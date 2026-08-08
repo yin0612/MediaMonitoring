@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T13:39:17.054310Z",
+  "generatedAt": "2026-08-08T13:58:27.912962Z",
   "data": {
     "status": "ok",
     "stale": false,
@@ -86,25 +86,6 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
-        }
-      },
-      {
-        "id": "b278629bb938f9dd1410",
-        "source": "chinatimes",
-        "title": "破40度別吹電扇！WHO示警：越吹越傷身",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T23:56:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5nSDhkcW05LXgtY05YeVhVWDRUbmNYSVRlQlZHelZkdkdtcnVkUFRVS0xEVnZ2SjJpemVzS1d1d2R2NTJBM25zaWVtUmVXejNhdVNZZEEzX29Dbk5sSTln?oc=5",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "示警",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
         }
       },
       {
@@ -198,19 +179,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T23:47:00Z",
         "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5QNmdsUmpvNndkemQ2ekV4R0FhQXpqRU1pajBoZEMxbXUtRlF4QUhJUVBZQnQxbVdqUnpnV0dESEF6V01Hbzl0aU8yM29xWmFrRWg5cTk3dVVMTWZ00gFiQVVfeXFMUGhBdXYtX2lsbTlmUzhHQkd3Z1RXYzJVLXFLM193QnRmMmlkMkxWZWxGbmRZOFlQOWRnOVRiTUtaQXFyVVh4RTFDZWNrcS03ejFVcFd3bVQtblhvS1ViM2p2SXc?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "3d5ac3ca3f2037a8e273",
-        "source": "setn",
-        "title": "登陸中國相關報導",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T23:46:12Z",
-        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE9BWUNNYldtYUxlWHRxZlE3eF9NSklFUVZ2OFEtU2tRaDJYLUhHQVpTY202bUowbUZzN2prTEpxSHRyZWJST1J0cQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -334,19 +302,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T23:26:00Z",
         "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1qMUxXdzJFRTFjb2tycmd2SzlNdHNCMHVURXdxbkVlMWdrU3ZBMy16cWpJcEZBZUI3anpCTGV4NkxPTjd1Qzd4by04RkJDM2MyLVpSQWhsamhILUQyQllz?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "e5b7651a2747b75bd261",
-        "source": "setn",
-        "title": "112學測英文相關報導",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T23:25:33Z",
-        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFA0OHZGNUJYMmZpTHlOSmhYbFdDRTJFc2xIcDZ3WGs3SEFzQmFvMWZqYWppRlVvZkxIdm9OU1Ayd2FOZndWbm5aYw?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -545,12 +500,12 @@
         }
       },
       {
-        "id": "25a9117a15f18b53a76c",
+        "id": "344fe316527b49761a94",
         "source": "moneydj",
-        "title": "沛爾生醫-創 公告本公司股票面額由「新台幣10元」變更為「新台幣0.5元」，公告期間：115年08月06日至115年11月05日。",
+        "title": "夠麻吉 公告本公司名稱由「夠麻吉股份有限公司」更名為「納維康生技股份有限公司」，公告期間：115年6月29日至115年9月28日",
         "excerpt": "",
         "publishedAt": "2026-08-07T23:04:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOanlZOGY1dkRjU2RPRFBZc3k5VktBTXVDeDQ1OFpzLXBkSU5nQXVEZGtsQlVRTVpsSzhndTNiclFOOWNMeVZyQWdja0dNYkZyOFdEeXZWem5QOEMtSm42SzMxcHp5WEVlQmQ3eTVqazBNMER5VUVvaWVVLXB4dS1zVUpweEltU1lDY3U4Qk84MHJDQQ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQbHNkVk5NaXhQT3FGUzVIcXEyLWE0LVZPNElaQkxoNllacmtORlRvV2U4YXJHUE5Lb1JzNE8zLTZPQUFfZ1dWRFlJQ1JBX2d0Y1poOUczR0doVWRqUnBWQl9NNERsSzE3SlB1dnhMX2xQTTA4azkzTFVNV0M5cW1HS1JKNDVXMnRZY1F4bENQN0w0QQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -558,12 +513,12 @@
         }
       },
       {
-        "id": "344fe316527b49761a94",
+        "id": "25a9117a15f18b53a76c",
         "source": "moneydj",
-        "title": "夠麻吉 公告本公司名稱由「夠麻吉股份有限公司」更名為「納維康生技股份有限公司」，公告期間：115年6月29日至115年9月28日",
+        "title": "沛爾生醫-創 公告本公司股票面額由「新台幣10元」變更為「新台幣0.5元」，公告期間：115年08月06日至115年11月05日。",
         "excerpt": "",
         "publishedAt": "2026-08-07T23:04:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQbHNkVk5NaXhQT3FGUzVIcXEyLWE0LVZPNElaQkxoNllacmtORlRvV2U4YXJHUE5Lb1JzNE8zLTZPQUFfZ1dWRFlJQ1JBX2d0Y1poOUczR0doVWRqUnBWQl9NNERsSzE3SlB1dnhMX2xQTTA4azkzTFVNV0M5cW1HS1JKNDVXMnRZY1F4bENQN0w0QQ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOanlZOGY1dkRjU2RPRFBZc3k5VktBTXVDeDQ1OFpzLXBkSU5nQXVEZGtsQlVRTVpsSzhndTNiclFOOWNMeVZyQWdja0dNYkZyOFdEeXZWem5QOEMtSm42SzMxcHp5WEVlQmQ3eTVqazBNMER5VUVvaWVVLXB4dS1zVUpweEltU1lDY3U4Qk84MHJDQQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -941,19 +896,6 @@
         }
       },
       {
-        "id": "e17b1788ff749304a817",
-        "source": "setn",
-        "title": "連、柯電視辯論會",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T22:22:01Z",
-        "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE1xNHFoa0dpWDF5akg2dVUycnFIZHFFYXNkUDE3TEpvZlJPSmd1dThhWk85Sm14S3pJMTJpZlFEa3daWFZ2amFNWWhzZVM?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "be36b9dba58f9964a0f6",
         "source": "ettoday",
         "title": "林得恩「白海豚轉彎」機率非常小：今明風雨集中顯著",
@@ -967,12 +909,38 @@
         }
       },
       {
+        "id": "10f60cace9d0952af282",
+        "source": "setn",
+        "title": "新型無人機相關報導",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T22:13:48Z",
+        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE04aDBzbTR0QmNuVmNISVZFQWI1U2pmQXUxZWF3OFZoeW82YlVBd2hWcGpmcFQxS2dub2RLWExXVHpPSnc3NGg1aA?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "121e23cf040a5a7ed225",
         "source": "ettoday",
         "title": "「海豚跳」颱風雨爆北台 白海豚中度等級登陸",
         "excerpt": "",
         "publishedAt": "2026-08-07T22:12:00Z",
         "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9BQnQxWWRpNS1IVTlhVUlaLWU4M0EzeU1NSlNIdHVGX3hZaHJWdW55SlV6cHJMcWpuNEctRkJQbW4tNVB6b0RBdTBuaGJoaDA3MlJCMzJoZDVZc0NuQlHSAUtBVV95cUxQOEp0UFFyVkhYdEllSXowcDFvellXbEJLS3RSUWNNZndIdktwVWVwaWZlbURvSThSZG44bjhpNVpjV1YxSjMwTzRQeEU?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "978ec62d080fe847d1e9",
+        "source": "businesstoday",
+        "title": "院長最新與熱門精選文章",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T22:04:27Z",
+        "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9nYVNfMWlkUERaRnFVSjdobVRzYUdFX1c3TWlrUm42WHgxVTVfUHlMQVc5TmNXX1lzZWhxbkRlU1ppdmU5S1pCMFd0dnVwR0VFWTRoYWc3QlhzWmNia2xSNkRSRHNBTUxyak5XeFpYU09Wb2EwdEd2NA?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -999,12 +967,12 @@
         }
       },
       {
-        "id": "d89409c72c5856900851",
-        "source": "businesstoday",
-        "title": "院長最新與熱門精選文章",
+        "id": "f5d347dc31a506e304ca",
+        "source": "ctwant",
+        "title": "松屋小編問「為何大家不來吃？」 一票人點出3大問題：滿手好牌打到爛 | 生活 | CTWANT",
         "excerpt": "",
-        "publishedAt": "2026-08-07T21:55:34Z",
-        "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBTRDVJZ0tOYVlDaVdIMTlVT2l6b2cyQkdZWVBRSWdUU3cta0U3U2xIUVZKbGN4TXk1TG9YdFJHNkQxaEZfdWxHMXl1M2FlT0JHd3Y4WXFia3hhZEJsNVFQOXZhVlNDenNlX3RsQy1OVHMyX0pxS2tRWg?oc=5",
+        "publishedAt": "2026-08-07T21:55:05Z",
+        "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1kckI1X1pTT3k3a2d4R0p5UEFmcy00cGpOQTNUa0RmRm5BX1pBbFJwWTZUcVBla0lwaWxzYnptZlI0UzJsaEFoOG5JbmJoSWvSAVRBVV95cUxOVDhpVkcwV3o5S25VNU9IVkpUa2szcHFIVngwdHBXeXdmZ19ycE0xSUNBYzExbThvaFJ6bXc5dmh6Z0ZGTV9DVC1zcXc2UlFfajd3SlQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1076,19 +1044,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T21:37:32Z",
         "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1TU3V0ODZnVE9vV19zd2U4TVhnSFNFVEV6bnV5aml3ZE9CalRHSUFiRzVycXRsbC1uVnJrdlNpQi13ejQtdGJWZ3FncFhkYXU5cTViYjVqVmlVUnkwaVhCa1dXUDdDSG1MVGdlNQ?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "fe3e78db86e38f825f2a",
-        "source": "ctwant",
-        "title": "宏碁發重訊！辭任兆基董事長並撤出經營：發現內部管理缺失 | 財經 | CTWANT",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T21:35:21Z",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBjMGxUbWJoekF0M3RQNUNUNkVyb2ZEZHZEcjB3WjdwQjFCSk1DNFZLWG5rTFpEa0FJdy1PVkc4VlQ0SXVGdU5Obm1FWU96d9IBVEFVX3lxTFBzU1YzSUh1dXEyZ2NDdG5JV0w4MG13OEtsUmFQdXJONVlUNWs4eGdzLVlHckxwZi05andPRk1nLXZ0NUtzdzlMUzBoTFRxSkVEaC1MSw?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1287,19 +1242,6 @@
         }
       },
       {
-        "id": "c4d587290cb4f6e02dda",
-        "source": "udn",
-        "title": "偵查室 - udn部落格",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T20:37:46Z",
-        "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5OcWpIWXdMeXBQdUUyLWQ3cG52ai1QN2lBYUtWNFJ0Ynh4X3U3RHdNQjh6SVZVcnVMa3hmTk1aUVlPc1NCU1hPS0U3VmpNZGpNelRlSDliVFZzVkVvNXZTcHRkSFY5QQ?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "a47df0e64f2a5fddba29",
         "source": "udn",
         "title": "防衛日誌 - udn部落格",
@@ -1352,12 +1294,12 @@
         }
       },
       {
-        "id": "a502ebaf1d3c49f703c1",
-        "source": "wealth",
-        "title": "錢婧 所有內容",
+        "id": "5faac32f408e429b6808",
+        "source": "udn",
+        "title": "經驗公開｜BTSEX相關過程完整整理- 清石日誌 - udn部落格",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:33:05Z",
-        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMVVGdXhsODFMdkpsVHNyR0hzdWZ1NWc1MmVZd08yMTlGbEpRbC1ESFpXdzhONFE4Vk03WFl2ZWg2RWpEX3dSakNqc2RKcnJPTzlpb2NMZlhaaHI2R2VDcHN2cktwRTlwOGtIZm9iX3o1dGV4X2pSWEZJNFF6eFppSGx3?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBDVzI3TE9ZejFxNkh4a0pZLVBCRjFINllIYkpWaHpDRFdVRzd2NjVhM20xbGVQZDRFNU1RQ3hlRWVCOG8xdFJaUlNHMkVSVEhramxQU3VuV2hJTkJCVnUwMkcxRU40T0lsTFJLbg?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1365,12 +1307,12 @@
         }
       },
       {
-        "id": "9b4d9364d81edf6066e3",
-        "source": "udn",
-        "title": "經驗公開｜BTSEX相關過程完整整理- 清石日誌 - udn部落格",
+        "id": "a502ebaf1d3c49f703c1",
+        "source": "wealth",
+        "title": "錢婧 所有內容",
         "excerpt": "",
-        "publishedAt": "2026-08-07T20:33:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9yU0dQMjRuQ2pWN0otRS1zVmdGTFNLS3I1SGE1MnJaRlZjQnBBMFZyN1dBMU9WXzE1dlhWSGtxdDRGTzNDZ1NLVFRpZkY5R1hGQnJHeURKLTVRQWs?oc=5",
+        "publishedAt": "2026-08-07T20:33:05Z",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMVVGdXhsODFMdkpsVHNyR0hzdWZ1NWc1MmVZd08yMTlGbEpRbC1ESFpXdzhONFE4Vk03WFl2ZWg2RWpEX3dSakNqc2RKcnJPTzlpb2NMZlhaaHI2R2VDcHN2cktwRTlwOGtIZm9iX3o1dGV4X2pSWEZJNFF6eFppSGx3?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1454,7 +1396,7 @@
       {
         "id": "6ea0a05ec34123f91b7d",
         "source": "chinatimes",
-        "title": "SEIKO慶145周年推出紀念腕表- 時尚消費- 中國時報 - chinatimes.com",
+        "title": "SEIKO慶145周年推出紀念腕表- 時尚消費- 中國時報",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:14:33Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9SMG1HR1BsU1JIR0lhV2dkSDV6c3hBemI2NjNkOHZSdV9rSzFJbkswNHNya2JuWFdpc0U0T0wxeERsQU5wclRFSmF1OEZoTzU2a0psWjdzWXFwTWFvMm1vdTFPZ3ZtOEljSk1r?oc=5",
@@ -1467,7 +1409,7 @@
       {
         "id": "3f74e93a0785f01a37bd",
         "source": "chinatimes",
-        "title": "單獨繼承房產 遺囑載明才有效 - chinatimes.com",
+        "title": "單獨繼承房產 遺囑載明才有效",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9TVUxuTWhhM2pBeFQyMEctMTdWSzhyOGtuMHYyNWxsempZNWhlU21PZEVFNVZXVmwxZlc1bU1xd0lvRklmTzB2MUFjQkRiWjlBT3RTbl9IMlE0bTB1SkVTY2wwOHgySnhPVGp3?oc=5",
@@ -1478,22 +1420,9 @@
         }
       },
       {
-        "id": "86f875cf67dbd16ee1a9",
-        "source": "chinatimes",
-        "title": "台北房市 南環線利多 木柵買氣增溫 - chinatimes.com",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T20:10:00Z",
-        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE0xeDB4MElpVW9Gd2NWUF9UOTgxTGhUd2VMY1pGY3VWNFRROHFxajQ3OWo3UndVTGl3NzhGUEVySTFTSlNJUXp3bm9SelRNdWtzVHM1Ym0xUUl2X0tzNllhRHhZbWhOTnRHdjQw?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "568c1ee66f58100aae60",
         "source": "chinatimes",
-        "title": "熱門股－新光鋼 利多助攻價量齊揚 - chinatimes.com",
+        "title": "熱門股－新光鋼 利多助攻價量齊揚",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE5CTmxXOFVtR0k3V2dfSktWTnpjS29BOVVHdG9kdUFwNU5LTTRXcUFFVmN3TXp4dURqQVdYejA3Y0lEUWc1Z1pIVHBVZ3VlNjZBOU1sVXF6Yl9obHQ3TmpBTGtsMVJMdXlMWi1v?oc=5",
@@ -1506,7 +1435,7 @@
       {
         "id": "629036012202d599b6d2",
         "source": "chinatimes",
-        "title": "韓菲有爸護航 跨足戲劇圈 - chinatimes.com",
+        "title": "韓菲有爸護航 跨足戲劇圈",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9aQWlOY3JQWmJPSloydUpwd0dTOTZ6MldUSkVBUURnNjlzY2xLUVNZZFNkV25DTnd0U2pkRDdGTk9qT05nMFBBS1ZrSE5wS3p6NEFKdzBNZlRnTlZIaUhpbDdISU0tQTViRUM0?oc=5",
@@ -1519,7 +1448,7 @@
       {
         "id": "8b6161f9408d9f84cd83",
         "source": "chinatimes",
-        "title": "賴總統催生 提4策略5面向 - chinatimes.com",
+        "title": "賴總統催生 提4策略5面向",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE16andpdzE2ZmdmYTlxenVkTXU5MGlFeFpmSXQ0MTh2ZzRXUWpzMjBETDh5V3VkZEhSRnhrRDlpYzRGenViRTlaNUprWEpVNjREY2xBQzV3bFU1TTh3S2ExSXp3SVRrMERDWE5N?oc=5",
@@ -1532,7 +1461,7 @@
       {
         "id": "8d2b62ba339b8f44c074",
         "source": "chinatimes",
-        "title": "熱門股－統新 股價登波段高點 - chinatimes.com",
+        "title": "熱門股－統新 股價登波段高點",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFAyam9YS3VUQmNKaWpuR0UzSkJNLTZUaktSZ2MxcHM4bi1NYnRaaTRaLUVTSmRENTdad0Q2YWhVNVdmbmZwb1dMSTVUeWZZTE40NldkQ1puR0tac3d5NFF0dUNNbVZhVzlKalJr?oc=5",
@@ -1545,7 +1474,7 @@
       {
         "id": "9331c6e0db052db62e4b",
         "source": "chinatimes",
-        "title": "熱門股－台橡 吸引買盤強攻漲停 - chinatimes.com",
+        "title": "熱門股－台橡 吸引買盤強攻漲停",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE55V3lXbFNYdXJwQXV0dlpEV0RIU29rVFhjRUhDUUQtZXRDUUFmU0ctc0htOWQtNzdLLVAyTUJoeHhGaGtoRFhHSWs4RVNzYW56NXlod1N6VlBvUFg2SkdyYU03V1R1MWpSbmVB?oc=5",
@@ -1558,7 +1487,7 @@
       {
         "id": "fc0560af0e8b0685c4c3",
         "source": "chinatimes",
-        "title": "達人心法－持續學習累積跨域歷練- 專題周報- 工商時報 - chinatimes.com",
+        "title": "達人心法－持續學習累積跨域歷練- 專題周報- 工商時報",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9OUVZzNkN1SlA4WlFNVnotNm5FVlc1SjY1UDNxbjluell6eUxCbUhmOTRiS2RWd1c3eTFWeHlJNjlTLU1zSW5hT1RYUFdVdzNIWThPc1hUZEE3U3hnSnZkVVpSTUZDMXR5Q3Rj?oc=5",
@@ -1571,7 +1500,7 @@
       {
         "id": "b8647eace8eca3bfb6e6",
         "source": "chinatimes",
-        "title": "熱門股－LINEPAY 價量俱揚攻漲停 - chinatimes.com",
+        "title": "熱門股－LINEPAY 價量俱揚攻漲停",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1RYXZUa0ZaTl92WXJBWkcwUm16cV9HNGt6MkhOZnBvLWd4SFZveE5yU0l6MS1iTTFlb1FvZzZ4TjNKcUlVdlpjYkszNzFDSFBHQkhaeV9tQlp5QTJZdzUwZ1Z2dkNtLWU2dFc0?oc=5",
@@ -1584,7 +1513,7 @@
       {
         "id": "a6bf100d023e88c183b0",
         "source": "chinatimes",
-        "title": "巨漢 H1每股賺14.14元 - chinatimes.com",
+        "title": "巨漢 H1每股賺14.14元",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1qVDgyUWRGaG1mYnhVRU41ZHF6bDFvTmhXNVJLaF9BNkJPbHFrOUlHMjhOZjBNSHJTMGdkQmplR0xSVWpjelg4VWI3WUdIVXl3YmZySHZIS25yZG4xQk1vT21XTmxianR5bFpV?oc=5",
@@ -1595,12 +1524,12 @@
         }
       },
       {
-        "id": "ec1ebf04bf7287fca21b",
-        "source": "setn",
-        "title": "艾涅爾相關報導",
+        "id": "f143d7dba1df0365ef6c",
+        "source": "businesstoday",
+        "title": "台灣股市最新與熱門精選文章",
         "excerpt": "",
-        "publishedAt": "2026-08-07T20:04:42Z",
-        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBNdkwxdWduN1VDeW1mNWFiRzA5cGN3TzVhMzc2Q3VSdWx3Z0R2alVNUHkyZGN6LW1KV2x1NjJUMzFTMWNaTHpMMA?oc=5",
+        "publishedAt": "2026-08-07T20:06:23Z",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOalh0Rnc3bzdBSHdGd2gyd0RxX3cxSnlRUk12SDJfYXphY3MyRnQ2RmY3WExSNWM2a05fbldnWER4NDdNbkZtOEhCbHN6Rld6VFh4S2ZNLURNUzZHVFpGNWlnbjUxbUZPd1U0OTNEU3JjWWJyNGVpc1dlMUtIekZkV0NpRmxoYmV2QXdubEpnaw?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -2143,19 +2072,6 @@
         }
       },
       {
-        "id": "f973e74c93972cfc176d",
-        "source": "moneydj",
-        "title": "今日要聞內容-A3346B72-7F98-46DC-9FE5-31C49F2AD56E - 5850web.moneydj.com",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T18:04:21Z",
-        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOTEJvYnpUcXFacmsyNXlKdlAzX3ZYRFNpcnFoQ0JidGlUTTNZWmhLcTdzTFlDeVEzdjVRdUkwWjAtWVltd0U3VXU3WjNkelhna0E3Q0VoT1FQMEZiMzdaRlM1aWRxY1JRWWZxVzVZb1ZVSWdHMklfUlpPMjF5NjhxRFcxSkxqbDhtRUJfWXln?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "fa65654a2d5e715c5bc7",
         "source": "moneydj",
         "title": "今日要聞內容-304DAA88-02FB-404A-9F23-CA4E1C088182 - 5850web.moneydj.com",
@@ -2364,6 +2280,19 @@
         }
       },
       {
+        "id": "fbb29ee0ed1db0a696ff",
+        "source": "moneydj",
+        "title": "環宇-KY 115年7月營收1.45億、年減6.93% - 台股 - 新聞",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T17:44:00Z",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPZ2NYWGJOSlpOVlZYR1ZXQ3dnYnVWc2xGQlp1TWhGUGxFTVQ5bkhGT1ZQUm9ta2NwcXVUdHFIb2Z2WkdaVE1sYk0zU1pRb1V5Z0tmUHVCendMejNKVXpITDNiT2hxVm05OXd6bXVneDhnVHVySnZIaXFLLXIyem1jVmxR?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "05c667dd8db089a05892",
         "source": "ettoday",
         "title": "快訊／4縣市大雷雨開炸 警戒範圍曝光",
@@ -2481,19 +2410,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T17:22:29Z",
         "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA4MWxXUWo0cWQ2dXFqbWxuZFFzdUlKeDYzaDZTbEhCTnpOQlV3MnBhRVNtOUZWTERHVUs4YmlrZTFrR0FScHgwSEQtTDhvUW8?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "922f1c792e9a6037dae2",
-        "source": "setn",
-        "title": "余家菁相關報導",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T17:14:18Z",
-        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE9fZ3RNVzR5QjM2a28tUkU4VGg5RjFZNnJodXI5UGJhS01JMDJZZXJkcGg0cmt4LWFiU080ZlFHcnRtTk5BSnl3Mg?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -3118,7 +3034,7 @@
       {
         "id": "6fca2ec4ec70f95b6414",
         "source": "chinatimes",
-        "title": "宏碁突發重訊撤出兆基屋管經營- 財經 - chinatimes.com",
+        "title": "宏碁突發重訊撤出兆基屋管經營- 財經",
         "excerpt": "",
         "publishedAt": "2026-08-07T15:39:03Z",
         "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE53TUhKenVvd01mVV9mSER6UDJjVmd1QnYtTXY5TTluYUZSZm9QcXNIWk1UOGI3aktrU2N0cUQ3NFVhc0pQZndxZzNrQ3dIRGZJSFNnS0puSWgtQ0Y4QnE3VGlMMUxlWC1TYXJ0dEdB?oc=5",
@@ -3197,12 +3113,12 @@
         }
       },
       {
-        "id": "931d40d38faacacca758",
+        "id": "3fd1e24e7890cec87717",
         "source": "moneydj",
         "title": "兆利 115年7月營收6.56億、年增6.32% - 台股 - 新聞",
         "excerpt": "",
         "publishedAt": "2026-08-07T15:09:00Z",
-        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNN2Y4UkpwYUhERWwxV0xXNEdBN1lpZkxSNWNsRmhnQ01DaVVFMi1ETkNObVJSUzFIdXU2WjZ1NU5CX2tqLTJmNjNzYjRnWVBQMWpVcVk0LXVkdDQ4VWxlRkNCN3NBMFhtQmo1dHpJSE5Ya0FsamlveHJrUXFXS0VCbkpZQnpPcFhjWThSME5VRWNsWDVoam81RzVaTQ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQR3REVi0tdzZoM1d0WVFEaFdXV29jdWZOLVFyWFUzOHpfOGk2bGZZb0c1ZjFBb0doOEUzQXd5WUdyRHgwTVFrVEpWV0JsUEZRb2E5WnF3NV9KbExsU1ZoejliVkExM3ByRkdnbjhDc2NWRzR1XzdsQzJ1WVpXRkdVYi13?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -3249,16 +3165,22 @@
         }
       },
       {
-        "id": "def5d6cb3857a23107b9",
-        "source": "setn",
-        "title": "果汁健康嗎相關報導",
+        "id": "6f9b73983c918b249da7",
+        "source": "chinatimes",
+        "title": "日本防衛費估上看8.9兆日圓創新高 高官：最終恐衝10兆",
         "excerpt": "",
-        "publishedAt": "2026-08-07T15:02:44Z",
-        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE1yY2tXTlFCbkJzU3BxdFlFdVFCU0NQT0d3X3NQWWo2QS0tR2RUY1Y1QWV6T2NzTkJPamdpQVV4Yl9XQ1ZFX0ZqeQ?oc=5",
+        "publishedAt": "2026-08-07T15:00:24Z",
+        "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE4tZVRQTUZLVDNhLWhqSU42c2loSDI3a0dnY3VfOHBySUxVYXVCcTlDVTlPSWdfdlNDbjFNRzVDd3BUb21SOFFrTUNEamJDZDJRZDRVM3lPR28taF9YRlJ3dWdNaWlodFJxVl8zSnhn?oc=5",
         "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "新高",
+              "polarity": "positive",
+              "weight": 2
+            }
+          ]
         }
       },
       {
@@ -3376,6 +3298,25 @@
         }
       },
       {
+        "id": "22a44ed19a37863f7772",
+        "source": "ebc",
+        "title": "雲林羊肉「世紀之毒」超標 汙染源找到了！",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T14:48:00Z",
+        "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE51OVRNaVo5NUlDdk43a0tnaWt0UDVBNm9wdkRIVFRqZ0R2U1RpWUc1MnBhM0FQRjY0MmNyVWxKeFNPTUFSSUw1bFc1TEc5T2lzN0NHdQ?oc=5",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "汙染",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
         "id": "f78cd26dfe231aee5ec2",
         "source": "udn",
         "title": "【歷史深度調查】打開中國吃人史- 彌勒熊電影UDN - udn部落格",
@@ -3470,12 +3411,12 @@
         }
       },
       {
-        "id": "b763ffa532600ffd05db",
-        "source": "ebc",
-        "title": "獨家／公車運將常開快？ 陽明交大碩生「親上陣」找原因",
+        "id": "5a6904f07338af4074be",
+        "source": "ctee",
+        "title": "「衛星定位晶片」的搜尋結果",
         "excerpt": "",
-        "publishedAt": "2026-08-07T14:38:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE5pV0lpc0Zham1ROFNNLTJGYXhqSVBFUk5QRXZnV3E1RUhXOU5pckJROU5IRGd0NkZod0VzQTlTeUk2akJmTkd3aC1nWHk1ZlJmQmZzUQ?oc=5",
+        "publishedAt": "2026-08-07T14:37:11Z",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNN0FIN19oUG9uQV80cWJaYU1aNHFMM1gxMWQ5WENhUEwyXzRpZWp6eDN2cWwycE5rTkkySEZta3gtdUxERW5qc3RnS2hGb243bmRlZGNNQUVCd0dsWVNNSnc0N01FRExlVFBSR1NzQjFqdVJRY0JlbjMwSVI3dUJMR2VjbDNwLU9HXzVhb1VR?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -3493,25 +3434,6 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
-        }
-      },
-      {
-        "id": "93982ba8b1ff2c6e5ca8",
-        "source": "ebc",
-        "title": "獨家／潭雅神自行車道傳死亡事故 翁墜6公尺不治",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:33:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1pMFBIRUxTMmYyb1RlVkwzb0JOYkRIektZSkxsTlJsTTFaTXoyY3JKMDJjdDJnSHZXU09RSXBTNnZMUlNHNDQwYmxBR25UWUJqb0daTDNn?oc=5",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "死亡",
-              "polarity": "negative",
-              "weight": 2
-            }
-          ]
         }
       },
       {
@@ -3644,6 +3566,19 @@
         }
       },
       {
+        "id": "429b8153e192de14fcf9",
+        "source": "udn",
+        "title": "心語籤，立秋，2026.08.07 - udn部落格",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T14:25:57Z",
+        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5LYUtpR1ZKLW0yTFFSNkVhclFOOEZfaXdUVEV0VXJPM3J5U2JBSkFRR0VkY0VSNW1fTXFudXoxcmg2Y2JJZGM0Q3FzbnJMMFRY?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "9b2e98f9cc7323cfd15c",
         "source": "mirrormedia",
         "title": "史上最賺上半年！華航客貨兩旺吸金千億",
@@ -3676,19 +3611,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T14:24:00Z",
         "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPNkNDVnkzenp6UWJHd0lDb0ViVWxGVzdPRGpRR2w2V3p5cTNRZWFqMWlVaThGczV0b1pVdkdYckJ3N2I1bGVyVkYtLTRvcG5BMU8taTVYbWtJYWJTVWR3VnE1WEd4Zl91RUF5ck9iemduYi1aTngwdFk1NlJpX1FMWk13?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "1b0e79104d49794dcd4a",
-        "source": "ttv",
-        "title": "酒駕累犯！開門害騎士摔飛倒地 吉安鄉長室副主任酒駕請辭獲准",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:20:18Z",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBhVDVlUHA5Si0tWTR2ZWFGeVk1dWV6SjA4MGxQRUdMb3hDcjE3TG5NV3VUZEJRaXpNOG1WaTlJdVo2dFZTR0VMbTJxTUtkWE1YdTk4TjdMbw?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -3982,32 +3904,6 @@
         }
       },
       {
-        "id": "2e325e6c3cad74561f8b",
-        "source": "ctee",
-        "title": "「丰厚」的搜尋結果",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:55:13Z",
-        "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1JR2V2Rm1iN0xpQUtrZEVYRHpyZy1iZUpjc3BMSEIwczNhV2RlS2Z1Wk1GRkNsMjdELUJ1cFBpNTQ2aE5saFU2QUo0ZFNGNnh0dGR4U0ltRDJmN0VzT1E?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "43172afc39e2e7d68711",
-        "source": "chinatimes",
-        "title": "核護盾- 搜尋 - 旺得富理財網",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:54:26Z",
-        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE11QnF1X3RGbXZZSlc5dnpnVkFPVHY1aUlWNk12djgzNkcta04xNllMMTdraDkwbDRjcG5SQ1JHdmtjSXF5cElPeEpCVEVxNFVXV1FuU3dIOW5LVjZyb1RSZFlBMUJfOXRRbkZIRHR6amFQY1B5?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "708f2a61078041ee15e1",
         "source": "cna",
         "title": "中國假借颱風名義稱對台灣海峽交管 海巡署：嚴厲譴責",
@@ -4024,97 +3920,6 @@
               "weight": 2
             }
           ]
-        }
-      },
-      {
-        "id": "e9b048b2a6eaf90dda3f",
-        "source": "ctee",
-        "title": "「國際扶輪帆艇聯誼會」的搜尋結果",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:52:21Z",
-        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQTTljTTBfaEhzR1hJUkRjWUNJbHhWc1ROR1B1UGRQNmZFeEdWYnN3aWVqUzlBblM0ZlNZeXhaSnZCeThLUGo1WnRjMmhKMWV4b21zdVhkQTNtY0pCMHNYZ2V1OGdueVB5MVpOWFBPVWpMRF9mR1hHZXZZVzhMMWxHemRmMEpXR1R2WndlSlZoZVZqZm55SzJ5T0d2TU1hcUNxcE5uUHlqaTZDXzRvRk5udW53?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "33c132b091a784b40a46",
-        "source": "bnext",
-        "title": "AI基建股",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:50:42Z",
-        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE52Q3ZnRjd5TG1LXzZkcHFUaXRmWGgydl9TZ05RU0lzYnZTeDNYN1pJdzZhNWF5R0tZRTJYRldsUzJsMXY3SWZ6dl9SMVpKeDc1TkN3eUZjTC1LTzRiQ1ptLUR5aVViR0oxeGw0?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "7017aacbf4b6b9014d51",
-        "source": "udn",
-        "title": "阿城鵝肉- Uppu's blog - udn部落格",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:47:37Z",
-        "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9hU1NVbzgzWU1WNFdTWnV5Z0tLOF9kdHFqUDhuOTRjbWg0d3lwdmFiYllXRG04NDBUY09kNU1ncTZEMlB0c09BamQ5OA?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "a6bb87883a0e65926c4b",
-        "source": "cts",
-        "title": "陸聲稱交管台海船舶陸委會：違反國際規範- 政治",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:44:22Z",
-        "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5DeHJMVjdkNkxUWFpJbFdXOEw2NkRDa0ctaXR4Z21ZaXg4MGtTR2xVT1Vfbkdxa1hBN1dld2RTN3UwNEE4czVJeXByV1lhNGYwdlUwbUZSZ1d3aUk3YW0welI3dGhUNTJIaXNUVnZkczdBdw?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "e9b3400ebd2e6ae9b39e",
-        "source": "udn",
-        "title": "那不是音樂的秘密- 張紫蘭 - udn部落格",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:43:40Z",
-        "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFAtaEN2cjJIc0dTNUVfTERoRHc0NFc5MHZ4SkxlWGZMdmd0MURfZmZPYVUyRUVMVXBuQVU3dy02Z3NkNkpRUzA5aHlwWEtfdlI1R3MzOGNUZXNDdEpwYld5cktkN1dFbjZwR0tOcUt5Y0dsTWM?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "88b309ff5b0233381449",
-        "source": "cts",
-        "title": "土耳其與沙烏地及巴基斯坦簽防禦協定澄清無針對性- 國際",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:43:20Z",
-        "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBkUGVESzgxYTZ2cUhGTV9SalBObHI2MjFZd2c1N29IYVZOeVBvU1BRRk1rZTk0Z0V6RnU3d3BCUmNpcDFvcEhkUE44SGtEbVVXRzNuaURrR3B1V0Z2LXA1aUV1NjNZcWxuSGY0WUR2VWFyOHB3NDBROA?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "90ec03dfebfe78ef26c9",
-        "source": "udn",
-        "title": "DNA - udn 女子漾",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:43:15Z",
-        "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE1pLXNERklZWGdCdEY0NVRPYnRhSFhrQ1BJbkpXUWNqeUtKS2ZMV3h3eXpEUXAyVlBISndpamNvTjQwTGwxaWdsZjJEcw?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
         }
       },
       {
@@ -5298,48 +5103,6 @@
         "excerpt": "（中央社記者吳哲豪彰化7日電）男子賴建榮與朱姓女友分手後，不滿朱女又跟李男交往，深夜闖入李男租屋處持刀猛刺，造成李男傷重不治；彰化地院國民法官法庭認賴男涉犯殺人罪，判處無期徒刑、褫奪公權終身。",
         "publishedAt": "2026-08-07T10:04:10Z",
         "url": "https://www.cna.com.tw/news/asoc/202608070253.aspx",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "85c0c5a56bb03a3d1de2",
-        "source": "cti",
-        "title": "遭賴瑞隆點名向陳時中道歉！柯志恩反嗆：比病毒還毒",
-        "excerpt": "慈濟在疫情期間採購BNT疫苗遭詐騙，民進黨高雄市長參選人賴瑞隆今天（7日）表示，時任衛福部長陳時中不斷示警，卻遭國民黨高雄市長參選人柯志恩等人攻擊，如今調查結果出爐，要求柯志恩向陳時中道歉。柯志恩則反嗆，賴瑞隆的說法「比病毒還要毒」。",
-        "publishedAt": "2026-08-07T09:58:20Z",
-        "url": "https://ctinews.com/news/items/KwnK0XJzWY",
-        "sentiment": {
-          "label": "negative",
-          "score": -0.5,
-          "matched": [
-            {
-              "term": "詐騙",
-              "polarity": "negative",
-              "weight": 2
-            },
-            {
-              "term": "疫情",
-              "polarity": "negative",
-              "weight": 1
-            },
-            {
-              "term": "示警",
-              "polarity": "positive",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
-        "id": "dfb87bc96e41ce377afa",
-        "source": "cti",
-        "title": "解放軍怎從《攻堅》走到《制勝》？！呂禮詩揭中國體系化建軍進化到何處！",
-        "excerpt": "前海軍艦長呂禮詩8月7日在中天《艦長來了》節目中表示，央視近期推出的軍事專題《制勝》，表面上看似只是大量解放軍訓練與裝備畫面，但其中其實藏有相當多作戰細節。他直言，自己用一個小時能講清楚的內容「連六分之一都不到」，尤其從火箭軍「地下長城」、055萬噸大驅，到076兩棲攻擊艦的電力…",
-        "publishedAt": "2026-08-07T09:46:52Z",
-        "url": "https://ctinews.com/news/items/Q8n8bmlEao",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
