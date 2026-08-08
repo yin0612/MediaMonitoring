@@ -1,10 +1,10 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T13:58:27.912962Z",
+  "generatedAt": "2026-08-08T13:58:56.706081Z",
   "data": {
     "status": "ok",
-    "lastFastAt": "2026-08-08T13:58:27.912962Z",
-    "lastDeepAt": "2026-08-08T13:58:27.912962Z",
+    "lastFastAt": "2026-08-08T13:58:56.706081Z",
+    "lastDeepAt": "2026-08-08T13:58:56.706081Z",
     "methodVersion": "news-heat-v4-37-sources",
     "scheduleDaysUntilPause": null,
     "coverage": {
@@ -12,6 +12,6 @@
       "trendBucketMinutes": 60,
       "archiveDays": 7
     },
-    "stateRestoreFailed": true
+    "stateRestoreFailed": false
   }
 }

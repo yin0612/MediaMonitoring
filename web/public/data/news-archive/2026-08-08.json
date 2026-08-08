@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T13:58:27.912962Z",
+  "generatedAt": "2026-08-08T13:58:56.706081Z",
   "data": {
     "status": "ok",
     "stale": false,
@@ -20,6 +20,38 @@
         }
       },
       {
+        "id": "3f0d515e24076b6d0cd5",
+        "source": "ltn",
+        "title": "伊朗遭制裁加密幣平台經手逾2000億 串起俄羅斯地下金流",
+        "excerpt": "美國7日制裁兩家協助伊朗規避制裁的加密貨幣交易所。其中一家制裁對象Shelbit，在兩年內處理的交易額超過63億美元（約2031億台幣）。區塊鏈分析公司TRM Labs指出，S...…",
+        "publishedAt": "2026-08-08T13:55:13Z",
+        "url": "https://news.ltn.com.tw/news/world/breakingnews/5533309",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "0fb0aeb22e116a14c22d",
+        "source": "setn",
+        "title": "男大生遭脫光圍毆慘死公園　主嫌稱「有輕度智障」仍被判無期",
+        "excerpt": "日本北海道江別市2024年10月發生一起公園圍毆致死命案，年僅20歲的男大生因感情糾紛，被對方找來多人施暴，衣服被扒光、點火燒體毛，傷重不治。被認定為主嫌的男子川口侑斗在案發當時只有18歲，其辯護律師主張他有輕度智能障礙，盼獲得斟酌減刑，但札幌地院一審仍判處他無期徒刑；另一名被告",
+        "publishedAt": "2026-08-08T13:55:00Z",
+        "url": "https://www.setn.com/news/1886234",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "施暴",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
         "id": "a5c80b16d6927b0cd165",
         "source": "newtalk",
         "title": "漢光42號演習進入反登陸階段 賴清德登海巡艦視導操演",
@@ -30,6 +62,44 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
+        }
+      },
+      {
+        "id": "499d79c02d6fc73bd102",
+        "source": "nownews",
+        "title": "「我最享特權」！杭特談爭議特赦認不公平 曝拜登癌症已轉移骨骼",
+        "excerpt": "美國前總統拜登（Joe Biden）的兒子杭特（Hunter Biden）近日接受《BBC》專訪，首度針對父親在卸任前給予他的爭議性特赦發聲。杭特坦言自己是「世上最幸運、最享有特權...",
+        "publishedAt": "2026-08-08T13:53:24Z",
+        "url": "https://www.nownews.com/news/6864275",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "a715291b6ac3a2fe0b99",
+        "source": "ltn",
+        "title": "70張地圖帶孩子環遊世界！橫跨300年兒童文學珍寶首度來台展出",
+        "excerpt": "一張地圖，帶孩子看見世界！台中市立圖書館攜手德國慕尼黑國際青少年圖書館，即日起到12月20日在中市圖總館（綠美圖）世界講堂推出國際合作特展「環遊世界70張地圖─三百年來兒童文學...…",
+        "publishedAt": "2026-08-08T13:52:57Z",
+        "url": "https://news.ltn.com.tw/news/life/breakingnews/5533303",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "合作",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
         }
       },
       {
@@ -46,12 +116,86 @@
         }
       },
       {
+        "id": "fe7ee3a828acdd6e39a9",
+        "source": "chinatimes",
+        "title": "CENTRAL26台北登場 UVERworld誇台粉「日文好」",
+        "excerpt": "源自日本橫濱的大型城市音樂節CENTRAL26，8日在台北登場，三組歌手UVERworld、jo0ji、yama 輪番接受聯訪。出道26年的UVERworld，上次在大港開唱對台灣粉絲的熱情留下深刻印象，吉他手克哉分享，「粉絲們不只在網路上",
+        "publishedAt": "2026-08-08T13:50:04Z",
+        "url": "https://www.chinatimes.com/realtimenews/20260808002918-260404",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "9d73767c0ec8cf4640b0",
+        "source": "setn",
+        "title": "以為益生菌護腎　6旬翁餐餐泡菜豆腐乳... 2週後雙腳水腫險洗腎",
+        "excerpt": "養生觀念誤區恐致命！一名患有慢性腎臟病的65歲男子，因聽信網路傳言大量食用泡菜、醃蘿蔔等發酵食品，短短兩週導致血壓飆升、嚴重水腫及肺積水，確診急性腎衰竭險需洗腎。腎臟科醫師洪永祥提醒，醃漬品含高鈉、高鉀與磷，會加重腎臟負擔。腎友若想攝取發酵食物，應將其視為調味品而非主菜，食用前務",
+        "publishedAt": "2026-08-08T13:49:00Z",
+        "url": "https://www.setn.com/news/1886307",
+        "sentiment": {
+          "label": "positive",
+          "score": 0.333,
+          "matched": [
+            {
+              "term": "飆升",
+              "polarity": "positive",
+              "weight": 2
+            },
+            {
+              "term": "確診",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
         "id": "56ce331083025cfe7984",
         "source": "ftv",
         "title": "霍爾木茲海峽驚傳遇襲！船隻遭不明投射物擊中起火",
         "excerpt": "",
         "publishedAt": "2026-08-08T13:48:56Z",
         "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5Ddjg0RXRMVUFzZWJ6SHpoUTd2Y2pMV2ZHSmZuVGo3SjNrYkR1XzVQc0ROMHUzbkM1TzFGVUk2T25PMUZRcGpMVDF0MGNTNTA2ZWo4UDhhRWIyNk82alZIdQ?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "c9dd7b0f250d053cc20a",
+        "source": "chinatimes",
+        "title": "BNT採購遭詐10.6億！ 慈濟內部信件曝光「每一分錢都來自善款」",
+        "excerpt": "疫情期間慈濟基金會為搶救生命，委託採購BNT疫苗，不料竟遭代理商「鈺達公司」負責人陳昱瑄及相關人員涉嫌詐欺，詐取高達新台幣10.6億元的佣金。台中地檢署已於本月6日將涉案人員提起公訴，消息一出，震驚社會。對此",
+        "publishedAt": "2026-08-08T13:48:40Z",
+        "url": "https://www.chinatimes.com/realtimenews/20260808003054-260402",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "涉嫌",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "疫情",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "6d392ceff0ded6ba963d",
+        "source": "tvbs",
+        "title": "白海豚颱風交通異動》飛機／航運／高鐵／台鐵／捷運不斷更新",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T13:48:36Z",
+        "url": "https://news.tvbs.com.tw/life/4002920",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -82,6 +226,56 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
+        }
+      },
+      {
+        "id": "652be7ea3317c6cbe314",
+        "source": "chinatimes",
+        "title": "陸上警報不發了！白海豚最新資訊出爐 強度又減弱還「瘦身一圈」",
+        "excerpt": "中度颱風白海豚目前持續緩慢向西行進，根據中央氣象署最新一報，白海豚不僅持續減弱，目前已跌至中度颱風後段班，就連暴風圈也縮小一圈，氣象署原先預估將針對北部地區發布陸上警報，但如今威脅已大幅減待，就連馬祖",
+        "publishedAt": "2026-08-08T13:47:15Z",
+        "url": "https://www.chinatimes.com/realtimenews/20260808003057-260405",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "14f840b5d26dee95f2fa",
+        "source": "chinatimes",
+        "title": "白海豚颱風來襲 苗栗各公所尚未通報停班停課",
+        "excerpt": "颱風白海豚逼近，苗栗縣政府8日晚間表示，因應山區如達停班課標準且有致災之虞者，因應非全縣天然災害（如：區域性強降雨有致災之虞等），已授權各鄉（鎮、市）長自行決定發布區域性停班停課，並於人事行政總處天然",
+        "publishedAt": "2026-08-08T13:46:45Z",
+        "url": "https://www.chinatimes.com/realtimenews/20260808003028-260421",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "f3d7cafd2b2d90085c59",
+        "source": "nownews",
+        "title": "當粿粿小王被告賠百萬！王子神隱8個月2度發聲：我已行過低谷不怕",
+        "excerpt": "藝人王子（邱勝翊）去年捲入粿粿（江瑋琳）外遇風波，遭女方原配提告並判賠100萬元，後來又因為涉嫌閃兵遭到檢方調查，演藝工作因此全面停擺，神隱八、九個月鮮少現身...",
+        "publishedAt": "2026-08-08T13:44:30Z",
+        "url": "https://www.nownews.com/news/6864265",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "停擺",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "涉嫌",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
         }
       },
       {
@@ -141,12 +335,76 @@
         }
       },
       {
-        "id": "760dd1eafb36a192fccd",
+        "id": "40a35c31e4efabd5355b",
+        "source": "setn",
+        "title": "颱風白海豚暴風圈縮小了！氣象署揭「降雨熱區」恐濕整天",
+        "excerpt": "氣象署表示，颱風白海豚的7級暴風半徑從280公里縮小至250公里，10級暴風半徑也從90公里縮小為80公里，未來強度上仍有持續減弱趨勢。",
+        "publishedAt": "2026-08-08T13:42:00Z",
+        "url": "https://www.setn.com/news/1886305",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "f88886cc35a45535ee4e",
+        "source": "chinatimes",
+        "title": "因應兆基案 內政部：已預為規劃轉銜機制",
+        "excerpt": "針對包租代管龍頭兆基屋管近期爆發經營爭議，內政部今（8）晚表示，政府將確保服務房東、房客權益不受影響，督促業者積極履約或後續契約轉讓，如涉有違反契約或法令規定，將依法追究。內政部指出，目前業者包租代管",
+        "publishedAt": "2026-08-08T13:39:48Z",
+        "url": "https://www.chinatimes.com/realtimenews/20260808003039-260407",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "68ec22554d14a0c71007",
+        "source": "chinatimes",
+        "title": "解陸經濟增長放緩半年答卷三關鍵詞 登高望遠 因地制宜 枝葉關情",
+        "excerpt": "大陸經濟增長放緩，面臨嚴峻下行與資產負債表衰退壓力。中共中央機關報《人民日報》客戶端8日刊文指出，2026年是「十五五」開局之年，上半年大陸經濟在壓力下保持增長，國內生產毛額（GDP）同比增長4.7％，經濟增量",
+        "publishedAt": "2026-08-08T13:39:33Z",
+        "url": "https://www.chinatimes.com/realtimenews/20260808002994-260409",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "衰退",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "2caaa2a80f9046faff91",
+        "source": "chinatimes",
+        "title": "父親節合體掃街！梁育慈、張博洋大啖屏東夜市美食",
+        "excerpt": "九合一選舉逼近，屏東市長選戰逐漸升溫，有意角逐屏東市長的選將梁育慈8日父親節持續深入基層，偕同屏東子弟、高市議員張博洋前往屏東夜市掃街，沿途與商家、市民問候，親和力十足；屏東縣議員李世斌、有意角逐屏縣",
+        "publishedAt": "2026-08-08T13:39:19Z",
+        "url": "https://www.chinatimes.com/realtimenews/20260808002901-260407",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "54d1eddd6f3c693d59da",
         "source": "ebc",
         "title": "永和豆漿創辦人林炳生病逝 享壽70歲",
         "excerpt": "",
         "publishedAt": "2026-08-08T13:39:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1fRGpWMWVkNjlxcG10bHFTVUtXZ1pQSVc3R3BCbWQ3NVdKdmw4VWlMVTJ1RF9ubXBSTXQ2b3FaMzF5a2VOTS1vN3JWQXRWQlRRMWd0TQ?oc=5",
+        "url": "https://news.ebc.net.tw/news/living/565382",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -160,6 +418,19 @@
         "excerpt": "中央災害應變中心於今（8）日下午8時召開第5次工作會報暨情資研判會議。副指揮官何晉滄提醒，農業部將對於新竹縣尖石鄉、苗栗縣泰安鄉及台中市和平區發布土石流及大規模崩塌黃色警戒。",
         "publishedAt": "2026-08-08T13:38:45Z",
         "url": "https://ctinews.com/news/items/4bnbjrJKnP",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "847175f3f3f32648ea92",
+        "source": "tvbs",
+        "title": "慈濟買疫苗遭詐「台積電、永齡沒事」！陳沂酸爆陳時中：當大家都失憶",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T13:37:07Z",
+        "url": "https://news.tvbs.com.tw/politics/4004291",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -209,6 +480,19 @@
         }
       },
       {
+        "id": "9ba2c549bf8f5d8cef25",
+        "source": "chinatimes",
+        "title": "林志玲父親節帶兒子農場做「Pizza蛋糕」 4歲兒正面近照顏值超高",
+        "excerpt": "「台灣第一名模」林志玲向來以溫柔優雅的形象深植人心，與日本男星AKIRA（黑澤良平）結婚7年，育有1子，婚後逐漸將生活重心放回家庭，鮮少公開孩子正面模樣。今（8）日適逢父親節，林志玲在臉書分享溫馨家庭日常，曬",
+        "publishedAt": "2026-08-08T13:35:43Z",
+        "url": "https://www.chinatimes.com/realtimenews/20260808003030-260404",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "49b6bc23adf4cb9d6ef8",
         "source": "ctwant",
         "title": "颱風白海豚肆虐！旅客遇返台班機取消 達人勸「這件事要先做」 | 生活 | CTWANT",
@@ -219,6 +503,38 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
+        }
+      },
+      {
+        "id": "a316bb20e0c95aa008e0",
+        "source": "ebc",
+        "title": "基隆港「滿潮」海水倒灌！業者無奈：沙包、閘門都沒用",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T13:35:00Z",
+        "url": "https://news.ebc.net.tw/news/living/565381",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "a0bd8373682a75fba1f1",
+        "source": "setn",
+        "title": "拋開阿湯哥光環　20歲舒莉愛丁堡藝穗節「一人飾四角」驚豔全場",
+        "excerpt": "好萊塢巨星湯姆克魯斯之女舒莉，今年20歲的她正式改姓為母親中間名「Noelle」，決心擺脫星二代光環，獨立闖蕩演藝圈。近日她以演員身份登上愛丁堡藝穗節舞台，參與莎翁名劇《仲夏夜之夢》改編作。舒莉在劇中挑戰一人分飾四角，憑藉精湛演技與唱跳實力贏得觀眾好評，甚至被讚譽為演出焦點。她不",
+        "publishedAt": "2026-08-08T13:35:00Z",
+        "url": "https://www.setn.com/news/1886304",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "好評",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
         }
       },
       {
@@ -266,6 +582,19 @@
         "excerpt": "【記者張家玲／台北報導】保養品牌SK-II今日在台北華山文創園區舉辦「鎖住青春PITERA體驗展」，特別邀請全球品牌大使、TWICE成員Mina（名井南）現身，這也是她首度單獨在台出席活動，透露昨天就已經先來晃了一圈，表示「台灣的食物特別想念珍珠奶茶和夜市小吃」。",
         "publishedAt": "2026-08-08T13:30:00Z",
         "url": "https://news.nextapple.com/entertainment/20260808/40855E0220E08DFECF0DF549501F15C0",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "7f4d99573fc9c65b159f",
+        "source": "nownews",
+        "title": "漢光42》備戰反封鎖！管碧玲赴左營 驗證海巡平戰轉換、艦艇整備",
+        "excerpt": "漢光42號實兵演習第四天，海洋委員會主任委員管碧玲今（8）日特別赴左營軍港了解「輕快兵力緊急出港」課目，因為接下來將進行「聯合反封鎖護航」實兵演練，從艦艇艤裝...",
+        "publishedAt": "2026-08-08T13:28:11Z",
+        "url": "https://www.nownews.com/news/6864272",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -344,6 +673,19 @@
         }
       },
       {
+        "id": "9722a6f2da26293a1357",
+        "source": "tvbs",
+        "title": "產後四個半月！焦凡凡親曝當媽「真實心聲」：幸福感一直倍增",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T13:24:31Z",
+        "url": "https://news.tvbs.com.tw/entertainment/music/4004283",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "0e187d156a226b7cfbfb",
         "source": "rti",
         "title": "[兩岸] 中國粉絲赴泰追星糾紛頻傳 中國駐泰使館籲文明守法",
@@ -363,12 +705,77 @@
         }
       },
       {
+        "id": "771dda29ed3caa7af3e8",
+        "source": "ebc",
+        "title": "全台最大親子樂園開幕 首日引爆3萬人潮、輕軌凱旋武昌站單日進出4千人次",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T13:23:00Z",
+        "url": "https://news.ebc.net.tw/news/living/565378",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "70c3e6785cc3dc0498af",
         "source": "ltn",
         "title": "中部以北進入白海豚「風雨搖滾區」 明晚中南部注意間歇雨",
         "excerpt": "受白海豚颱風影響，今天晚間起到明天（9日）是風雨最明顯的時候，特別是中部、北部山區強雨劇烈，要到明晚才會減緩，但晚間中南部也有間歇雨，下週一（10日）上午颱風才會遠離。 ...…",
         "publishedAt": "2026-08-08T13:22:46Z",
         "url": "https://news.ltn.com.tw/news/life/breakingnews/5533311",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "77b6fd2075e53163124a",
+        "source": "tvbs",
+        "title": "快訊／永和豆漿「豆哥」林炳生病逝！享壽70歲　集團悲痛證實",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T13:21:43Z",
+        "url": "https://news.tvbs.com.tw/local/4004284",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "9d7a11062f1ec7f1d084",
+        "source": "setn",
+        "title": "快訊／永和豆漿創始人在台北離世　享壽70歲",
+        "excerpt": "永和豆漿創始人林炳生傳出不幸消息，永和資本集團今（8）日發布訃告證實，林炳生因病醫治無效，已於8月7日在台北逝世，享壽70歲。業界尊稱其為「豆哥」，感念他深耕實業數十載，以卓越戰略格局帶領集團佈局大健康產業與海外業務。集團表示，林炳生為永和資本奠定深厚基石，是核心領航者。治喪期間",
+        "publishedAt": "2026-08-08T13:21:00Z",
+        "url": "https://www.setn.com/news/1886301",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "c2380a3268d86fcdc8b0",
+        "source": "ebc",
+        "title": "台指期夜盤狂飆736點 專家揭反彈契機上看48000點",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T13:20:00Z",
+        "url": "https://news.ebc.net.tw/news/business/565373",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "c5ce77622df8ad8cff09",
+        "source": "setn",
+        "title": "快訊／新竹縣府急宣布！五峰尖石明日8校停課　但正常上班",
+        "excerpt": "新竹縣今晚宣布尖石、五峰8所國中小，明天受颱風影響停課1天。新竹縣府表示，根據中央氣象署最新預測，明天新竹縣山區雨量達停班停課標準。新竹縣尖石鄉後山的新光國小、石磊國小、秀巒國小、玉峰國小，以及五峰鄉五峰國中、五峰國小、桃山國小、花園國小（含竹林分校），共8校明天停課、但正常上班",
+        "publishedAt": "2026-08-08T13:20:00Z",
+        "url": "https://www.setn.com/news/1886303",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -459,12 +866,44 @@
         }
       },
       {
-        "id": "ed4c7b89275ff9d4c9c0",
+        "id": "0ae028eaaf340558fbd1",
         "source": "ttv",
         "title": "白海豚颱風強度稍減、暴風圈縮小 今晚至明天白天影響最劇烈",
-        "excerpt": "",
+        "excerpt": "白海豚颱風暴風圈略為縮小，持續向西北西移動，氣象署晚間說明，今晚至明天白天是風雨最明顯時段，北臺灣及中部山區降雨增強，北部山區可能出現局部豪雨以上降雨。颱風西移後，風場轉西南風，中南部尤其山區雨勢增大，北部雨勢則逐漸減弱。氣象署說明，白海豚仍是中度颱風，近中心最大風速每秒35公尺",
         "publishedAt": "2026-08-08T13:14:12Z",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9CdXpyRTA5WU5tNTFid1VxdjZXbklLS2k1RFFlTDNsMTFqY29PZnJWWGdpM0FrQVFMODFydHRwVzBtYWdPTERjZE1yT3FpZkxScHV3UlhNTQ?oc=5",
+        "url": "https://news.ttv.com.tw//news/11508080002600W",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "豪雨",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "f64de512366f025b11d0",
+        "source": "nownews",
+        "title": "快訊／「永和豆漿創始人」林炳生離世！享壽70歲 集團發訃告哀悼",
+        "excerpt": "永和資本集團董事局今（8）日發布訃告，宣布董事局主席、永和豆漿創始人林炳生因食道癌於昨（7）日在台北辭世，享年70歲。集團表示，林炳生是永和資本的奠基者與核心領...",
+        "publishedAt": "2026-08-08T13:13:00Z",
+        "url": "https://www.nownews.com/news/6864269",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "23897f2ba9022dec9e11",
+        "source": "setn",
+        "title": "直擊／HIGHLIGHT來了！壓軸掀回憶殺　尹斗俊擔心後輩太帥：壓力好大",
+        "excerpt": "由永豐銀行、永豐金證券冠名贊助的「K-WAVE INFINITY」韓流演唱會，8日晚間於高雄巨蛋熱力開唱，集結NEWBEAT、FLARE U、CRAVITY、Apink及HIGHLIGHT五組人氣韓星，從新生代團體到韓流經典代表接力登台，滿場粉絲高舉手燈熱情應援，尖叫與歡呼聲一路",
+        "publishedAt": "2026-08-08T13:12:00Z",
+        "url": "https://www.setn.com/news/1886283",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -523,6 +962,38 @@
         "excerpt": "蘋果中國官網《Mac 使用手冊》證實，Apple Intelligence 中國版已整合阿里巴巴「千問」模型，Siri、寫作工具等功能均可直接調用，顯示蘋果 AI 策略正轉向多模型合作。",
         "publishedAt": "2026-08-08T13:10:05Z",
         "url": "https://news.cnyes.com/news/id/6566558",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "合作",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "1d7b91588b5fb96154f9",
+        "source": "setn",
+        "title": "狂冒百顆紅疹非毛囊炎！醫「診斷出罕見疾病」：好發這族群",
+        "excerpt": "身上突然冒出數百顆紅疹，千萬別誤判為水痘或毛囊炎！皮膚科醫師黃星瑋分享近期案例，一名患者胸腹及四肢佈滿丘疹，經切片診斷為罕見的「急性痘瘡樣苔癬樣糠疹（PLEVA）」。此病常見於年輕族群，病灶會同時呈現紅疹、水疱與結痂，雖非傳染病，但與免疫異常有關，需透過類固醇、抗生素或光照治療。",
+        "publishedAt": "2026-08-08T13:10:00Z",
+        "url": "https://www.setn.com/news/1886300",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "ab5e5ec86c8fdba71760",
+        "source": "nownews",
+        "title": "結合科技與教育！2026 MotionJet x 清大國際高中籃球邀請賽落幕",
+        "excerpt": "由中華民國愛自造者學習協會、清華大學運動科技中心與新澄生活行銷有限公司攜手合作的「2026 MotionJet x 清大運動科技中心國際高中籃球邀請賽」於 7 月 29 日圓滿落幕...",
+        "publishedAt": "2026-08-08T13:09:32Z",
+        "url": "https://www.nownews.com/news/6864270",
         "sentiment": {
           "label": "positive",
           "score": 1.0,
@@ -640,6 +1111,19 @@
         }
       },
       {
+        "id": "7f4a8a4b40774afe672b",
+        "source": "nownews",
+        "title": "漢光42》連打8小時！金防部首度用「投彈式無人機」火力圍剿敵軍",
+        "excerpt": "漢光42號實兵演練，陸軍金門防衛指揮部罕見連續8小時執行實彈操演，以因應戰場實戰化。今（8）日清晨進行「要域火殲」實彈射擊任務，首次加入「投彈式無人機」演練，並...",
+        "publishedAt": "2026-08-08T13:06:27Z",
+        "url": "https://www.nownews.com/news/6864267",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "47444f1ed13901638114",
         "source": "newtalk",
         "title": "(影)PO影片打臉！蘇巧慧競辦：國民黨議員候選人意圖挑撥基層感情",
@@ -672,12 +1156,12 @@
         }
       },
       {
-        "id": "6094b8a19c34ea567787",
+        "id": "40e607e5cff69f06a61d",
         "source": "ebc",
         "title": "獨家／女拒付4百洗頭費！ 髮廊老闆怒：洗「霸王頭」",
         "excerpt": "",
         "publishedAt": "2026-08-08T13:02:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE0yVGVKd2xJV3lIV1RDMFJTaUpldjFGemlHSWFFUDduenI5SHdnenBYVEZNSFBoenR4NXk5bnhDQnBEcTNUckVHWEtoVHZuSEZ3T2lzQ3N3?oc=5",
+        "url": "https://news.ebc.net.tw/news/society/565355",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -704,6 +1188,19 @@
         "excerpt": "",
         "publishedAt": "2026-08-08T13:00:04Z",
         "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQU3pBN0NEdENVRjFuNmFLd3JObVdmVW4xUUhZYnVIOHB0N3FVVEZzaDJ1dTMwMDBLMXhfZzMwLWc2RGVWV3YyWUFYY2t1V01wdmFoeWJFX3VKdmhNSHprT0FZb1ZpTlFDeHUxT2RZYmdvNDVpTFBMY0tmYXNhT1VrTm1OTdIBYkFVX3lxTE9qSkV3OUFLa1o4bzFFVXJUVm44WWxmQTlvUC0wNk02ZmJVTlRoT1h0OVRuNkpzaUY1ZU1Ec0tfSTVHUEZtakVoS3hQd19CdHI1blJVeXdvUjdrMXVjcHFyUzFB?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "ad4dd2c948f31f86231c",
+        "source": "tvbs",
+        "title": "飛機餐發「宿便殺手」！航班上僅2廁所　乘客痛批：差點丟大臉",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T13:00:02Z",
+        "url": "https://news.tvbs.com.tw/china/4004282",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -753,6 +1250,19 @@
               "weight": 1
             }
           ]
+        }
+      },
+      {
+        "id": "150f9dc29827a8da9e41",
+        "source": "ebc",
+        "title": "才準備出家！昔泰國男團成員溺斃 背包藏20公斤重物",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:59:00Z",
+        "url": "https://news.ebc.net.tw/news/world/565354",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -866,6 +1376,25 @@
         }
       },
       {
+        "id": "b8957c01589daf24649a",
+        "source": "tvbs",
+        "title": "BLACKPINK慶10週年！Jisoo「罕見哭了」　Lisa發文力挺成員",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:53:29Z",
+        "url": "https://news.tvbs.com.tw/entertainment/jk-pop/4004280",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "力挺",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
         "id": "39440ba0ce8b0abd3224",
         "source": "ltn",
         "title": "海水倒灌！基隆愛四路夜市周邊淹水 深及小腿肚",
@@ -898,6 +1427,25 @@
         }
       },
       {
+        "id": "3abd4e2cdc2cf04e4e9f",
+        "source": "ebc",
+        "title": "澎湖13孩沒人顧！擠10坪屋「小孩顧小孩」 母離家帶走補助金",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:52:00Z",
+        "url": "https://news.ebc.net.tw/news/society/565351",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "補助",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
         "id": "d69b83626e1c1b349f67",
         "source": "mirrormedia",
         "title": "AKIRA台北唱到一半突收兒子告白「爸爸I LOVE YOU」 驚喜林志玲同步曝光父親節「披薩蛋糕」",
@@ -927,6 +1475,19 @@
               "weight": 2
             }
           ]
+        }
+      },
+      {
+        "id": "ad2f3dab784436c46323",
+        "source": "tvbs",
+        "title": "颱風動態》白海豚颱風「今明距台最近」！最新路徑、影響範圍一次看",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:49:41Z",
+        "url": "https://news.tvbs.com.tw/life/4002686",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -982,12 +1543,12 @@
         }
       },
       {
-        "id": "bfb1e62ffb16a0e83cc9",
+        "id": "b7dd7e1b15d3a2207763",
         "source": "ttv",
         "title": "山區雨量達標！ 新竹縣明日8校停止上課、正常上班",
-        "excerpt": "",
+        "excerpt": "根據中央氣象署最新預測，明天新竹縣山區雨量達停班停課標準，新竹縣政府宣布，新竹縣尖石鄉後山的新光國小、石磊國小、秀巒國小、玉峰國小，以及五峰鄉五峰國中、五峰國小、桃山國小、花園國小（含竹林分校），共8校明8/9停課、正常上班。責任編輯／施佳宜",
         "publishedAt": "2026-08-08T12:46:25Z",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9mYnE2VjFWLXVaZ0dtZ0NJb3ZjRS0wVWpISE9wdFJHVEQyN05PYkNLcUxVdTNYT05aUXIyMGJYQVBnR1dhVTZYRXJqRzhDai1hX05UbUkyOA?oc=5",
+        "url": "https://news.ttv.com.tw//news/11508080002500W",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1119,6 +1680,19 @@
               "weight": 1
             }
           ]
+        }
+      },
+      {
+        "id": "a29907abcc07c0e32bcd",
+        "source": "ebc",
+        "title": "快訊／白海豚逼近！新竹縣尖石、五峰「8校停課」",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:44:00Z",
+        "url": "https://news.ebc.net.tw/news/living/565370",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -1366,6 +1940,19 @@
         }
       },
       {
+        "id": "ac76923b512ab34c961d",
+        "source": "nownews",
+        "title": "台玻總裁 關鍵字",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:33:56Z",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFAxclh5djVJcGxLX0RJVGNsZnIyZ0lJa2ZYSzNrbVdJNTBRVERIZlJUX1FCRE9tSUNxMnhJT19HZjJwaUpQUHZNT0JQR2tLTXdJakNkV1VNa1Y0dWxyS3NYTExrTHhubVBUYUtZdENTczAxak84?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "12cf83d5775447a5c53a",
         "source": "nexttv",
         "title": "未戴安全帽被攔！ 朋友掛保證「沒喝酒」酒測竟破功",
@@ -1411,12 +1998,12 @@
         }
       },
       {
-        "id": "79e3c610538c83898f62",
+        "id": "275b51c9d5e628b50f35",
         "source": "ttv",
         "title": "今彩539頭獎800萬！ 台彩8/8獎號一次看",
-        "excerpt": "",
+        "excerpt": "台彩今（8）晚開出今彩539、39樂合彩、三星彩、四星彩的中獎獎號，獎號依序為：．今彩539：05、11、24、31、32。．39樂合彩：05、11、24、31、32。．3星彩：219。．4星彩：9624。確切中獎號碼及派彩結果以台彩官網公布為主。責任編輯／施佳宜",
         "publishedAt": "2026-08-08T12:30:27Z",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFA4N1JQLU5LZko2ZTFWSlZseUhjQUV2UW9KV2cxUDE4RkJ0OUpiS195VHFyclU4X2tEclo5TkVmTVVMa3ZaZnl4TlNRZHFLSC1LYVc3WHNsZw?oc=5",
+        "url": "https://news.ttv.com.tw//news/11508080002400W",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1507,6 +2094,19 @@
         }
       },
       {
+        "id": "16117db0c39cfe508a34",
+        "source": "tvbs",
+        "title": "UVERworld來台點外賣「收到後大傻眼」！　得知「伍佰1事」當場笑翻",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:28:24Z",
+        "url": "https://news.tvbs.com.tw/entertainment/jk-pop/4004279",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "d160c478f16db052bc3e",
         "source": "ltn",
         "title": "13萬變3萬！民團批社宅政見「跳票再腰斬」：還要地方一起背鍋",
@@ -1528,6 +2128,19 @@
               "weight": 1
             }
           ]
+        }
+      },
+      {
+        "id": "e542ab289c5066d3a80b",
+        "source": "tvbs",
+        "title": "白海豚颱風假宣布了！連江縣9日停班停課　新竹縣8校停課",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:27:37Z",
+        "url": "https://news.tvbs.com.tw/life/4004278",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -1580,6 +2193,19 @@
         "excerpt": "【記者陳薇安／台北報導】國民姐夫AKIRA加入「放浪兄弟」（EXILE）20週年，首次展開個人巡演「URBAN SAVAGE」，今明2天在Clapper Studio登場，也是巡演最終站。他戴著墨鏡，身穿黑色西裝帥氣登場，以節奏強烈的《SAVAGE》揭開序幕，中文大喊「大家好」，…",
         "publishedAt": "2026-08-08T12:25:26Z",
         "url": "https://news.nextapple.com/entertainment/20260808/949A9C0F1C66D238E98E18CA56B19E83",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "f52b7cb95e914f33c9f6",
+        "source": "tvbs",
+        "title": "立秋犯煞注意！「4生肖」健康易受衝擊　錢財恐暗中流失",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:25:16Z",
+        "url": "https://news.tvbs.com.tw/life/4004277",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1722,6 +2348,19 @@
               "weight": 2
             }
           ]
+        }
+      },
+      {
+        "id": "13237acbf03f1cbb3642",
+        "source": "tvbs",
+        "title": "AKIRA台灣過父親節！4歲兒萌音首曝光甜喊：爸爸I Love You　模仿林志玲嬌喊「時間好快」",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:20:25Z",
+        "url": "https://news.tvbs.com.tw/entertainment/jk-pop/4004276",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -1910,12 +2549,12 @@
         }
       },
       {
-        "id": "e89495409a88f40a136c",
+        "id": "3731021182ca2bc40733",
         "source": "ttv",
         "title": "風力預測達標！ 連江縣明日8/9停止上班上課",
-        "excerpt": "",
+        "excerpt": "白海豚颱風週末影響台灣最劇烈，依據中央氣象局資料評估，馬祖地區明（9）日雨量雖未及標準，但風速預測平均風力5-6級轉6-7級，陣風可達8-9級轉9-10級。連江縣政府稍早宣布，馬祖地區明日停止上班上課。責任編輯／施佳宜",
         "publishedAt": "2026-08-08T12:09:24Z",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBkVVV5dGNYWVpzbUwxRk5TTV85am14a0VHQ29wSWtPamZCSzl6RHlFT21qQlpvZ01Zd1FMem1uTUpRY1lFbXdSSnFoMG10dDlYRm1nRUgzWQ?oc=5",
+        "url": "https://news.ttv.com.tw//news/11508080002300W",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1923,22 +2562,16 @@
         }
       },
       {
-        "id": "3e69e80c5fbe8cc4b7fe",
-        "source": "ltn",
-        "title": "漢光42》聯手護台！海巡八里艦、海陸突擊艇「同框」畫面曝",
-        "excerpt": "面對中共灰色地帶襲擾，海軍、海巡聯合作戰已是大勢所趨，但長年以來僅是檯面下進行，「只能做、不能說」。然而，國軍今年漢光42號演習不僅由海巡八里艦率光華6號飛彈快艇緊急出港；在海...…",
-        "publishedAt": "2026-08-08T12:08:49Z",
-        "url": "https://news.ltn.com.tw/news/def/breakingnews/5533269",
+        "id": "58f38de1ab437e873437",
+        "source": "tvbs",
+        "title": "淡水驚見龍捲風！氣象署揭成因證實：的確觀測到鉤狀母雲",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T12:08:39Z",
+        "url": "https://news.tvbs.com.tw/life/4004275",
         "sentiment": {
-          "label": "positive",
-          "score": 1.0,
-          "matched": [
-            {
-              "term": "合作",
-              "polarity": "positive",
-              "weight": 1
-            }
-          ]
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -1971,25 +2604,6 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
-        }
-      },
-      {
-        "id": "dbaeb71f31559bf992d3",
-        "source": "ltn",
-        "title": "中國下1場重大競賽阻礙者竟是「這動物」比輝達晶片還難搞",
-        "excerpt": "〔財經頻道／綜合報導〕外媒報導指出，中國下一場重大競賽的阻礙者竟然是個意想不到的對手：猴子。過去八年，中國實驗用靈長類動物的價格飆升超過1000%，一隻食蟹猴的價格如今高達約26294美元（台幣...…",
-        "publishedAt": "2026-08-08T12:06:42Z",
-        "url": "https://ec.ltn.com.tw/article/breakingnews/5533274",
-        "sentiment": {
-          "label": "positive",
-          "score": 1.0,
-          "matched": [
-            {
-              "term": "飆升",
-              "polarity": "positive",
-              "weight": 2
-            }
-          ]
         }
       },
       {
@@ -2337,19 +2951,6 @@
         }
       },
       {
-        "id": "81b2374e28c6c760c3f2",
-        "source": "tvbs",
-        "title": "白海豚颱風交通異動》飛機／航運／高鐵／台鐵／捷運不斷更新",
-        "excerpt": "",
-        "publishedAt": "2026-08-08T11:57:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBQbmdUcndUcEVWZ1JtNjBBN3dvOHB0d1EwUFJRN1c2Wk1tZXZJa0dBQUE2VFZLZ1RNMUxCZ3dFR1lMZF95SmYyNkVMS2VCdw?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "4707126e33debada5c17",
         "source": "rti",
         "title": "[國際] 搶搭令和8年8月8日熱潮 日本新人排隊登記結婚",
@@ -2471,6 +3072,19 @@
         }
       },
       {
+        "id": "bcb45c79c29cd713f0cd",
+        "source": "tvbs",
+        "title": "創新低！115大學分發入學「3.3萬人登記」　8/17上午放榜",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T11:53:01Z",
+        "url": "https://news.tvbs.com.tw/life/4004274",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "b579f0515ddb5bb38331",
         "source": "pts",
         "title": "中海事部門對台海船舶交管 陸委會批中方無權管轄",
@@ -2487,6 +3101,19 @@
               "weight": 1
             }
           ]
+        }
+      },
+      {
+        "id": "37c6b131c68d990fb3fe",
+        "source": "tvbs",
+        "title": "彰化「民進黨老將」蔡裕昌肺腺癌病逝　享壽71歲",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T11:52:14Z",
+        "url": "https://news.tvbs.com.tw/politics/4004273",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -2926,6 +3553,30 @@
         }
       },
       {
+        "id": "34cb9d3ee407bcee1f81",
+        "source": "ttv",
+        "title": "南韓足壇驚人醜聞！ 足協挪公款性招待外籍裁判",
+        "excerpt": "南韓足球協會爆出重大醜聞！繼前國家隊主帥洪明甫的任命爭議後，南韓足協被爆出曾於2011年至2012年世界盃及奧運資格賽期間，涉嫌動用公款向多名外籍裁判提供性招待，消費金額達數百萬韓元，引發韓國民眾怒火。根據韓國官方稽查報告，南韓足協在2011年至2012年的世界盃、奧運資格賽等7",
+        "publishedAt": "2026-08-08T11:36:10Z",
+        "url": "https://news.ttv.com.tw//news/11508080002200W",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "涉嫌",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
         "id": "2e6842aaf628592eca69",
         "source": "cti",
         "title": "游淑慧質疑鄭朝方選舉金流 競辦：不回應",
@@ -2942,6 +3593,19 @@
               "weight": 1
             }
           ]
+        }
+      },
+      {
+        "id": "7fe15f2cdf565d6538bf",
+        "source": "tvbs",
+        "title": "日職／最快球速156km！孫易磊後援2局無失分　「17球下班」賞2K",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T11:33:21Z",
+        "url": "https://news.tvbs.com.tw/sports/baseball/4004270",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -3119,6 +3783,19 @@
               "weight": 2
             }
           ]
+        }
+      },
+      {
+        "id": "44419af2a68c7d026238",
+        "source": "tvbs",
+        "title": "喉嚨痛如刀割！一票人狂咳3週「新冠、流感全陰」　醫曝：這次病毒很毒",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T11:21:11Z",
+        "url": "https://news.tvbs.com.tw/life/4004269",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -3644,19 +4321,6 @@
               "weight": 1
             }
           ]
-        }
-      },
-      {
-        "id": "1092ed5e83783ff1f8b2",
-        "source": "mirrormedia",
-        "title": "李燕父親節心酸告白！冷戰1年、疏離10多年 早一點原諒爸爸就沒遺憾",
-        "excerpt": "",
-        "publishedAt": "2026-08-08T10:53:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBQVnBZTUw1SGIwdmc1alpFMFdqN1VnTUloSUhXNUdScEVRb3k5UmFiY2dwVm1vc3BRN0owYVNzMTVDcUZGb3FLOXNPdUlONUVrZjV0eVpyemZYTEd1OFZtMkNaUdIBaEFVX3lxTE5Xa0tINjB2X3UxQlBla01VLWg4MkRwU01VWjZvUnBJQW1FaGQ4ZzRuMmJhMTJVNHlTckZvUWJTdm1tMVBPYjNzZVo5X1Y5WXk0dFA1TDZKa296MXN5WEFyT2J4S0NWZlRo?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
         }
       },
       {
@@ -4201,6 +4865,19 @@
         }
       },
       {
+        "id": "59d040db5d0ff50d66ff",
+        "source": "ttv",
+        "title": "白海豚颱風恐吹7-8級強風 淡江大橋將於今晚21時封閉人行道及機車道",
+        "excerpt": "白海豚颱風本週末影響台灣最劇烈，氣象署預測明（9）日凌晨西北部沿岸將會出現7-8級強風。公路局公告，為維用路安全，將於今（8）日晚間21時預警性封閉淡江大橋人行自行車道及機車道，並實施主線降速（時速30公里）行駛。公路局說明，淡江大橋設計可承受16級風，即使強颱侵襲亦安全無虞，考",
+        "publishedAt": "2026-08-08T10:29:32Z",
+        "url": "https://news.ttv.com.tw//news/11508080002100W",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "d8d15ffeefa95865e691",
         "source": "nownews",
         "title": "大學考試分發委員會 關鍵字",
@@ -4602,6 +5279,19 @@
         }
       },
       {
+        "id": "685e7b16bbbceb4e04b5",
+        "source": "chinatimes",
+        "title": "Swarmer - 旺得富理財網",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T10:08:18Z",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1pMHEyaE9panNTN09nRzFGTmE5dzM1dlJrR1lnbXBQUTVDemNLQUpjbjBPS2lRR1QwZ1ZhVGN1MFpBN1p2cU9jUWh3RGJrOHVxWkl4eEltUHh2dw?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "bd253d10f2449040111a",
         "source": "tvbs",
         "title": "以為教召演戲？他當眾飆粗口辱罵士官長 觸軍法下場曝",
@@ -4679,12 +5369,12 @@
         }
       },
       {
-        "id": "84654a9c3b87cfcfa19f",
+        "id": "9a98427210de39b6a2bb",
         "source": "ttv",
-        "title": "白海豚颱風「海豚跳」路徑南北擺盪 氣象專家：與雙眼牆結構有關",
-        "excerpt": "",
+        "title": "白海豚颱風「海豚跳」路徑南北擺盪　氣象專家：與雙眼牆結構有關",
+        "excerpt": "白海豚颱風逐漸逼近，今（8）日晚間至明（9）日白天將是風雨最明顯的時段。受到颱風外圍環流影響，北海岸浪高可能達3至6公尺，北部午後開始也將出現間歇性降雨。中央氣象署預估，8月7日至10日，新北市、桃園市、新竹縣及苗栗縣山區最大累積雨量可能達300至500毫米以上，且雨勢可能高度集",
         "publishedAt": "2026-08-08T10:05:26Z",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE92YzJGRGNiYmVXZGlIT3RuLTJTZHRVM3l0bmhSVzBkOW1jT0IxQXFLSUxvaktqdElsZmpVYU5YSVMtaUxSMmJCbEJpbjliTERIZVIwYXhHdw?oc=5",
+        "url": "https://news.ttv.com.tw//news/11508080025100L",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -5579,6 +6269,19 @@
         }
       },
       {
+        "id": "725a41e5dc0bfc719dee",
+        "source": "ettoday",
+        "title": "ETtoday 開箱雲：就愛開箱愛分享",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T09:30:07Z",
+        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBjeWpVRXVFVnFfMERRdWstRmg3UlBmTkxRYUliVlp1MXlfQzNBVVlUOU54TFRrNFN3TjVwZ2JHZU9hQ2Y3VGltc3plUnVvTWdxQmxvNFZ3?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "84305dabf0d00b46061f",
         "source": "nexttv",
         "title": "在野黨推「未來帳戶」三讀 行政院：編預算屬憲政職權",
@@ -5942,12 +6645,12 @@
         }
       },
       {
-        "id": "475ecebe9c5d05654794",
+        "id": "cb37f8c435cdfcbf4ed0",
         "source": "ttv",
-        "title": "致癌油燒1個月...石崇良、姜至剛傳請辭？ 行政院澄清：並未討論",
-        "excerpt": "",
+        "title": "致癌油燒1個月...石崇良、姜至剛傳請辭？  行政院澄清：並未討論",
+        "excerpt": "中聯致癌油延燒超過一個月，傳出衛福部長石崇良、食藥署長姜至剛已經向行政院提出請辭，石崇良更說，20%的下架標準是根據專家會議，但全面下架這個政治決定「由他來負責」。針對請辭傳言，行政院發言人李慧芝回應，目前沒有相關討論。全面下架是「政治決定」 石崇良承諾會負責強調20%的下架標準",
         "publishedAt": "2026-08-08T09:20:13Z",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE4tS1hiUjhqNGpFUkg0bVFtZlRwdnRRdlZ1dzJ6aEk0djJ6dkhtWVpfc1ZvZHRUNXNZaXNBdm1aWmpQaXFGTktnUnNhcUpoQnRFXzB2V3dmMA?oc=5",
+        "url": "https://news.ttv.com.tw//news/11508080024400N",
         "sentiment": {
           "label": "negative",
           "score": -1.0,
@@ -6617,19 +7320,6 @@
               "weight": 1
             }
           ]
-        }
-      },
-      {
-        "id": "d5232ee1a4b2261b61d1",
-        "source": "cts",
-        "title": "基隆男兩度臉書留言嗆殺警 判應執行徒刑8月",
-        "excerpt": "",
-        "publishedAt": "2026-08-08T08:52:06Z",
-        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBkV2NTYkw2YWVOa08xQXlRYUg0MmJja2VFaUNYcVNMLW52cEtkYkIyaFg3aUNzVEhEbElPSFM1Tmk5RmxpQ3RWUjdyWmtWVS1YRHlFM0Zycm84aUFLTUlSeC1tcmx2S2lsMnd3MVdaYkI?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
         }
       },
       {
@@ -9667,19 +10357,6 @@
         }
       },
       {
-        "id": "d9a81cb4323077b9104a",
-        "source": "udn",
-        "title": "8/8 WISH保養 - ANSON的人車誌 - udn部落格",
-        "excerpt": "",
-        "publishedAt": "2026-08-08T06:37:08Z",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE82RU00STNWWFBzUmVnVkNrN2hGNTAwLTlBVWJOSzVkNTFtdURYbmtBbDBXdUIzZ1VlcGk3NzZ0enJsQ3BIN1FZYmpDcU02RmZ5RE5KdmpZQQ?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "51eed97c233e3167cae4",
         "source": "cts",
         "title": "京都醫大爆嚴重疏失！ 醫師誤切病患正常腦組織- 國際",
@@ -12302,6 +12979,19 @@
         }
       },
       {
+        "id": "878609adf30ab6f261cd",
+        "source": "mirrormedia",
+        "title": "日本捐台灣AZ疫苗…「專門為台灣生產」內幕曝！他嘆：藍白說日本不要的",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T04:30:20Z",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOaF9tZk1waURDYW40QjhUdTFQbzBqN1o3dUJ2cjloZzFJM0J2YWRqN1dOYnZVSlVNZ1RZWlNTZm14YktSaTJWVHlWYk9xaHBkV3FjYUJ5aDhoeEEzZkVYWFZGbUUzd3V1ekV4Wk5NX082OGFISmI3M29DbWFRREtMMVVjOWlZd1dCVnpFaHBB0gFoQVVfeXFMTi1GSDVXaFdJSlFzRzJveXBUNjhHaUNDVWpDSi1wTXlkNWFWT1FQRExiaTNoYm9ES0JGalgtempwN2JSVWliTnVSMGJuN0g4VUxUMWR5SWFYTTVKRnh2WnhwNi1TVk5tNmM?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "bfbde3f8be835e2f7c22",
         "source": "anue",
         "title": "那指4日狂增3.5兆美元市值 Palantir飆近40%領軍科技股 財報成美股本週最大行情推手",
@@ -12512,19 +13202,6 @@
         }
       },
       {
-        "id": "cb12eeb5837817da8a38",
-        "source": "chinatimes",
-        "title": "銷售規則 - 觸mii",
-        "excerpt": "",
-        "publishedAt": "2026-08-08T04:23:52Z",
-        "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1YXzlUeC03MEZ4Qmxva05iSjd6MzdTS2lJVnNIT2hBZGJSMVFaa2oxVFk4a0pRUmxKRFF5bDRIajJlQlRLVWRrWjBlMmhaeW1ZbUM0Y1Fic1B5RmVWTF9WaWhTZ21mTmJKSVJ2MHc1MEZYMDMxRmdtQlBXd1duWW8?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "57bb4e333728820a7c77",
         "source": "chinatimes",
         "title": "隱藏情緒 - 觸mii",
@@ -12570,6 +13247,19 @@
         "excerpt": "",
         "publishedAt": "2026-08-08T04:23:08Z",
         "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5KaTVNM1ZvcTM5T1EzLWpQV3J5eHd4T3NZUTBOMmc2UW9tc1VmTXMtVGRnT3hEYzh2YjhnQmxwSFNaTXZITzZmN0tlRXdKVFNVTW43ZDNwWFR0elFrNXVmU1o3YmFiUXdyeFE?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "6716fbb596376270b699",
+        "source": "cts",
+        "title": "台南歸仁釋迦節登場黃偉哲邀全民體驗- 地方",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T04:21:33Z",
+        "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBnS04tT3BURXhDRHVjTlNJVzFfTXlOMWJDeHVSRlFiTFpTcW5WdVhvVUt5NU8zN3dhOTZsZEljR0Vkcm9uRFpPbXpoTzRtSm9RYk54VTUtdVlNNzZlZHI5YlZWM1VlQTQ4dVgtVmdR?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -12843,19 +13533,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-08T04:09:00Z",
         "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5nVnF5NnJ1S05hMkkxV3BlY3I3cjJkZHE1QWZOWGdIUm05Q0N6MHVGdFN4NU16LWZfaS13aXJtUUFKVDhvRVZ2TEQxLVJNWkM3U3g5a1BQRU1kb3oyZ1HSAUtBVV95cUxQZjUydEU3Tk5qTUVDaFpzRnpNVXl6dGd5Wnh2czNhZ0FUSnBFamhzM0JiaUpiWktpMFYyQWRHRnlEQkdDcHgwd2JNOVU?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "ae2046ac5b27b7637744",
-        "source": "ettoday",
-        "title": "現代人不愛開口！ 研究：說話量「比20年前少3成」",
-        "excerpt": "",
-        "publishedAt": "2026-08-08T04:09:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE54X2hPeUlvNl93Q2dVckpmdy1nVE50TTNnVzZnUmtudUYyM3RSQ2NoYmliUFFBaDBTWERWVlFRNk1NZkJvckwyRXdJQ0J6dTJVTWQxWWlOTEtDUkpIWnfSAUtBVV95cUxQejhWUnl4dGZHalRDY2xOQUFqaWt5SVVPZm9zbXQzMWdZaWJGaVJCUVMwODVzdHc3MHVNNTQ5aml0emR2OUt4b2VuamM?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -13533,7 +14210,7 @@
       {
         "id": "af1e54bc2a4e9f83f2e6",
         "source": "udn",
-        "title": "烘衣機| 搜尋標籤 - tech.udn.com",
+        "title": "烘衣機| 搜尋標籤 - udn科技玩家",
         "excerpt": "",
         "publishedAt": "2026-08-08T03:53:51Z",
         "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBOM3FPTUlaWWZtblBBMmdYT1czWW1ueXQxaVdEbk5BY0YwOG5YYVI2cVhKVHdPVWZ5NXRKSWc5NTdJN3R3LVdzM2JiNmJ0RjRDZ043ejNZOTh1Q1lfOGRPMl95WXJ5YU50?oc=5",
@@ -13814,12 +14491,12 @@
         }
       },
       {
-        "id": "1f2b405994b539c04c41",
+        "id": "f84a43c51582c433fb5f",
         "source": "moneydj",
         "title": "幃翔 115年7月營收6531萬、年增55.74%",
         "excerpt": "",
         "publishedAt": "2026-08-08T03:44:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOWU9kUnVVZW83elpYOWFjUVpheFh3WGtUX2puV1ZzT1ZyWHpCZ3lwdkNPSlAyLUFON08zZFM4LUlIM0pvVFBFMTQ3cFItS1RCOEZVcWdUMnRoeHlsaWtQeEtGa2oteDdXcldUN0pyUmlNR1lITzZIM3dLalh6cTZReGlzM3BNQ0E4ZG00ZG96RFRKdw?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE0yb1hDNF9TVGdlS3NON0VwTzNjdTFSVHpNbkxuRzl4NlFPcklQek9iVTNfYVJ3Q2xvZFRzRXVjaHNxd1hTZXVqT2xSVkdpeDduY3Bob1cwZEFkd2pneXdDd3FUTVpuSUIzXzZPS3pNbmRYZWExZ0tQWg?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -14023,19 +14700,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-08T03:31:27Z",
         "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5QTXU2eTFJbGloQ0pXOXE0YjNQckhmdmJaeVE5SVQweDlackdraWQySi1SMmJia3lSVVl1UW1Fc1dTTDliT05YQ09fcFVid3pta1ZReTlkQVVTNXRYRmE5RDNzdUJUeDBkUlItOHlyWkdpNUQw?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "492b098f39f99eeec275",
-        "source": "nownews",
-        "title": "跨年計畫 關鍵字",
-        "excerpt": "",
-        "publishedAt": "2026-08-08T03:31:16Z",
-        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE95YUlPWXZmT0RYRzI5SDFwUkhMM1p6cVpUZmpycWhXRjl4U2NYdnp2S21oQUJrQ1NMcXRacUFaYlB0YS00dUZYVmZ6LWVzTlA3WjdVUjNwYkl3T01GTm9JMEdiS3dmUTM0aG5DT3gxeE10b1lF?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -14625,7 +15289,7 @@
       {
         "id": "6983cb5a66d7f823eced",
         "source": "udn",
-        "title": "綠電 | 搜尋標籤 - tech.udn.com",
+        "title": "綠電 | 搜尋標籤 - udn科技玩家",
         "excerpt": "",
         "publishedAt": "2026-08-08T02:58:12Z",
         "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE8xcTBJQlhhdW1IMHhDTjAyQ0V2Y25ZS3R0WDI1bzVvbjY5NE1rN0c1QVlxd3ExaGRXeFNBRXJsSXNYTkg5N2lHVi16SGZYRmxQZi01Z0MzM2ZKcTR0?oc=5",
@@ -15451,6 +16115,19 @@
         }
       },
       {
+        "id": "62f8522df351c5b82b84",
+        "source": "moneydj",
+        "title": "立弘 115年7月營收8254萬、年增13.77%",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T02:14:00Z",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQS2daNDN3UWNNUk5jVUJINlI1cUItaXNzMm5lcmZGei1ZaUNITUVQUlJ4Rjc2VzYzN0VPa2R1RFRCeFY0aGlHbFdrbDh1aG5PZXlNXzQ3OUJwR3pYclZDdmRwSFc2MzFwS2VQNEFpdEdRRHBoNF96cWkxVnhkNk1qR21NdWNOb2FBR0dyT3JOVHFDdw?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "b87efd40e36698a974b8",
         "source": "mirrormedia",
         "title": "韓足協驚爆「性招待外籍裁判」 世足、奧運7場不敗黑幕曝光",
@@ -16202,19 +16879,6 @@
         }
       },
       {
-        "id": "c90753b5dff10e0d6ce3",
-        "source": "udn",
-        "title": "踢爆B2C2 無法提領套路- 純淨視野 - udn部落格",
-        "excerpt": "",
-        "publishedAt": "2026-08-08T01:39:19Z",
-        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9WTWNRSW4tTE1jZ3hqR3BDRjdCR2RaQ1hxcWhUckFQeGRmR3p3ZWd0QnQ2Vk4zZHUxQ2JQRVhIRzBmWkxHWk5oOVVXMTBQWjky?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "864757bf54c1f0ab726f",
         "source": "cts",
         "title": "颱風白海豚影響星宇航空8日往返沖繩全數取消- 生活",
@@ -16265,12 +16929,12 @@
         }
       },
       {
-        "id": "57f9a179d40998731d99",
+        "id": "96b3b6d405e66b0dff75",
         "source": "moneydj",
-        "title": "立視科公告本公司115年度現金增資全體董事放棄認購股數達得認購股數二分之一以上，並洽特定人認購事宜- 新聞",
+        "title": "立視科 本公司115年現金增資股款催繳公告 - 台股 - 新聞",
         "excerpt": "",
         "publishedAt": "2026-08-08T01:38:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQUDNvZVlnRUZZMDZoUVJybEl3di1RdHl3RVpSQ21hM2JweUNqTW1JQXQ5MWE2WWpWeXZIU2ZMcWJFTktKU1Uwb0E0cURJaEIwVFQwck9lMWVLMXgzVm5NVUtrOWJuby1raXFmaFRTamlvckRoeHBrb1RFSUhQT0ljc1hrUGthMWpnLW9Mc2FtYlRyUQ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQQTYwTHV5b3pBdTl2cDI0QzdrckJLc1g4Q0FibHJXSkg4aGFTc1hGRU9tS2I1SzAweE1WcGdqcFllN1hBcVVOVDhubFl5LVl3bDhRei1GUGZsOVFoVTM5XzIza2RpSlhDdzdoMlFrQ0MxZHh0b054UlZabTZCUzZnbE53?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -16278,12 +16942,12 @@
         }
       },
       {
-        "id": "9a22743a4fe9387d8814",
+        "id": "57f9a179d40998731d99",
         "source": "moneydj",
-        "title": "立視科本公司115年現金增資股款催繳公告- 新聞",
+        "title": "立視科公告本公司115年度現金增資全體董事放棄認購股數達得認購股數二分之一以上，並洽特定人認購事宜- 新聞",
         "excerpt": "",
         "publishedAt": "2026-08-08T01:38:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPM2VVUHhNTk9UZzBiaUxJblNKbVlJVG9qOTBwRURjWmt0anJEWU8tVW0wcHdXbUZVbGkyaXdoUXQ5ZEV3LTVCS3g4WUJPWEI0OHBCVk5GREk3OURzRnFybWtIcUhnSEZFSDVsTjNxa2JYYkdqa1VKSGJPLWVaTXYtOWRFdHR6QlRoQm5Bc210a3l1QQ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQUDNvZVlnRUZZMDZoUVJybEl3di1RdHl3RVpSQ21hM2JweUNqTW1JQXQ5MWE2WWpWeXZIU2ZMcWJFTktKU1Uwb0E0cURJaEIwVFQwck9lMWVLMXgzVm5NVUtrOWJuby1raXFmaFRTamlvckRoeHBrb1RFSUhQT0ljc1hrUGthMWpnLW9Mc2FtYlRyUQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -17239,6 +17903,19 @@
         "excerpt": "",
         "publishedAt": "2026-08-08T00:14:00Z",
         "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOc2pjTVFial9QZ2NBRDUtUE93clljeGxKZjh6bFJQWlVlSm1id2k5V294WUQxUnBralpWV0N0UVhmY3JZWmlXaURHUFNHUEY0YU9nSW0wVDhHWndqUWYwWl9UeGJVbXhkejVCME1GZ0J4emlrWWlENWZpYmV4Ny1FcFd3?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "faeb7c2a8d63e5e97843",
+        "source": "moneydj",
+        "title": "均華 115年7月營收6.89億、年增266.01% - 台股 - 新聞",
+        "excerpt": "",
+        "publishedAt": "2026-08-08T00:14:00Z",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNYklqTEVDa0tYekFCMG03MUNsNnJrcElfU3dtN0RXWWJ2OVdnbExhR0JJcDg2eW9SMmtENnNHczZSYzI4cU5jcUVFOVloSG5KTUR4QnAtdGR3VFh6XzN3OGJjUEhFdzROVXZQUTBIYzZvTHF4S1pIaGQyeWxnVVFMOHpn?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,

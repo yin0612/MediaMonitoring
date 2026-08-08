@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T13:58:27.912962Z",
+  "generatedAt": "2026-08-08T13:58:56.706081Z",
   "data": {
     "status": "ok",
     "stale": false,
@@ -487,12 +487,12 @@
         }
       },
       {
-        "id": "dd22277a2283e85628e9",
+        "id": "25a9117a15f18b53a76c",
         "source": "moneydj",
-        "title": "寶雅* 公告本公司股票面額變更由「新台幣10元」變更為「新台幣1元」公告期間：115年7月2日至115年10月1日",
+        "title": "沛爾生醫-創 公告本公司股票面額由「新台幣10元」變更為「新台幣0.5元」，公告期間：115年08月06日至115年11月05日。",
         "excerpt": "",
         "publishedAt": "2026-08-07T23:04:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOT2JxRlZYVjE4SWs0dHZIVndBWmdqMnhrTmV5MXZRNUk0dEVVYktNeWtxc2RJWXlLR0FxdlZwTlhRM2hYazBvV1RpRVRoSDdoVHV2UUJYMFlobnlyWjY1TWN6N21DTzZMd1U0MnZ0QnNRaGpTelJEV2Z5djVTTmJSODlaVmJOa0MwSVdmNW5tQzBIdw?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOanlZOGY1dkRjU2RPRFBZc3k5VktBTXVDeDQ1OFpzLXBkSU5nQXVEZGtsQlVRTVpsSzhndTNiclFOOWNMeVZyQWdja0dNYkZyOFdEeXZWem5QOEMtSm42SzMxcHp5WEVlQmQ3eTVqazBNMER5VUVvaWVVLXB4dS1zVUpweEltU1lDY3U4Qk84MHJDQQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -513,12 +513,12 @@
         }
       },
       {
-        "id": "25a9117a15f18b53a76c",
+        "id": "71cecfa51fec6420d228",
         "source": "moneydj",
-        "title": "沛爾生醫-創 公告本公司股票面額由「新台幣10元」變更為「新台幣0.5元」，公告期間：115年08月06日至115年11月05日。",
+        "title": "仁新 公告本公司股票面額由「新台幣10元」變更為「新台幣1元」，公告期間：115年8月5日至115年11月4日。",
         "excerpt": "",
         "publishedAt": "2026-08-07T23:04:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOanlZOGY1dkRjU2RPRFBZc3k5VktBTXVDeDQ1OFpzLXBkSU5nQXVEZGtsQlVRTVpsSzhndTNiclFOOWNMeVZyQWdja0dNYkZyOFdEeXZWem5QOEMtSm42SzMxcHp5WEVlQmQ3eTVqazBNMER5VUVvaWVVLXB4dS1zVUpweEltU1lDY3U4Qk84MHJDQQ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNVGM4RWVmUWFkUEk3QnFMUXBZUHh3LTNtRTFqRGJEUDhWUGd3VW5Yd0pZUXBLYTJOZFdCa3hoNUR4UHluZHNMWE9iQWxRbnB2WjdUSkg1SERCUjRtdFZUTFFOUWlPR1RLbUxNdG5jRUVhTmdjNWtxSHdHZDIySTNFRGZYNjNjM05qU3Fka1MxUDlXZEhYQWRqaWhGeC1wNlJtUGRxTXc2cW1UVHVRMVp2b3VhVldldF9ieC1qS1I2Zw?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -526,12 +526,12 @@
         }
       },
       {
-        "id": "71cecfa51fec6420d228",
+        "id": "dd22277a2283e85628e9",
         "source": "moneydj",
-        "title": "仁新 公告本公司股票面額由「新台幣10元」變更為「新台幣1元」，公告期間：115年8月5日至115年11月4日。",
+        "title": "寶雅* 公告本公司股票面額變更由「新台幣10元」變更為「新台幣1元」公告期間：115年7月2日至115年10月1日",
         "excerpt": "",
         "publishedAt": "2026-08-07T23:04:00Z",
-        "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNVGM4RWVmUWFkUEk3QnFMUXBZUHh3LTNtRTFqRGJEUDhWUGd3VW5Yd0pZUXBLYTJOZFdCa3hoNUR4UHluZHNMWE9iQWxRbnB2WjdUSkg1SERCUjRtdFZUTFFOUWlPR1RLbUxNdG5jRUVhTmdjNWtxSHdHZDIySTNFRGZYNjNjM05qU3Fka1MxUDlXZEhYQWRqaWhGeC1wNlJtUGRxTXc2cW1UVHVRMVp2b3VhVldldF9ieC1qS1I2Zw?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOT2JxRlZYVjE4SWs0dHZIVndBWmdqMnhrTmV5MXZRNUk0dEVVYktNeWtxc2RJWXlLR0FxdlZwTlhRM2hYazBvV1RpRVRoSDdoVHV2UUJYMFlobnlyWjY1TWN6N21DTzZMd1U0MnZ0QnNRaGpTelJEV2Z5djVTTmJSODlaVmJOa0MwSVdmNW5tQzBIdw?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -709,6 +709,19 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T22:46:23Z",
         "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE42LW5ibFJ6U0laSmFHZ0JpZUcyNUlVbTRvNnVpQ1ZVb1l5WEM4djBSSXhhSm5uVy12SlBOVjh1cnpoRlZOMUFjeFZER0Y?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "f6333ccc3a7a13753e01",
+        "source": "udn",
+        "title": "大腦防護網 - udn部落格",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T22:46:23Z",
+        "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5RUmRybG5OdG1HS1BMbllyWHU3MlZ1Nm15UVNRVkVHdUtTWkdkRHJTNHJKbUJQWFZsTjBWRnVxVDV0bldZWkt2eWY1SWsyNFdoVDA0UFdBQ3lNQzVlZlUwZTVpWTVHUQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1006,6 +1019,25 @@
         }
       },
       {
+        "id": "328d17624916f18dca2c",
+        "source": "udn",
+        "title": "望“世界對白”早日康復 - 王孟源的部落格 - udn部落格",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T21:50:22Z",
+        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBoR2RpTDNwaG96Ul9VSjZvaEZCbjFmeVpBVnRnWXVHZTV2UEpiWFVial95RTh5WEJaZDVoNFlCVHpMVWQzblFiaW9lUVpmZm9DTUVzaG9B?oc=5",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "康復",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
         "id": "4a4ecb96c4fff346995e",
         "source": "cts",
         "title": "市場衡量荷莫茲海峽談判和伊朗局勢油價走高- 綜合",
@@ -1242,6 +1274,32 @@
         }
       },
       {
+        "id": "6214aba1ea97466a17f7",
+        "source": "udn",
+        "title": "清石日誌 - udn部落格",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T20:37:46Z",
+        "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBWd0JVMVJIb1hZRGcyakg4enhHYmxGYnFBSDBTamJHcG1yVTI2aVVrdXJSU0Q3c0V4NmNCYWtCc3FXTVczVWZDTjBVS1g?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "c4d587290cb4f6e02dda",
+        "source": "udn",
+        "title": "偵查室 - udn部落格",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T20:37:46Z",
+        "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5OcWpIWXdMeXBQdUUyLWQ3cG52ai1QN2lBYUtWNFJ0Ynh4X3U3RHdNQjh6SVZVcnVMa3hmTk1aUVlPc1NCU1hPS0U3VmpNZGpNelRlSDliVFZzVkVvNXZTcHRkSFY5QQ?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "a47df0e64f2a5fddba29",
         "source": "udn",
         "title": "防衛日誌 - udn部落格",
@@ -1294,12 +1352,12 @@
         }
       },
       {
-        "id": "5faac32f408e429b6808",
-        "source": "udn",
-        "title": "經驗公開｜BTSEX相關過程完整整理- 清石日誌 - udn部落格",
+        "id": "a502ebaf1d3c49f703c1",
+        "source": "wealth",
+        "title": "錢婧 所有內容",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:33:05Z",
-        "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBDVzI3TE9ZejFxNkh4a0pZLVBCRjFINllIYkpWaHpDRFdVRzd2NjVhM20xbGVQZDRFNU1RQ3hlRWVCOG8xdFJaUlNHMkVSVEhramxQU3VuV2hJTkJCVnUwMkcxRU40T0lsTFJLbg?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMVVGdXhsODFMdkpsVHNyR0hzdWZ1NWc1MmVZd08yMTlGbEpRbC1ESFpXdzhONFE4Vk03WFl2ZWg2RWpEX3dSakNqc2RKcnJPTzlpb2NMZlhaaHI2R2VDcHN2cktwRTlwOGtIZm9iX3o1dGV4X2pSWEZJNFF6eFppSGx3?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1307,12 +1365,12 @@
         }
       },
       {
-        "id": "a502ebaf1d3c49f703c1",
-        "source": "wealth",
-        "title": "錢婧 所有內容",
+        "id": "9b4d9364d81edf6066e3",
+        "source": "udn",
+        "title": "經驗公開｜BTSEX相關過程完整整理- 清石日誌 - udn部落格",
         "excerpt": "",
-        "publishedAt": "2026-08-07T20:33:05Z",
-        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMVVGdXhsODFMdkpsVHNyR0hzdWZ1NWc1MmVZd08yMTlGbEpRbC1ESFpXdzhONFE4Vk03WFl2ZWg2RWpEX3dSakNqc2RKcnJPTzlpb2NMZlhaaHI2R2VDcHN2cktwRTlwOGtIZm9iX3o1dGV4X2pSWEZJNFF6eFppSGx3?oc=5",
+        "publishedAt": "2026-08-07T20:33:00Z",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9yU0dQMjRuQ2pWN0otRS1zVmdGTFNLS3I1SGE1MnJaRlZjQnBBMFZyN1dBMU9WXzE1dlhWSGtxdDRGTzNDZ1NLVFRpZkY5R1hGQnJHeURKLTVRQWs?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -2085,38 +2143,12 @@
         }
       },
       {
-        "id": "005c43e0f015062918cb",
-        "source": "moneydj",
-        "title": "今日要聞內容-917E1C05-AA63-4D28-8D0D-CCD10B0554DB - 5850web.moneydj.com",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T18:04:06Z",
-        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNVE5DVWoyeU5KQk54V1lDRXpWelp6QXNCYU0ybHFSTmlOUkZCTUFEQm9vcXJZc0xmd2NMYWtOVXdsWHZWUUNyM2NYVUs4eEJ0a3BhcTJYaXlfWTNDbVpyMXVrLWcwMGtRY2tlX2dFUWFOdWlGeS1NWk44V0hMdUZINFBtV3BQV2dLVXM1MDhR?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "93dea6097d2439d2efcb",
         "source": "moneydj",
         "title": "今日要聞內容-5CAFC4C2-1CE4-4EB3-8A4D-5534A7E293DA - 5850web.moneydj.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T18:04:00Z",
         "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQVUJhd3NxWXdaNzVZcFBVWm5rdGlrN1EzdUFOanE3VmJhS01uQXJnQnlpeUFfUW1NVGRXT1dGZWZBWUF0c3F3MEVvdUIwZHZUTDQyLWdLeG1GeGVhY1FiTzJ2YXg4MlByWXBGZEphTV9KdzIxX044UzR1S3FMT2ZaU2xXdG13dktud1R2b053?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "b13f777b3d485c4450bc",
-        "source": "moneydj",
-        "title": "今日要聞內容-594CA617-CA13-4B38-933D-A82DB43401D8 - 5850web.moneydj.com",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T18:03:56Z",
-        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQTmFGSm1fU3dzblFsbnlXZUpReTJNSmhsX0JrSG94ZTJ2MDM1Vmc5dzhhZG9mSVFzSjFPR2thTWtmTEhoaTZ6UzdrVlF0X0J4dzlDSUV2SWdlVnJIcENmNUlObFYyR013RnB5RjFNS3pkc2N1andoNTFOd250akpJaWNTbTU2akFtRlA2TzBR?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -2143,19 +2175,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T18:03:42Z",
         "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOdzVFWXUtZTlfLU90N3BVVEljMXpFTU5YcFE2OWNGLWhSazBsTnVCN0pLb0g5SnQ2RjZ5YnlOeDlWUmxxd1ZXeTlnNzJjMTVoU0k1UkF4RkpjVTRLLU90ZFBFTExUblJ2TEFHRTN6WDh5NXZkYWtuclVaSDI2bmtWVzJmdkRzaFdPS0dWQzl3?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "aba176c6fdd538094fbe",
-        "source": "moneydj",
-        "title": "今日要聞內容-E8F6D5C5-383C-4854-9B3A-8EADB1A937D2 - 5850web.moneydj.com",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T18:03:38Z",
-        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOekp0T2o3OVZNSFVRLU5EMm1PcXZubmVkNVBTTWVTTVR4UVZaQlVqOENLWDJOTnlyZXo4QWVDWFBiWTBMTElHQ0xxdnNRSjFVekZyZlJKdGRBWkVxMS1NN2pfSkRjX2JpemtSNnd5NGU3MGZhS0hVVC1ZOW1lVHBBNTBEekNIMVRxYWNwVGx3?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -2423,6 +2442,19 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T17:13:00Z",
         "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFAtcnJYTWtBdTBNRUFjTUhqdlVwWnk5clNoYUpnYlU4Sk1rUDB2OUdzNHMzWHZYVzg5MTZReXBobllfbkpVbDktdHdGOFU3OTBTclE?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "caf338a0db271d4e3411",
+        "source": "udn",
+        "title": "偵探現場 - udn部落格",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T17:10:45Z",
+        "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBaR2NuVmU1WENETTJwVGJkWElETzhJUzh0dkpTdExJaGRMMHlqLTFHLW1wRk9QN3RZczBsTTBGbjFoSk5pYTdSTkh0dFc?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -3165,25 +3197,6 @@
         }
       },
       {
-        "id": "6f9b73983c918b249da7",
-        "source": "chinatimes",
-        "title": "日本防衛費估上看8.9兆日圓創新高 高官：最終恐衝10兆",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T15:00:24Z",
-        "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE4tZVRQTUZLVDNhLWhqSU42c2loSDI3a0dnY3VfOHBySUxVYXVCcTlDVTlPSWdfdlNDbjFNRzVDd3BUb21SOFFrTUNEamJDZDJRZDRVM3lPR28taF9YRlJ3dWdNaWlodFJxVl8zSnhn?oc=5",
-        "sentiment": {
-          "label": "positive",
-          "score": 1.0,
-          "matched": [
-            {
-              "term": "新高",
-              "polarity": "positive",
-              "weight": 2
-            }
-          ]
-        }
-      },
-      {
         "id": "3ab797c1e3cb74115ccc",
         "source": "cti",
         "title": "漢光42號空軍戰力恢復 新竹幻象2000戰機呼嘯出擊",
@@ -3291,6 +3304,19 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T14:53:00Z",
         "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBRTUtlQjlUV1A3NmwzOEdSN21TYjBIUGFiNVMwaHNMZUJyektvMzZNN2FsNTZzdDFNMTVLY3Zob3UwU1c5UENPRWN4LXNsM2t3c3ZpNHdBX0M1Vjd1U3fSAUtBVV95cUxPZGZIeHdqYlhCSmxXVi1XWVBIeml2TmdwWGVxX05vd1RWcVpZbGNFTThfNlJwVWhKX2d3cGp0SUJJQUs0Z0tIb2NTd2c?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "ef977634ae4d820e299b",
+        "source": "moneydj",
+        "title": "中探針 115年7月營收4.22億、年增27.80%",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T14:49:00Z",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOVWZ6ZjNNVUsxSlo1bGhjUW9LMmFZN0c1RFotdThsVi1qelR2QzVEUmstR2hvVE5xQVNOUjlqYmEzUGJCUlFlZHJZS3d3bjRvMEVWNTJsTDRfcHE1OUUzVWNmSzNUWDAtRTl3MVpwcHpwVExMWVE2cnNjeldZWDk0SmNtWmFrMjl5eFB6R3dfWk9Udw?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -3495,12 +3521,12 @@
         }
       },
       {
-        "id": "81ff3e1e0209dacd607f",
+        "id": "1bed20bf47147bef8c97",
         "source": "moneydj",
         "title": "材料*-KY 代子公司北屏新材料（山東）有限公司公告新增資金貸與金額達新臺幣一千萬元以上且達該公開發行公司最近期財務報表淨值百分之二以上。",
         "excerpt": "",
         "publishedAt": "2026-08-07T14:29:00Z",
-        "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPYTRINUtnVk1CYnozU1JxYm9yUUZZX0VDbFByYm9qV1IwcGJtTC1nc3Q4UkFJaWpxaktnMHBETG5vUGVsR2dRRGdiSUtTQlNrWFd0dXRCZWY4VGVCaklsakg1MWNYOFZFYl9IMmVZU05FeF9Td214ZEpUQXFBbXcwOW9FdkxLZ3BrYjduXzlJdkRrampjNXhuRHF0dkFQTnNjRmhNTWlkLTdKN0tWdXcyc3h6cXFyVnRvSlJQbzdaWQ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQRGdkNXJYZ3p4aHh0SExuaURtaFNod2VaUFZUQ3VKUEh2WG9FSW9qMUkzRFotbHRpWi1BaWdXV3BwQnpkOEhjM3k5TDE2NHh3S1JZTThEOXRldzJMU0xTNDBDakFNNVBoZ0VpTlVRczNZQWFzTEM4eFpFNmczRVBETEtHX1VidWRKeUhuaVd6dzl6bUY3V0RfbVJEbFRrcHdVR2VxRElybDhmZnpXaVI1QWRuWnFmZG9mVVFoTw?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -3566,19 +3592,6 @@
         }
       },
       {
-        "id": "429b8153e192de14fcf9",
-        "source": "udn",
-        "title": "心語籤，立秋，2026.08.07 - udn部落格",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:25:57Z",
-        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5LYUtpR1ZKLW0yTFFSNkVhclFOOEZfaXdUVEV0VXJPM3J5U2JBSkFRR0VkY0VSNW1fTXFudXoxcmg2Y2JJZGM0Q3FzbnJMMFRY?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "9b2e98f9cc7323cfd15c",
         "source": "mirrormedia",
         "title": "史上最賺上半年！華航客貨兩旺吸金千億",
@@ -3611,6 +3624,19 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T14:24:00Z",
         "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPNkNDVnkzenp6UWJHd0lDb0ViVWxGVzdPRGpRR2w2V3p5cTNRZWFqMWlVaThGczV0b1pVdkdYckJ3N2I1bGVyVkYtLTRvcG5BMU8taTVYbWtJYWJTVWR3VnE1WEd4Zl91RUF5ck9iemduYi1aTngwdFk1NlJpX1FMWk13?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "35e52f2e7bf1ee39ab67",
+        "source": "chinatimes",
+        "title": "廖明輝專欄》美中「G2」若成形 台灣如何因應？",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T14:20:40Z",
+        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBjb253SC1LRTR0cDI3blhPQm1xMHFNY3VWNVliMml5MWJUN1pEUmdCN05aZWp5NHdodUJaQTNRZXQwMTJNYUlrZVk5b3lGLVJGT2JfRHdmekYwYXBKdWlLaS05eUxfaEk?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -3856,38 +3882,6 @@
               "weight": 1
             }
           ]
-        }
-      },
-      {
-        "id": "bebe20dddbca403e31e3",
-        "source": "bnext",
-        "title": "0到18歲成長津貼來了！可領多少？2027上路規劃、最新進度一次看",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:59:56Z",
-        "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9zeVRpMUszVC1RRWxfYzVHNmRFQzZZSDk3a0lDeGRsWFBFNTNxa0RXTUw1bnJ4Q0lyVXI4NWpvRXdEQXl3VTU2SE5oSUJsSExsbXktbTl1MWpNMjF3MUxUSEhXSFZteUZ5cTlEUFQyUlRtaVpadmRRYXJHdGRsV3M?oc=5",
-        "sentiment": {
-          "label": "positive",
-          "score": 1.0,
-          "matched": [
-            {
-              "term": "成長",
-              "polarity": "positive",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
-        "id": "6e762a53baf61bd66eab",
-        "source": "udn",
-        "title": "《苦難過後將迎來大解放》",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T13:58:47Z",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5sU25CQy1ZQzNfNnJsMGlxNVJMcmdxMDk5Wm1GVm9yOWdHUjBFOUdueWN5VGNtYkU1Mk1sM1h2Sm1udEVIMnNXWTJGX2NZMTFNbWFkS3VMeGY5cGs?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
         }
       },
       {

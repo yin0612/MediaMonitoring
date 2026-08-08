@@ -432,7 +432,7 @@ def run(
                 "methodVersion": "news-heat-v4-37-sources",
                 "scheduleDaysUntilPause": None,
                 "coverage": {"keywordWindowHours": 24, "trendBucketMinutes": 60, "archiveDays": 7},
-                "stateRestoreFailed": not bool(restored_items) and bool(restore_base_url),
+                "stateRestoreFailed": not bool(current_items or restored_items) and bool(restore_base_url),
             },
             generated_at,
         ),

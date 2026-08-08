@@ -81,39 +81,38 @@ function GlobalStatus() {
 function ManualRefreshButton() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
-  const [unavailable, setUnavailable] = useState(false);
-
-  if (!isManualRefreshConfigured()) return null;
 
   async function refresh() {
     if (busy) return;
     setBusy(true);
     setMessage('');
     try {
-      await requestManualRefresh();
-      setMessage('已送出更新，資料會在背景同步');
-      setUnavailable(false);
-      window.setTimeout(() => window.dispatchEvent(new Event(DATA_REFRESH_EVENT)), 5_000);
-      window.setTimeout(() => setMessage(''), 4_000);
+      if (isManualRefreshConfigured()) {
+        await requestManualRefresh();
+        setMessage('已送出更新，資料會在背景同步');
+      } else {
+        setMessage('已重新載入最新熱度數據');
+      }
+      window.dispatchEvent(new Event(DATA_REFRESH_EVENT));
+      window.setTimeout(() => setMessage(''), 3_000);
     } catch (error) {
       setMessage((error as Error).message || '更新失敗，請稍後再試');
-      setUnavailable(true);
-      window.setTimeout(() => setMessage(''), 5_000);
+      window.setTimeout(() => setMessage(''), 4_000);
     } finally {
       setBusy(false);
     }
   }
 
-  const label = busy ? '更新中…' : unavailable ? '自動更新中' : '立即更新';
+  const label = busy ? '更新中…' : '立即更新';
   return (
     <div className="appbar__refresh">
       <button
         className="refresh-btn"
         type="button"
         onClick={refresh}
-        disabled={busy || unavailable}
-        aria-label="手動更新快照"
-        title={unavailable ? '手動更新服務無法連線；資料仍依排程自動更新' : '手動更新快照'}
+        disabled={busy}
+        aria-label="手動更新數據"
+        title="重新載入最新輿情數據"
       >
         <Icon name="refresh" size={15} />
         <span className="refresh-btn__label">{label}</span>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T13:58:27.912962Z",
+  "generatedAt": "2026-08-08T13:58:56.706081Z",
   "data": {
     "stale": false,
     "experimental": true,
@@ -9,7 +9,7 @@
         "id": "org-1",
         "name": "中央氣象署",
         "type": "ORG",
-        "mentions": 32
+        "mentions": 40
       },
       {
         "id": "org-2",
@@ -21,7 +21,7 @@
         "id": "org-3",
         "name": "民進黨",
         "type": "ORG",
-        "mentions": 30
+        "mentions": 31
       },
       {
         "id": "person-4",
@@ -54,15 +54,15 @@
         "mentions": 14
       },
       {
-        "id": "person-9",
-        "name": "柯文哲",
-        "type": "PERSON",
-        "mentions": 12
-      },
-      {
-        "id": "org-10",
+        "id": "org-9",
         "name": "衛福部",
         "type": "ORG",
+        "mentions": 13
+      },
+      {
+        "id": "person-10",
+        "name": "柯文哲",
+        "type": "PERSON",
         "mentions": 12
       },
       {
@@ -103,7 +103,7 @@
       },
       {
         "id": "org-17",
-        "name": "輝達",
+        "name": "台積電",
         "type": "ORG",
         "mentions": 7
       },
@@ -115,61 +115,61 @@
       },
       {
         "id": "org-19",
+        "name": "食藥署",
+        "type": "ORG",
+        "mentions": 7
+      },
+      {
+        "id": "org-20",
         "name": "交通部",
         "type": "ORG",
         "mentions": 6
       },
       {
-        "id": "org-20",
-        "name": "台積電",
+        "id": "org-21",
+        "name": "內政部",
         "type": "ORG",
         "mentions": 6
       },
       {
-        "id": "org-21",
+        "id": "org-22",
         "name": "宏碁",
         "type": "ORG",
         "mentions": 6
       },
       {
-        "id": "person-22",
+        "id": "person-23",
         "name": "賴瑞隆",
         "type": "PERSON",
         "mentions": 6
       },
       {
-        "id": "org-23",
-        "name": "食藥署",
+        "id": "org-24",
+        "name": "輝達",
         "type": "ORG",
         "mentions": 6
       },
       {
-        "id": "org-24",
+        "id": "org-25",
+        "name": "三星",
+        "type": "ORG",
+        "mentions": 5
+      },
+      {
+        "id": "org-26",
         "name": "中油",
         "type": "ORG",
         "mentions": 5
       },
       {
-        "id": "org-25",
-        "name": "內政部",
-        "type": "ORG",
-        "mentions": 5
-      },
-      {
-        "id": "person-26",
+        "id": "person-27",
         "name": "韓國瑜",
         "type": "PERSON",
         "mentions": 5
       },
       {
-        "id": "org-27",
-        "name": "Meta",
-        "type": "ORG",
-        "mentions": 4
-      },
-      {
         "id": "org-28",
-        "name": "三星",
+        "name": "Meta",
         "type": "ORG",
         "mentions": 4
       },
@@ -263,28 +263,28 @@
         "weight": 7
       },
       {
-        "source": "person-9",
+        "source": "person-10",
         "target": "org-14",
         "weight": 6
       },
       {
-        "source": "org-8",
-        "target": "person-26",
-        "weight": 5
+        "source": "org-9",
+        "target": "org-19",
+        "weight": 6
       },
       {
-        "source": "org-10",
-        "target": "org-23",
+        "source": "org-8",
+        "target": "person-27",
         "weight": 5
       },
       {
         "source": "org-1",
-        "target": "org-19",
+        "target": "org-20",
         "weight": 4
       },
       {
         "source": "org-2",
-        "target": "person-26",
+        "target": "person-27",
         "weight": 4
       },
       {
@@ -304,7 +304,7 @@
       },
       {
         "source": "org-3",
-        "target": "person-22",
+        "target": "person-23",
         "weight": 4
       },
       {
@@ -314,7 +314,7 @@
       },
       {
         "source": "person-4",
-        "target": "org-10",
+        "target": "org-9",
         "weight": 3
       },
       {
@@ -339,7 +339,7 @@
       },
       {
         "source": "org-2",
-        "target": "person-22",
+        "target": "person-23",
         "weight": 2
       },
       {
@@ -348,7 +348,7 @@
         "weight": 2
       },
       {
-        "source": "person-9",
+        "source": "person-10",
         "target": "org-3",
         "weight": 2
       },
@@ -359,12 +359,22 @@
       },
       {
         "source": "org-3",
-        "target": "org-10",
+        "target": "org-9",
         "weight": 2
       },
       {
         "source": "person-33",
         "target": "person-5",
+        "weight": 2
+      },
+      {
+        "source": "org-15",
+        "target": "org-9",
+        "weight": 2
+      },
+      {
+        "source": "org-15",
+        "target": "org-19",
         "weight": 2
       }
     ]
