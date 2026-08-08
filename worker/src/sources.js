@@ -34,6 +34,8 @@ export const NEWS_SOURCES = [
   { id: 'managertoday', displayName: '經理人', domains: ['managertoday.com.tw', 'www.managertoday.com.tw'], aliases: ['經理人', 'ManagerToday', '經理人月刊'], rssUrl: 'https://www.managertoday.com.tw/rss' },
   { id: 'chinatimes', displayName: '中時新聞網', domains: ['chinatimes.com', 'www.chinatimes.com'], aliases: ['中時新聞網', '中國時報', '中時'] },
   { id: 'ctwant', displayName: 'CTWANT', domains: ['ctwant.com', 'www.ctwant.com'], aliases: ['CTWANT', '周刊王', 'CTWANT新聞'] },
+  { id: 'mnews', displayName: '鏡新聞', domains: ['mnews.tw', 'www.mnews.tw'], aliases: ['鏡新聞', 'MNews'] },
+  { id: 'mirrormedia', displayName: '鏡週刊', domains: ['mirrormedia.mg', 'www.mirrormedia.mg'], aliases: ['鏡週刊', 'Mirror Media', '鏡週刊Mirror Media'] },
 ];
 
 // 官方 RSS 補充：來源名稱與白名單維持單一登錄，RSS 可用多個分類 feed 合併。

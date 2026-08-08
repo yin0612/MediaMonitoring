@@ -429,7 +429,7 @@ def run(
                 "status": archive_status,
                 "lastFastAt": generated_at if current_items else None,
                 "lastDeepAt": generated_at if topics else None,
-                "methodVersion": "news-heat-v4-35-sources",
+                "methodVersion": "news-heat-v4-37-sources",
                 "scheduleDaysUntilPause": None,
                 "coverage": {"keywordWindowHours": 24, "trendBucketMinutes": 60, "archiveDays": 7},
                 "stateRestoreFailed": not bool(restored_items) and bool(restore_base_url),

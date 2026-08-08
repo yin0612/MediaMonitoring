@@ -10,7 +10,7 @@ SOURCE_IDS = (
     "ltn", "cna", "moneyudn", "ctee", "anue", "wealth", "businessweekly", "thenewslens",
     "reporter", "newtalk", "nownews", "nextapple", "ettoday", "rti", "technews",
     "taipeitimes", "coolloud", "tfc", "moneydj", "businesstoday", "bnext", "managertoday",
-    "chinatimes", "ctwant",
+    "chinatimes", "ctwant", "mnews", "mirrormedia",
 )
 
 

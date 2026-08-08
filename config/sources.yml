@@ -280,6 +280,20 @@ sources:
       url: https://www.ctwant.com/
       article_url_pattern: '^https://www\.ctwant\.com/article/\d+$'
 
+  - id: mnews
+    name: 鏡新聞
+    domains: [mnews.tw, www.mnews.tw]
+    aliases: [鏡新聞, MNews]
+    rss_url: ""
+    crawl: { enabled: false, url: "" }
+
+  - id: mirrormedia
+    name: 鏡週刊
+    domains: [mirrormedia.mg, www.mirrormedia.mg]
+    aliases: [鏡週刊, Mirror Media, 鏡週刊Mirror Media]
+    rss_url: ""
+    crawl: { enabled: false, url: "" }
+
 fetch:
   timeout_seconds: 20
   max_items_per_source: 60

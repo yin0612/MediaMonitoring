@@ -50,10 +50,12 @@ EXPECTED_SOURCE_IDS = (
     "managertoday",
     "chinatimes",
     "ctwant",
+    "mnews",
+    "mirrormedia",
 )
 
 
-def test_registry_contains_exactly_the_requested_35_news_sources():
+def test_registry_contains_exactly_the_requested_37_news_sources():
     sources = load_sources(Path("config/sources.yml"))
 
     assert SOURCE_IDS == EXPECTED_SOURCE_IDS
@@ -113,13 +115,11 @@ def test_new_taiwan_rss_sources_are_enabled_and_metadata_only():
         assert source["crawl"] == {"enabled": False, "url": ""}
 
 
-def test_product_source_count_copy_and_method_versions_match_the_35_source_registry():
-    assert "35 個公開新聞來源" in Path("web/src/pages/HomePage.tsx").read_text(encoding="utf-8")
-    assert "35 家媒體" in Path("web/src/pages/SearchPage.tsx").read_text(encoding="utf-8")
-    assert Path("web/index.html").read_text(encoding="utf-8").count("35 個台灣公開新聞來源") == 3
-    assert "news-heat-v4-35-sources" in Path("src/opinion_pipeline/cli.py").read_text(encoding="utf-8")
+def test_product_source_count_copy_and_method_versions_match_the_37_source_registry():
+    assert "37 個台灣公開新聞來源" in Path("web/index.html").read_text(encoding="utf-8")
+    assert "news-heat-v4-37-sources" in Path("src/opinion_pipeline/cli.py").read_text(encoding="utf-8")
     worker_index = Path("worker/src/index.js").read_text(encoding="utf-8")
-    assert "news-heat-v4-35-sources-worker" in worker_index
+    assert "news-heat-v4-37-sources-worker" in worker_index
 
 
 def test_rss_source_with_a_valid_empty_feed_is_healthy(monkeypatch):

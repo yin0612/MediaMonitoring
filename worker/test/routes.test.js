@@ -155,7 +155,7 @@ test('24h search merges Google News results with the low-frequency Pages snapsho
 
     assert.equal(response.status, 200);
     assert.equal(response.headers.get('Cache-Control'), 'no-store');
-    assert.equal(body.data.sources.length, 35);
+    assert.equal(body.data.sources.length, 37);
     assert.deepEqual(new Set(body.data.items.map((item) => item.source)), new Set(['setn', 'ebc']));
     assert.ok(requested.some((url) => url.endsWith('/data/recent.json')));
     assert.ok(!requested.some((url) => url.endsWith('/data/news-archive.json')));
@@ -818,7 +818,7 @@ test('scheduled build writes a snapshot that /api/data serves per file', async (
     assert.ok(['ok', 'partial'].includes(meta.data.status));
 
     const sources = await (await worker.fetch(new Request('https://worker.example/api/data?name=sources'), env)).json();
-    assert.equal(sources.data.sources.length, 35);
+    assert.equal(sources.data.sources.length, 37);
 
     const keywords = await (await worker.fetch(new Request('https://worker.example/api/data?name=keywords'), env)).json();
     assert.equal(keywords.data.keywords[0].id, 'pages-only');

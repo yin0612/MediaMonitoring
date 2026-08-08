@@ -8,6 +8,7 @@ const EXPECTED_SOURCE_IDS = [
   'reporter', 'newtalk', 'nownews', 'nextapple', 'ettoday',
   'rti', 'technews', 'taipeitimes', 'coolloud', 'tfc',
   'moneydj', 'businesstoday', 'bnext', 'managertoday', 'chinatimes', 'ctwant',
+  'mnews', 'mirrormedia',
 ];
 
 describe('news source registry', () => {

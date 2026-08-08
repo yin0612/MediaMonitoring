@@ -19,11 +19,12 @@ const EXPECTED_SOURCE_IDS = [
   'newtalk', 'nownews', 'nextapple', 'ettoday',
   'rti', 'technews', 'taipeitimes', 'coolloud', 'tfc',
   'moneydj', 'businesstoday', 'bnext', 'managertoday', 'chinatimes', 'ctwant',
+  'mnews', 'mirrormedia',
 ];
 
-test('news source registry contains exactly the requested 35 publishers', () => {
+test('news source registry contains exactly the requested 37 publishers', () => {
   assert.deepEqual(NEWS_SOURCES.map((source) => source.id), EXPECTED_SOURCE_IDS);
-  assert.equal(new Set(NEWS_SOURCES.flatMap((source) => source.domains)).size >= 35, true);
+  assert.equal(new Set(NEWS_SOURCES.flatMap((source) => source.domains)).size >= 37, true);
 });
 
 test('new official RSS sources retain their required domains and feed URLs', () => {

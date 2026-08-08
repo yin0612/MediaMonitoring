@@ -48,6 +48,8 @@ export const SOURCE_META: Record<SourceId, SourceMeta> = {
   managertoday: { id: 'managertoday', name: '經理人', short: '經理人', series: 6, news: true },
   chinatimes: { id: 'chinatimes', name: '中時新聞網', short: '中時', series: 7, news: true },
   ctwant: { id: 'ctwant', name: 'CTWANT', short: 'CTWANT', series: 0, news: true },
+  mnews: { id: 'mnews', name: '鏡新聞', short: '鏡新聞', series: 1, news: true },
+  mirrormedia: { id: 'mirrormedia', name: '鏡週刊', short: '鏡週刊', series: 2, news: true },
 };
 
 /** 依顯示順序排列的新聞來源。 */

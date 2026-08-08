@@ -26,6 +26,8 @@
 | `newtalk` | 新頭殼 | [官方 RSS](https://newtalk.tw/rss/all/) | 新頭殼全站即時新聞 feed |
 | `chinatimes` | 中時新聞網 | 官方網域 Google News 補充 | 新增媒體來源白名單，支援即時比對與官網 metadata 擷取 |
 | `ctwant` | CTWANT | 官方網域 Google News 補充 | 新增媒體來源白名單，支援即時比對與官網 metadata 擷取 |
+| `mnews` | 鏡新聞 | 官方網域 Google News 補充 | 新增媒體來源白名單，支援即時比對與官網 metadata 擷取 |
+| `mirrormedia` | 鏡週刊 | 官方網域 Google News 補充 | 新增媒體來源白名單，支援即時比對與官網 metadata 擷取 |
 | `rti` | 中央廣播電臺 | [官方 RSS](https://www.rti.org.tw/rss) | 央廣公開新聞 feed |
 | `technews` | 科技新報 | [官方 RSS](https://technews.tw/feed/) | 科技與產業新聞 feed |
 | `taipeitimes` | Taipei Times | [官方 RSS](https://www.taipeitimes.com/xml/index.rss) | 英文新聞索引 feed |

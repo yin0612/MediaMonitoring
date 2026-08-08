@@ -57,7 +57,9 @@ export type SourceId =
   | 'bnext'
   | 'managertoday'
   | 'chinatimes'
-  | 'ctwant';
+  | 'ctwant'
+  | 'mnews'
+  | 'mirrormedia';
 
 export type SourceStatus = 'ok' | 'stale' | 'degraded' | 'disabled' | 'error';
 

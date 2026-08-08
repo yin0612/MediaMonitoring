@@ -495,7 +495,7 @@ async function buildSnapshot(env) {
           pagesTopics?.generatedAt
           || previous?.files?.meta?.data?.lastDeepAt
           || null,
-        methodVersion: 'news-heat-v4-35-sources-worker',
+        methodVersion: 'news-heat-v4-37-sources-worker',
         scheduleDaysUntilPause: null,
         coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 7 },
         stateRestoreFailed: false,

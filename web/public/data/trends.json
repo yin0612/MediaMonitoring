@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T13:00:49.999406Z",
+  "generatedAt": "2026-08-08T13:39:17.054310Z",
   "data": {
     "geo": "TW",
     "status": "ok",
@@ -8,6 +8,96 @@
     "source": "google-trends-rss",
     "sourceUrl": "https://trends.google.com/trending/rss?geo=TW&hl=zh-TW",
     "items": [
+      {
+        "title": "賴瑞隆",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-08T13:30:00Z",
+        "news": [
+          {
+            "title": "綠營要求向陳時中道歉柯志恩開嗆：企圖洗白陳時中- 政治",
+            "source": "自由時報",
+            "url": "https://news.ltn.com.tw/news/politics/breakingnews/5532881"
+          },
+          {
+            "title": "蜂蜜節同框互嗆賴瑞隆.柯志恩為BNT疫苗隔空交鋒- 政治",
+            "source": "華視新聞網",
+            "url": "https://news.cts.com.tw/cts/politics/202608/202608083065109.html"
+          },
+          {
+            "title": "柯志恩要向陳時中致歉？名醫嗆：賴瑞隆才應為這事羞愧道歉- 政治",
+            "source": "中時新聞網",
+            "url": "https://www.chinatimes.com/realtimenews/20260808002929-260407"
+          }
+        ]
+      },
+      {
+        "title": "國旅補助",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-08T13:30:00Z",
+        "news": []
+      },
+      {
+        "title": "週末最強大",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-08T13:30:00Z",
+        "news": []
+      },
+      {
+        "title": "天弓三型防空飛彈",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-08T13:20:00Z",
+        "news": []
+      },
+      {
+        "title": "油價",
+        "approximateTraffic": "1000+",
+        "publishedAt": "2026-08-08T13:10:00Z",
+        "news": [
+          {
+            "title": "油價繼續凍漲！下週汽油、柴油維持不調整",
+            "source": "東森新聞",
+            "url": "https://news.ebc.net.tw/news/living/565346"
+          },
+          {
+            "title": "國際油價仍處高檔 「下週國內是否調漲」中油公布了",
+            "source": "Yahoo新聞",
+            "url": "https://tw.news.yahoo.com/%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E4%BB%8D%E8%99%95%E9%AB%98%E6%AA%94-%E4%B8%8B%E9%80%B1%E5%9C%8B%E5%85%A7%E6%98%AF%E5%90%A6%E8%AA%BF%E6%BC%B2-%E4%B8%AD%E6%B2%B9%E5%85%AC%E5%B8%83%E4%BA%86-091900901.html"
+          },
+          {
+            "title": "持續專案平穩 汽、柴油各吸收4.2及3.7元 8/10-8/16國內汽、柴油價格維持不調整",
+            "source": "經濟部",
+            "url": "https://www.moea.gov.tw/Mns/populace/news/News.aspx?kind=1&menu_id=40&news_id=123569"
+          }
+        ]
+      },
+      {
+        "title": "三商美邦",
+        "approximateTraffic": "500+",
+        "publishedAt": "2026-08-08T13:10:00Z",
+        "news": [
+          {
+            "title": "一檔台股將下市！這天停止交易 千張大戶人數曝",
+            "source": "東森新聞",
+            "url": "https://news.ebc.net.tw/news/business/565253"
+          },
+          {
+            "title": "三商壽股票9月1日走入歷史 12月1日更名為「玉山人壽」",
+            "source": "UDN",
+            "url": "https://udn.com/news/story/7251/9677568"
+          },
+          {
+            "title": "三商壽預計9/1併入玉山金 12/1更名玉山人壽 | 陳怡慈 | 新聞",
+            "source": "風傳媒",
+            "url": "https://www.storm.mg/article/11153625"
+          }
+        ]
+      },
+      {
+        "title": "陳亞蘭",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-08T12:20:00Z",
+        "news": []
+      },
       {
         "title": "王室",
         "approximateTraffic": "100+",
@@ -19,22 +109,16 @@
             "url": "https://www.elle.com/tw/entertainment/voice/g73363214/queen-rania-and-princess-rajwa-album/"
           },
           {
+            "title": "喬治王子身邊唯一教他面對「輸」的人！叔叔麥克廷德爾用親身經歷，教「未來國王」學會勝敗這堂人生必修課",
+            "source": "ELLE",
+            "url": "https://www.elle.com/tw/entertainment/gossip/a73382213/mike-tindall-talks-to-future-king-prince-george-about-what-260729/"
+          },
+          {
             "title": "汶萊王妃被褫奪頭銜！蘇丹稱其危害王室聲譽",
             "source": "Yahoo新聞",
             "url": "https://tw.news.yahoo.com/%E6%B1%B6%E8%90%8A%E7%8E%8B%E5%A6%83%E8%A2%AB%E8%A4%AB%E5%A5%AA%E9%A0%AD%E9%8A%9C-%E8%98%87%E4%B8%B9%E7%A8%B1%E5%85%B6%E5%8D%B1%E5%AE%B3%E7%8E%8B%E5%AE%A4%E8%81%B2%E8%AD%BD-084617430.html"
-          },
-          {
-            "title": "汶萊王妃被褫奪頭銜！蘇丹稱其危害王室聲譽 | NOWNEWS今日新聞",
-            "source": "LINE TODAY",
-            "url": "https://today.line.me/tw/v3/article/peZ3Raw"
           }
         ]
-      },
-      {
-        "title": "孫協志",
-        "approximateTraffic": "200+",
-        "publishedAt": "2026-08-08T12:10:00Z",
-        "news": []
       },
       {
         "title": "林煒",
@@ -52,101 +136,17 @@
             "url": "https://stars.udn.com/star/story/10089/9679202"
           },
           {
-            "title": "林煒力拼3年後上市！「一失手沒有機會回頭」當自己的Angle",
-            "source": "壹蘋新聞網",
-            "url": "https://news.nextapple.com/entertainment/20260808/917C73F177B542EF22E96C394894257D"
+            "title": "花系列男神健康出狀況！猛吃這物「腎指數過標」 竟是女友貼心烏龍",
+            "source": "TVBS新聞網",
+            "url": "https://news.tvbs.com.tw/entertainment/4004153"
           }
         ]
       },
       {
-        "title": "aubl",
+        "title": "孫協志",
         "approximateTraffic": "200+",
-        "publishedAt": "2026-08-08T11:50:00Z",
+        "publishedAt": "2026-08-08T12:10:00Z",
         "news": []
-      },
-      {
-        "title": "市值",
-        "approximateTraffic": "100+",
-        "publishedAt": "2026-08-08T11:50:00Z",
-        "news": [
-          {
-            "title": "單周市值暴增5620億美元創紀錄！輝達股價飆11% 馬斯克一句話成助攻",
-            "source": "Yahoo股市",
-            "url": "https://tw.stock.yahoo.com/news/%E5%96%AE%E5%91%A8%E5%B8%82%E5%80%BC%E6%9A%B4%E5%A2%9E5620%E5%84%84%E7%BE%8E%E5%85%83%E5%89%B5%E7%B4%80%E9%8C%84-%E8%BC%9D%E9%81%94%E8%82%A1%E5%83%B9%E9%A3%8611-%E9%A6%AC%E6%96%AF%E5%85%8B-%E5%8F%A5%E8%A9%B1%E6%88%90%E5%8A%A9%E6%94%BB-074500145.html"
-          },
-          {
-            "title": "SpaceX解禁後兩日暴漲23%！市值超車Meta　逼近收復發行價",
-            "source": "ETtoday財經雲",
-            "url": "https://finance.ettoday.net/news/3215557"
-          },
-          {
-            "title": "拆解SpaceX財報密碼！火箭回收引爆太空革命，6檔台廠「星鏈概念股」搶紅利",
-            "source": "ESG遠見",
-            "url": "https://esg.gvm.com.tw/article/122859"
-          }
-        ]
-      },
-      {
-        "title": "補貼",
-        "approximateTraffic": "2000+",
-        "publishedAt": "2026-08-08T11:40:00Z",
-        "news": []
-      },
-      {
-        "title": "盜壘失敗",
-        "approximateTraffic": "200+",
-        "publishedAt": "2026-08-08T11:40:00Z",
-        "news": [
-          {
-            "title": "大谷翔平盜壘失敗求挑戰被無視！網怒噴為何裝死？道奇教頭揭秘了",
-            "source": "NOWnews今日新聞",
-            "url": "https://www.nownews.com/news/6864169"
-          },
-          {
-            "title": "大谷又在壘間出局、左膝仍有傷 球迷看不下去：羅伯斯該阻止他",
-            "source": "ETtoday運動雲",
-            "url": "https://sports.ettoday.net/news/3215592"
-          },
-          {
-            "title": "大谷翔平滑進二壘急喊挑戰！羅伯茲揭露最後放棄重審原因 | 民視新聞網",
-            "source": "LINE TODAY",
-            "url": "https://today.line.me/tw/v3/article/KwVJBYr"
-          }
-        ]
-      },
-      {
-        "title": "劉亞仁",
-        "approximateTraffic": "100+",
-        "publishedAt": "2026-08-08T11:40:00Z",
-        "news": []
-      },
-      {
-        "title": "欣興電子",
-        "approximateTraffic": "500+",
-        "publishedAt": "2026-08-08T11:40:00Z",
-        "news": []
-      },
-      {
-        "title": "xsmb",
-        "approximateTraffic": "2000+",
-        "publishedAt": "2026-08-08T11:30:00Z",
-        "news": [
-          {
-            "title": "Cập nhật kết quả xổ số miền Trung hôm nay 8.8",
-            "source": "Laodong.vn",
-            "url": "https://laodong.vn/ldt/tin-tuc/cap-nhat-ket-qua-xo-so-mien-trung-hom-nay-88-1747949.ldo"
-          },
-          {
-            "title": "XSTG 9/8. Kết quả xổ số Tiền Giang hôm nay ngày 9/8/2026. XSTG ngày 9/8",
-            "source": "Bnews.vn",
-            "url": "https://bnews.vn/xstg-9-8-ket-qua-xo-so-tien-giang-hom-nay-ngay-9-8-2026-xstg-ngay-9-8/431896.html"
-          },
-          {
-            "title": "XSMN 8/8 - Kết quả xổ số miền Nam hôm nay ngày 8/8/2026",
-            "source": "Báo Giáo dục và Thời đại Online",
-            "url": "https://giaoducthoidai.vn/xsmn-88-ket-qua-xo-so-mien-nam-hom-nay-ngay-882026-post787389.html"
-          }
-        ]
       }
     ]
   }
