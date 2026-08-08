@@ -1,10 +1,10 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T13:39:17.054310Z",
+  "generatedAt": "2026-08-08T13:27:30.618249Z",
   "data": {
     "geo": "TW",
-    "status": "ok",
-    "stale": false,
+    "status": "stale",
+    "stale": true,
     "source": "google-trends-rss",
     "sourceUrl": "https://trends.google.com/trending/rss?geo=TW&hl=zh-TW",
     "items": [

@@ -79,3 +79,13 @@ export function fmtPct(ratio: number, digits = 1): string {
 export function fmtFixed(n: number, digits = 1): string {
   return n.toFixed(digits);
 }
+
+/** 將內部 methodVersion (如 news-heat-v4-37-sources) 轉換為友善文字 */
+export function formatMethodVersion(version?: string | null): string {
+  if (!version) return '數據更新正常';
+  const match = version.match(/v(\d+)-(\d+)-sources/);
+  if (match) {
+    return `算法 v${match[1]} · ${match[2]} 家媒體`;
+  }
+  return version;
+}

@@ -1,11 +1,11 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T13:39:17.054310Z",
+  "generatedAt": "2026-08-08T13:27:30.618249Z",
   "data": {
-    "status": "ok",
-    "lastFastAt": "2026-08-08T13:39:17.054310Z",
-    "lastDeepAt": "2026-08-08T13:39:17.054310Z",
-    "methodVersion": "news-heat-v4-37-sources",
+    "status": "stale",
+    "lastFastAt": null,
+    "lastDeepAt": null,
+    "methodVersion": "news-heat-v4-35-sources",
     "scheduleDaysUntilPause": null,
     "coverage": {
       "keywordWindowHours": 24,

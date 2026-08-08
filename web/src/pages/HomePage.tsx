@@ -5,7 +5,7 @@ import { DataSection } from '../components/DataSection';
 import { Banner, Card, Freshness, HeatBar, SourceTag, StatTile } from '../components/ui';
 import { buildHomeSnapshot } from '../lib/home';
 import { displayExcerpt } from '../lib/recent';
-import { fmtCompact, fmtDateTime, fmtNum, fmtRelative } from '../lib/format';
+import { fmtCompact, fmtDateTime, fmtNum, fmtRelative, formatMethodVersion } from '../lib/format';
 import { buildDecisionBrief } from '../lib/decisionBrief';
 import { DecisionBrief } from '../components/DecisionBrief';
 
@@ -59,7 +59,7 @@ export function HomePage() {
         <StatTile label="啟用來源" value={fmtNum(snapshot.sourceCount)} sub={'正常 ' + snapshot.healthySourceCount + ' 個'} icon="newspaper" />
         <StatTile label="24 小時關鍵字命中量" value={fmtCompact(snapshot.keywordMentionCount24h)} sub="不同關鍵字可能重複計數" icon="message" />
         <StatTile label="最高熱度" value={snapshot.topKeyword ? snapshot.topKeyword.heat.toFixed(0) : '—'} sub={snapshot.topKeyword?.term ?? '等待資料'} icon="flame" />
-        <StatTile label="最近更新" value={fmtRelative(snapshot.meta?.lastFastAt ?? null)} sub={snapshot.meta?.methodVersion ?? '尚未取得版本'} icon="clock" />
+        <StatTile label="最近更新" value={fmtRelative(snapshot.meta?.lastFastAt ?? null)} sub={formatMethodVersion(snapshot.meta?.methodVersion)} icon="clock" />
       </div>
 
       <div className="home-section-grid">
