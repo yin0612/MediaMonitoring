@@ -64,13 +64,18 @@ export function buildDecisionBrief(
 ): DecisionBriefModel {
   const keywords = [...input.keywords.keywords].sort((a, b) => b.heat - a.heat);
   const topics = [...input.topics.topics].sort((a, b) => b.size - a.size);
-  const topKeyword = keywords[0] ?? null;
-  const topTopic = topics[0] ?? null;
+  const activeKeywords = keywords.filter((k) => k.heat > 0 || (k.mentions24h ?? 0) > 0);
+  const activeTopics = topics.filter((t) => (t.size ?? 0) > 0);
+  const topKeyword = activeKeywords[0] ?? null;
+  const topTopic = activeTopics[0] ?? null;
   const coverage = sourceCoverage(input);
   const requiredDataAvailable = Object.values(availability).every(Boolean);
   const confidence = confidenceOf(input, coverage.enabled, coverage.healthy, requiredDataAvailable);
 
-  if (!topKeyword && !topTopic && input.recent.items.length === 0) {
+  const referenceTime = generatedAt ?? input.meta?.lastFastAt ?? '';
+  const rising = getRisingKeywords(input.recent.items, keywords, referenceTime, 90)[0] ?? null;
+
+  if (!rising && !topKeyword && !topTopic && input.recent.items.length === 0) {
     return {
       eyebrow: '今日決策摘要',
       headline: '等待下一批新聞訊號',
@@ -83,8 +88,6 @@ export function buildDecisionBrief(
     };
   }
 
-  const referenceTime = generatedAt ?? input.meta?.lastFastAt ?? '';
-  const rising = getRisingKeywords(input.recent.items, keywords, referenceTime, 90)[0] ?? null;
   const deepDataLimited = !requiredDataAvailable || input.keywords.stale === true || input.topics.stale;
   const signals: DecisionSignal[] = [];
 
@@ -124,13 +127,17 @@ export function buildDecisionBrief(
     ? `${rising.term}正在升溫`
     : topKeyword
       ? `${topKeyword.term}是目前最高熱度訊號`
-      : `${topTopic?.label ?? '新聞事件'}最受關注`;
+      : topTopic
+        ? `${topTopic.label}最受關注`
+        : '即時新聞動態監測中';
 
   const baseSummary = rising
     ? `近 90 分鐘共有 ${rising.recentMentions} 篇新聞共同提及「${rising.term}」（較前一時段增加 ${rising.delta} 篇）；目前最大事件為${topTopic?.label ?? '尚待分類'}。`
     : topKeyword
       ? `${topKeyword.term}目前熱度 ${Math.round(topKeyword.heat)}，24 小時命中 ${topKeyword.mentions24h} 篇。`
-      : `${topTopic?.label ?? '主要事件'}目前累積 ${topTopic?.size ?? 0} 篇相關新聞。`;
+      : topTopic
+        ? `${topTopic.label}目前累積 ${topTopic.size} 篇相關新聞。`
+        : '系統正在持續監測 37 家新聞媒體。資料快照更新後，此處將自動呈現最新議題。';
 
   return {
     eyebrow: '今日決策摘要',
