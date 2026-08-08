@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-08T13:00:49.999406Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-03",
+    "items": [
+      {
+        "id": "5921afb67ad7ef3c22c0",
+        "source": "tfc",
+        "title": "【2026/7/27-2026/8/2】闢謠TOP10",
+        "excerpt": "油品議題持續延燒，社群多則訊息與此有關，從苯駢芘毒性、食安預算蓋大樓到高美濕地被違法濫倒戴奧辛廢棄物，相關的謠言層出不窮。 〈【2026/7/27-2026/8/2】闢謠TOP10〉這篇文章最早發佈於《台灣事實查核中心》。",
+        "publishedAt": "2026-08-03T10:23:02Z",
+        "url": "https://tfc-taiwan.org.tw/top10_20260727_20260802/",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "違法",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "2cb3138fce834f1c42b6",
+        "source": "tfc",
+        "title": "【AI亂象如何解？】義大利政黨簽署自律條款 拒用深偽內容攻擊對手",
+        "excerpt": "AI深偽技術被用於政治攻訐在全球日漸普遍，這些利用AI生成極為逼真、但並未實際發生的內容可能影響民眾決策、進而侵蝕民主制度。為此，義大利查核組織呼籲國內政黨簽署自律條款，拒絕使用深偽攻擊對手，幾乎所有政黨都參與宣誓。義大利的做法或可作為其他社會的典範。 〈【AI亂象如何解？】義大…",
+        "publishedAt": "2026-08-03T06:27:52Z",
+        "url": "https://tfc-taiwan.org.tw/italian-political-parties-pledge-no-deepfakes-in-election-campaigns/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

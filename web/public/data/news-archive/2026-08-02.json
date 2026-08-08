@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-08T13:00:49.999406Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-02",
+    "items": [
+      {
+        "id": "2b7be7724125c9605442",
+        "source": "reporter",
+        "title": "性創傷裡的深度安靜（上）：受傷的不只倖存者，還有「重要他人」",
+        "excerpt": "沈可尚至今仍與那位啟發他探入創傷歷程的前女友維持聯繫，事實上，電影田調階段的受訪者，有些就是她介紹的。後來她去看了《深度安靜》，並傳訊息給沈可尚：「我拚命往前走，卻把你留在那。」",
+        "publishedAt": "2026-08-02T16:00:00Z",
+        "url": "https://www.twreporter.org/a/supporting-the-significant-others-of-sexual-trauma-survivors-1",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "受傷",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "7a4b33211574eaf1aa19",
+        "source": "reporter",
+        "title": "性創傷裡的深度安靜（下）：在沒有地圖的復元路上，與你同行",
+        "excerpt": "「其實你只要像盞燈，重點不在夠不夠亮、提供多少熱源，穩定存在就好。」性暴力倖存者互助社群「暖暖Sunshine」的發起人湯淨、元老成員詩縈，以及兩人的伴侶，和《報導者》分享陪伴路上的起伏跌宕：他們學著看見對方的傷，也照顧彼此的需要。",
+        "publishedAt": "2026-08-02T16:00:00Z",
+        "url": "https://www.twreporter.org/a/supporting-the-significant-others-of-sexual-trauma-survivors-2",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "595e76b5f5246abfcca4",
+        "source": "coolloud",
+        "title": "追究以色列戰爭罪的 ICC 檢察官為何遭免職？",
+        "excerpt": "2026/08/02 12:00:00公共論壇陳韋綸苦勞網特約編輯2024 年申請對以色列總理納坦雅胡發出戰爭罪逮捕令的國際刑事法院（ICC）首席檢察官克里姆・汗（Karim Khan），於 7 月 24 日遭 ICC 締約國以多數決方式免職。這是 ICC 成立以來，首次由締約國…",
+        "publishedAt": "2026-08-02T05:32:45Z",
+        "url": "https://www.coolloud.org.tw/node/99498",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

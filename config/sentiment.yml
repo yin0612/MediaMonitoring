@@ -1,0 +1,137 @@
+# 繁體中文情緒詞典（baseline 方法）
+#
+# 設計原則：
+# - 只做透明、可重算的字面比對；不使用模型權重，符合免費／離線與公開研究限制。
+# - 每一次判讀都會回傳「命中詞」作為依據，前端據此顯示正／負向理由，可追溯到原文。
+# - weight 2 代表語氣明顯強烈（如死亡、暴漲），weight 1 為一般傾向。
+# - 這是 baseline，未經人工標註集驗證前一律標示為實驗性，不得宣稱準確。
+
+negation_window: 4   # 命中詞前幾個字內出現否定詞則反轉極性
+negations: [不, 未, 無, 沒, 免, 難以, 並非, 毫無, 拒, 否認]
+
+positive:
+  # 經濟與市場
+  - { term: 成長, weight: 1 }
+  - { term: 上漲, weight: 1 }
+  - { term: 大漲, weight: 2 }
+  - { term: 飆升, weight: 2 }
+  - { term: 獲利, weight: 1 }
+  - { term: 創高, weight: 2 }
+  - { term: 新高, weight: 2 }
+  - { term: 回升, weight: 1 }
+  - { term: 看好, weight: 1 }
+  - { term: 樂觀, weight: 1 }
+  - { term: 增加, weight: 1 }
+  - { term: 擴大投資, weight: 1 }
+  - { term: 加薪, weight: 1 }
+  - { term: 減稅, weight: 1 }
+  - { term: 補助, weight: 1 }
+  # 成就與進展
+  - { term: 成功, weight: 1 }
+  - { term: 突破, weight: 2 }
+  - { term: 奪冠, weight: 2 }
+  - { term: 奪金, weight: 2 }
+  - { term: 獲獎, weight: 1 }
+  - { term: 締造, weight: 1 }
+  - { term: 改善, weight: 1 }
+  - { term: 進步, weight: 1 }
+  - { term: 通過, weight: 1 }
+  - { term: 達成, weight: 1 }
+  - { term: 完工, weight: 1 }
+  - { term: 啟用, weight: 1 }
+  - { term: 復原, weight: 1 }
+  - { term: 康復, weight: 1 }
+  - { term: 獲救, weight: 2 }
+  - { term: 平安, weight: 1 }
+  - { term: 順利, weight: 1 }
+  - { term: 肯定, weight: 1 }
+  - { term: 支持, weight: 1 }
+  - { term: 感謝, weight: 1 }
+  - { term: 歡迎, weight: 1 }
+  - { term: 合作, weight: 1 }
+  - { term: 和解, weight: 1 }
+  - { term: 力挺, weight: 1 }
+  - { term: 好評, weight: 1 }
+  - { term: 熱銷, weight: 1 }
+  - { term: 看漲, weight: 1 }
+  - { term: 優惠, weight: 1 }
+  - { term: 升級, weight: 1 }
+  - { term: 領先, weight: 1 }
+  - { term: 奪下, weight: 1 }
+
+negative:
+  # 經濟與市場
+  - { term: 下跌, weight: 1 }
+  - { term: 大跌, weight: 2 }
+  - { term: 暴跌, weight: 2 }
+  - { term: 重挫, weight: 2 }
+  - { term: 虧損, weight: 2 }
+  - { term: 衰退, weight: 2 }
+  - { term: 下滑, weight: 1 }
+  - { term: 減少, weight: 1 }
+  - { term: 裁員, weight: 2 }
+  - { term: 失業, weight: 2 }
+  - { term: 倒閉, weight: 2 }
+  - { term: 破產, weight: 2 }
+  - { term: 停業, weight: 1 }
+  - { term: 漲價, weight: 1 }
+  - { term: 通膨, weight: 1 }
+  - { term: 看壞, weight: 1 }
+  - { term: 悲觀, weight: 1 }
+  # 災害與事故
+  - { term: 死亡, weight: 2 }
+  - { term: 罹難, weight: 2 }
+  - { term: 死傷, weight: 2 }
+  - { term: 傷亡, weight: 2 }
+  - { term: 受傷, weight: 1 }
+  - { term: 車禍, weight: 2 }
+  - { term: 火警, weight: 2 }
+  - { term: 火災, weight: 2 }
+  - { term: 爆炸, weight: 2 }
+  - { term: 墜落, weight: 2 }
+  - { term: 坍塌, weight: 2 }
+  - { term: 災情, weight: 1 }
+  - { term: 雨彈, weight: 2 }
+  - { term: 豪大雨, weight: 2 }
+  - { term: 豪雨, weight: 1 }
+  - { term: 淹水, weight: 1 }
+  - { term: 停電, weight: 1 }
+  - { term: 疫情, weight: 1 }
+  - { term: 確診, weight: 1 }
+  - { term: 中毒, weight: 2 }
+  - { term: 致癌, weight: 2 }
+  - { term: 汙染, weight: 1 }
+  - { term: 危機, weight: 2 }
+  - { term: 風險, weight: 1 }
+  - { term: 警告, weight: 1 }
+  - { term: 示警, weight: 1 }
+  # 社會與司法
+  - { term: 爭議, weight: 1 }
+  - { term: 抗議, weight: 1 }
+  - { term: 批評, weight: 1 }
+  - { term: 譴責, weight: 2 }
+  - { term: 抨擊, weight: 2 }
+  - { term: 質疑, weight: 1 }
+  - { term: 衝突, weight: 2 }
+  - { term: 詐騙, weight: 2 }
+  - { term: 起訴, weight: 2 }
+  - { term: 判刑, weight: 2 }
+  - { term: 收押, weight: 2 }
+  - { term: 貪污, weight: 2 }
+  - { term: 弊案, weight: 2 }
+  - { term: 違法, weight: 2 }
+  - { term: 違規, weight: 1 }
+  - { term: 罰款, weight: 1 }
+  - { term: 開罰, weight: 1 }
+  - { term: 遭控, weight: 1 }
+  - { term: 涉嫌, weight: 1 }
+  - { term: 侵害, weight: 2 }
+  - { term: 霸凌, weight: 2 }
+  - { term: 施暴, weight: 2 }
+  - { term: 失利, weight: 1 }
+  - { term: 落敗, weight: 1 }
+  - { term: 延宕, weight: 1 }
+  - { term: 停擺, weight: 1 }
+  - { term: 反對, weight: 1 }
+  - { term: 抵制, weight: 2 }
+  - { term: 緊張, weight: 1 }

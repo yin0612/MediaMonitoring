@@ -1,0 +1,20 @@
+{
+  "name": "media-monitoring-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gen-config": "node scripts/gen-config.mjs",
+    "pretest": "node scripts/gen-config.mjs",
+    "test": "node --test",
+    "dev": "wrangler dev",
+    "predeploy": "node scripts/gen-config.mjs",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.3.0",
+    "wrangler": "^4.26.0"
+  },
+  "overrides": {
+    "sharp": "^0.35.3"
+  }
+}

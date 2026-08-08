@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-08T13:00:49.999406Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-04",
+    "items": [
+      {
+        "id": "fe2e0d014fffa7cc53b8",
+        "source": "reporter",
+        "title": "害死「焚證者們」的西班牙夢：7.2萬非法移民一夜現身，是誰煽動休達的偷渡風暴？",
+        "excerpt": "西班牙位於北非的飛地休達，在24小時內出現7.2萬名難民強闖邊境、至少99人死亡。失控風暴為何發生？煽動群眾的「謠言種子」從何而來？任由國民非法偷渡的摩洛哥，又為何被國際再度懷疑是操縱難民的幕後得利者？",
+        "publishedAt": "2026-08-04T16:00:00Z",
+        "url": "https://www.twreporter.org/a/hello-world-2026-08-05",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "死亡",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "7f8820d7452228e4c471",
+        "source": "reporter",
+        "title": "臥底直擊跨境器官移植供應鏈（上）：採訪前先想「逃跑計畫」？首次用針孔密錄器！記者經歷的風險與第一手發現",
+        "excerpt": "《報導者》揭發非法跨境器官移植產業鏈的報導刊登後，不少讀者擔心記者的人身安全。本集，你將聽到報導中沒寫到的：無人願意受訪的瓶頸、首度使用針孔密錄器的考量、為什麼風險高還要去第二次，以及差點曝露記者身分的處境。",
+        "publishedAt": "2026-08-04T16:00:00Z",
+        "url": "https://www.twreporter.org/a/podcast-2026-08-05",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "風險",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

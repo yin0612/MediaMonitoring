@@ -1,0 +1,111 @@
+name: Update news snapshot and deploy Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'config/**'
+      - 'worker/**'
+      - 'requirements.txt'
+      - '.github/workflows/deploy-web.yml'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [scheduled-refresh]
+  # public repo 的 Actions 分鐘數無限量；排程觸發已跳過重複測試，build 約 1 分鐘，
+  # 故採 GitHub 允許的最小排程間隔 5 分鐘，讓 14 家無官方 RSS 來源的 recent.json
+  # 也能跟上 Worker Cron 的更新節奏（best effort，GitHub 不保證準點）。
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允許一個執行中與最新一個等待中的部署，且不取消進行中的工作，避免互相覆寫
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: 安裝 Python 相依套件
+        run: pip install -r requirements.txt
+
+      # 排程與 Worker 自動刷新只做資料更新與部署；push 與人工執行仍跑完整測試
+      - name: Python 測試
+        if: github.event_name != 'schedule' && github.event_name != 'repository_dispatch'
+        run: python -m pytest -q
+        env:
+          PYTHONPATH: src
+
+      - name: 更新官方 RSS 與 Google Trends TW 快照
+        run: python -m opinion_pipeline.cli --restore-base-url https://yin0612.github.io/MediaMonitoring
+        env:
+          PYTHONPATH: src
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            web/package-lock.json
+            worker/package-lock.json
+
+      - name: 安裝 Worker 相依套件
+        if: github.event_name != 'schedule' && github.event_name != 'repository_dispatch'
+        run: npm ci
+        working-directory: worker
+
+      - name: Worker 核心測試
+        if: github.event_name != 'schedule' && github.event_name != 'repository_dispatch'
+        run: npm test
+        working-directory: worker
+
+      - name: 安裝前端相依套件
+        run: npm ci
+        working-directory: web
+
+      - name: 前端單元測試
+        if: github.event_name != 'schedule' && github.event_name != 'repository_dispatch'
+        run: npm test
+        working-directory: web
+
+      - name: 型別檢查
+        if: github.event_name != 'schedule' && github.event_name != 'repository_dispatch'
+        run: npm run typecheck
+        working-directory: web
+
+      - name: 建置
+        run: npm run build
+        working-directory: web
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

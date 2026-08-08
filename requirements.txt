@@ -1,0 +1,6 @@
+# 輿情資料管線（Phase 2 快速管線）相依套件
+feedparser>=6.0.11
+PyYAML>=6.0.2
+requests>=2.32.0
+jieba>=0.42.1
+pytest>=8.3.0

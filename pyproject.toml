@@ -1,0 +1,17 @@
+[project]
+name = "media-monitoring"
+version = "0.1.0"
+dependencies = [
+    "feedparser>=6.0.11",
+    "PyYAML>=6.0.2",
+    "requests>=2.32.0",
+    "jieba>=0.42.1",
+    "pytest>=8.3.0",
+]
+
+[tool.pytest.ini_options]
+# 讓 `python -m pytest` 在乾淨 clone 直接可執行，
+# 不必先手動設定 PYTHONPATH=src（CI 與本機行為一致）。
+pythonpath = ["src"]
+testpaths = ["tests"]
+

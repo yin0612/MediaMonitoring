@@ -1,0 +1,70 @@
+{
+  "now": "2026-07-22T12:00:00Z",
+  "enabledSourceCount": 24,
+  "items": [
+    {
+      "id": "1",
+      "source": "cna",
+      "title": "賴清德與台積電討論半導體投資創新高",
+      "excerpt": "總統肯定產業成長。",
+      "url": "https://example.com/1",
+      "publishedAt": "2026-07-22T11:00:00Z"
+    },
+    {
+      "id": "2",
+      "source": "ltn",
+      "title": "賴總統視察台積電半導體園區",
+      "excerpt": "投資計畫獲得支持。",
+      "url": "https://example.com/2",
+      "publishedAt": "2026-07-22T10:00:00Z"
+    },
+    {
+      "id": "3",
+      "source": "udn",
+      "title": "Donald Trump批評台積電投資",
+      "excerpt": "市場擔憂衝擊與風險。",
+      "url": "https://example.com/3",
+      "publishedAt": "2026-07-22T09:00:00Z"
+    },
+    {
+      "id": "4",
+      "source": "tvbs",
+      "title": "行政院與經濟部推動半導體政策",
+      "excerpt": "卓榮泰表示政策改善投資環境。",
+      "url": "https://example.com/4",
+      "publishedAt": "2026-07-22T08:00:00Z"
+    },
+    {
+      "id": "5",
+      "source": "setn",
+      "title": "颱風豪雨造成災情",
+      "excerpt": "交通中斷並傳出傷亡。",
+      "url": "https://example.com/5",
+      "publishedAt": "2026-07-21T12:00:00Z"
+    },
+    {
+      "id": "6",
+      "source": "ettoday",
+      "title": "颱風警報解除",
+      "excerpt": "交通逐步恢復正常。",
+      "url": "https://example.com/6",
+      "publishedAt": "2026-07-21T11:00:00Z"
+    },
+    {
+      "id": "7",
+      "source": "pts",
+      "title": "立法院審查行政院預算",
+      "excerpt": "朝野立委爆發爭議。",
+      "url": "https://example.com/7",
+      "publishedAt": "2026-07-20T11:00:00Z"
+    },
+    {
+      "id": "8",
+      "source": "ctee",
+      "title": "股市上漲反映經濟成長",
+      "excerpt": "企業獲利創高。",
+      "url": "https://example.com/8",
+      "publishedAt": "2026-07-20T10:00:00Z"
+    }
+  ]
+}

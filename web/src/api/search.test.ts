@@ -1,0 +1,226 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import {
+  buildStaticSearchData,
+  calculateNewsHeat,
+  parseSearchResponse,
+  parseTrendsResponse,
+  searchNews,
+  selectArchiveDays,
+} from './search';
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+  vi.unstubAllGlobals();
+});
+
+describe('calculateNewsHeat', () => {
+  it('uses only volume, acceleration, and source diversity', () => {
+    expect(calculateNewsHeat({ volume: 1, acceleration: 0.5, diversity: 0 })).toBe(67);
+  });
+
+  it('clamps every component to zero through one hundred', () => {
+    expect(calculateNewsHeat({ volume: 2, acceleration: -1, diversity: 1 })).toBe(67);
+  });
+});
+
+describe('static snapshot fallback', () => {
+  it('uses the small recent snapshot for ranges up to 24 hours', async () => {
+    vi.stubEnv('VITE_API_BASE_URL', '');
+    const requested: string[] = [];
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
+      requested.push(String(input));
+      return new Response(JSON.stringify({
+        schemaVersion: '2.1.0',
+        generatedAt: '2026-07-22T12:00:00Z',
+        data: {
+          items: [{
+            id: '1',
+            source: 'cna',
+            title: '台積電公布法說會資訊',
+            excerpt: '摘要',
+            publishedAt: new Date().toISOString(),
+            url: 'https://example.com/1',
+            sentiment: null,
+          }],
+        },
+      }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    }));
+
+    await searchNews('台積電', '24h');
+
+    expect(requested.some((url) => url.endsWith('/data/recent.json'))).toBe(true);
+    expect(requested.some((url) => url.endsWith('/data/news-archive.json'))).toBe(false);
+  });
+
+  it('reads recent directly from Pages after Worker search fails', async () => {
+    vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
+    const requested: string[] = [];
+    const now = Date.now();
+    const article = (id: string, publishedAt: number) => ({
+      id,
+      source: 'cna',
+      title: `台積電新聞 ${id}`,
+      excerpt: '',
+      publishedAt: new Date(publishedAt).toISOString(),
+      url: `https://example.com/${id}`,
+      sentiment: null,
+    });
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      requested.push(url);
+      if (url.startsWith('https://worker.example/api/search')) {
+        return new Response('', { status: 503 });
+      }
+      if (url.startsWith('https://worker.example/api/data?name=recent')) {
+        return Response.json({
+          schemaVersion: '2.1.0',
+          generatedAt: new Date().toISOString(),
+          data: { items: [article('worker-truncated', now - 180_000)] },
+        });
+      }
+      if (url.endsWith('/data/recent.json')) {
+        return Response.json({
+          schemaVersion: '2.1.0',
+          generatedAt: new Date().toISOString(),
+          data: {
+            items: [
+              article('pages-1', now - 120_000),
+              article('pages-2', now - 60_000),
+            ],
+          },
+        });
+      }
+      return new Response('', { status: 404 });
+    }));
+
+    const result = await searchNews('台積電', '24h');
+
+    expect(result.data.items.map((item) => item.id)).toEqual(['pages-2', 'pages-1']);
+    expect(requested.some((url) => url.includes('/api/data?name=recent'))).toBe(false);
+    expect(requested.some((url) => url.endsWith('/data/recent.json'))).toBe(true);
+  });
+
+  it('loads only the daily chunks needed by the requested range', () => {
+    const days = [
+      { date: '2026-07-22', count: 10, file: 'news-archive/2026-07-22' },
+      { date: '2026-07-21', count: 20, file: 'news-archive/2026-07-21' },
+      { date: '2026-07-20', count: 30, file: 'news-archive/2026-07-20' },
+    ];
+
+    expect(selectArchiveDays(days, '24h', Date.parse('2026-07-22T12:00:00Z'))).toHaveLength(2);
+    expect(selectArchiveDays(days, '7d', Date.parse('2026-07-22T12:00:00Z'))).toHaveLength(3);
+  });
+
+  it('filters the last-good archive without claiming it is live', () => {
+    const data = buildStaticSearchData(
+      [
+        {
+          id: '1',
+          source: 'cna',
+          title: '台積電公布法說會資訊',
+          excerpt: '摘要',
+          publishedAt: '2026-07-22T11:30:00Z',
+          url: 'https://example.com/1',
+          sentiment: null,
+        },
+        {
+          id: '2',
+          source: 'ltn',
+          title: '天氣快訊',
+          excerpt: '摘要',
+          publishedAt: '2026-07-22T11:20:00Z',
+          url: 'https://example.com/2',
+          sentiment: null,
+        },
+      ],
+      '台積電',
+      '24h',
+      Date.parse('2026-07-22T12:00:00Z'),
+    );
+
+    expect(data.status).toBe('stale');
+    expect(data.stale).toBe(true);
+    expect(data.items).toHaveLength(1);
+  });
+
+  it('returns zero heat when no article matches', () => {
+    const data = buildStaticSearchData([], '不存在詞', '24h', Date.parse('2026-07-22T12:00:00Z'));
+    expect(data.metrics.mentions).toBe(0);
+    expect(data.metrics.heat).toBe(0);
+  });
+
+  it('validates the Taiwan trends source identity', () => {
+    expect(() =>
+      parseTrendsResponse({
+        schemaVersion: '2.0.0',
+        generatedAt: '2026-07-22T00:00:00Z',
+        data: { geo: 'US', source: 'other', items: [] },
+      }),
+    ).toThrow('趨勢資料格式不相容');
+  });
+
+  it('rejects malformed Google Trends related-news metadata', () => {
+    expect(() => parseTrendsResponse({
+      schemaVersion: '2.0.0',
+      generatedAt: '2026-07-22T00:00:00Z',
+      data: {
+        geo: 'TW', source: 'google-trends-rss', status: 'ok', stale: false,
+        sourceUrl: 'https://trends.google.com/',
+        items: [{
+          title: 'short selling', approximateTraffic: '200+', publishedAt: '2026-07-22T00:00:00Z',
+          news: [{ title: 'news', source: 'publisher' }],
+        }],
+      },
+    })).toThrow('趨勢資料格式不相容');
+  });
+});
+
+describe('parseSearchResponse', () => {
+  it('accepts a partial response and preserves failed source details', () => {
+    const parsed = parseSearchResponse({
+        schemaVersion: '2.0.0',
+      generatedAt: '2026-07-22T00:00:00Z',
+      data: {
+        query: '台積電',
+        range: '24h',
+        status: 'partial',
+        stale: false,
+        metrics: {
+          heat: 72,
+          mentions: 4,
+          sourceCount: 2,
+          volume: 0.8,
+          acceleration: 0.6,
+          diversity: 0.4,
+        },
+        timeline: [],
+        sourceCounts: { cna: 2, ltn: 2 },
+        sources: [
+          { id: 'cna', displayName: '中央社', status: 'ok', itemCount: 2, errorCode: null },
+          { id: 'tvbs', displayName: 'TVBS', status: 'error', itemCount: 0, errorCode: 'HTTP_403' },
+        ],
+        items: [],
+      },
+    });
+
+    expect(parsed.data.status).toBe('partial');
+    expect(parsed.data.sources[1].errorCode).toBe('HTTP_403');
+  });
+
+  it('rejects malformed payloads instead of guessing fields', () => {
+    expect(() => parseSearchResponse({ data: { query: '台積電' } })).toThrow('搜尋資料格式不相容');
+  });
+
+  it('rejects a different schema major version', () => {
+    expect(() =>
+      parseSearchResponse({
+        schemaVersion: '1.9.0',
+        generatedAt: '2026-07-22T00:00:00Z',
+        data: {
+          query: '台積電', range: '24h', status: 'ok', stale: false, metrics: {},
+          timeline: [], sources: [], items: [],
+        },
+      }),
+    ).toThrow('搜尋資料格式不相容');
+  });
+});

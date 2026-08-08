@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:ht="https://trends.google.com/trending/rss" version="2.0">
+  <channel>
+    <title>Daily Search Trends</title>
+    <item>
+      <title>台灣颱風</title>
+      <ht:approx_traffic>20,000+</ht:approx_traffic>
+      <pubDate>Wed, 22 Jul 2026 08:00:00 +0000</pubDate>
+      <ht:picture>https://example.com/weather.jpg</ht:picture>
+      <ht:news_item>
+        <ht:news_item_title>颱風最新動態</ht:news_item_title>
+        <ht:news_item_url>https://example.com/news/1</ht:news_item_url>
+        <ht:news_item_source>中央社</ht:news_item_source>
+      </ht:news_item>
+    </item>
+  </channel>
+</rss>

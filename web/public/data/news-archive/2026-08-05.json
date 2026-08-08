@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-08T13:00:49.999406Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-05",
+    "items": [
+      {
+        "id": "75c93f94b4e01095f048",
+        "source": "reporter",
+        "title": "李志德／補修「共產中國」這一課──讀《幹部國家》",
+        "excerpt": "革命的歷史、幹部的來源和養成、執政績效經濟發展、城鄉二元體制、公民社會的消滅、意識形態，這些都是認識當今共產中國的主要線索，而把這些線索串起來的，就是處在共產黨內從上到下，各種位階中的政策執行者──幹部。",
+        "publishedAt": "2026-08-05T16:00:00Z",
+        "url": "https://www.twreporter.org/a/bookreview-cadre-country-how-china-became-the-chinese-communist-party",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "ea35c9f178e372654625",
+        "source": "tfc",
+        "title": "二二八、林宅血案，歷史研究如何看清假訊息與認知戰？",
+        "excerpt": "歷史如何對抗假訊息與認知戰？台大歷史系教授陳翠蓮從二二八、林宅血案、陳文成案談起，解析轉型正義、歷史記憶與獨立思辨的重要性，拒絕遺忘歷史。 〈二二八、林宅血案，歷史研究如何看清假訊息與認知戰？〉這篇文章最早發佈於《台灣事實查核中心》。",
+        "publishedAt": "2026-08-05T04:25:28Z",
+        "url": "https://tfc-taiwan.org.tw/history-disinformation-transitional-justice/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

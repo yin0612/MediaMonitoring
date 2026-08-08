@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chunyu8866.github.io/MediaMonitoringDB/sitemap.xml

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-08T13:00:49.999406Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-06",
+    "items": [
+      {
+        "id": "e91b8a51d21ea30cb012",
+        "source": "reporter",
+        "title": "【投書】他們仍有夢想──從電影《我們要回家》反思台灣引進印度移工政策",
+        "excerpt": "「在這充滿苦難的世界，我們常忘記，每個數字背後都是活生生的人。」電影《我們要回家》改編2020年印度疫情封鎖下的階級悲劇，敘事手法提醒觀者先認識人再理解身分，學者黃星達則以此省思因印度移工之議引發紛爭的台灣。",
+        "publishedAt": "2026-08-06T16:00:00Z",
+        "url": "https://www.twreporter.org/a/opinion-homebound",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "疫情",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+"""新聞快照的去重、篩選與公開 JSON 序列化。"""
+from __future__ import annotations
+
+import hashlib
+from datetime import datetime, timedelta, timezone
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+
+from .models import NormalizedItem
+from .sentiment import SentimentLexicon, classify
+
+
+RANGE_HOURS = {"1h": 1, "6h": 6, "24h": 24, "7d": 24 * 7}
+_TRACKING_KEYS = {"fbclid", "gclid", "ref", "source"}
+
+
+def canonical_url(url: str) -> str:
+    parts = urlsplit(url.strip())
+    query = [
+        (key, value)
+        for key, value in parse_qsl(parts.query, keep_blank_values=True)
+        if not key.lower().startswith("utm_") and key.lower() not in _TRACKING_KEYS
+    ]
+    path = parts.path.rstrip("/") or "/"
+    return urlunsplit((parts.scheme.lower(), parts.netloc.lower(), path, urlencode(query), ""))
+
+
+def _title_key(entry: NormalizedItem) -> tuple[str, str]:
+    return entry.source, "".join(entry.title.split()).casefold()
+
+
+def _is_original_url(entry: NormalizedItem) -> bool:
+    return "news.google.com" not in entry.url
+
+
+def dedupe_items(items: list[NormalizedItem]) -> list[NormalizedItem]:
+    """兩層去重：先依 canonical URL，再依（來源, 標題）。
+
+    同一篇新聞可能同時出現 Google News 轉址 URL 與原文 URL，
+    標題層去重時偏好原文 URL 的版本。
+    """
+    by_url: dict[str, NormalizedItem] = {}
+    for entry in sorted(items, key=lambda value: value.published_at, reverse=True):
+        by_url.setdefault(canonical_url(entry.url), entry)
+
+    by_title: dict[tuple[str, str], NormalizedItem] = {}
+    for entry in by_url.values():
+        key = _title_key(entry)
+        kept = by_title.get(key)
+        if kept is None or (_is_original_url(entry) and not _is_original_url(kept)):
+            by_title[key] = entry
+    return sorted(by_title.values(), key=lambda value: value.published_at, reverse=True)
+
+
+def filter_items(
+    items: list[NormalizedItem], query: str, range_name: str, now: datetime | None = None
+) -> list[NormalizedItem]:
+    now = now or datetime.now(timezone.utc)
+    if range_name not in RANGE_HOURS:
+        raise ValueError("INVALID_RANGE")
+    needle = query.strip().casefold()
+    if len(needle) < 2 or len(needle) > 50:
+        raise ValueError("INVALID_QUERY")
+    cutoff = now - timedelta(hours=RANGE_HOURS[range_name])
+    return [
+        entry
+        for entry in items
+        if entry.published_at >= cutoff and needle in entry.search_text.casefold()
+    ]
+
+
+def item_to_public(entry: NormalizedItem, lexicon: SentimentLexicon | None = None) -> dict:
+    digest = hashlib.sha256(f"{entry.source}:{entry.source_item_id}".encode("utf-8")).hexdigest()[:20]
+    published = entry.published_at.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+    return {
+        "id": digest,
+        "source": entry.source,
+        "title": entry.title,
+        "excerpt": entry.excerpt[:140] + ("…" if len(entry.excerpt) > 140 else ""),
+        "publishedAt": published,
+        "url": entry.url,
+        # 情緒只在管線端計算一次；matched 保留判讀依據，前端不得另建第二套詞典。
+        "sentiment": classify(entry.search_text, lexicon) if lexicon and lexicon.size else None,
+    }
+
+
+def public_to_item(value: dict, now: datetime | None = None) -> NormalizedItem | None:
+    try:
+        current = now or datetime.now(timezone.utc)
+        published = datetime.fromisoformat(str(value["publishedAt"]).replace("Z", "+00:00"))
+        if published > current + timedelta(minutes=5):
+            corrected = published - timedelta(hours=8)
+            if corrected <= current + timedelta(minutes=5):
+                published = corrected
+        if published > current + timedelta(minutes=5):
+            return None
+        return NormalizedItem(
+            source=str(value["source"]),
+            source_item_id=str(value.get("id") or value["url"]),
+            title=str(value["title"]),
+            excerpt=str(value.get("excerpt") or "")[:140],
+            url=str(value["url"]),
+            published_at=published,
+        )
+    except (KeyError, TypeError, ValueError):
+        return None

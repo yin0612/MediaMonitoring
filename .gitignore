@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+**/node_modules/
+__pycache__/
+*.pyc
+
+# Environment & local tools
+.env
+.env.local
+bin_tools/
+
+# Build outputs & caches
+dist/
+build/
+.pytest_cache/
+.coverage
+*.log
+
+# OS & IDE
+.DS_Store
+.vscode/
+.idea/

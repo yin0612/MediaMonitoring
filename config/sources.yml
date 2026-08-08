@@ -1,0 +1,286 @@
+sources:
+  - id: tvbs
+    name: TVBS
+    domains: [news.tvbs.com.tw, tvbs.com.tw]
+    aliases: [TVBS新聞網, TVBS]
+    rss_url: ""
+    crawl:
+      enabled: true
+      url: https://news.tvbs.com.tw/realtime
+      article_url_pattern: '^https://news\.tvbs\.com\.tw/[a-z-]+/\d+$'
+
+  - id: ebc
+    name: 東森新聞
+    domains: [news.ebc.net.tw, ebc.net.tw]
+    aliases: [東森新聞, EBC東森新聞]
+    rss_url: ""
+    crawl:
+      enabled: true
+      url: https://news.ebc.net.tw/
+      article_url_pattern: '^https://news\.ebc\.net\.tw/news/[a-z-]+/\d+$'
+
+  - id: setn
+    name: 三立新聞
+    domains: [setn.com, www.setn.com]
+    aliases: [三立新聞網, 三立新聞網SETN.com, SETN]
+    rss_url: ""
+    crawl:
+      enabled: true
+      url: https://www.setn.com/
+      article_url_pattern: '^https://www\.setn\.com/news/\d+$'
+
+  - id: ftv
+    name: 民視新聞
+    domains: [ftvnews.com.tw, www.ftvnews.com.tw]
+    aliases: [民視新聞網, 民視新聞]
+    rss_url: ""
+    crawl: { enabled: true, url: https://www.ftvnews.com.tw/ }
+
+  - id: cti
+    name: 中天新聞
+    domains: [ctinews.com]
+    aliases: [中天新聞網, 中天新聞]
+    rss_url: https://ctinews.com/rss/google-news.xml
+    crawl: { enabled: false, url: "" }
+
+  - id: era
+    name: 年代新聞
+    domains: [eracom.com.tw, www.eracom.com.tw]
+    aliases: [年代新聞, 年代電視]
+    rss_url: ""
+    crawl:
+      enabled: true
+      url: https://www.eracom.com.tw/EraNews/
+      article_url_pattern: '^https://www\.eracom\.com\.tw/EraNews/Home/(?:HotNews|HotPrograms)/\d{4}-\d{2}-\d{2}/\d+\.html$'
+
+  - id: nexttv
+    name: 壹電視
+    domains: [nexttv.com.tw, www.nexttv.com.tw]
+    aliases: [壹電視, 壹新聞]
+    rss_url: https://www.nexttv.com.tw/nRSS.xml
+    crawl: { enabled: false, url: "" }
+
+  - id: pts
+    name: 公視新聞
+    domains: [news.pts.org.tw, pts.org.tw]
+    aliases: [公視新聞網, 公視新聞網PNN, 公視新聞]
+    rss_url: https://news.pts.org.tw/xml/newsfeed.xml
+    crawl: { enabled: false, url: "" }
+
+  - id: ttv
+    name: 台視新聞
+    domains: [news.ttv.com.tw, ttv.com.tw]
+    aliases: [台視新聞網, 台視新聞, 台視]
+    rss_url: ""
+    crawl:
+      enabled: true
+      url: https://news.ttv.com.tw/realtime
+      article_url_pattern: '^https://news\.ttv\.com\.tw/news/\w+$'
+
+  - id: cts
+    name: 華視新聞
+    domains: [news.cts.com.tw, cts.com.tw]
+    aliases: [華視新聞網, 華視新聞, 華視]
+    rss_url: ""
+    crawl: { enabled: false, url: "" }
+
+  - id: udn
+    name: UDN
+    domains: [udn.com, www.udn.com]
+    aliases: [聯合新聞網, UDN]
+    rss_url: ""
+    crawl: { enabled: false, url: "" }
+
+  - id: ltn
+    name: 自由時報
+    domains: [news.ltn.com.tw, ltn.com.tw, ec.ltn.com.tw]
+    aliases: [自由時報, 自由電子報, 自由財經]
+    rss_url: https://news.ltn.com.tw/rss/all.xml
+    crawl: { enabled: false, url: "" }
+
+  - id: cna
+    name: 中央社
+    domains: [cna.com.tw, www.cna.com.tw]
+    aliases: [中央社, 中央通訊社, 中央社 CNA, 中央社－產經證券, 中央社產經證券]
+    rss_urls:
+      - https://feeds.feedburner.com/rsscna/politics
+      - https://feeds.feedburner.com/rsscna/local
+      - https://feeds.feedburner.com/rsscna/social
+      - https://feeds.feedburner.com/rsscna/finance
+      - https://feeds.feedburner.com/rsscna/technology
+      - https://feeds.feedburner.com/rsscna/lifehealth
+    crawl: { enabled: false, url: "" }
+
+  - id: moneyudn
+    name: 經濟日報
+    domains: [money.udn.com]
+    aliases: [經濟日報]
+    rss_url: https://money.udn.com/rssfeed/news/1001/5590?ch=money
+    crawl: { enabled: false, url: "" }
+
+  - id: ctee
+    name: 工商時報
+    domains: [ctee.com.tw, www.ctee.com.tw]
+    aliases: [工商時報]
+    rss_url: ""
+    crawl: { enabled: false, url: "" }
+
+  - id: anue
+    name: 鉅亨網
+    domains: [news.cnyes.com, cnyes.com]
+    aliases: [鉅亨網, Anue鉅亨]
+    rss_url: https://news.cnyes.com/rss/v1/news/category/headline
+    crawl: { enabled: false, url: "" }
+
+  - id: wealth
+    name: 財訊
+    domains: [wealth.com.tw, www.wealth.com.tw]
+    aliases: [財訊, 財訊雙週刊]
+    rss_url: ""
+    crawl: { enabled: true, url: https://www.wealth.com.tw/ }
+
+  - id: businessweekly
+    name: 商業週刊
+    domains: [businessweekly.com.tw, www.businessweekly.com.tw]
+    aliases: [商業周刊, 商周]
+    rss_url: https://www.businessweekly.com.tw/feedsec.aspx?feedid=1&channelid=4
+    crawl:
+      enabled: true
+      url: https://www.businessweekly.com.tw/
+      article_url_pattern: '^https://www\.businessweekly\.com\.tw/(?:[^/]+/(?:blog|article)/\d+|Archive/Article/Index.*)$'
+
+  - id: thenewslens
+    name: 關鍵評論網
+    domains: [thenewslens.com, www.thenewslens.com]
+    aliases: [關鍵評論網, The News Lens]
+    rss_url: https://www.thenewslens.com/feed/feedly
+    crawl: { enabled: false, url: "" }
+
+  - id: reporter
+    name: 報導者
+    domains: [twreporter.org, www.twreporter.org, public.twreporter.org]
+    aliases: [報導者, The Reporter]
+    rss_url: https://www.twreporter.org/a/rss2.xml
+    crawl: { enabled: false, url: "" }
+
+  - id: newtalk
+    name: 新頭殼
+    domains: [newtalk.tw]
+    aliases: [新頭殼, Newtalk新聞]
+    rss_url: https://newtalk.tw/rss/all/
+    crawl:
+      enabled: true
+      url: https://newtalk.tw/
+      article_url_pattern: '^https://newtalk\.tw/news/view/\d{4}-\d{2}-\d{2}/\d+$'
+
+  - id: nownews
+    name: NOWNEWS
+    domains: [nownews.com, www.nownews.com]
+    aliases: [NOWnews今日新聞, NOWNEWS今日新聞, NOWNEWS]
+    rss_url: ""
+    crawl:
+      enabled: true
+      url: https://www.nownews.com/
+      article_url_pattern: '^https://www\.nownews\.com/news/\d+$'
+
+  - id: nextapple
+    name: 壹蘋新聞網
+    domains: [tw.nextapple.com, news.nextapple.com, nextapple.com]
+    aliases: [壹蘋新聞網, 壹蘋]
+    rss_url: https://news.nextapple.com/api/rss/category/latest
+    crawl: { enabled: false, url: "" }
+
+  - id: ettoday
+    name: ETtoday
+    domains: [ettoday.net, www.ettoday.net]
+    aliases: [ETtoday新聞雲, ETtoday]
+    rss_url: https://feeds.feedburner.com/ettoday/realtime
+    crawl: { enabled: false, url: "" }
+
+  - id: rti
+    name: 中央廣播電臺
+    domains: [rti.org.tw, www.rti.org.tw]
+    aliases: [中央廣播電臺, 中央廣播電台, Rti央廣]
+    rss_url: https://www.rti.org.tw/rss
+    crawl: { enabled: false, url: "" }
+
+  - id: technews
+    name: 科技新報
+    domains: [technews.tw, finance.technews.tw]
+    aliases: [科技新報, TechNews]
+    rss_url: https://technews.tw/feed/
+    crawl: { enabled: false, url: "" }
+
+  - id: taipeitimes
+    name: Taipei Times
+    domains: [taipeitimes.com, www.taipeitimes.com]
+    aliases: [Taipei Times, 台北時報]
+    rss_url: https://www.taipeitimes.com/xml/index.rss
+    crawl: { enabled: false, url: "" }
+
+  - id: coolloud
+    name: 苦勞網
+    domains: [coolloud.org.tw, www.coolloud.org.tw]
+    aliases: [苦勞網]
+    rss_url: https://www.coolloud.org.tw/rss.xml
+    crawl: { enabled: false, url: "" }
+
+  - id: tfc
+    name: 台灣事實查核中心
+    domains: [tfc-taiwan.org.tw, www.tfc-taiwan.org.tw]
+    aliases: [台灣事實查核中心, Taiwan FactCheck Center]
+    rss_url: https://tfc-taiwan.org.tw/feed/
+    crawl: { enabled: false, url: "" }
+
+  - id: moneydj
+    name: MoneyDJ 理財網
+    domains: [moneydj.com, www.moneydj.com, fund.moneydj.com]
+    aliases: [MoneyDJ理財網, MoneyDJ, 理財網]
+    rss_url: ""
+    crawl: { enabled: false, url: "" }
+
+  - id: businesstoday
+    name: 今周刊
+    domains: [businesstoday.com.tw, www.businesstoday.com.tw]
+    aliases: [今周刊, BusinessToday]
+    rss_url: ""
+    crawl: { enabled: false, url: "" }
+
+  - id: bnext
+    name: 數位時代
+    domains: [bnext.com.tw, www.bnext.com.tw]
+    aliases: [數位時代, BusinessNext, BNext]
+    rss_url: https://www.bnext.com.tw/rss
+    crawl: { enabled: false, url: "" }
+
+  - id: managertoday
+    name: 經理人
+    domains: [managertoday.com.tw, www.managertoday.com.tw]
+    aliases: [經理人, ManagerToday, 經理人月刊]
+    rss_url: https://www.managertoday.com.tw/rss
+    crawl: { enabled: false, url: "" }
+
+  - id: chinatimes
+    name: 中時新聞網
+    domains: [chinatimes.com, www.chinatimes.com]
+    aliases: [中時新聞網, 中國時報, 中時]
+    rss_url: ""
+    crawl:
+      enabled: true
+      url: https://www.chinatimes.com/realtimenews/
+      article_url_pattern: '^https://www\.chinatimes\.com/realtimenews/\d{14}-\d+$'
+
+  - id: ctwant
+    name: CTWANT
+    domains: [ctwant.com, www.ctwant.com]
+    aliases: [CTWANT, 周刊王, CTWANT新聞]
+    rss_url: ""
+    crawl:
+      enabled: true
+      url: https://www.ctwant.com/
+      article_url_pattern: '^https://www\.ctwant\.com/article/\d+$'
+
+fetch:
+  timeout_seconds: 20
+  max_items_per_source: 60
+  crawl_interval_hours: 6

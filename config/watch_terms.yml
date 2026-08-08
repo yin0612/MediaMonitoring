@@ -1,0 +1,149 @@
+# 人工監測詞。即使當期沒有聲量也會顯示（熱度 0），維持研究時間序列完整。
+# any_of：命中任一詞即算（含主詞與別名）。exclude：命中任一詞則排除。
+watch_terms:
+  - id: tsmc
+    display: 台積電
+    any_of: [台積電, 台積, TSMC, 護國神山]
+    exclude: []
+
+  - id: legislature
+    display: 立法院
+    any_of: [立法院, 立院, 朝野協商]
+    exclude: []
+
+  - id: typhoon
+    display: 颱風
+    any_of: [颱風, 熱帶低壓, 颱風假, 停班停課]
+    exclude: []
+
+  - id: power_price
+    display: 電價
+    any_of: [電價, 電費, 台電]
+    exclude: []
+
+  - id: exchange_rate
+    display: 台幣匯率
+    any_of: [台幣, 新台幣, 匯率]
+    exclude: []
+
+  - id: housing
+    display: 房價
+    any_of: [房價, 房市, 打房]
+    exclude: []
+
+  # ── 政治與公共政策 ──────────────────────────────────────────────
+  - id: cabinet
+    display: 行政院
+    any_of: [行政院, 政院, 閣揆, 行政院長]
+    exclude: []
+
+  - id: president
+    display: 總統府
+    any_of: [總統府, 總統宣布, 國安高層]
+    exclude: []
+
+  - id: election
+    display: 選舉
+    any_of: [選舉, 選情, 民調, 罷免, 參選]
+    exclude: []
+
+  - id: budget
+    display: 中央預算
+    any_of: [總預算, 中央預算, 預算案, 追加預算]
+    exclude: []
+
+  # ── 兩岸與外交 ──────────────────────────────────────────────────
+  - id: cross_strait
+    display: 兩岸關係
+    any_of: [兩岸, 對岸, 中共, 國台辦, 陸委會]
+    exclude: []
+
+  - id: defense
+    display: 國防安全
+    any_of: [國防部, 共軍, 軍演, 漢光, 國軍]
+    exclude: []
+
+  - id: diplomacy
+    display: 外交
+    any_of: [外交部, 邦交, 訪台, 出訪]
+    exclude: []
+
+  # ── 經濟與產業 ──────────────────────────────────────────────────
+  - id: stock_market
+    display: 台股
+    any_of: [台股, 加權指數, 集中市場]
+    exclude: []
+
+  - id: ai_tech
+    display: AI 產業
+    any_of: [人工智慧, 生成式AI, AI晶片, 輝達, NVIDIA]
+    exclude: []
+
+  - id: tariff
+    display: 關稅貿易
+    any_of: [關稅, 貿易戰, 對等關稅, 出口管制]
+    exclude: []
+
+  # ── 社會與民生 ──────────────────────────────────────────────────
+  - id: labor
+    display: 勞工權益
+    any_of: [勞動部, 基本工資, 勞保, 缺工]
+    exclude: []
+
+  - id: health
+    display: 醫療衛生
+    any_of: [衛福部, 健保, 疫苗, 流感, 疫情]
+    exclude: []
+
+  - id: education
+    display: 教育
+    any_of: [教育部, 學費, 校園, 課綱]
+    exclude: []
+
+  - id: food_safety
+    display: 食安
+    any_of: [食安, 食品安全, 違規添加, 農藥殘留]
+    exclude: []
+
+  - id: transport
+    display: 交通
+    any_of: [交通部, 國道, 高鐵, 台鐵, 車禍]
+    exclude: []
+
+  - id: energy
+    display: 能源
+    any_of: [核電, 核三, 綠電, 光電, 供電]
+    exclude: []
+
+  - id: disaster
+    display: 地震與災害
+    any_of: [地震, 豪雨, 淹水, 土石流, 停水]
+    exclude: []
+
+  - id: crime
+    display: 治安與司法
+    any_of: [檢方, 起訴, 詐騙, 毒品, 判刑]
+    exclude: []
+
+# 自動熱詞設定
+auto_terms:
+  max_terms: 30
+  min_docs: 3          # 至少出現在幾筆獨立內容
+  min_sources: 3       # 至少跨幾家媒體（排除單一媒體版型詞）
+  min_length: 2        # 候選詞最短字數
+  stopwords: [
+    快訊, 影, 圖, 獨家, 直播, 專訪, 報導, 新聞, 今日, 昨日, 記者, 表示, 指出, 一名, 民眾, 台灣, 相關,
+    最新, 曝光, 關鍵, 國際, 速報, 快報, 影音, 直擊, 盤點, 回顧, 完整, 一次看, 懶人包, 網友, 這些, 竟然,
+    台北, 北市, 北市府, 台北市, 新北, 新北市, 台中, 中市, 中市府, 台南, 南市, 高雄, 高市, 高市府, 桃園, 桃市, 新竹, 竹市, 竹縣, 基隆, 基市, 宜蘭, 花蓮, 台東, 屏東, 嘉義, 彰化, 南投, 雲林, 苗栗, 縣府, 市府, 全台, 全縣, 全市, 台灣, 國內, 國外, 中央, 地方,
+    政治, 社會, 生活, 財經, 體育, 娛樂, 天氣, 地方, 健康, 調查, 宣布, 證實, 回應, 分析, 沒有, 因為, 可能,
+    日報, 時報, 週刊, 電子報, 雜誌,
+    # 財經個股報告與樂透開獎屬版型雜訊，非輿情事件
+    目標價, 評等, 除息, 除權, 開盤, 收盤, 早盤, 盤中, 盤後, 法人, 外資, 個股, 選股,
+    今彩, 威力彩, 大樂透, 雙贏彩, 樂合彩, 三星彩, 四星彩, 開獎, 中獎, 頭獎, 獎號,
+    部落, 網紅, 經濟, 政院, 半年, 上半, 下半, 今年, 明年, 去年,
+    # 財經財務與通用雜訊過濾
+    億元, 萬元, 美元, 台幣, 新台幣, 億美, 億台幣, 百萬, 千萬, 近億,
+    月營收, 營收, 年增, 月增, 季增, 累積營收, 獲利, 淨利, 毛利率, 營業額, 財報, 盈餘, 每股盈餘, 每股, EPS, 稅後,
+    新高, 新低, 創下, 暴漲, 暴跌, 飆漲, 重挫, 漲停, 跌停, 大漲, 大跌, 亮眼, 表現, 挑戰, 突破, 衝破, 雙增, 三增, 亮麗,
+    股價, 概念股, 法說會, 投信, 自營商, 買超, 賣超, 籌碼,
+  ]
