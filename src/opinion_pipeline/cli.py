@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -296,6 +297,40 @@ def collect_source(source: dict, state: dict | None, now: datetime, timeout: int
     }
 
 
+# 抓取全是網路等待，不吃 CPU，所以用執行緒池併發。
+# 序列版本的最壞情況：單一 URL 逾時 20 秒 × 4 次重試再加 2/5/12 秒退避 ≈ 99 秒，
+# 每家來源最多還會依序試官方 RSS → Google News → 官網爬取三條路徑，
+# 37 家跑完可超過 20 分鐘，遠高於 5 分鐘的排程間隔，導致排程互相堆積。
+# 併發數刻意保守：失敗來源會集中回退到同一個 news.google.com，
+# 併發過高只會換來 429 與更多重試。
+MAX_FETCH_WORKERS = 6
+
+
+def collect_sources(
+    sources: list[dict],
+    restored_states: dict[str, dict],
+    now: datetime,
+    timeout: int,
+    max_items: int,
+) -> list[dict]:
+    """併發取得所有來源，並保持與 `sources` 相同的輸出順序。
+
+    順序必須穩定，否則 sources.json 每輪的來源排列都會變動。
+    """
+    if not sources:
+        return []
+    with ThreadPoolExecutor(max_workers=min(MAX_FETCH_WORKERS, len(sources))) as pool:
+        # ThreadPoolExecutor.map 依輸入順序回傳結果，與序列版本一致。
+        return list(
+            pool.map(
+                lambda source: collect_source(
+                    source, restored_states.get(source["id"]), now, timeout, max_items
+                ),
+                sources,
+            )
+        )
+
+
 def run(
     config_path: Path,
     output_dir: Path,
@@ -314,7 +349,7 @@ def run(
     max_items = int(fetch_cfg.get("max_items_per_source", 20))
 
     restored_states = restore_source_states(restore_base_url)
-    runs = [collect_source(source, restored_states.get(source["id"]), now, timeout, max_items) for source in sources]
+    runs = collect_sources(sources, restored_states, now, timeout, max_items)
 
     current_items = [entry for run_ in runs for entry in run_["items"]]
     restored_items = keep_allowed_sources(restore_items(restore_base_url), set(sources_by_id))
