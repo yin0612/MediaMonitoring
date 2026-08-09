@@ -22,7 +22,7 @@ from .connectors.google_news import fetch_google_news
 from .connectors.html_listing import crawl_due, fetch_listing_source
 from .connectors.rss import _fetch_bytes, fetch_source
 from .sentiment import SentimentLexicon, aggregate, classify, load_sentiment_lexicon
-from .connectors.trends import parse_trends_feed
+from .connectors.trends import fetch_realtime_web_trends, parse_trends_feed
 from .models import SourceResult
 from .sources import load_sources
 from .timeutil import FUTURE_TOLERANCE
@@ -398,7 +398,21 @@ def run(
 
     trends_stale = False
     try:
-        trends_items = prepare_trends_items(parse_trends_feed(_fetch_bytes(TRENDS_URL, timeout))[:20])
+        realtime_items = fetch_realtime_web_trends("TW", timeout)
+        rss_items = parse_trends_feed(_fetch_bytes(TRENDS_URL, timeout))
+        seen_titles = set()
+        merged = []
+        for item in realtime_items:
+            t = item["title"].lower()
+            if t not in seen_titles:
+                seen_titles.add(t)
+                merged.append(item)
+        for item in rss_items:
+            t = item["title"].lower()
+            if t not in seen_titles:
+                seen_titles.add(t)
+                merged.append(item)
+        trends_items = prepare_trends_items(merged[:30])
     except Exception:  # noqa: BLE001 - 趨勢失敗不阻擋新聞部署
         trends_items = []
         previous = output_dir / "trends.json"

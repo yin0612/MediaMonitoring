@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T13:58:56.706081Z",
+  "generatedAt": "2026-08-08T14:21:14.291658Z",
   "data": {
     "status": "ok",
     "stale": false,
@@ -102,6 +102,19 @@
         }
       },
       {
+        "id": "6977adc73de2ac51dddf",
+        "source": "anue",
+        "title": "營收速報 - 2026年8月8日台股中小型公司7月營收一覽（新增931家）",
+        "excerpt": "7月台股營收公布，2026年8月針對中小型公司前一日公布931家營收。截至目前7月營收公布共計1047家，其中營收年增大於+25％有432家，年增小於-20％有108家。| Anue鉅亨 - 台股營收",
+        "publishedAt": "2026-08-07T23:55:10Z",
+        "url": "https://news.cnyes.com/news/id/6566326",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "405bb5e554627ee30529",
         "source": "anue",
         "title": "營收速報 - 2026年8月8日台股大型公司7月營收一覽（新增98家）",
@@ -173,12 +186,38 @@
         }
       },
       {
+        "id": "c09124a6f79d30aa9e4d",
+        "source": "ttv",
+        "title": "公務員「帳戶多64萬」檢方查貪瀆意外揭善舉【發燒話題】-20260805",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T23:47:04Z",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNMHRnSmlHdTE2Qlo5WDJvZWpTZ09QUF8zTDg3elJRTG9US0FnSmQtV1lwaUpEeVdyRFJHckhveVR4TnNFSXQ0OUk0UG1kTzlIWElqNHpLeVBBUWd4LVRkX0xNeDZJWUVsNl96MWM0SC12VmM1VHlldFdmT3I0eEJMajV3?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "cc9658ab2221728db59a",
         "source": "mirrormedia",
         "title": "阿拉斯加郵輪7／八天七夜怎麼玩？不用天天下船、免費餐廳吃不膩 星辰公主號船上一日生活公開",
         "excerpt": "",
         "publishedAt": "2026-08-07T23:47:00Z",
         "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5QNmdsUmpvNndkemQ2ekV4R0FhQXpqRU1pajBoZEMxbXUtRlF4QUhJUVBZQnQxbVdqUnpnV0dESEF6V01Hbzl0aU8yM29xWmFrRWg5cTk3dVVMTWZ00gFiQVVfeXFMUGhBdXYtX2lsbTlmUzhHQkd3Z1RXYzJVLXFLM193QnRmMmlkMkxWZWxGbmRZOFlQOWRnOVRiTUtaQXFyVVh4RTFDZWNrcS03ejFVcFd3bVQtblhvS1ViM2p2SXc?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "3d5ac3ca3f2037a8e273",
+        "source": "setn",
+        "title": "登陸中國相關報導",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T23:46:12Z",
+        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE9BWUNNYldtYUxlWHRxZlE3eF9NSklFUVZ2OFEtU2tRaDJYLUhHQVpTY202bUowbUZzN2prTEpxSHRyZWJST1J0cQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -309,6 +348,19 @@
         }
       },
       {
+        "id": "e5b7651a2747b75bd261",
+        "source": "setn",
+        "title": "112學測英文相關報導",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T23:25:33Z",
+        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFA0OHZGNUJYMmZpTHlOSmhYbFdDRTJFc2xIcDZ3WGs3SEFzQmFvMWZqYWppRlVvZkxIdm9OU1Ayd2FOZndWbm5aYw?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "3d34ee6d004f9308c947",
         "source": "ctee",
         "title": "台股見4萬8天價後爆量大洗牌！海力士去槓桿＋美債飆5.2％ AI泡沫修正在即？",
@@ -347,35 +399,6 @@
           "matched": [
             {
               "term": "獲利",
-              "polarity": "positive",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
-        "id": "f51b53bfaa24d61c7bf5",
-        "source": "anue",
-        "title": "漢堡王睽違6年重奪美國漢堡二哥 溫蒂漢堡早餐攻勢失靈 連6季銷售衰退",
-        "excerpt": "漢堡王睽違 6 年重新超越溫蒂漢堡，成為美國第二大漢堡連鎖品牌，背後是兩家公司近兩年業績明顯分化，漢堡王持續成長、溫蒂漢堡則陷入同店銷售連 6 季下滑。",
-        "publishedAt": "2026-08-07T23:10:02Z",
-        "url": "https://news.cnyes.com/news/id/6566303",
-        "sentiment": {
-          "label": "negative",
-          "score": -0.5,
-          "matched": [
-            {
-              "term": "衰退",
-              "polarity": "negative",
-              "weight": 2
-            },
-            {
-              "term": "下滑",
-              "polarity": "negative",
-              "weight": 1
-            },
-            {
-              "term": "成長",
               "polarity": "positive",
               "weight": 1
             }
@@ -487,12 +510,12 @@
         }
       },
       {
-        "id": "25a9117a15f18b53a76c",
+        "id": "344fe316527b49761a94",
         "source": "moneydj",
-        "title": "沛爾生醫-創 公告本公司股票面額由「新台幣10元」變更為「新台幣0.5元」，公告期間：115年08月06日至115年11月05日。",
+        "title": "夠麻吉 公告本公司名稱由「夠麻吉股份有限公司」更名為「納維康生技股份有限公司」，公告期間：115年6月29日至115年9月28日",
         "excerpt": "",
         "publishedAt": "2026-08-07T23:04:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOanlZOGY1dkRjU2RPRFBZc3k5VktBTXVDeDQ1OFpzLXBkSU5nQXVEZGtsQlVRTVpsSzhndTNiclFOOWNMeVZyQWdja0dNYkZyOFdEeXZWem5QOEMtSm42SzMxcHp5WEVlQmQ3eTVqazBNMER5VUVvaWVVLXB4dS1zVUpweEltU1lDY3U4Qk84MHJDQQ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQbHNkVk5NaXhQT3FGUzVIcXEyLWE0LVZPNElaQkxoNllacmtORlRvV2U4YXJHUE5Lb1JzNE8zLTZPQUFfZ1dWRFlJQ1JBX2d0Y1poOUczR0doVWRqUnBWQl9NNERsSzE3SlB1dnhMX2xQTTA4azkzTFVNV0M5cW1HS1JKNDVXMnRZY1F4bENQN0w0QQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -500,12 +523,12 @@
         }
       },
       {
-        "id": "344fe316527b49761a94",
+        "id": "25a9117a15f18b53a76c",
         "source": "moneydj",
-        "title": "夠麻吉 公告本公司名稱由「夠麻吉股份有限公司」更名為「納維康生技股份有限公司」，公告期間：115年6月29日至115年9月28日",
+        "title": "沛爾生醫-創 公告本公司股票面額由「新台幣10元」變更為「新台幣0.5元」，公告期間：115年08月06日至115年11月05日。",
         "excerpt": "",
         "publishedAt": "2026-08-07T23:04:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQbHNkVk5NaXhQT3FGUzVIcXEyLWE0LVZPNElaQkxoNllacmtORlRvV2U4YXJHUE5Lb1JzNE8zLTZPQUFfZ1dWRFlJQ1JBX2d0Y1poOUczR0doVWRqUnBWQl9NNERsSzE3SlB1dnhMX2xQTTA4azkzTFVNV0M5cW1HS1JKNDVXMnRZY1F4bENQN0w0QQ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOanlZOGY1dkRjU2RPRFBZc3k5VktBTXVDeDQ1OFpzLXBkSU5nQXVEZGtsQlVRTVpsSzhndTNiclFOOWNMeVZyQWdja0dNYkZyOFdEeXZWem5QOEMtSm42SzMxcHp5WEVlQmQ3eTVqazBNMER5VUVvaWVVLXB4dS1zVUpweEltU1lDY3U4Qk84MHJDQQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -616,30 +639,6 @@
         }
       },
       {
-        "id": "7833579028702c8c42dd",
-        "source": "anue",
-        "title": "〈紐約匯市〉美非農就業人口意外減少 美元周線連二黑",
-        "excerpt": "美元對主要貨幣周五 (7 日) 走軟，美國 7 月非農就業人口意外減少，引發市場對美國經濟韌性的擔憂，也削弱了聯準會 (Fed) 升息的理由，進而拖累美元。 紐約尾盤，追蹤美元兌六種主要貨幣走勢的 ICE 美元指數 (DXY) 下跌 0.44%，約報 99.50，本周共下跌 0.…",
-        "publishedAt": "2026-08-07T22:57:37Z",
-        "url": "https://news.cnyes.com/news/id/6564477",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "下跌",
-              "polarity": "negative",
-              "weight": 1
-            },
-            {
-              "term": "減少",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
         "id": "3ec28458f3d4c7dfff3f",
         "source": "ettoday",
         "title": "廖大乙堪輿「屏東木乃伊」命案現場：天有異象冤屈未解",
@@ -674,19 +673,6 @@
               "weight": 2
             }
           ]
-        }
-      },
-      {
-        "id": "b6fb266cdbcb3e2f4769",
-        "source": "ftv",
-        "title": "NBA灰熊前鋒Brandon Clarke猝逝 法醫證實死於毒品意外",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T22:47:44Z",
-        "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE03dW9DYmRKZmRVbloyWnRHbGlPVFhleWprUW1Ld09mM3Q4UHN6RHQyLUtOZ3hNWVkycmtkTWlncHFFN2tFQ0ZlbjlidGE4UDFxM2RsSVBJU09SVTh3MVNiZg?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
         }
       },
       {
@@ -729,19 +715,6 @@
         }
       },
       {
-        "id": "4402d136bbf081888cf8",
-        "source": "udn",
-        "title": "Colend事件全記錄，看完再做決定- 逆向日誌 - udn部落格",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T22:43:56Z",
-        "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5rRjNHT3A3T1prNHprZk9EenRMdXBMZDR0b1Ezajl0ei1jb3pNRTl2SUdSbkV6UERUMy05RXpIbUx4V0F3Z0lVYVJOcGotMGtLMmpjQlh3ZlBLXzhqQXBQR1ViaWRvZFlRYWF5MQ?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "7b8ad67206b7f3a3fc89",
         "source": "tvbs",
         "title": "包租代管龍頭爆掏空7億！兆基集團創辦人李建成裁定收押",
@@ -771,49 +744,6 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
-        }
-      },
-      {
-        "id": "18ded337c581ece60c47",
-        "source": "anue",
-        "title": "〈貴金屬盤後〉美7月非農爆冷 金價本周大漲逾7%創1月來最佳單周",
-        "excerpt": "現貨金價周五 (7 日) 大漲，登上七周高點，主因是美國當天公布的 7 月非農就業人口意外減少，抑制了聯準會 (Fed) 立即升息的可能性，並幫助金價一周漲幅擴大到 7% 以上，交出七個月來最佳單周表現。 黃金現貨跳漲 2.3%，報每盎司 4336.02 美元，盤中稍早觸及 6…",
-        "publishedAt": "2026-08-07T22:32:42Z",
-        "url": "https://news.cnyes.com/news/id/6564475",
-        "sentiment": {
-          "label": "positive",
-          "score": 0.333,
-          "matched": [
-            {
-              "term": "大漲",
-              "polarity": "positive",
-              "weight": 2
-            },
-            {
-              "term": "減少",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
-        "id": "93dd52fda9cf3f992903",
-        "source": "anue",
-        "title": "美Fed獨立性再受挑戰 川普再提房貸爭議 重啟撤換庫克程序",
-        "excerpt": "川普政府以房貸申報爭議為由，重啟撤換聯準會理事庫克程序，並要求其三週內說明，引發 Fed 獨立性再度受關注。",
-        "publishedAt": "2026-08-07T22:30:05Z",
-        "url": "https://news.cnyes.com/news/id/6566284",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "爭議",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
         }
       },
       {
@@ -875,37 +805,16 @@
         }
       },
       {
-        "id": "0d67d75633c7bd97ce0b",
-        "source": "anue",
-        "title": "〈美股盤後〉非農爆冷Fed、升息機率降！標普登新高 單周大漲3.6%今年來次佳",
-        "excerpt": "美國 7 月非農就業人口意外減少，降低聯準會 (Fed)9 月升息的必要性，美股周五 (7 日) 上漲，標普 500 指數創新高，並以單周上漲 3.6% 寫下 4 月以來最佳表現，也是今年來第二大單周漲幅。 標普本周稍早才首度登上 7700 點，本周累計上漲 3.6%。那斯達克在…",
-        "publishedAt": "2026-08-07T22:23:36Z",
-        "url": "https://news.cnyes.com/news/id/6563571",
+        "id": "e17b1788ff749304a817",
+        "source": "setn",
+        "title": "連、柯電視辯論會",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T22:22:01Z",
+        "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE1xNHFoa0dpWDF5akg2dVUycnFIZHFFYXNkUDE3TEpvZlJPSmd1dThhWk85Sm14S3pJMTJpZlFEa3daWFZ2amFNWWhzZVM?oc=5",
         "sentiment": {
-          "label": "positive",
-          "score": 0.667,
-          "matched": [
-            {
-              "term": "大漲",
-              "polarity": "positive",
-              "weight": 2
-            },
-            {
-              "term": "新高",
-              "polarity": "positive",
-              "weight": 2
-            },
-            {
-              "term": "上漲",
-              "polarity": "positive",
-              "weight": 1
-            },
-            {
-              "term": "減少",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
         }
       },
       {
@@ -1102,30 +1011,6 @@
         }
       },
       {
-        "id": "eee7f7efd13bda8b0892",
-        "source": "anue",
-        "title": "〈能源盤後〉荷姆茲海峽重啟仍添變數 原油漲逾1% 但周線仍跌逾8%",
-        "excerpt": "伊朗戰事與荷姆茲海峽通航談判再添變數，布蘭特原油周五 (7 日) 上漲逾 1 美元，但全周仍可能下跌逾 8%。伊朗與阿曼的通航安排、通行費及美國制裁成為市場焦點。",
-        "publishedAt": "2026-08-07T21:30:05Z",
-        "url": "https://news.cnyes.com/news/id/6566271",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": [
-            {
-              "term": "上漲",
-              "polarity": "positive",
-              "weight": 1
-            },
-            {
-              "term": "下跌",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
         "id": "40967621c9f01a043d32",
         "source": "businesstoday",
         "title": "回歸最新與熱門精選文章",
@@ -1241,6 +1126,19 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T20:45:12Z",
         "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFAtRWJPZ0hySmFFdU9PdEZRcE40dUQ3VHZaUEhGcVlKNmdudVJOTmtNdmV6Sk1nYV93S3JGWHRVb1JtbFFfMmdqMEIzTmJCQi1T?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "2f3f7a6b26e3bb115776",
+        "source": "udn",
+        "title": "Tesla事件全記錄，看完再做決定- 透視報告 - udn部落格",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T20:43:46Z",
+        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBaOHRCUHE4SG8yczl6V185Y0FWSXBnck1aT1BLTXZDbXFhM2VxOVFpWWV2TmFKb0QxSGdQblVzMnotaG4tcUN5elJyZlRWZGlP?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1452,12 +1350,12 @@
         }
       },
       {
-        "id": "6ea0a05ec34123f91b7d",
+        "id": "22ecac62fd0566b0de9c",
         "source": "chinatimes",
-        "title": "SEIKO慶145周年推出紀念腕表- 時尚消費- 中國時報",
+        "title": "SEIKO慶145周年推出紀念腕表 - chinatimes.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:14:33Z",
-        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9SMG1HR1BsU1JIR0lhV2dkSDV6c3hBemI2NjNkOHZSdV9rSzFJbkswNHNya2JuWFdpc0U0T0wxeERsQU5wclRFSmF1OEZoTzU2a0psWjdzWXFwTWFvMm1vdTFPZ3ZtOEljSk1r?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE0tNGtjaGpPX0FOWkZORnVtUHp6dk1HTE43ZGYxeEdlcVpoQU1ySnVDUlAyVGFpODdqMGNfMFdrWW90UHdtc0h6Sm15VGdGV21BYlZVbm9jdERodW1IdUtUTTBUcXJBa0lwZm1v?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1467,7 +1365,7 @@
       {
         "id": "3f74e93a0785f01a37bd",
         "source": "chinatimes",
-        "title": "單獨繼承房產 遺囑載明才有效",
+        "title": "單獨繼承房產 遺囑載明才有效 - chinatimes.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9TVUxuTWhhM2pBeFQyMEctMTdWSzhyOGtuMHYyNWxsempZNWhlU21PZEVFNVZXVmwxZlc1bU1xd0lvRklmTzB2MUFjQkRiWjlBT3RTbl9IMlE0bTB1SkVTY2wwOHgySnhPVGp3?oc=5",
@@ -1478,9 +1376,22 @@
         }
       },
       {
+        "id": "86f875cf67dbd16ee1a9",
+        "source": "chinatimes",
+        "title": "台北房市 南環線利多 木柵買氣增溫 - chinatimes.com",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T20:10:00Z",
+        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE0xeDB4MElpVW9Gd2NWUF9UOTgxTGhUd2VMY1pGY3VWNFRROHFxajQ3OWo3UndVTGl3NzhGUEVySTFTSlNJUXp3bm9SelRNdWtzVHM1Ym0xUUl2X0tzNllhRHhZbWhOTnRHdjQw?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "568c1ee66f58100aae60",
         "source": "chinatimes",
-        "title": "熱門股－新光鋼 利多助攻價量齊揚",
+        "title": "熱門股－新光鋼 利多助攻價量齊揚 - chinatimes.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE5CTmxXOFVtR0k3V2dfSktWTnpjS29BOVVHdG9kdUFwNU5LTTRXcUFFVmN3TXp4dURqQVdYejA3Y0lEUWc1Z1pIVHBVZ3VlNjZBOU1sVXF6Yl9obHQ3TmpBTGtsMVJMdXlMWi1v?oc=5",
@@ -1493,7 +1404,7 @@
       {
         "id": "629036012202d599b6d2",
         "source": "chinatimes",
-        "title": "韓菲有爸護航 跨足戲劇圈",
+        "title": "韓菲有爸護航 跨足戲劇圈 - chinatimes.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9aQWlOY3JQWmJPSloydUpwd0dTOTZ6MldUSkVBUURnNjlzY2xLUVNZZFNkV25DTnd0U2pkRDdGTk9qT05nMFBBS1ZrSE5wS3p6NEFKdzBNZlRnTlZIaUhpbDdISU0tQTViRUM0?oc=5",
@@ -1506,7 +1417,7 @@
       {
         "id": "8b6161f9408d9f84cd83",
         "source": "chinatimes",
-        "title": "賴總統催生 提4策略5面向",
+        "title": "賴總統催生 提4策略5面向 - chinatimes.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE16andpdzE2ZmdmYTlxenVkTXU5MGlFeFpmSXQ0MTh2ZzRXUWpzMjBETDh5V3VkZEhSRnhrRDlpYzRGenViRTlaNUprWEpVNjREY2xBQzV3bFU1TTh3S2ExSXp3SVRrMERDWE5N?oc=5",
@@ -1519,7 +1430,7 @@
       {
         "id": "8d2b62ba339b8f44c074",
         "source": "chinatimes",
-        "title": "熱門股－統新 股價登波段高點",
+        "title": "熱門股－統新 股價登波段高點 - chinatimes.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFAyam9YS3VUQmNKaWpuR0UzSkJNLTZUaktSZ2MxcHM4bi1NYnRaaTRaLUVTSmRENTdad0Q2YWhVNVdmbmZwb1dMSTVUeWZZTE40NldkQ1puR0tac3d5NFF0dUNNbVZhVzlKalJr?oc=5",
@@ -1532,7 +1443,7 @@
       {
         "id": "9331c6e0db052db62e4b",
         "source": "chinatimes",
-        "title": "熱門股－台橡 吸引買盤強攻漲停",
+        "title": "熱門股－台橡 吸引買盤強攻漲停 - chinatimes.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE55V3lXbFNYdXJwQXV0dlpEV0RIU29rVFhjRUhDUUQtZXRDUUFmU0ctc0htOWQtNzdLLVAyTUJoeHhGaGtoRFhHSWs4RVNzYW56NXlod1N6VlBvUFg2SkdyYU03V1R1MWpSbmVB?oc=5",
@@ -1545,36 +1456,10 @@
       {
         "id": "fc0560af0e8b0685c4c3",
         "source": "chinatimes",
-        "title": "達人心法－持續學習累積跨域歷練- 專題周報- 工商時報",
+        "title": "達人心法－持續學習累積跨域歷練- 專題周報- 工商時報 - chinatimes.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T20:10:00Z",
         "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9OUVZzNkN1SlA4WlFNVnotNm5FVlc1SjY1UDNxbjluell6eUxCbUhmOTRiS2RWd1c3eTFWeHlJNjlTLU1zSW5hT1RYUFdVdzNIWThPc1hUZEE3U3hnSnZkVVpSTUZDMXR5Q3Rj?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "b8647eace8eca3bfb6e6",
-        "source": "chinatimes",
-        "title": "熱門股－LINEPAY 價量俱揚攻漲停",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T20:10:00Z",
-        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1RYXZUa0ZaTl92WXJBWkcwUm16cV9HNGt6MkhOZnBvLWd4SFZveE5yU0l6MS1iTTFlb1FvZzZ4TjNKcUlVdlpjYkszNzFDSFBHQkhaeV9tQlp5QTJZdzUwZ1Z2dkNtLWU2dFc0?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "a6bf100d023e88c183b0",
-        "source": "chinatimes",
-        "title": "巨漢 H1每股賺14.14元",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T20:10:00Z",
-        "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1qVDgyUWRGaG1mYnhVRU41ZHF6bDFvTmhXNVJLaF9BNkJPbHFrOUlHMjhOZjBNSHJTMGdkQmplR0xSVWpjelg4VWI3WUdIVXl3YmZySHZIS25yZG4xQk1vT21XTmxianR5bFpV?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1588,6 +1473,32 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T20:06:23Z",
         "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOalh0Rnc3bzdBSHdGd2gyd0RxX3cxSnlRUk12SDJfYXphY3MyRnQ2RmY3WExSNWM2a05fbldnWER4NDdNbkZtOEhCbHN6Rld6VFh4S2ZNLURNUzZHVFpGNWlnbjUxbUZPd1U0OTNEU3JjWWJyNGVpc1dlMUtIekZkV0NpRmxoYmV2QXdubEpnaw?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "ec1ebf04bf7287fca21b",
+        "source": "setn",
+        "title": "艾涅爾相關報導",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T20:04:42Z",
+        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBNdkwxdWduN1VDeW1mNWFiRzA5cGN3TzVhMzc2Q3VSdWx3Z0R2alVNUHkyZGN6LW1KV2x1NjJUMzFTMWNaTHpMMA?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "b396fd4f771e97ae12b0",
+        "source": "setn",
+        "title": "朋程科技相關報導",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T20:04:35Z",
+        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5rRUg0UXh6SHREQ3JKM2xzRlpmMmJTNi1taU81UnVMcGVGQ1BrOXAtRHFHc2Z0b0xxZ08yTVVjTFAtWGI0UE10VQ?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -1694,6 +1605,25 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
+        }
+      },
+      {
+        "id": "50403b9468ceb8fe61b8",
+        "source": "ctee",
+        "title": "台塑四寶7月成績單出爐！南亞營收創49個月新高 台塑化年增32.3％",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T19:00:00Z",
+        "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1ZcGg2Z0ctVEJmTktxMXNTRE5kTFlfUjg4R2Q0VjhNZ3p3QkRBOG56cnRwOWNQNFRvVWt3UHFXSkNOTjBzWl85bGdMMGhUTV81M0ZjYy1PUTNsRkpwZ3Jn?oc=5",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "新高",
+              "polarity": "positive",
+              "weight": 2
+            }
+          ]
         }
       },
       {
@@ -2130,6 +2060,19 @@
         }
       },
       {
+        "id": "f973e74c93972cfc176d",
+        "source": "moneydj",
+        "title": "今日要聞內容-A3346B72-7F98-46DC-9FE5-31C49F2AD56E - 5850web.moneydj.com",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T18:04:21Z",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOTEJvYnpUcXFacmsyNXlKdlAzX3ZYRFNpcnFoQ0JidGlUTTNZWmhLcTdzTFlDeVEzdjVRdUkwWjAtWVltd0U3VXU3WjNkelhna0E3Q0VoT1FQMEZiMzdaRlM1aWRxY1JRWWZxVzVZb1ZVSWdHMklfUlpPMjF5NjhxRFcxSkxqbDhtRUJfWXln?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "fa65654a2d5e715c5bc7",
         "source": "moneydj",
         "title": "今日要聞內容-304DAA88-02FB-404A-9F23-CA4E1C088182 - 5850web.moneydj.com",
@@ -2143,12 +2086,51 @@
         }
       },
       {
+        "id": "005c43e0f015062918cb",
+        "source": "moneydj",
+        "title": "今日要聞內容-917E1C05-AA63-4D28-8D0D-CCD10B0554DB - 5850web.moneydj.com",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T18:04:06Z",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNVE5DVWoyeU5KQk54V1lDRXpWelp6QXNCYU0ybHFSTmlOUkZCTUFEQm9vcXJZc0xmd2NMYWtOVXdsWHZWUUNyM2NYVUs4eEJ0a3BhcTJYaXlfWTNDbVpyMXVrLWcwMGtRY2tlX2dFUWFOdWlGeS1NWk44V0hMdUZINFBtV3BQV2dLVXM1MDhR?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
         "id": "93dea6097d2439d2efcb",
         "source": "moneydj",
         "title": "今日要聞內容-5CAFC4C2-1CE4-4EB3-8A4D-5534A7E293DA - 5850web.moneydj.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T18:04:00Z",
         "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQVUJhd3NxWXdaNzVZcFBVWm5rdGlrN1EzdUFOanE3VmJhS01uQXJnQnlpeUFfUW1NVGRXT1dGZWZBWUF0c3F3MEVvdUIwZHZUTDQyLWdLeG1GeGVhY1FiTzJ2YXg4MlByWXBGZEphTV9KdzIxX044UzR1S3FMT2ZaU2xXdG13dktud1R2b053?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "b13f777b3d485c4450bc",
+        "source": "moneydj",
+        "title": "今日要聞內容-594CA617-CA13-4B38-933D-A82DB43401D8 - 5850web.moneydj.com",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T18:03:56Z",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQTmFGSm1fU3dzblFsbnlXZUpReTJNSmhsX0JrSG94ZTJ2MDM1Vmc5dzhhZG9mSVFzSjFPR2thTWtmTEhoaTZ6UzdrVlF0X0J4dzlDSUV2SWdlVnJIcENmNUlObFYyR013RnB5RjFNS3pkc2N1andoNTFOd250akpJaWNTbTU2akFtRlA2TzBR?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "e4b1c211a46fbdb8c893",
+        "source": "moneydj",
+        "title": "今日要聞內容-FEC18579-663D-4960-B172-80E31ECB2727 - 5850web.moneydj.com",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T18:03:52Z",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOaURNRWh4a1N5ZmlYaXNtcFNDWnZ5bmVETXNmN1R5cU1NU0t6NVhTd3JwY0NuSXA1VnJ5MHJmZTRUcGtpeDl2dG1vWXllZEVITEhIV0tlcUk4ZHQ5ZVJWTHlQSGdPMHVObURoQUdUTFhxcW9wTS1rNWFfSm9Ka05mQ28wV3VLZnQwQl9rNDlB?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -2182,12 +2164,12 @@
         }
       },
       {
-        "id": "8864f138af0e4ec0fb45",
+        "id": "aba176c6fdd538094fbe",
         "source": "moneydj",
-        "title": "今日要聞內容-0D6814D3-66F4-4E9D-A981-62705CD46C95 - 5850web.moneydj.com",
+        "title": "今日要聞內容-E8F6D5C5-383C-4854-9B3A-8EADB1A937D2 - 5850web.moneydj.com",
         "excerpt": "",
-        "publishedAt": "2026-08-07T18:03:34Z",
-        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPQU1mNzFYdnh4TkVlUU5YRG1BNWc4b0s0OGN0UjdMUE00T2hRN3NZN3dOTDZfZXNwNDlGNVYyZUwyR0RzdzVVOS1vbTJNTUtFc3d5dGFYQVd3Z1FyUng3bU1iZkUxVm9ac29YQW0yLVVybXhQVmdnTUVHTEMwbkVWODd5MjJGeC1qbjhvdkRB?oc=5",
+        "publishedAt": "2026-08-07T18:03:38Z",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOekp0T2o3OVZNSFVRLU5EMm1PcXZubmVkNVBTTWVTTVR4UVZaQlVqOENLWDJOTnlyZXo4QWVDWFBiWTBMTElHQ0xxdnNRSjFVekZyZlJKdGRBWkVxMS1NN2pfSkRjX2JpemtSNnd5NGU3MGZhS0hVVC1ZOW1lVHBBNTBEekNIMVRxYWNwVGx3?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -2195,12 +2177,12 @@
         }
       },
       {
-        "id": "0b9289cc3c6c0fe3fbfd",
-        "source": "anue",
-        "title": "美債殖利率終於有救？財政部暗示可能減發長債",
-        "excerpt": "美國財政部本周調整債務發行措辭，引發市場猜測，政府可能縮減 20 年期與 30 年期公債標售規模，以壓低長期殖利率，打破市場多年來認定美債發行只會愈來愈多的看法。",
-        "publishedAt": "2026-08-07T18:00:05Z",
-        "url": "https://news.cnyes.com/news/id/6566221",
+        "id": "8864f138af0e4ec0fb45",
+        "source": "moneydj",
+        "title": "今日要聞內容-0D6814D3-66F4-4E9D-A981-62705CD46C95 - 5850web.moneydj.com",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T18:03:34Z",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPQU1mNzFYdnh4TkVlUU5YRG1BNWc4b0s0OGN0UjdMUE00T2hRN3NZN3dOTDZfZXNwNDlGNVYyZUwyR0RzdzVVOS1vbTJNTUtFc3d5dGFYQVd3Z1FyUng3bU1iZkUxVm9ac29YQW0yLVVybXhQVmdnTUVHTEMwbkVWODd5MjJGeC1qbjhvdkRB?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -2299,12 +2281,12 @@
         }
       },
       {
-        "id": "fbb29ee0ed1db0a696ff",
+        "id": "7851d99dabebd2b55ad2",
         "source": "moneydj",
-        "title": "環宇-KY 115年7月營收1.45億、年減6.93% - 台股 - 新聞",
+        "title": "環宇-KY 115年7月營收1.45億、年減6.93%",
         "excerpt": "",
         "publishedAt": "2026-08-07T17:44:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPZ2NYWGJOSlpOVlZYR1ZXQ3dnYnVWc2xGQlp1TWhGUGxFTVQ5bkhGT1ZQUm9ta2NwcXVUdHFIb2Z2WkdaVE1sYk0zU1pRb1V5Z0tmUHVCendMejNKVXpITDNiT2hxVm05OXd6bXVneDhnVHVySnZIaXFLLXIyem1jVmxR?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQRmRYcEZudEdKcmNhZlZSbXhpUFF4cGNpRXRvMU1fUmhNdjVwU1NYdkhla05Wck9jTTRJeWl6RnpMdF9zX3dEajNrS29yT1h6dGlzU1cxVzJoeHJIMWxJbDNRV2lneEVuaDBySGJVS2ViV2JOZTNqNENoSnFpbzBYczlwVkNLcmNNZ3BFOGR6bVpGdw?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -2322,30 +2304,6 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
-        }
-      },
-      {
-        "id": "19e5582e7c85f2d96ddf",
-        "source": "anue",
-        "title": "賴清德：0-18歲每月5千津貼明年上路 籲「此時不生更待何時」",
-        "excerpt": "賴清德今 (7) 日出席「總統府暨國家安全會議員工家庭日」，在致詞時除了感謝每位父親照顧家庭，也針對國人育兒政策，提及 0 至 18 歲成長津貼已編入明 (2027) 年度總預算，明年將正式上路，屆時符合者每月可領取 5,000 元。",
-        "publishedAt": "2026-08-07T17:39:21Z",
-        "url": "https://news.cnyes.com/news/id/6565933",
-        "sentiment": {
-          "label": "positive",
-          "score": 1.0,
-          "matched": [
-            {
-              "term": "感謝",
-              "polarity": "positive",
-              "weight": 1
-            },
-            {
-              "term": "成長",
-              "polarity": "positive",
-              "weight": 1
-            }
-          ]
         }
       },
       {
@@ -2442,19 +2400,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T17:13:00Z",
         "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFAtcnJYTWtBdTBNRUFjTUhqdlVwWnk5clNoYUpnYlU4Sk1rUDB2OUdzNHMzWHZYVzg5MTZReXBobllfbkpVbDktdHdGOFU3OTBTclE?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "caf338a0db271d4e3411",
-        "source": "udn",
-        "title": "偵探現場 - udn部落格",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T17:10:45Z",
-        "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBaR2NuVmU1WENETTJwVGJkWElETzhJUzh0dkpTdExJaGRMMHlqLTFHLW1wRk9QN3RZczBsTTBGbjFoSk5pYTdSTkh0dFc?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -2607,25 +2552,6 @@
             },
             {
               "term": "漲價",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
-        "id": "9d9ad0b8d1c47e793bcc",
-        "source": "anue",
-        "title": "SK海力士擴產嚇跌美光 但新產能遠水救不了近火",
-        "excerpt": "美光 (MU-US) 周五早盤下跌 3.6% 至 849.80 美元，市場一度擔憂南韓競爭對手 SK 海力士 (SK Hynix) 大舉擴產，恐加速記憶體供需反轉。不過，《巴隆周刊》(Barron’s) 認為，晶圓廠從興建到投產需時多年，SK",
-        "publishedAt": "2026-08-07T16:30:03Z",
-        "url": "https://news.cnyes.com/news/id/6566158",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "下跌",
               "polarity": "negative",
               "weight": 1
             }
@@ -2889,25 +2815,6 @@
         }
       },
       {
-        "id": "e7dcb069ef9c790b6759",
-        "source": "anue",
-        "title": "不再是崩盤代名詞！價值股大勝成長股 專家：AI擴散助長多頭行情",
-        "excerpt": "歷史上，幾乎每當價值股發光發熱，通常意味著大盤正陷入崩跌，但這一次情況不同：在這波多頭行情即將邁入第四年、主要股指持續在歷史高檔震盪的情況下，羅素 1000 價值股指數 (RLV) 卻大幅跑贏羅素 1000 成長股指數(RLG)。 根據 Nationwide 彙整的數據，過去一年…",
-        "publishedAt": "2026-08-07T16:00:08Z",
-        "url": "https://news.cnyes.com/news/id/6563575",
-        "sentiment": {
-          "label": "positive",
-          "score": 1.0,
-          "matched": [
-            {
-              "term": "成長",
-              "polarity": "positive",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
         "id": "e3b7456e4be313413dfb",
         "source": "technews",
         "title": "魯賓天文台 LSST 相機首發，32 億畫素震撼捕捉 COSMOS 天區 50 萬星系",
@@ -3040,7 +2947,7 @@
       {
         "id": "b1b96a91b25bec979dd2",
         "source": "ettoday",
-        "title": "尚未填入標題 - sports.ettoday.net",
+        "title": "尚未填入標題 - ETtoday運動雲",
         "excerpt": "",
         "publishedAt": "2026-08-07T15:47:00Z",
         "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBCQTMtZU9peEFhWm1DVU4tTzEyVFlrelNRVUdfemw0ZmI3TlRCVEM2bFhVWFdPbndyRXItY1hrRUNWTUxyeG5scGR5dk5mdlHSAU9BVV95cUxQQkEzLWVPaXhBYVptQ1VOLU8xMlRZa3pTUVVHX3psNGZiN05UQlRDNmxYVVhXT253ckVyLWNYa0VDVk1McnhubHBkeXZOZnZR?oc=5",
@@ -3066,7 +2973,7 @@
       {
         "id": "6fca2ec4ec70f95b6414",
         "source": "chinatimes",
-        "title": "宏碁突發重訊撤出兆基屋管經營- 財經",
+        "title": "宏碁突發重訊撤出兆基屋管經營- 財經 - chinatimes.com",
         "excerpt": "",
         "publishedAt": "2026-08-07T15:39:03Z",
         "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE53TUhKenVvd01mVV9mSER6UDJjVmd1QnYtTXY5TTluYUZSZm9QcXNIWk1UOGI3aktrU2N0cUQ3NFVhc0pQZndxZzNrQ3dIRGZJSFNnS0puSWgtQ0Y4QnE3VGlMMUxlWC1TYXJ0dEdB?oc=5",
@@ -3074,35 +2981,6 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
-        }
-      },
-      {
-        "id": "7a00f9836cfd2c58ce4b",
-        "source": "anue",
-        "title": "紐約Fed調查：美國7月消費者就業信心改善 短期通膨預期降至3.6%",
-        "excerpt": "紐約聯準銀行周五 (7 日) 公布的 7 月消費者預期調查顯示，美國民眾對重新找到工作的信心升高，短期通膨預期則小幅下降。不過，受訪者同時認為未來失業率可能上升，對自身失業與債務違約的憂慮也有所加深，反映消費者對經濟前景仍抱持矛盾",
-        "publishedAt": "2026-08-07T15:30:22Z",
-        "url": "https://news.cnyes.com/news/id/6566160",
-        "sentiment": {
-          "label": "positive",
-          "score": 0.5,
-          "matched": [
-            {
-              "term": "失業",
-              "polarity": "positive",
-              "weight": 2
-            },
-            {
-              "term": "改善",
-              "polarity": "positive",
-              "weight": 1
-            },
-            {
-              "term": "通膨",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
         }
       },
       {
@@ -3197,6 +3075,25 @@
         }
       },
       {
+        "id": "6f9b73983c918b249da7",
+        "source": "chinatimes",
+        "title": "日本防衛費估上看8.9兆日圓創新高 高官：最終恐衝10兆 - chinatimes.com",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T15:00:24Z",
+        "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE4tZVRQTUZLVDNhLWhqSU42c2loSDI3a0dnY3VfOHBySUxVYXVCcTlDVTlPSWdfdlNDbjFNRzVDd3BUb21SOFFrTUNEamJDZDJRZDRVM3lPR28taF9YRlJ3dWdNaWlodFJxVl8zSnhn?oc=5",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "新高",
+              "polarity": "positive",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
         "id": "3ab797c1e3cb74115ccc",
         "source": "cti",
         "title": "漢光42號空軍戰力恢復 新竹幻象2000戰機呼嘯出擊",
@@ -3220,25 +3117,6 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
-        }
-      },
-      {
-        "id": "1beb123a25aacef76767",
-        "source": "ftv",
-        "title": "非農就業意外下滑緩解升息憂慮 美股三大指數齊揚",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:57:10Z",
-        "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE8zT1hUWXVQcF93QnlNNGxlUWlUYldaSUpHdGQ5QzZBaEFIZVhFRTFXZEMzVnlNMFZDaktTUWs1UGdrMjRReTQ4cFI1aVEtcDBjc0trVzFVM0lSTTFtVEVlcw?oc=5",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "下滑",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
         }
       },
       {
@@ -3369,19 +3247,6 @@
         }
       },
       {
-        "id": "71437b5b90f607522e19",
-        "source": "mirrormedia",
-        "title": "又要不副署？立院三讀藍白兒少未來帳戶 政院放話：將採必要憲政作為",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:42:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1vLU1lTXBsc25PdjFoWURzVVNmQm9BdXBJUENucVVvTEpzMC1mX21jZWdNdzJScEp4ZUoyNG55bUI2SzNyODRwblV4ZXRCRG9zYk1mejJ0NEt1cnPSAWBBVV95cUxNd2tNdXJyR01IUXVlWjZtU1RBdDVxb3RXZzNqcWNWcnNvV1FscGR3OHlZZGlST0xsLVBHektfZERVelFDSjdORzA5Y29OR3NOVTh3VElBdE5TYURvQUNCTG0?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "2980eff7e9e2586cf0e2",
         "source": "ftv",
         "title": "西非安全- 第1頁 - 相關新聞",
@@ -3437,19 +3302,6 @@
         }
       },
       {
-        "id": "5a6904f07338af4074be",
-        "source": "ctee",
-        "title": "「衛星定位晶片」的搜尋結果",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:37:11Z",
-        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNN0FIN19oUG9uQV80cWJaYU1aNHFMM1gxMWQ5WENhUEwyXzRpZWp6eDN2cWwycE5rTkkySEZta3gtdUxERW5qc3RnS2hGb243bmRlZGNNQUVCd0dsWVNNSnc0N01FRExlVFBSR1NzQjFqdVJRY0JlbjMwSVI3dUJMR2VjbDNwLU9HXzVhb1VR?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "aa6d95cf6ca1e30c2826",
         "source": "ebc",
         "title": "又有苦茶油出包！ 218瓶緊急下架",
@@ -3489,25 +3341,6 @@
         }
       },
       {
-        "id": "2a037bdad7c258adf53c",
-        "source": "anue",
-        "title": "SK海力士調整中國布局？30億美元重慶廠傳尋找投資人",
-        "excerpt": "南韓記憶體大廠 SK 海力士 (SKHY-US) 據傳正評估中國重慶廠的多項處置方案，包括引進投資人以加速業務成長。知情人士透露，若公司最終決定出售部分股權，這座廠區的估值可能達到約 30 億美元。",
-        "publishedAt": "2026-08-07T14:30:05Z",
-        "url": "https://news.cnyes.com/news/id/6566130",
-        "sentiment": {
-          "label": "positive",
-          "score": 1.0,
-          "matched": [
-            {
-              "term": "成長",
-              "polarity": "positive",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
         "id": "303f86d6ad9268b0e33e",
         "source": "moneydj",
         "title": "盛弘公告本公司決議除息基準日等相關事宜- 新聞",
@@ -3527,19 +3360,6 @@
         "excerpt": "",
         "publishedAt": "2026-08-07T14:29:00Z",
         "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQRGdkNXJYZ3p4aHh0SExuaURtaFNod2VaUFZUQ3VKUEh2WG9FSW9qMUkzRFotbHRpWi1BaWdXV3BwQnpkOEhjM3k5TDE2NHh3S1JZTThEOXRldzJMU0xTNDBDakFNNVBoZ0VpTlVRczNZQWFzTEM4eFpFNmczRVBETEtHX1VidWRKeUhuaVd6dzl6bUY3V0RfbVJEbFRrcHdVR2VxRElybDhmZnpXaVI1QWRuWnFmZG9mVVFoTw?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "f82dae494b2796968ae6",
-        "source": "ctee",
-        "title": "夏日沁涼隨行試駕Volkswagen旅行車即可享精品咖啡卡- 商情",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:28:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE4wWG1Ncm9WSDM4eVNqaFRlVjBCaDhUSDhJT2RETV8wX2V2QW1YWHJ0MXYzYnFJb0VlVzZicV9tUnk1WUFSbFFoRkMtX291Z3V0RnMwQ01aVVJLZmZ4MV9r?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -3592,58 +3412,6 @@
         }
       },
       {
-        "id": "9b2e98f9cc7323cfd15c",
-        "source": "mirrormedia",
-        "title": "史上最賺上半年！華航客貨兩旺吸金千億",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:25:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5qOU1BdUxtaVlwRDZEcHo2alR4eGsxbzNnN1FBYVFZbG1uX2ZlYXdNNTJPRnFWNTdwWXYySVV4LXV6OTRjbFFPRWM2MnZLekR3VDlyVVEtRndIaTNT0gFiQVVfeXFMTlZ2ZGFVeTM5bFZEdHN6cXpuVlJrZkVyVmFROGh6MzVhNVVyUGoyRTdWaWZpeTdZbjZvVTRLTzdjMF9sTUZOWUFKcXR3dThZaUlMVWhmcThQN3RYLWVNTHZxaGc?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "3e26b1d52b375b58f09f",
-        "source": "moneydj",
-        "title": "材料*-KY 代重要子公司中峰化學有限公司公告董事會決議盈餘分派- 新聞",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:24:00Z",
-        "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQZUNsX2JmMU5pT1BYYm1vOGRUdDBKSTNpS3Q3c0h3dDBuSkVzb2hSSW40MS1VZEk5MFp6S0xEdFBOWkphSTFRWmR6MnZZSzVickJxNGMxbktubjZQbWthVHRYVV9CN3VOYXJ6dVJ4RXpQLUo2YTZuTUJBM1RYMWtEY0FISmpKYWhsdVNNdzBkQi1FbnByRXpobGx2MnFrc0Y4UEpJT2ZUR0lRVU5FNVZJdzZjUGJhUmJjYlhFUkRaMA?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "9e11a7badcd5b56e2c01",
-        "source": "moneydj",
-        "title": "材料*-KY 代重要子公司中峰化學有限公司公告董事會決議盈餘分派 - 台股 - 新聞",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:24:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPNkNDVnkzenp6UWJHd0lDb0ViVWxGVzdPRGpRR2w2V3p5cTNRZWFqMWlVaThGczV0b1pVdkdYckJ3N2I1bGVyVkYtLTRvcG5BMU8taTVYbWtJYWJTVWR3VnE1WEd4Zl91RUF5ck9iemduYi1aTngwdFk1NlJpX1FMWk13?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "35e52f2e7bf1ee39ab67",
-        "source": "chinatimes",
-        "title": "廖明輝專欄》美中「G2」若成形 台灣如何因應？",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:20:40Z",
-        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBjb253SC1LRTR0cDI3blhPQm1xMHFNY3VWNVliMml5MWJUN1pEUmdCN05aZWp5NHdodUJaQTNRZXQwMTJNYUlrZVk5b3lGLVJGT2JfRHdmekYwYXBKdWlLaS05eUxfaEk?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
         "id": "0eb2e29f223bbaf6d8fd",
         "source": "cti",
         "title": "自爆因疫苗問題遠離綠營！郭正亮酸：他們跟沈伯洋有仇？",
@@ -3661,223 +3429,6 @@
             },
             {
               "term": "疫情",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
-        "id": "937352342de42a7ec22c",
-        "source": "ebc",
-        "title": "獨家／白海豚颱風直撲沖繩！ 獨家直擊那霸風雨",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:16:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBLTXZtcnpNanBjTEU3ZW10OVdkeTJrZTBrZ1p0MmlzQVBDcEtvUzhvaVlfTDh5UU5aWjBqYzFaYmhIb0Vla0kzZW1tSWtNT190N3h3?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "6fb8c4d9d7376d4f7815",
-        "source": "setn",
-        "title": "中職／陳傑憲猛打助獅2戰25安！餅總卻虧做了蠢事 張翔短打傷退不樂觀",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:14:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFA2ZnJFRkF6emZMRlY2VzIwYk5vNjMxUkdaRWEwUXViUDVOcXYtU1VBa2N4a0k2OHdINUpVZXNWQ2lLTHNkR2RSRtIBTEFVX3lxTE9BR3pxN3VXdDBfck0wb2N6U1B6ZlNjY0VMdFdzZ05zOXZNN182QzlHYXhvSjV4Mzd6anJ3M3lXWEh3RERySXZ0bHlPRVY?oc=5",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "樂觀",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
-        "id": "07985ba88dff3a610cd9",
-        "source": "mirrormedia",
-        "title": "又有苦茶油苯駢芘超標 218瓶全面追查",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:13:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9PNGpiNmpjTHZUMjVEMHR6bm9sWWgzUWpvRVdocW5VQzlKM0xKMFAxeFhBWGx5MDNyNUVoWTBKVWRHZV9DUElKQUhYMjV3NkRjYmhQdDhXelBXTVBQ0gFiQVVfeXFMTW1tTW5BZV9SQThaX1luZEdjMHZfcFpQVUNodFNrOUlzM25BZFQ0QzU3ZXU0QzdlYWdEbTlLTnBCOVpBVkg3Z1A5ZEVXM3VzX21tUkJfM1N5aG1oSExGWWZ3bEE?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "3689a4b90fd35d1b187e",
-        "source": "ctee",
-        "title": "南港LaLaport鷹架掉落臉書粉專：部分櫃位暫停營業- 生活",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:09:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5YWk1YcEJCWmQ2bHRaVlRMSUplWXhaV1FTX0NvWkhvSlIxSjBEZDctZUVuUUhpT0hxSUdOZ00xeWpXRndta0xlU0ZsVWV4MC1la0lWTWE3aHA3RXdsUUdn?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "43fa634c3af38af64b23",
-        "source": "ctwant",
-        "title": "木乃伊命案再添疑點！命理師赴現場遇天候驟變 驚喊：死者還有冤屈 | 社會 | CTWANT",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:07:11Z",
-        "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1ublk2Z1RPT25FMHJYTlhwUDJxbHV1X3k5bFJ1Q2thb2V5N3ZDa1l4MDlwU29VbHJ3Szl0M0wxbGFUSDRNRjQ3ZExpM3hsM1HSAVRBVV95cUxOSkRxa3RRSkYyWUxydmJ5QU1tV2VhVkZTRU1yNTdRMjNpTUdpUzVnNEhKQUh5MXU0MlAxS3ZmOXZnN2hoZnEzRVRIN0NhQnVNa2lYVHc?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "e2a4d3a717fb52629552",
-        "source": "moneydj",
-        "title": "《強勢美股特報》ABNB,LITE,NOW,UBER等10檔",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:06:00Z",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOOXFpNldaV2pvbGdSRmo2RDZJaWdMUTFjY3NETXZ4TVctaTk4M2k5Z25zbEp0VmlGMk0zRE1MS3pPYXBrZHEyaWF4YUVLd2tUMDJJcUxkbXh4MlVHa0xEQXBkTkxpVzhvRUFLVGJjZU5wMkxMeEFfa0pMM1ZmRER0RC10VmlNYXlBRTdscjN6Y3JyUQ?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "3a3f519dd2d767556714",
-        "source": "cts",
-        "title": "今彩539第115191期頭獎4注中獎- 財經",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:05:37Z",
-        "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9iUURGRm5lQlhJa0x2MzF5UGRraWRNdnNNZlR6RnVBbEJOdkU4cmRpN3g4N3pvUEFuWHJ6MEZnNUpscVhyTFEwcUFCUzM2REFQS2ZxVFo0eTNmZkhCcEFYcklmcWFBTmMyTDRsVUpn?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "b0510ac9fd1dbad2c6fa",
-        "source": "tvbs",
-        "title": "肺部結節不用怕！醫師：做「這件事」解心結！",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:05:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFAwQ3RhY2x1ZG9DaGNyTy14Uy14bjlzRWlIVFk3Y29OdVA5VTRZc0lJSm50YV9ZSjAyd1pscmhOTWtHOTA3OHpwckxzVUJvU3lf?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "10757514dab756017445",
-        "source": "cts",
-        "title": "川普宣傳脫稿嘲諷酸電動車主罹患里程焦慮病- 國際",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:05:00Z",
-        "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE4tVHFVUVFsdWxEX3JFV3plZWRIRHROTkx1c2UzaldPOWtmQ2N6MnR6TWk3Qk0zNFZTYjdKTFltV1ROeEFmZGhGR25NTGc1aFVRWVpCbXdYUjRwMkpWRk80WU16ZFloWXdmQmhVa0xacXhIbk1MenB3Qw?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "4b9c459d3abb21dea963",
-        "source": "cts",
-        "title": "川普宣布對多晶矽產品加徵15%關稅 12/4生效",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:05:00Z",
-        "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1La25adEMyU1NSZnplNVVwMkpUNHhBQXFRdkwyZXM2ZmV3ZmU4Y1ZMZEE5Q0VZR21vcDlWbk1wUFplTjVzY204YUxEZHpaei1WWldFRUJ3czNSWHRPMlNLbktCRnZtRHpsdGRPbGZCSFQ2Wl9mNXRySQ?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "76d56dc09de9f6e46611",
-        "source": "cts",
-        "title": "大樂透第115077期頭獎槓龜- 財經",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:04:35Z",
-        "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE94R1VyTXIyamNoMThISWI0X3pLdlhLMTFjNWVtSXBCYU4xUXJuLTNaM1E2T0NrbDRIc0MxMkQ2TmJyYXl6bXdsUmhSVDY2eG1iMkdUdkZIY253a3F2d0RmZ2MwRjI5b0NxS2gtN2FB?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "2723e060d17ee5a1b80c",
-        "source": "moneydj",
-        "title": "能率亞洲針對投資案兆基屋管股份有限公司近期相關新聞說明- 新聞",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:04:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNZFZieVdwbUs0XzJ3ME4tX093enpnSlJvMUhqVnRCNC1HY3h4S0lCTmJvOWpIT0NJelFJUnFweDl3TTQ3cG95Tkd1bnRGY3JMR19vYjY5QjZBdTBtQVhYZlh4OG1ySlpjZXJMSVNlbzk0bVBuOC1aRlU4Q1RkQmZmTFVYNVYyMUFkS0ppRDBUTWFnVVR3MnM2aGFMcnZOYmpzSFEtRWRPNWZNRDdTSDJOU09ROHIwWWJienhOMXF0aWtWZw?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "84416861aabb52ee9ba5",
-        "source": "mnews",
-        "title": "林岳平執教400勝達陣！功勞全歸球員 陳傑憲跑壘失誤餅總這樣說",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:03:00Z",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1Xc1c4RTZ2ZUZrbFpkQ2M1VVlRMEZhU1Zkb2w3NHRrSkswX2JWd3M3S2pjZlkxUHcxT2VKTFlob0lWcGZhQkhaZjlQbk1TS0pwa0k4U2NFU1huUQ?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "99ce2aec81ee76de593e",
-        "source": "cts",
-        "title": "美7月非農就業人數意外減標普與那指雙雙開高- 綜合",
-        "excerpt": "",
-        "publishedAt": "2026-08-07T14:02:31Z",
-        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE82ajVEZjVIZS1ZVktBcl9meHA1NDN2UXYyUnlnMWppX0YzZ1AtallYTTN4QmFnaDRZV2FfMElua2o4bU9SUS0yLXhPSTRzQm1kMUlpdjJfd2hqNWFTa0JZaFFPd0pJR3Z3MHNIc3B1b04?oc=5",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "3e8693470e92fb379c7d",
-        "source": "anue",
-        "title": "Fed還升得下去嗎？華爾街看完非農都說先等等 升息恐扼殺製造業復甦",
-        "excerpt": "美國 7 月非農就業意外減少 2.3 萬人，6 月增幅也由 5.7 萬人大幅下修至 2 萬人，使市場開始質疑聯準會 (Fed) 是否仍有條件在 9 月升息。不過，華爾街分析師普遍認為，一個月的疲弱數據還不足以證明就業市場已陷入衰退，但足以讓 Fed",
-        "publishedAt": "2026-08-07T14:00:04Z",
-        "url": "https://news.cnyes.com/news/id/6565992",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "衰退",
-              "polarity": "negative",
-              "weight": 2
-            },
-            {
-              "term": "減少",
-              "polarity": "negative",
-              "weight": 1
-            },
-            {
-              "term": "質疑",
               "polarity": "negative",
               "weight": 1
             }
@@ -3917,25 +3468,6 @@
         }
       },
       {
-        "id": "1895d542a4f47bca91ce",
-        "source": "anue",
-        "title": "〈美股早盤〉非農意外轉負緩解Fed升息疑慮 主要指數開高",
-        "excerpt": "美股周五 (7 日) 開盤走高，標普 500 指數與那斯達克指數雙雙上揚。美國 7 月非農就業意外減少 2.3 萬人，顯示勞動市場明顯降溫，儘管數據本身令人失望，投資人卻看見其「好的一面」，認為聯準會 (Fed) 短期內無須急於升息，9 月按兵",
-        "publishedAt": "2026-08-07T13:38:19Z",
-        "url": "https://news.cnyes.com/news/id/6565334",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "減少",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
         "id": "9d111324e0c8a1bfcc8f",
         "source": "cna",
         "title": "漢光演習 雷霆2000多管火箭演練打擊登陸敵軍",
@@ -3959,35 +3491,6 @@
           "label": "neutral",
           "score": 0.0,
           "matched": []
-        }
-      },
-      {
-        "id": "89fb32bc730c75bd1b60",
-        "source": "anue",
-        "title": "日元又突然急升！非農爆冷還是美日再度干預？",
-        "excerpt": "美國 7 月非農就業數據意外轉為負成長，重挫聯準會 (Fed) 升息預期，帶動美元全面走弱，日元兌美元周五 (7 日) 盤中突然大漲。由於美日當局才在數日前聯手進場支撐日元，交易員也高度警戒官方可能再度干預匯市。",
-        "publishedAt": "2026-08-07T13:20:04Z",
-        "url": "https://news.cnyes.com/news/id/6565993",
-        "sentiment": {
-          "label": "positive",
-          "score": 0.2,
-          "matched": [
-            {
-              "term": "大漲",
-              "polarity": "positive",
-              "weight": 2
-            },
-            {
-              "term": "重挫",
-              "polarity": "negative",
-              "weight": 2
-            },
-            {
-              "term": "成長",
-              "polarity": "positive",
-              "weight": 1
-            }
-          ]
         }
       },
       {
@@ -4027,43 +3530,6 @@
             {
               "term": "遭控",
               "polarity": "negative",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
-        "id": "912be7159fc23aeef379",
-        "source": "anue",
-        "title": "ETF資金流入點火 比特幣重回6.5萬美元 但市場情緒仍為「極度恐懼」",
-        "excerpt": "比特幣在經歷了低迷的 7 月後，於 8 月初展現反彈力道，受美國比特幣現貨 ETF 連續 4 天資金流入的推動，比特幣價格周五 (7 日) 已重新收復 65,000 美元大關。",
-        "publishedAt": "2026-08-07T13:13:24Z",
-        "url": "https://news.cnyes.com/news/id/6565991",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "59cca72cf30842401af7",
-        "source": "anue",
-        "title": "〈財報〉北美消費者不買了？Under Armour下修全年財測 盤前股價跌近5%",
-        "excerpt": "運動服飾品牌 Under Armour(UAA-US) 周五 (7 日) 美股盤前公布 2027 會計年度第一季 (截至 6 月 30 日) 財報，儘管北美與亞太市場需求疲弱，營收持續下滑，公司仍轉虧為盈，調整後獲利也優於預期。不過，在消費環境充",
-        "publishedAt": "2026-08-07T13:10:04Z",
-        "url": "https://news.cnyes.com/news/id/6565337",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": [
-            {
-              "term": "下滑",
-              "polarity": "negative",
-              "weight": 1
-            },
-            {
-              "term": "獲利",
-              "polarity": "positive",
               "weight": 1
             }
           ]
@@ -4150,56 +3616,6 @@
         }
       },
       {
-        "id": "105757a2c7df9dc10e41",
-        "source": "anue",
-        "title": "蘋果調高多款裝置以舊換新回收價格 新增多款安卓機型",
-        "excerpt": "蘋果調整多款 iPhone、iPad、Mac 和蘋果手錶以舊換新回收價格，並新增多款安卓手機回收，可能為日益感受到價格壓力的消費者帶來一定安慰。",
-        "publishedAt": "2026-08-07T13:06:59Z",
-        "url": "https://news.cnyes.com/news/id/6565974",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "3c39d19f410a25b54819",
-        "source": "anue",
-        "title": "川普將與礦企高層開會 確保關鍵礦產供應",
-        "excerpt": "美國總統川普將於 7 日（周五）在美國國務院召集全球部分大型礦業公司高層開會，以期採取行動，確保美國及盟友的關鍵礦產供應。",
-        "publishedAt": "2026-08-07T12:53:54Z",
-        "url": "https://news.cnyes.com/news/id/6565975",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "a07f998c5cc0e963cbad",
-        "source": "anue",
-        "title": "FAO：戰爭與極端氣候引發「完美風暴」 全球糧食價格攀升至3年新高",
-        "excerpt": "根據聯合國糧食及農業組織 (FAO)2026 年 8 月發布的最新報告，7 月份全球糧食價格指數平均達到 131.1 點，創下自 2023 年 1 月以來、3 年多來的最高紀錄。這一波漲勢主要受地緣政治衝突加劇以及極端氣候條件的雙重壓力所推動。",
-        "publishedAt": "2026-08-07T12:50:11Z",
-        "url": "https://news.cnyes.com/news/id/6565089",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": [
-            {
-              "term": "新高",
-              "polarity": "positive",
-              "weight": 2
-            },
-            {
-              "term": "衝突",
-              "polarity": "negative",
-              "weight": 2
-            }
-          ]
-        }
-      },
-      {
         "id": "24e6b6b7c3f83e936ae8",
         "source": "pts",
         "title": "白海豚颱風進逼北部、東北部 基隆大武崙沙灘提前封閉",
@@ -4226,35 +3642,6 @@
         }
       },
       {
-        "id": "3e57496ee60fb08e98ac",
-        "source": "anue",
-        "title": "非農大爆冷！美國7月就業意外減少2.3萬人 聯準會9月升息機率驟降至4成",
-        "excerpt": "美國 7 月非農就業意外減少 2.3 萬人，不僅遠遜市場原先預期的增加 8.3 萬人，5 月與 6 月數據也合計遭大幅下修 10.3 萬人，顯示年初一度展現韌性的勞動市場正迅速降溫。就業與薪資成長雙雙放緩，促使交易員大幅降低聯準會 (Fed)9",
-        "publishedAt": "2026-08-07T12:40:02Z",
-        "url": "https://news.cnyes.com/news/id/6565335",
-        "sentiment": {
-          "label": "positive",
-          "score": 0.333,
-          "matched": [
-            {
-              "term": "增加",
-              "polarity": "positive",
-              "weight": 1
-            },
-            {
-              "term": "成長",
-              "polarity": "positive",
-              "weight": 1
-            },
-            {
-              "term": "減少",
-              "polarity": "negative",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
         "id": "e791bf8246247fc9e9a9",
         "source": "cti",
         "title": "陳時中稱造謠者應道歉 鄭麗文嗆綠冷血：下台100次都不足以謝罪！",
@@ -4274,70 +3661,12 @@
         }
       },
       {
-        "id": "d1869ea779aa28341839",
-        "source": "anue",
-        "title": "佳世達Q2純益季增87% 上半年EPS0.58元",
-        "excerpt": "佳世達 Q2 純益季增 87% 上半年 EPS0.58 元",
-        "publishedAt": "2026-08-07T12:30:02Z",
-        "url": "https://news.cnyes.com/news/id/6565931",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "aac90c08c9fbc48d0570",
-        "source": "anue",
-        "title": "和椿上半年EPS達1.92元賺逾去年全年9成 下半年將提升高毛利產品比重",
-        "excerpt": "和椿 (6215-TW) 自結第 2 季、上半年財報暨營運成果，第 2 季稅後純益 6,500 萬元，單季 EPS 為 0.78 元，上半年稅後淨利為 1.59 億元，EPS 為 1.92 元，上半年 EPS 已賺近去年 92.31％。",
-        "publishedAt": "2026-08-07T12:29:26Z",
-        "url": "https://news.cnyes.com/news/id/6565838",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "687dd5ad9e57b8c9e042",
-        "source": "anue",
-        "title": "邑錡Q2轉盈上半年每股虧損0.3元 續投入AI視覺產品開發",
-        "excerpt": "邑錡 (7402-TW) 在 2026 年第二季營運轉盈，較上季及 2025 年同期轉盈，單季稅後純益 359 萬元、每股純益 0.1 元，不過，邑錡 2026 年上半年仍虧損 1060 萬元，每股虧損 0.3 元。",
-        "publishedAt": "2026-08-07T12:25:07Z",
-        "url": "https://news.cnyes.com/news/id/6565834",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "虧損",
-              "polarity": "negative",
-              "weight": 2
-            }
-          ]
-        }
-      },
-      {
         "id": "4f0e4a42db9453264d23",
         "source": "cna",
         "title": "酒駕停車開車門與機車碰撞 吉安鄉公所副主任請辭",
         "excerpt": "（中央社記者張祈花蓮縣7日電）吉安鄉長游淑貞辦公室吳姓副主任，昨天路邊停車開車門時與機車發生碰撞，經酒測超過法定標準值，被依公共危險罪嫌移送偵辦。吉安鄉公所今天聲明，吳男已主動請辭獲准。",
         "publishedAt": "2026-08-07T12:24:15Z",
         "url": "https://www.cna.com.tw/news/asoc/202608070311.aspx",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
-        }
-      },
-      {
-        "id": "de71002b326bc1cbc010",
-        "source": "anue",
-        "title": "百萬噸鐵礦砂賣不掉！中國買家接連疏遠兩大貿易商",
-        "excerpt": "中國多家鐵礦砂貿易商與鋼鐵廠近期停止與 Radiant World 及 Sapphire Minmetals Corp. 交易，兩家公司本周因此難以出售多批鐵礦砂。由於市場擔憂貨物最終去向，鐵礦砂價格也跌至逾一年低點。",
-        "publishedAt": "2026-08-07T12:20:04Z",
-        "url": "https://news.cnyes.com/news/id/6565338",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -4395,19 +3724,6 @@
               "weight": 1
             }
           ]
-        }
-      },
-      {
-        "id": "2db9ec872d23758ba8db",
-        "source": "anue",
-        "title": "美日罕見聯手干預日元 高盛：彰顯美元儲備貨幣霸權不可替代",
-        "excerpt": "近期美國與日本展開罕見的聯合干預行動以支撐日元匯率，此舉引發外界對於美元作為儲備貨幣吸引力的討論。然而，高盛集團周四 (6 日) 發表報告指出，這次事件反而凸顯了美元在國際金融體系中無可取代的優勢，其深厚的市場深度與流動性，讓",
-        "publishedAt": "2026-08-07T12:11:13Z",
-        "url": "https://news.cnyes.com/news/id/6565082",
-        "sentiment": {
-          "label": "neutral",
-          "score": 0.0,
-          "matched": []
         }
       },
       {
@@ -4650,6 +3966,19 @@
         "excerpt": "AI 資料中心快速發展，除了帶動算力需求，也讓能源管理成為下一波產業競爭焦點。台達電今（7）日舉辦 55 周年 […]",
         "publishedAt": "2026-08-07T11:29:40Z",
         "url": "https://technews.tw/2026/08/07/energy-management-new-era-zheng-ping-delta-comprehensive-microgrid-solutions/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "040e5dfbbfc085b37a2c",
+        "source": "tvbs",
+        "title": "汽車關稅調降",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T11:24:50Z",
+        "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1JbUJkODNEbVBScW5PZ29tWS1lVDBZTkpNV21QdEw2NFFzM08zb3p5STlmaVRsSFZreVhQaWhhby1PRFZ6VnlYN0RUbHdWZUhBdC13?oc=5",
         "sentiment": {
           "label": "neutral",
           "score": 0.0,
@@ -5066,25 +4395,6 @@
             {
               "term": "成長",
               "polarity": "positive",
-              "weight": 1
-            }
-          ]
-        }
-      },
-      {
-        "id": "1897f1e7f06c3ae41a57",
-        "source": "cti",
-        "title": "鄭麗文認了「徐欣瑩與陳見賢至今沒見面」 曝新竹縣整合內幕",
-        "excerpt": "國民黨主席鄭麗文今（7）日上網路節目專訪，談及新竹縣長選情，坦言初選激烈遺留整合問題，初選勝出的縣長參選人徐欣瑩，至今未見到初選落敗的新竹縣副縣長陳見賢。",
-        "publishedAt": "2026-08-07T10:06:57Z",
-        "url": "https://ctinews.com/news/items/gOnLmlpJWk",
-        "sentiment": {
-          "label": "negative",
-          "score": -1.0,
-          "matched": [
-            {
-              "term": "落敗",
-              "polarity": "negative",
               "weight": 1
             }
           ]

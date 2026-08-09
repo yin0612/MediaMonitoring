@@ -1,10 +1,12 @@
-"""Google Trends 台灣 Trending Now RSS 解析器。"""
+"""Google Trends 台灣 Trending Now RSS 與網頁即時榜解析器。"""
 from __future__ import annotations
 
 from datetime import timezone
 from email.utils import parsedate_to_datetime
+import json
 import re
 from xml.etree import ElementTree
+import requests
 
 
 _HT = "https://trends.google.com/trending/rss"
@@ -50,3 +52,44 @@ def parse_trends_feed(raw: bytes) -> list[dict]:
             }
         )
     return output
+
+
+def fetch_realtime_web_trends(geo: str = "TW", timeout: int = 10) -> list[dict]:
+    """解析 Google Trends 網頁版當前最即時熱搜榜（與網頁版同步）。"""
+    url = f"https://trends.google.com/trending?geo={geo}&hl=zh-TW"
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
+    try:
+        response = requests.get(url, headers=headers, timeout=timeout)
+        if response.status_code != 200:
+            return []
+        matches = [m for m in re.findall(r"AF_initDataCallback\((.*?)\);", response.text, re.DOTALL) if "ds:0" in m]
+        if not matches:
+            return []
+        match_str = matches[0]
+        data_match = re.search(r"data:\s*(.*?), sideChannel:", match_str, re.DOTALL)
+        if not data_match:
+            return []
+        data = json.loads(data_match.group(1))
+        items = data[1] if len(data) > 1 and isinstance(data[1], list) else []
+        output = []
+        for item in items:
+            if not isinstance(item, list) or not item:
+                continue
+            raw_title = item[0] if isinstance(item[0], str) else ""
+            clean_title = _CJK_SPACE.sub(r"\1", raw_title.replace(" ", "")).strip()
+            if not clean_title:
+                continue
+            traffic_num = item[6] if len(item) > 6 and isinstance(item[6], int) else 0
+            traffic_str = f"{traffic_num:,}+" if traffic_num >= 1000 else (f"{traffic_num}+" if traffic_num > 0 else "")
+            output.append(
+                {
+                    "title": clean_title,
+                    "approximateTraffic": traffic_str,
+                    "publishedAt": "",
+                    "isRealtime": True,
+                    "news": [],
+                }
+            )
+        return output
+    except Exception:
+        return []

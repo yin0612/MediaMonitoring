@@ -376,6 +376,7 @@ export interface TrendItem {
   title: string;
   approximateTraffic: string;
   publishedAt: string;
+  isRealtime?: boolean;
   news: TrendNewsItem[];
 }
 

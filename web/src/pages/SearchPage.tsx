@@ -200,13 +200,13 @@ export function SearchPage() {
       <section className="trends-section" aria-labelledby="trends-title">
         <div className="section-row">
           <div>
-            <h2 id="trends-title">台灣 Google 熱門搜尋</h2>
+            <h2 id="trends-title">台灣 Google 熱門搜尋（包含網頁版即時榜與 RSS）</h2>
             <p>
-              官方 Trending Now RSS 本次提供 {trends?.data.items.length ?? 0} 筆，非完整 Google Trends 圖表；本站每 2 分鐘檢查更新。
+              已整合 Google Trends 網頁版即時搜尋榜（如：停班）與 RSS 頻道，本次提供 {trends?.data.items.length ?? 0} 筆；每 2 分鐘自動檢查更新。
               {trends && <> <a href={trends.data.sourceUrl} target="_blank" rel="noreferrer noopener">查看資料源</a></>}
             </p>
           </div>
-          {trends && <Badge variant={trends.data.stale ? 'warning' : 'good'} dot>{trends.data.stale ? '快照' : 'RSS 更新'}</Badge>}
+          {trends && <Badge variant={trends.data.stale ? 'warning' : 'good'} dot>{trends.data.stale ? '快照' : '即時同步'}</Badge>}
         </div>
         {trendsError ? (
           <Banner variant="warning">Google Trends 目前無法載入：{trendsError}</Banner>
@@ -214,10 +214,10 @@ export function SearchPage() {
           <LoadingState label="讀取台灣熱門搜尋…" />
         ) : (
           <div className="trend-chips">
-            {trends.data.items.slice(0, 12).map((item) => (
+            {trends.data.items.slice(0, 16).map((item) => (
               <button key={`${item.title}-${item.publishedAt}`} type="button" onClick={() => void selectTrend(item)}>
                 <strong>{item.title}</strong>
-                <span>{item.approximateTraffic || '未提供搜尋量'} · {item.news.length ? `${item.news.length} 則新聞` : '點擊載入新聞'}</span>
+                <span>{item.approximateTraffic || '未提供搜尋量'} · {item.isRealtime ? '網頁即時榜' : item.news.length ? `${item.news.length} 則新聞` : '點擊載入新聞'}</span>
               </button>
             ))}
           </div>
