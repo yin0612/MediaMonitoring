@@ -257,18 +257,47 @@ export async function searchNews(query: string, range: SearchRange): Promise<Env
 
 export async function fetchTrends(): Promise<Envelope<TrendsData>> {
   const base = apiBase();
+  let workerTrends: Envelope<TrendsData> | null = null;
   if (base) {
     try {
       const response = await fetch(`${base}/api/trends`);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return parseTrendsResponse(await response.json());
+      workerTrends = parseTrendsResponse(await response.json());
     } catch {
       // 改用 Pages 的最後成功趨勢快照。
     }
   }
-  const snapshot = await fetchData<TrendsData>('trends');
-  const parsed = parseTrendsResponse(snapshot);
-  return { ...parsed, data: { ...parsed.data, status: 'stale', stale: true } };
+  try {
+    const pagesTrends = parseTrendsResponse(await fetchData<TrendsData>('trends'));
+    if (workerTrends) {
+      const realtimeItems = pagesTrends.data.items.filter((item) => item.isRealtime);
+      if (realtimeItems.length === 0) return workerTrends;
+      const stale = workerTrends.data.stale || pagesTrends.data.stale;
+      return {
+        schemaVersion: pagesTrends.schemaVersion,
+        generatedAt: pagesTrends.generatedAt,
+        data: {
+          ...workerTrends.data,
+          status: stale
+            ? 'stale'
+            : workerTrends.data.status === 'ok' && pagesTrends.data.status === 'ok'
+              ? 'ok'
+              : 'partial',
+          stale,
+          source: 'google-trends-realtime-and-rss',
+          sourceUrl: pagesTrends.data.sourceUrl,
+          items: [
+            ...realtimeItems,
+            ...workerTrends.data.items.filter((item) => !item.isRealtime),
+          ],
+        },
+      };
+    }
+    return { ...pagesTrends, data: { ...pagesTrends.data, status: 'stale', stale: true } };
+  } catch (error) {
+    if (workerTrends) return workerTrends;
+    throw error;
+  }
 }
 
 export type { SearchMetrics };

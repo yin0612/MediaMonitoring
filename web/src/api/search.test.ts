@@ -3,6 +3,7 @@ import type { SearchArticle } from '../types/contracts';
 import {
   buildStaticSearchData,
   calculateNewsHeat,
+  fetchTrends,
   parseSearchResponse,
   parseTrendsResponse,
   searchNews,
@@ -173,6 +174,81 @@ describe('static snapshot fallback', () => {
         }],
       },
     })).toThrow('趨勢資料格式不相容');
+  });
+});
+
+describe('fetchTrends', () => {
+  it('combines Pages realtime topics with the current Worker RSS topics', async () => {
+    vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
+    const requested: string[] = [];
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      requested.push(url);
+      if (url === 'https://worker.example/api/trends') {
+        return Response.json({
+          schemaVersion: '2.0.0',
+          generatedAt: '2026-08-09T14:40:00Z',
+          data: {
+            geo: 'TW',
+            status: 'ok',
+            stale: false,
+            source: 'google-trends-rss',
+            sourceUrl: 'https://trends.google.com/trending/rss?geo=TW&hl=zh-TW',
+            items: [{
+              title: 'Worker 最新 RSS',
+              approximateTraffic: '500+',
+              publishedAt: '2026-08-09T14:30:00Z',
+              news: [],
+            }],
+          },
+        });
+      }
+      if (url.endsWith('/data/trends.json')) {
+        return Response.json({
+          schemaVersion: '2.1.0',
+          generatedAt: '2026-08-09T14:39:00Z',
+          data: {
+            geo: 'TW',
+            status: 'ok',
+            stale: false,
+            source: 'google-trends-realtime-and-rss',
+            sourceUrl: 'https://trends.google.com/trending?geo=TW&hl=zh-TW',
+            items: [
+              {
+                title: 'Pages 網頁即時榜',
+                approximateTraffic: '10,000+',
+                publishedAt: '',
+                isRealtime: true,
+                news: [],
+              },
+              {
+                title: 'Pages 較舊 RSS',
+                approximateTraffic: '200+',
+                publishedAt: '2026-08-09T14:20:00Z',
+                isRealtime: false,
+                news: [],
+              },
+            ],
+          },
+        });
+      }
+      return new Response('', { status: 404 });
+    }));
+
+    const result = await fetchTrends();
+
+    expect(requested).toEqual(expect.arrayContaining([
+      'https://worker.example/api/trends',
+      '/data/trends.json',
+    ]));
+    expect(requested).toHaveLength(2);
+    expect(result.data.source).toBe('google-trends-realtime-and-rss');
+    expect(result.data.sourceUrl).toBe('https://trends.google.com/trending?geo=TW&hl=zh-TW');
+    expect(result.data.items.map((item) => item.title)).toEqual([
+      'Pages 網頁即時榜',
+      'Worker 最新 RSS',
+    ]);
+    expect(result.data.stale).toBe(false);
   });
 });
 
