@@ -15,4 +15,4 @@ crons = ["*/5 * * * *"]
 # 一次執行只寫一個鍵，288 次/日，遠低於免費層 1000 寫入/日限制
 [[kv_namespaces]]
 binding = "SNAPSHOT"
-id = "7b3cce6f054f4918bf5a27dc5386a322"
+id = "7f726665db69456aba1da52ddeeeb563"
