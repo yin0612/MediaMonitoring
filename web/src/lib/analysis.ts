@@ -37,14 +37,16 @@ export function sentimentLabelOf(
   return sentiment?.label ?? null;
 }
 
+// Segmenter 只建立一次：extractTermStats 會對每篇文章呼叫 words()，
+// 原本在函式內建構，比較三個主題時會重複建立數百個實例。
+const SEGMENTER = new (Intl as unknown as {
+  Segmenter: new (locale: string, options: { granularity: 'word' }) => {
+    segment: (value: string) => Iterable<{ segment: string; isWordLike?: boolean }>;
+  };
+}).Segmenter('zh-TW', { granularity: 'word' });
+
 function words(text: string): string[] {
-  const Segmenter = (Intl as unknown as {
-    Segmenter: new (locale: string, options: { granularity: 'word' }) => {
-      segment: (value: string) => Iterable<{ segment: string; isWordLike?: boolean }>;
-    };
-  }).Segmenter;
-  const segmenter = new Segmenter('zh-TW', { granularity: 'word' });
-  const base = [...segmenter.segment(text)]
+  const base = [...SEGMENTER.segment(text)]
     .filter((part) => part.isWordLike)
     .map((part) => part.segment.trim())
     .filter((word) => word.length >= 2 && !STOPWORDS.has(word));
