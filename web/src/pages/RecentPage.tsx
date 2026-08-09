@@ -3,15 +3,18 @@ import { useData } from '../api/useData';
 import { Card, EmptyState, ErrorState, Freshness, LoadingState, SourceTag } from '../components/ui';
 import { fmtRelative } from '../lib/format';
 import { displayExcerpt, getRecentItems } from '../lib/recent';
-import type { RecentData } from '../types/contracts';
+import type { Meta, RecentData } from '../types/contracts';
 import { PageHeader } from '../components/PageHeader';
 
 export function RecentPage() {
   const recent = useData<RecentData>('recent');
+  const meta = useData<Meta>('meta');
+
+  const generatedAt = recent.envelope?.generatedAt ?? meta.envelope?.generatedAt ?? null;
 
   if (recent.error) return (
     <>
-      <PageHeader title="近期新聞" description="集中查看最新新聞快照；每則僅保留來源、短摘要與原文連結，點擊標題即可追溯。" context={{ label: '快照更新於', at: recent.envelope?.generatedAt ?? null }} />
+      <PageHeader title="近期新聞" description="集中查看最新新聞快照；每則僅保留來源、短摘要與原文連結，點擊標題即可追溯。" context={{ label: '快照更新於', at: generatedAt }} />
       <ErrorState error={recent.error} onRetry={recent.reload} />
     </>
   );
@@ -20,12 +23,12 @@ export function RecentPage() {
 
   return (
     <>
-      <PageHeader title="近期新聞" description="集中查看最新新聞快照；每則僅保留來源、短摘要與原文連結，點擊標題即可追溯。" context={{ label: '快照更新於', at: recent.envelope?.generatedAt ?? null }} />
+      <PageHeader title="近期新聞" description="集中查看最新新聞快照；每則僅保留來源、短摘要與原文連結，點擊標題即可追溯。" context={{ label: '快照更新於', at: generatedAt }} />
 
       <Card
         title="近期內容"
         hint={`${items.length} 則新聞・來源快照`}
-        right={<Freshness at={recent.envelope?.generatedAt ?? null} />}
+        right={<Freshness at={generatedAt} />}
       >
         {recent.loading ? (
           <LoadingState label="載入近期新聞中…" />

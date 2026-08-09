@@ -22,10 +22,17 @@ const NOISE_STOPWORDS = new Set([
   '台北', '北市', '北市府', '台北市', '新北', '新北市', '台中', '中市', '中市府', '台中市', '台南', '台南市', '南市',
   '高雄', '高市', '高市府', '高雄市', '桃園', '桃市', '桃園市', '新竹', '竹市', '竹縣', '基隆', '基市', '宜蘭', '花蓮', '台東',
   '屏東', '嘉義', '彰化', '南投', '雲林', '苗栗', '縣府', '市府', '全台', '全縣', '全市', '台灣', '國內', '國外', '中央', '地方',
-  // 通用非事件連載詞（過濾如「標準」、「相關」、「大戰」等動能雜訊）
-  '標準', '相關', '目前', '未來', '最新', '現場', '影響', '宣佈', '宣布', '推出', '指出', '強調', '進行', '出現', '持續', '說明', '呼籲', '提出',
-  '大戰', '大展', '展覽', '大賽', '比賽', '活動', '報導', '表示', '市場', '產業', '公司', '集團', '單位', '代表',
+  // 年齡與性別新聞標題片段過濾（過濾如「歲女」、「歲男」等片段詞）
+  '歲女', '歲男', '歲婦', '歲翁', '歲童', '歲幼', '歲男童', '歲女童', '歲高齡', '名男', '名女', '歲的', '幾歲', '男子', '女子', '男童', '女童', '男性', '女性',
 ]);
+
+function isInvalidRisingTerm(term: string): boolean {
+  const lower = term.toLowerCase().trim();
+  if (NOISE_STOPWORDS.has(lower)) return true;
+  if (/^歲[男女兒婦翁童幼]/.test(lower) || /歲[男女兒婦翁童幼]$/.test(lower)) return true;
+  if (/^\d+歲?$/.test(lower)) return true;
+  return false;
+}
 
 /** Compare the latest and preceding half-open time windows using existing keyword terms. */
 export function getRisingKeywords(
@@ -43,7 +50,7 @@ export function getRisingKeywords(
   const counts = new Map<string, { recent: number; previous: number }>();
   const terms = keywords
     .map((keyword) => keyword.term.trim())
-    .filter((term) => Boolean(term) && !NOISE_STOPWORDS.has(term.toLowerCase()));
+    .filter((term) => Boolean(term) && !isInvalidRisingTerm(term));
 
   for (const item of items) {
     const published = timestamp(item.publishedAt);

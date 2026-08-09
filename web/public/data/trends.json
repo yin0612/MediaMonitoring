@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-09T07:23:04.574812Z",
+  "generatedAt": "2026-08-09T07:32:55.617361Z",
   "data": {
     "geo": "TW",
     "status": "ok",
@@ -23,14 +23,14 @@
         "news": []
       },
       {
-        "title": "徐乃麟",
+        "title": "遣返",
         "approximateTraffic": "10,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "遣返",
+        "title": "徐乃麟",
         "approximateTraffic": "10,000+",
         "publishedAt": "",
         "isRealtime": true,
@@ -44,14 +44,14 @@
         "news": []
       },
       {
-        "title": "前列腺",
+        "title": "三商美邦",
         "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "三商美邦",
+        "title": "前列腺",
         "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
@@ -72,15 +72,45 @@
         "news": []
       },
       {
-        "title": "龍捲風",
-        "approximateTraffic": "10,000+",
+        "title": "光通訊",
+        "approximateTraffic": "2,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
+        "title": "陳睦衡",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-09T07:20:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "狂飆149公里無失分！歐力士台灣新星陳睦衡二軍先發5局好投技驚四座",
+            "source": "Yahoo運動",
+            "url": "https://tw.sports.yahoo.com/news/%E7%8B%82%E9%A3%86149%E5%85%AC%E9%87%8C%E7%84%A1%E5%A4%B1%E5%88%86-%E6%AD%90%E5%8A%9B%E5%A3%AB%E5%8F%B0%E7%81%A3%E6%96%B0%E6%98%9F%E9%99%B3%E7%9D%A6%E8%A1%A1%E4%BA%8C%E8%BB%8D%E5%85%88%E7%99%BC5%E5%B1%80%E5%A5%BD%E6%8A%95%E6%8A%80%E9%A9%9A%E5%9B%9B%E5%BA%A7-050059252.html"
+          },
+          {
+            "title": "日職》防禦率0.66超鬼神！台灣20歲火球男5局3K無失分 最快球速曝光",
+            "source": "自由體育",
+            "url": "https://sports.ltn.com.tw/news/breakingnews/5533595"
+          },
+          {
+            "title": "陳睦衡日職二軍5局無失分本季第2勝登英雄訪問| 運動",
+            "source": "中央社 CNA",
+            "url": "https://www.cna.com.tw/news/aspt/202608090088.aspx"
+          }
+        ]
+      },
+      {
+        "title": "愛子公主",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-09T07:20:00Z",
+        "isRealtime": false,
+        "news": []
+      },
+      {
         "title": "摩洛哥",
-        "approximateTraffic": "200+",
+        "approximateTraffic": "500+",
         "publishedAt": "2026-08-09T07:10:00Z",
         "isRealtime": false,
         "news": [
@@ -90,14 +120,14 @@
             "url": "https://africa.espn.com/espn/story/_/id/49561639/morocco-vs-south-africa-banyana-wafcon-quarter-final-defeat-happened"
           },
           {
-            "title": "Hosts Morocco edge South Africa to reach TotalEnergies CAF WAFCON semi-finals and seal Women’s World Cup qualification",
+            "title": "CAF announces extensive coverage of TotalEnergies CAF Women’s Africa Cup of Nations Morocco 2026 including CAF TV streaming",
             "source": "CAFOnline.com",
-            "url": "https://www.cafonline.com/caf-womens-africa-cup-of-nations/news/hosts-morocco-edge-south-africa-to-reach-totalenergies-caf-wafcon-semi-finals-and-seal-women-s-world-cup-qualification/"
+            "url": "https://www.cafonline.com/caf-womens-africa-cup-of-nations/news/caf-announces-extensive-coverage-of-totalenergies-caf-women-s-africa-cup-of-nations-morocco-2026-including-caf-tv-streaming/"
           },
           {
-            "title": "Morocco dump Banyana out of Wafcon, delay their World Cup dream",
-            "source": "Sowetan",
-            "url": "https://www.sowetan.co.za/sport/2026-08-08-morocco-dump-banyana-out-of-wafcon-delay-their-world-cup-dream/"
+            "title": "WAFCON quarterfinals preview: World Cup spots on the line, players to watch and more key stories",
+            "source": "The New York Times",
+            "url": "https://www.nytimes.com/athletic/7498458/2026/08/07/wafcon-quarterfinal-preview-world-cup-qualification/"
           }
         ]
       },
@@ -154,39 +184,28 @@
         "isRealtime": false,
         "news": [
           {
-            "title": "見放火翻垃圾找相機 黃豪平揭16年前含淚「翻垃圾」往事",
+            "title": "百萬YTR跳50噸垃圾山找相機！澎湖民宿辯「以為是按摩棒才丟」遭網砲轟",
             "source": "Yahoo新聞",
-            "url": "https://tw.news.yahoo.com/%E8%A6%8B%E6%94%BE%E7%81%AB%E7%BF%BB%E5%9E%83%E5%9C%BE%E6%89%BE%E7%9B%B8%E6%A9%9F-%E9%BB%83%E8%B1%AA%E5%B9%B3%E6%8F%AD16%E5%B9%B4%E5%89%8D%E5%90%AB%E6%B7%9A-%E7%BF%BB%E5%9E%83%E5%9C%BE-%E5%BE%80%E4%BA%8B-035200575.html"
+            "url": "https://tw.news.yahoo.com/%E7%99%BE%E8%90%ACytr%E8%B7%B350%E5%99%B8%E5%9E%83%E5%9C%BE%E5%B1%B1%E6%89%BE%E7%9B%B8%E6%A9%9F-%E6%BE%8E%E6%B9%96%E6%B0%91%E5%AE%BF%E8%BE%AF-%E4%BB%A5%E7%82%BA%E6%98%AF%E6%8C%89%E6%91%A9%E6%A3%92%E6%89%8D%E4%B8%9F-%E9%81%AD%E7%B6%B2%E7%A0%B2%E8%BD%9F-062800499.html"
+          },
+          {
+            "title": "黃豪平看「放火垃圾山找相機」有感發聲　曝16年前遊日垃圾車中含淚找御守",
+            "source": "噓！星聞",
+            "url": "https://stars.udn.com/star/story/10089/9677835"
           },
           {
             "title": "攝影機被民宿老闆丟了 網紅衝垃圾山翻找 萬人線上觀看",
             "source": "東森電視",
             "url": "https://ent.ebc.net.tw/buzz/501002"
-          },
-          {
-            "title": "【放火澎湖民宿遺失相機！清潔員「以為是按摩棒」丟垃圾桶】 現在按摩棒還有螢幕和鏡頭喔！？（#豬頭皮）",
-            "source": "Facebook",
-            "url": "https://www.facebook.com/ETtoday/posts/%E6%94%BE%E7%81%AB%E6%BE%8E%E6%B9%96%E6%B0%91%E5%AE%BF%E9%81%BA%E5%A4%B1%E7%9B%B8%E6%A9%9F%E6%B8%85%E6%BD%94%E5%93%A1%E4%BB%A5%E7%82%BA%E6%98%AF%E6%8C%89%E6%91%A9%E6%A3%92%E4%B8%9F%E5%9E%83%E5%9C%BE%E6%A1%B6%E7%8F%BE%E5%9C%A8%E6%8C%89%E6%91%A9%E6%A3%92%E9%82%84%E6%9C%89%E8%9E%A2%E5%B9%95%E5%92%8C%E9%8F%A1%E9%A0%AD%E5%96%94%E8%B1%AC%E9%A0%AD%E7%9A%AE/1517628483729565/"
           }
         ]
       },
       {
         "title": "中国男子篮球职业联赛",
-        "approximateTraffic": "500+",
+        "approximateTraffic": "200+",
         "publishedAt": "2026-08-09T05:50:00Z",
         "isRealtime": false,
-        "news": [
-          {
-            "title": "大学生球员成CBA选秀主角 高校体育培育沃土",
-            "source": "中华网",
-            "url": "https://news.china.com/socialgd/10000169/20260807/49661280.html"
-          },
-          {
-            "title": "CBA选秀大会今日开启：广州获得状元签，江苏与宁波紧随其后！",
-            "source": "搜狐网",
-            "url": "https://roll.sohu.com/a/1056193137_121921085"
-          }
-        ]
+        "news": []
       },
       {
         "title": "重陽節",
@@ -224,52 +243,6 @@
         "publishedAt": "2026-08-09T05:30:00Z",
         "isRealtime": false,
         "news": []
-      },
-      {
-        "title": "秀姑巒山",
-        "approximateTraffic": "100+",
-        "publishedAt": "2026-08-09T05:30:00Z",
-        "isRealtime": false,
-        "news": [
-          {
-            "title": "55歲女攀「八大秀」失聯4天！同行山友已獲救 女兒急求助：剩我媽媽還沒找到",
-            "source": "Yahoo新聞",
-            "url": "https://tw.news.yahoo.com/55%E6%AD%B2%E5%A5%B3%E6%94%80-%E5%85%AB%E5%A4%A7%E7%A7%80-%E5%A4%B1%E8%81%AF4%E5%A4%A9-%E5%90%8C%E8%A1%8C%E5%B1%B1%E5%8F%8B%E5%B7%B2%E7%8D%B2%E6%95%91-%E5%A5%B3%E5%85%92%E6%80%A5%E6%B1%82%E5%8A%A9-100719954.html"
-          },
-          {
-            "title": "55歲婦八通關登山失聯！同行友人獲救 家屬急喊：剩媽媽沒找到 | TVBS",
-            "source": "LINE TODAY",
-            "url": "https://today.line.me/tw/v3/article/2Dq13je"
-          },
-          {
-            "title": "花蓮局玉里消防分隊相關報導",
-            "source": "三立新聞",
-            "url": "https://www.setn.com/klist/774265"
-          }
-        ]
-      },
-      {
-        "title": "賣空",
-        "approximateTraffic": "200+",
-        "publishedAt": "2026-08-09T05:20:00Z",
-        "isRealtime": false,
-        "news": [
-          {
-            "title": "《大賣空》原型警告1987崩盤重演可信嗎？ 專家：「萬年空頭」忽略美股重要事實| 全球財經| 全球",
-            "source": "UDN",
-            "url": "https://udn.com/news/story/6811/9679580"
-          },
-          {
-            "title": "麥可貝瑞放空Oracle、Nebius 鎖定表外負債風險",
-            "source": "台視全球資訊網",
-            "url": "https://www.ttv.com.tw/finance/view/0820260710371B3CF4DD1F7F4769A72B3E04700E91DB0698/587"
-          },
-          {
-            "title": "麥可貝瑞坦承放空輝達虧損、警告 1987 年崩盤恐至",
-            "source": "TechNews 科技新報",
-            "url": "https://finance.technews.tw/2026/08/05/michael-burry-bets-against-rally-we-are-near-a-major-top/"
-          }
-        ]
       }
     ]
   }

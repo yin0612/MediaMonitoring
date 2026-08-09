@@ -422,7 +422,7 @@ def run(
                 "geo": "TW",
                 "status": "stale" if trends_stale else "ok",
                 "stale": trends_stale,
-                "source": "google-trends-rss",
+                "source": "google-trends-realtime-and-rss",
                 "sourceUrl": TRENDS_URL,
                 "items": trends_items,
             },
