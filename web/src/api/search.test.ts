@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import type { SearchArticle } from '../types/contracts';
 import {
   buildStaticSearchData,
   calculateNewsHeat,
@@ -222,5 +223,42 @@ describe('parseSearchResponse', () => {
         },
       }),
     ).toThrow('搜尋資料格式不相容');
+  });
+});
+
+describe('search statistics describe every match, not just the returned page', () => {
+  const sources: SearchArticle['source'][] = ['tvbs', 'cna', 'ltn', 'udn'];
+  // minutesAgo 從 1 起算：時間桶是半開區間 [start, end)，剛好等於 now 的項目
+  // 不屬於任何一桶，而真實新聞的發布時間一律在過去。
+  const article = (index: number, minutesAgo: number): SearchArticle => ({
+    id: `a${index}`,
+    source: sources[index % sources.length],
+    title: `颱風動態 ${index}`,
+    excerpt: '',
+    publishedAt: new Date(Date.now() - minutesAgo * 60_000).toISOString(),
+    url: `https://example.com/${index}`,
+    sentiment: null,
+  });
+
+  it('reports the true mention count when matches exceed the 100-item page', () => {
+    // 先前先 slice(0,100) 再算 metrics，命中 250 篇時聲量會顯示 100。
+    const items = Array.from({ length: 250 }, (_, i) => article(i, i + 1));
+
+    const data = buildStaticSearchData(items, '颱風', '24h');
+
+    expect(data.items).toHaveLength(100);
+    expect(data.metrics.mentions).toBe(250);
+    expect(data.timeline.reduce((sum, point) => sum + point.mentions, 0)).toBe(250);
+    // sourceCounts 也要涵蓋全部命中，而不是前 100 筆。
+    expect(Object.values(data.sourceCounts).reduce((a, b) => a + b, 0)).toBe(250);
+  });
+
+  it('still reports honest numbers when matches fit inside one page', () => {
+    const items = [article(0, 5), article(1, 10)];
+
+    const data = buildStaticSearchData(items, '颱風', '24h');
+
+    expect(data.metrics.mentions).toBe(2);
+    expect(data.metrics.sourceCount).toBe(2);
   });
 });

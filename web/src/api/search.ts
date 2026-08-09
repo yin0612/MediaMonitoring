@@ -111,13 +111,18 @@ const RANGE_MS: Record<SearchRange, number> = {
 
 const SOURCE_COUNT = NEWS_SOURCE_IDS.length;
 
+/** 搜尋回傳的文章上限，與 Worker 的 MAX_SEARCH_ITEMS 一致。 */
+const MAX_SEARCH_ITEMS = 100;
+
 /**
  * Worker 不可用時，用 Pages 快照在瀏覽器端算出與 Worker 相同形狀的搜尋結果。
  *
- * 刻意與 Worker 的 handleSearch 保持一致：同樣先取前 100 筆再計算 metrics。
- * 因此 `metrics.mentions` 上限為 100，命中數超過 100 時會低報；命中數達到
- * 來源數（37）時 volume 即飽和為 1.0。兩端一致是為了讓使用者不會因為
- * Worker 是否可用而看到不同數字，代價是熱門查詢的熱度區辨力有限。
+ * 與 Worker 的 handleSearch 保持一致：統計以全部命中計算，只有回傳清單截斷，
+ * 因此 `metrics.mentions` 會誠實反映命中總數。兩端一致是為了讓使用者不會因為
+ * Worker 是否可用而看到不同數字。
+ *
+ * 仍存在的取捨：volume = 命中數 / 來源數，命中達 37 篇即飽和為 1.0，
+ * 熱門查詢之間的熱度區辨力有限。要改這個定義屬產品決策。
  */
 export function buildStaticSearchData(
   allItems: SearchArticle[],
@@ -126,24 +131,24 @@ export function buildStaticSearchData(
   now = Date.now(),
 ): SearchData {
   const cutoff = now - RANGE_MS[range];
-  const items = allItems
+  const matched = allItems
     .filter((item) => Date.parse(item.publishedAt) >= cutoff)
     .filter((item) => matchesAdvancedQuery(`${item.title} ${item.excerpt}`, query.trim()))
-    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
-    .slice(0, 100);
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+  const items = matched.slice(0, MAX_SEARCH_ITEMS);
   const sourceCounts = Object.fromEntries(
-    [...new Set(items.map((item) => item.source))].map((source) => [
+    [...new Set(matched.map((item) => item.source))].map((source) => [
       source,
-      items.filter((item) => item.source === source).length,
+      matched.filter((item) => item.source === source).length,
     ]),
   );
   const sourceCount = Object.keys(sourceCounts).length;
   const midpoint = now - RANGE_MS[range] / 2;
-  const recent = items.filter((item) => Date.parse(item.publishedAt) >= midpoint).length;
-  const previous = items.length - recent;
+  const recent = matched.filter((item) => Date.parse(item.publishedAt) >= midpoint).length;
+  const previous = matched.length - recent;
   const input = {
-    volume: clamp01(items.length / SOURCE_COUNT),
-    acceleration: items.length === 0
+    volume: clamp01(matched.length / SOURCE_COUNT),
+    acceleration: matched.length === 0
       ? 0
       : clamp01(0.5 + (recent - previous) / (2 * Math.max(1, recent, previous))),
     diversity: clamp01(sourceCount / SOURCE_COUNT),
@@ -153,7 +158,7 @@ export function buildStaticSearchData(
   const timeline = Array.from({ length: bucketCount }, (_, index) => {
     const start = now - RANGE_MS[range] + index * bucketMs;
     const end = start + bucketMs;
-    const mentions = items.filter((item) => {
+    const mentions = matched.filter((item) => {
       const timestamp = Date.parse(item.publishedAt);
       return timestamp >= start && timestamp < end;
     }).length;
@@ -164,7 +169,7 @@ export function buildStaticSearchData(
     range,
     status: 'stale',
     stale: true,
-    metrics: { ...input, heat: calculateNewsHeat(input), mentions: items.length, sourceCount },
+    metrics: { ...input, heat: calculateNewsHeat(input), mentions: matched.length, sourceCount },
     timeline,
     sourceCounts,
     sources: NEWS_SOURCE_IDS.map((id) => ({

@@ -6,14 +6,14 @@ Google News RSS，只會取得該白名單媒體自己網域的內容。
 """
 from __future__ import annotations
 
-from datetime import datetime, timezone
 from urllib.parse import quote
 
 import feedparser
 
 from ..models import NormalizedItem, SourceResult
-from ..timeutil import normalize_published
-from .rss import _clean, _error_code, _fetch_bytes, is_feed_document
+# 時間解析與 RSS 連接器共用同一份實作（它已委派 timeutil.normalize_published），
+# 避免兩個連接器各留一份會分歧的複本。
+from .rss import _clean, _error_code, _fetch_bytes, _parse_time, is_feed_document
 
 
 def google_news_url(domain: str) -> str:
@@ -28,14 +28,6 @@ def strip_publisher_suffix(title: str, source: dict) -> str:
         return title
     names = {source.get("name", ""), *source.get("aliases", [])}
     return head if tail.strip() in names else title
-
-
-def _parse_time(entry, now: datetime | None = None) -> datetime | None:
-    for key in ("published_parsed", "updated_parsed"):
-        tm = entry.get(key)
-        if tm:
-            return normalize_published(datetime(*tm[:6], tzinfo=timezone.utc), now)
-    return None
 
 
 def fetch_google_news(source: dict, timeout: int, max_items: int) -> SourceResult:

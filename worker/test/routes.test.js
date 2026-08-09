@@ -1032,3 +1032,42 @@ test('trends endpoint preserves related news from publishers outside the 29-sour
     globalThis.fetch = originalFetch;
   }
 });
+
+// 搜尋統計必須描述全部命中，只有回傳清單截斷。先前是先 slice(0,100) 再算 metrics，
+// 命中 250 篇時聲量會顯示 100，是錯誤的數字而非取捨。前端 fallback 有對應測試。
+test('search metrics count every match while the payload stays capped', async () => {
+  const originalFetch = globalThis.fetch;
+  const pubDate = new Date(Date.now() - 30 * 60 * 1000).toUTCString();
+  const archived = Array.from({ length: 250 }, (_, i) => ({
+    id: `arch-${i}`,
+    source: ['tvbs', 'cna', 'ltn', 'udn'][i % 4],
+    title: `颱風動態 ${i}`,
+    excerpt: '',
+    publishedAt: new Date(Date.now() - (i + 1) * 60 * 1000).toISOString(),
+    url: `https://news.example/typhoon/${i}`,
+    sentiment: null,
+  }));
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.endsWith('/data/recent.json')) return Response.json({ data: { items: archived } });
+    if (url.includes('news.google.com')) return new Response('<rss><channel></channel></rss>');
+    return new Response(`<rss><channel><item><guid>x</guid><title>無關</title>
+      <link>https://news.example/other</link><pubDate>${pubDate}</pubDate></item></channel></rss>`);
+  };
+  try {
+    const response = await worker.fetch(
+      new Request('https://worker.example/api/search?q=颱風&range=24h'),
+      { ARCHIVE_BASE_URL: 'https://pages.example' },
+    );
+    const { data } = await response.json();
+
+    assert.equal(data.items.length, 100, '回傳清單應維持 100 筆上限');
+    assert.equal(data.metrics.mentions, 250, 'metrics 應反映全部命中');
+    const timelineTotal = data.timeline.reduce((sum, point) => sum + point.mentions, 0);
+    assert.equal(timelineTotal, 250, 'timeline 應涵蓋全部命中');
+    const sourceTotal = Object.values(data.sourceCounts).reduce((a, b) => a + b, 0);
+    assert.equal(sourceTotal, 250, 'sourceCounts 應涵蓋全部命中');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});

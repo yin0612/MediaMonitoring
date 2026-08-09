@@ -28,6 +28,8 @@ const DEEP_SNAPSHOT_MAX_AGE_MS = SOURCE_HEALTH_MAX_AGE_MS;
 // Worker 僅保留最近 600 篇做即時合併與逐篇情緒；CPU 較重的
 // keywords／entities／topics 統一由 GitHub Actions / Python 產生。
 const MAX_ANALYSIS_ITEMS = 600;
+// 搜尋回傳的文章上限。統計不受此限制，一律以全部命中計算（見 handleSearch）。
+const MAX_SEARCH_ITEMS = 100;
 // 7 天完整 archive 不由 Worker 提供（CPU/KV 成本），由 Pages 靜態檔與 /api/search 負責。
 const DATA_FILES = new Set(['meta', 'keywords', 'sources', 'recent', 'entities', 'topics']);
 const googleNewsUrl = (query, range = '24h') => {
@@ -300,23 +302,25 @@ async function handleSearch(request, env, url) {
 
   const liveItems = runs.flatMap((run) => run.items);
   const archived = await archiveItems(env, input.range);
-  const items = filterAndDedupe([...liveItems, ...archived], input.query, input.range)
-    .slice(0, 100)
-    .map(withSentiment);
+  // 統計要描述「全部命中」，回傳清單才截斷。先前是先 slice(0,100) 再算 metrics，
+  // 命中 300 篇時聲量會顯示 100，是直接錯誤的數字而非取捨。
+  // 逐篇情緒只算在實際回傳的那 100 筆，維持 Worker 的 CPU 預算。
+  const matched = filterAndDedupe([...liveItems, ...archived], input.query, input.range);
+  const items = matched.slice(0, MAX_SEARCH_ITEMS).map(withSentiment);
   const enabledCount = NEWS_SOURCES.length;
   const failures = runs.filter((run) => ['error', 'degraded'].includes(run.status)).length;
   const stale = liveItems.length === 0 && archived.length > 0;
   const status = stale ? 'stale' : failures ? 'partial' : 'ok';
   const sourceCounts = Object.fromEntries(
-    [...new Set(items.map((item) => item.source))].map((source) => [source, items.filter((item) => item.source === source).length]),
+    [...new Set(matched.map((item) => item.source))].map((source) => [source, matched.filter((item) => item.source === source).length]),
   );
   const data = {
     query: input.query,
     range: input.range,
     status,
     stale,
-    metrics: calculateMetrics(items, input.range, Date.now(), enabledCount),
-    timeline: timelineFor(items, input.range),
+    metrics: calculateMetrics(matched, input.range, Date.now(), enabledCount),
+    timeline: timelineFor(matched, input.range),
     sourceCounts,
     sources: runs.map(({ items: _items, ...source }) => source),
     items,
