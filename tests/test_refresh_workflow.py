@@ -34,6 +34,10 @@ def test_refresh_workflow_accepts_every_trigger_the_worker_uses() -> None:
     assert "workflow_dispatch" in triggers
     assert WORKER_DISPATCH_EVENT in triggers["repository_dispatch"]["types"]
 
+    # README 承諾「推送至 main」就會部署；沒有這個觸發條件，修好的前端要等
+    # 下一次排程才會上線。
+    assert triggers["push"]["branches"] == ["main"]
+
 
 def test_worker_dispatches_to_a_workflow_that_exists() -> None:
     """Worker 寫死的 workflow 檔名必須真的存在，否則手動更新會靜默失敗。"""
@@ -46,12 +50,15 @@ def test_worker_dispatches_to_a_workflow_that_exists() -> None:
     assert referenced == REFRESH_WORKFLOW
 
 
-def test_refresh_never_hard_fails_on_a_missing_worker_url() -> None:
-    """Worker 網址是選配加速層；沒設定時要降級建置，不能擋掉整條新聞更新。"""
-    body = REFRESH_WORKFLOW.read_text(encoding="utf-8")
+def test_no_workflow_hard_fails_on_a_missing_worker_url() -> None:
+    """Worker 網址是選配加速層；沒設定時要降級建置，不能擋掉更新或讓 CI 永遠紅燈。
 
-    assert "ALLOW_STATIC_ONLY" in body, "未設定 Worker 網址時應改用靜態快照模式建置"
-    assert "VITE_API_BASE_URL is required" not in body
+    這個檢查涵蓋兩個 workflow：漏掉任何一個都會有一條管線永久失敗。
+    """
+    for workflow in (REFRESH_WORKFLOW, CI_WORKFLOW):
+        body = workflow.read_text(encoding="utf-8")
+        assert "ALLOW_STATIC_ONLY" in body, f"{workflow.name} 未設定 Worker 網址時應降級建置"
+        assert "VITE_API_BASE_URL is required" not in body, f"{workflow.name} 不應硬性要求 Worker 網址"
 
 
 def test_refresh_skips_the_test_suite_that_ci_already_runs() -> None:

@@ -51,6 +51,12 @@ jobs:
         working-directory: web
         run: npm run typecheck
 
+      # CI 只需證明前端建置得起來，不產出正式站產物。若 repository variable
+      # VITE_API_BASE_URL 未設定，就以靜態快照模式建置；否則 check:prod-env
+      # 會讓 CI 永遠紅燈（部署用的降級邏輯在 refresh-data.yml）。
       - name: Build
         working-directory: web
         run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          ALLOW_STATIC_ONLY: ${{ vars.VITE_API_BASE_URL == '' }}

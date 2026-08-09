@@ -1,6 +1,12 @@
 name: Refresh data and deploy
 
 on:
+  # 程式碼進 main 就重建並部署，否則修好的前端要等下一次排程才會上線，
+  # 而 GitHub 的 schedule 事件延遲可達數小時。
+  push:
+    branches:
+      - main
+
   workflow_dispatch:
     inputs:
       refresh_id:
