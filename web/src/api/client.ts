@@ -135,15 +135,29 @@ async function fetchEnvelope<T>(name: string, url: string, cache: RequestCache):
  */
 export async function fetchData<T>(name: string, bypassCache = false): Promise<Envelope<T>> {
   const workerUrl = WORKER_FILES.has(name) ? workerDataUrl(name) : null;
+  let workerEnv: Envelope<T> | null = null;
   if (workerUrl) {
     try {
-      return await fetchEnvelope<T>(name, workerUrl, 'no-store');
+      workerEnv = await fetchEnvelope<T>(name, workerUrl, 'no-store');
     } catch (err) {
       if (err instanceof SchemaVersionError) throw err;
-      // Worker 無快照或離線 → 退回 Pages 靜態檔。
     }
   }
-  return fetchEnvelope<T>(name, pagesUrl(name, bypassCache), 'no-cache');
+
+  let pagesEnv: Envelope<T> | null = null;
+  try {
+    pagesEnv = await fetchEnvelope<T>(name, pagesUrl(name, bypassCache), 'no-cache');
+  } catch (err) {
+    if (!workerEnv) throw err;
+  }
+
+  if (workerEnv && pagesEnv) {
+    const workerTime = Date.parse(workerEnv.generatedAt) || 0;
+    const pagesTime = Date.parse(pagesEnv.generatedAt) || 0;
+    return workerTime >= pagesTime ? workerEnv : pagesEnv;
+  }
+
+  return workerEnv ?? (pagesEnv as Envelope<T>);
 }
 
 /** 明確讀取 Pages last-good；用於 Worker 搜尋失敗後，避免再讀到截短的 Worker 快照。 */

@@ -1,12 +1,12 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-09T06:35:55.649817Z",
+  "generatedAt": "2026-08-09T06:34:53.113428Z",
   "data": {
     "geo": "TW",
     "status": "ok",
     "stale": false,
-    "source": "google-trends-realtime-and-rss",
-    "sourceUrl": "https://trends.google.com/trending?geo=TW&hl=zh-TW",
+    "source": "google-trends-rss",
+    "sourceUrl": "https://trends.google.com/trending/rss?geo=TW&hl=zh-TW",
     "items": [
       {
         "title": "白海豚停班停課",
@@ -79,6 +79,41 @@
         "news": []
       },
       {
+        "title": "光通訊",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "王子",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "賴瑞隆",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "sbs歌謠大戰2026",
+        "approximateTraffic": "1,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "boynextdoor演唱會",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
         "title": "垃圾",
         "approximateTraffic": "200+",
         "publishedAt": "2026-08-09T05:50:00Z",
@@ -138,19 +173,19 @@
         "isRealtime": false,
         "news": [
           {
-            "title": "派助理颱風天「肉身護植栽」 愛莉莎莎遭轟：命比不上植物",
+            "title": "愛莉莎莎颱風天讓助理「肉身護植栽」挨轟　本人親回：助理不會被吹出去",
+            "source": "噓！星聞",
+            "url": "https://stars.udn.com/star/story/120661/9679935"
+          },
+          {
+            "title": "愛莉莎莎颱風天派助理「冒雨肉身護植栽」 挨轟笑稱：不會被吹出去",
             "source": "Yahoo新聞",
-            "url": "https://tw.news.yahoo.com/%E6%B4%BE%E5%8A%A9%E7%90%86%E9%A2%B1%E9%A2%A8%E5%A4%A9-%E8%82%89%E8%BA%AB%E8%AD%B7%E6%A4%8D%E6%A0%BD-%E6%84%9B%E8%8E%89%E8%8E%8E%E8%8E%8E%E9%81%AD%E8%BD%9F-%E5%91%BD%E6%AF%94%E4%B8%8D%E4%B8%8A%E6%A4%8D%E7%89%A9-031500637.html"
+            "url": "https://tw.news.yahoo.com/%E6%84%9B%E8%8E%89%E8%8E%8E%E8%8E%8E%E9%A2%B1%E9%A2%A8%E5%A4%A9%E6%B4%BE%E5%8A%A9%E7%90%86-%E5%86%92%E9%9B%A8%E8%82%89%E8%BA%AB%E8%AD%B7%E6%A4%8D%E6%A0%BD-%E6%8C%A8%E8%BD%9F%E7%AC%91%E7%A8%B1-%E4%B8%8D%E6%9C%83%E8%A2%AB%E5%90%B9%E5%87%BA%E5%8E%BB-061317182.html"
           },
           {
             "title": "主機、商品全泡水！3C Tim哥成受災戶崩潰",
             "source": "鏡週刊Mirror Media",
             "url": "https://www.mirrormedia.mg/external/setn_1886391"
-          },
-          {
-            "title": "慘淪白海豚受災戶！網紅Tim哥公司淹水　貨物泡湯、員工急救電腦",
-            "source": "NOWnews今日新聞",
-            "url": "https://www.nownews.com/news/6864312"
           }
         ]
       },

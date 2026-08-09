@@ -1,19 +1,24 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T14:21:14.291658Z",
+  "generatedAt": "2026-08-09T06:34:53.113428Z",
   "data": {
     "status": "ok",
     "stale": false,
-    "totalItems": 1593,
+    "totalItems": 1554,
     "days": [
       {
+        "date": "2026-08-09",
+        "count": 689,
+        "file": "news-archive/2026-08-09"
+      },
+      {
         "date": "2026-08-08",
-        "count": 1286,
+        "count": 828,
         "file": "news-archive/2026-08-08"
       },
       {
         "date": "2026-08-07",
-        "count": 296,
+        "count": 28,
         "file": "news-archive/2026-08-07"
       },
       {
@@ -38,13 +43,8 @@
       },
       {
         "date": "2026-08-02",
-        "count": 3,
+        "count": 2,
         "file": "news-archive/2026-08-02"
-      },
-      {
-        "date": "2026-08-01",
-        "count": 1,
-        "file": "news-archive/2026-08-01"
       }
     ]
   }

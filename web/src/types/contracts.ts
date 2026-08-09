@@ -384,7 +384,7 @@ export interface TrendsData {
   geo: 'TW';
   status: GlobalStatus;
   stale: boolean;
-  source: 'google-trends-rss';
+  source: 'google-trends-rss' | 'google-trends-realtime-and-rss';
   sourceUrl: string;
   items: TrendItem[];
 }

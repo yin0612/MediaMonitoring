@@ -1,380 +1,372 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T14:21:14.291658Z",
+  "generatedAt": "2026-08-09T06:34:53.113428Z",
   "data": {
     "stale": false,
     "experimental": true,
     "nodes": [
       {
         "id": "org-1",
-        "name": "中央氣象署",
+        "name": "國民黨",
         "type": "ORG",
         "mentions": 39
       },
       {
         "id": "org-2",
-        "name": "國民黨",
-        "type": "ORG",
-        "mentions": 33
-      },
-      {
-        "id": "org-3",
         "name": "民進黨",
         "type": "ORG",
-        "mentions": 28
+        "mentions": 38
       },
       {
-        "id": "person-4",
+        "id": "person-3",
         "name": "蔣萬安",
         "type": "PERSON",
-        "mentions": 27
+        "mentions": 34
+      },
+      {
+        "id": "org-4",
+        "name": "中央氣象署",
+        "type": "ORG",
+        "mentions": 32
       },
       {
         "id": "person-5",
-        "name": "賴清德",
-        "type": "PERSON",
-        "mentions": 22
-      },
-      {
-        "id": "person-6",
-        "name": "川普",
-        "type": "PERSON",
-        "mentions": 17
-      },
-      {
-        "id": "person-7",
         "name": "沈伯洋",
         "type": "PERSON",
-        "mentions": 16
+        "mentions": 14
       },
       {
-        "id": "org-8",
-        "name": "立法院",
+        "id": "org-6",
+        "name": "行政院",
         "type": "ORG",
-        "mentions": 13
+        "mentions": 14
+      },
+      {
+        "id": "org-7",
+        "name": "台積電",
+        "type": "ORG",
+        "mentions": 10
+      },
+      {
+        "id": "person-8",
+        "name": "柯文哲",
+        "type": "PERSON",
+        "mentions": 10
       },
       {
         "id": "org-9",
-        "name": "衛福部",
+        "name": "外交部",
         "type": "ORG",
-        "mentions": 13
+        "mentions": 9
       },
       {
         "id": "person-10",
-        "name": "柯文哲",
+        "name": "川普",
         "type": "PERSON",
-        "mentions": 12
+        "mentions": 9
       },
       {
         "id": "org-11",
-        "name": "特斯拉",
-        "type": "ORG",
-        "mentions": 12
-      },
-      {
-        "id": "org-12",
-        "name": "外交部",
-        "type": "ORG",
-        "mentions": 11
-      },
-      {
-        "id": "org-13",
-        "name": "台鐵",
-        "type": "ORG",
-        "mentions": 9
-      },
-      {
-        "id": "org-14",
-        "name": "民眾黨",
-        "type": "ORG",
-        "mentions": 9
-      },
-      {
-        "id": "org-15",
-        "name": "台北市政府",
+        "name": "內政部",
         "type": "ORG",
         "mentions": 8
       },
       {
-        "id": "org-16",
-        "name": "台積電",
+        "id": "org-12",
+        "name": "民眾黨",
         "type": "ORG",
+        "mentions": 8
+      },
+      {
+        "id": "org-13",
+        "name": "衛福部",
+        "type": "ORG",
+        "mentions": 8
+      },
+      {
+        "id": "person-14",
+        "name": "賴清德",
+        "type": "PERSON",
+        "mentions": 8
+      },
+      {
+        "id": "person-15",
+        "name": "賴瑞隆",
+        "type": "PERSON",
+        "mentions": 8
+      },
+      {
+        "id": "person-16",
+        "name": "鄭麗文",
+        "type": "PERSON",
         "mentions": 8
       },
       {
         "id": "org-17",
-        "name": "行政院",
-        "type": "ORG",
-        "mentions": 8
-      },
-      {
-        "id": "org-18",
-        "name": "陸委會",
+        "name": "立法院",
         "type": "ORG",
         "mentions": 7
+      },
+      {
+        "id": "person-18",
+        "name": "侯友宜",
+        "type": "PERSON",
+        "mentions": 6
       },
       {
         "id": "org-19",
-        "name": "食藥署",
+        "name": "鴻海",
         "type": "ORG",
-        "mentions": 7
+        "mentions": 6
       },
       {
         "id": "org-20",
-        "name": "交通部",
+        "name": "特斯拉",
         "type": "ORG",
-        "mentions": 6
+        "mentions": 5
       },
       {
         "id": "org-21",
-        "name": "內政部",
-        "type": "ORG",
-        "mentions": 6
-      },
-      {
-        "id": "org-22",
-        "name": "宏碁",
-        "type": "ORG",
-        "mentions": 6
-      },
-      {
-        "id": "org-23",
-        "name": "輝達",
-        "type": "ORG",
-        "mentions": 6
-      },
-      {
-        "id": "org-24",
-        "name": "三星",
-        "type": "ORG",
-        "mentions": 5
-      },
-      {
-        "id": "org-25",
-        "name": "中油",
-        "type": "ORG",
-        "mentions": 5
-      },
-      {
-        "id": "person-26",
-        "name": "賴瑞隆",
-        "type": "PERSON",
-        "mentions": 5
-      },
-      {
-        "id": "person-27",
-        "name": "韓國瑜",
-        "type": "PERSON",
-        "mentions": 5
-      },
-      {
-        "id": "org-28",
-        "name": "Meta",
-        "type": "ORG",
-        "mentions": 4
-      },
-      {
-        "id": "org-29",
         "name": "亞馬遜",
         "type": "ORG",
         "mentions": 4
       },
       {
-        "id": "person-30",
+        "id": "org-22",
+        "name": "台中市政府",
+        "type": "ORG",
+        "mentions": 4
+      },
+      {
+        "id": "org-23",
+        "name": "台北市政府",
+        "type": "ORG",
+        "mentions": 4
+      },
+      {
+        "id": "org-24",
+        "name": "台鐵",
+        "type": "ORG",
+        "mentions": 4
+      },
+      {
+        "id": "person-25",
         "name": "徐巧芯",
         "type": "PERSON",
         "mentions": 4
       },
       {
-        "id": "org-31",
-        "name": "海巡署",
-        "type": "ORG",
-        "mentions": 4
-      },
-      {
-        "id": "org-32",
-        "name": "緯創",
-        "type": "ORG",
-        "mentions": 4
-      },
-      {
-        "id": "person-33",
+        "id": "person-26",
         "name": "盧秀燕",
         "type": "PERSON",
+        "mentions": 4
+      },
+      {
+        "id": "org-27",
+        "name": "Google",
+        "type": "ORG",
         "mentions": 3
       },
       {
-        "id": "person-34",
-        "name": "郭台銘",
-        "type": "PERSON",
+        "id": "org-28",
+        "name": "Meta",
+        "type": "ORG",
+        "mentions": 3
+      },
+      {
+        "id": "org-29",
+        "name": "OpenAI",
+        "type": "ORG",
+        "mentions": 3
+      },
+      {
+        "id": "org-30",
+        "name": "中油",
+        "type": "ORG",
+        "mentions": 3
+      },
+      {
+        "id": "org-31",
+        "name": "交通部",
+        "type": "ORG",
+        "mentions": 3
+      },
+      {
+        "id": "org-32",
+        "name": "國防部",
+        "type": "ORG",
+        "mentions": 3
+      },
+      {
+        "id": "org-33",
+        "name": "海巡署",
+        "type": "ORG",
+        "mentions": 3
+      },
+      {
+        "id": "org-34",
+        "name": "緯創",
+        "type": "ORG",
         "mentions": 3
       },
       {
         "id": "person-35",
-        "name": "鄭麗文",
+        "name": "黃國昌",
         "type": "PERSON",
         "mentions": 3
       },
       {
         "id": "person-36",
-        "name": "侯友宜",
-        "type": "PERSON",
-        "mentions": 2
-      },
-      {
-        "id": "person-37",
-        "name": "普丁",
-        "type": "PERSON",
-        "mentions": 2
-      },
-      {
-        "id": "person-38",
         "name": "澤倫斯基",
         "type": "PERSON",
         "mentions": 2
       },
       {
-        "id": "person-39",
-        "name": "陳其邁",
-        "type": "PERSON",
-        "mentions": 2
-      },
-      {
-        "id": "person-40",
-        "name": "馬斯克",
+        "id": "person-37",
+        "name": "韓國瑜",
         "type": "PERSON",
         "mentions": 2
       }
     ],
     "edges": [
       {
-        "source": "org-2",
-        "target": "org-3",
-        "weight": 14
+        "source": "org-1",
+        "target": "org-2",
+        "weight": 19
+      },
+      {
+        "source": "org-4",
+        "target": "person-3",
+        "weight": 10
+      },
+      {
+        "source": "org-1",
+        "target": "person-16",
+        "weight": 7
       },
       {
         "source": "org-2",
-        "target": "org-8",
-        "weight": 8
-      },
-      {
-        "source": "person-7",
-        "target": "person-4",
-        "weight": 8
-      },
-      {
-        "source": "person-10",
-        "target": "org-14",
+        "target": "person-5",
         "weight": 6
       },
       {
-        "source": "org-9",
-        "target": "org-19",
-        "weight": 6
-      },
-      {
-        "source": "org-8",
-        "target": "person-27",
+        "source": "org-2",
+        "target": "person-15",
         "weight": 5
       },
       {
         "source": "org-1",
-        "target": "org-20",
+        "target": "org-12",
+        "weight": 4
+      },
+      {
+        "source": "org-1",
+        "target": "org-17",
         "weight": 4
       },
       {
         "source": "org-2",
-        "target": "person-27",
+        "target": "person-3",
         "weight": 4
       },
       {
-        "source": "org-3",
-        "target": "org-8",
-        "weight": 4
-      },
-      {
-        "source": "org-3",
-        "target": "person-5",
-        "weight": 4
-      },
-      {
-        "source": "org-3",
-        "target": "person-26",
-        "weight": 4
-      },
-      {
-        "source": "org-3",
-        "target": "person-7",
+        "source": "org-1",
+        "target": "org-6",
         "weight": 3
       },
       {
-        "source": "org-8",
+        "source": "person-8",
+        "target": "org-12",
+        "weight": 3
+      },
+      {
+        "source": "org-12",
+        "target": "person-26",
+        "weight": 3
+      },
+      {
+        "source": "org-12",
+        "target": "person-35",
+        "weight": 3
+      },
+      {
+        "source": "org-2",
         "target": "org-17",
         "weight": 3
       },
       {
-        "source": "person-4",
-        "target": "org-9",
+        "source": "org-2",
+        "target": "org-13",
         "weight": 3
       },
       {
         "source": "org-2",
-        "target": "person-30",
+        "target": "person-16",
+        "weight": 3
+      },
+      {
+        "source": "person-5",
+        "target": "person-3",
+        "weight": 3
+      },
+      {
+        "source": "person-18",
+        "target": "person-16",
         "weight": 2
       },
       {
-        "source": "org-2",
-        "target": "org-14",
+        "source": "org-7",
+        "target": "org-19",
         "weight": 2
       },
       {
-        "source": "org-2",
-        "target": "person-4",
+        "source": "org-1",
+        "target": "person-25",
         "weight": 2
       },
       {
-        "source": "org-2",
+        "source": "org-1",
         "target": "person-5",
         "weight": 2
       },
       {
-        "source": "org-2",
+        "source": "org-1",
         "target": "person-26",
         "weight": 2
       },
       {
-        "source": "org-2",
+        "source": "org-1",
+        "target": "org-13",
+        "weight": 2
+      },
+      {
+        "source": "org-1",
+        "target": "person-15",
+        "weight": 2
+      },
+      {
+        "source": "org-1",
         "target": "person-35",
         "weight": 2
       },
       {
-        "source": "person-10",
-        "target": "org-3",
+        "source": "person-8",
+        "target": "org-2",
         "weight": 2
       },
       {
-        "source": "org-14",
-        "target": "org-3",
+        "source": "org-12",
+        "target": "org-2",
         "weight": 2
       },
       {
-        "source": "org-3",
-        "target": "org-9",
-        "weight": 2
-      },
-      {
-        "source": "person-33",
-        "target": "person-5",
+        "source": "org-12",
+        "target": "org-6",
         "weight": 2
       },
       {
         "source": "org-17",
-        "target": "org-9",
-        "weight": 2
-      },
-      {
-        "source": "org-17",
-        "target": "org-19",
+        "target": "org-6",
         "weight": 2
       }
     ]

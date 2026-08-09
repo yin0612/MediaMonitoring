@@ -84,7 +84,11 @@ export function parseTrendsResponse(value: unknown): Envelope<TrendsData> {
       /^https?:\/\//.test(news.url),
     ),
   );
-  if (data.geo !== 'TW' || data.source !== 'google-trends-rss' || !validItems) {
+  if (
+    data.geo !== 'TW' ||
+    (data.source !== 'google-trends-rss' && data.source !== 'google-trends-realtime-and-rss') ||
+    !validItems
+  ) {
     throw new Error('趨勢資料格式不相容');
   }
   return value as Envelope<TrendsData>;
