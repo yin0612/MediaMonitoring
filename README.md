@@ -18,7 +18,7 @@
 - 時間正規化單一規則（`timeutil.py`）：無時區時間視為台北時間；台灣時間誤標 GMT 的未來時間自動校正；無法解析或仍為未來的時間直接捨棄，並在來源狀態頁顯示捨棄統計。
 - 熱度排行的數字只在排行欄顯示一次；熱度條本身只呈現視覺比例，避免手機版重複數字造成跑版。
 
-來源固定為 29 家指定媒體。官方 RSS 可用時優先使用；同一媒體可合併多個官方分類 RSS（目前中央社使用政治、地方、社會、財經、科技與生活健康 feed），不可用時才改用該媒體官方網域的 Google News RSS 補充，部分媒體另有遵守 robots.txt 的低頻官網 metadata 擷取。來源狀態會隨每次更新顯示，不會把失敗來源偽裝成成功。
+來源固定為 37 家指定媒體（實際數量以 `config/sources.yml` 為準，前端顯示的數量由該清單推導）。官方 RSS 可用時優先使用；同一媒體可合併多個官方分類 RSS（目前中央社使用政治、地方、社會、財經、科技與生活健康 feed），不可用時才改用該媒體官方網域的 Google News RSS 補充，部分媒體另有遵守 robots.txt 的低頻官網 metadata 擷取。來源狀態會隨每次更新顯示，不會把失敗來源偽裝成成功。
 
 ## 架構
 
@@ -31,7 +31,7 @@
   └─ Google Trends：Worker /api/trends（快取 60 秒），失敗改讀 Pages trends
 
 Cloudflare Worker（免費層）
-  ├─ Cron */5：抓 29 家來源 → 合併近 24 小時工作集 → 重算逐篇輕量情緒與 sources/meta → 寫入 KV
+  ├─ Cron */5：抓 37 家來源 → 合併近 24 小時工作集 → 重算逐篇輕量情緒與 sources/meta → 寫入 KV
   ├─ keywords/entities/topics：搬運 Actions/Python 公開快照，避免 Free Cron 的 10 ms CPU 上限
   ├─ /api/data：從 KV 取儀表板各檔（新鮮度 ≤5 分鐘）
   ├─ /api/search、/api/trends、/api/health
@@ -51,7 +51,7 @@ GitHub Actions（每 5 分鐘 best effort，作為備援；排程觸發跳過重
 本專案已配置一鍵同步與啟動腳本：
 
 ```bash
-# 1. 立即同步與更新最新新聞輿情資料 (擷取 33 家媒體 RSS 與 Google Trends)
+# 1. 立即同步與更新最新新聞輿情資料 (擷取 37 家媒體 RSS 與 Google Trends)
 ./scripts/sync_data.sh
 
 # 2. 啟動 Web 前端儀表板
@@ -98,7 +98,14 @@ npm run deploy
 
 ### UI 手動更新
 
-頁首的「立即更新」按鈕會呼叫 Worker 的 `POST /api/refresh`。Worker 將 GitHub Token 留在伺服器端，觸發 `deploy-web.yml`，並在背景重建 KV 快照。端點只接受設定的 Pages Origin，且每個用戶端 IP 五分鐘內只能觸發一次。
+頁首的「立即更新」按鈕會呼叫 Worker 的 `POST /api/refresh`。Worker 將 GitHub Token 留在伺服器端，觸發 `refresh-data.yml`，並在背景重建 KV 快照。端點只接受設定的 Pages Origin，且每個用戶端 IP 五分鐘內只能觸發一次（超過時回 `429` 與剩餘秒數）。
+
+更新分兩段回報，兩段互不阻擋：
+
+- **fast**：Worker 立即重抓來源並重建 KV 快照，數十秒內就能看到新新聞。
+- **deep**：觸發 GitHub Actions 重算關鍵字、人物組織與主題，完成後前端再同步一次。未設定 `GITHUB_TOKEN` 時 deep 會回報 `unavailable`，fast 仍照常完成。
+
+**未設定 `VITE_API_BASE_URL`（沒有部署 Worker）時**，按鈕會退化為繞過快取重讀 Pages 上最新的已發布快照，並明確告知資料每 5 分鐘由排程更新——不會靜默失敗，但也不會即時重抓來源。要有真正的即時更新，必須部署 Worker 並設定該變數。
 
 部署 Worker 前，請先將可觸發 GitHub Actions 的 Token 設為 Worker Secret：
 
@@ -107,13 +114,15 @@ Set-Location worker
 npx wrangler secret put GITHUB_TOKEN
 ```
 
-Token 必須具備觸發該 repository workflow 的權限；同時將 `web/.env.local` 與 `deploy-web.yml` 使用的 GitHub repository variable `VITE_API_BASE_URL` 設為已部署的 Worker 網址。
+Token 必須具備觸發該 repository workflow 的權限；同時將 `web/.env.local` 與 `refresh-data.yml` 使用的 GitHub repository variable `VITE_API_BASE_URL` 設為已部署的 Worker 網址。
 
 ## GitHub Pages
 
-1. Repository `Settings → Pages → Source` 選擇 **GitHub Actions**。
-2. 推送至 `main`，或手動執行 `Update news snapshot and deploy Pages`。
-3. 排程每 5 分鐘嘗試更新一次；GitHub 不保證準點執行，故 UI 會顯示實際資料時間。
+1. Repository `Settings → Pages → Source` 選擇 **Deploy from a branch**，分支選 `gh-pages`、路徑 `/`。
+   `refresh-data.yml` 會把建置結果強制推到 `gh-pages`，再由 GitHub 自動發布；**不要**選 GitHub Actions，否則這條部署路徑不會生效。
+2. 推送至 `main`，或手動執行 `Refresh data and deploy`。
+3. 排程每 5 分鐘嘗試更新一次；GitHub 對 `schedule` 事件會依負載大量延後或合併，實際間隔可能遠大於 5 分鐘，故 UI 一律顯示實際資料時間。部署 Worker 後由 Worker 的 Cron 主動觸發，時間才會穩定。
+4. `VITE_API_BASE_URL` 未設定時仍會照常建置與部署（靜態快照模式），只是沒有即時更新能力。
 
 正式站點：<https://yin0612.github.io/MediaMonitoring/>
 

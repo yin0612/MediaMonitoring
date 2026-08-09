@@ -11,7 +11,7 @@ const baseInput: HomeInputs = {
     lastDeepAt: now,
     methodVersion: 'v3',
     scheduleDaysUntilPause: 30,
-    coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 7 },
+    coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 7, sourceCount: 37 },
     stateRestoreFailed: false,
   },
   keywords: {

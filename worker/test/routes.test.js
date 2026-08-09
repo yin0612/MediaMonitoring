@@ -47,7 +47,7 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
       new Request('https://worker.example/api/refresh', {
         method: 'POST',
         headers: {
-          Origin: 'https://chunyu8866.github.io',
+          Origin: 'https://yin0612.github.io',
           'CF-Connecting-IP': '203.0.113.10',
         },
       }),
@@ -56,7 +56,7 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
     );
 
     assert.equal(response.status, 202);
-    assert.equal(response.headers.get('Access-Control-Allow-Origin'), 'https://chunyu8866.github.io');
+    assert.equal(response.headers.get('Access-Control-Allow-Origin'), 'https://yin0612.github.io');
     assert.match(response.headers.get('Access-Control-Allow-Methods'), /POST/);
     const body = await response.json();
     assert.equal(body.status, 'accepted');
@@ -67,9 +67,12 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
     assert.ok(dispatch, 'expected a manual GitHub Actions dispatch');
     assert.equal(
       dispatch.url,
-      'https://api.github.com/repos/yin0612/MediaMonitoring/actions/workflows/deploy-web.yml/dispatches',
+      'https://api.github.com/repos/yin0612/MediaMonitoring/actions/workflows/refresh-data.yml/dispatches',
     );
-    assert.deepEqual(JSON.parse(dispatch.init.body), { ref: 'main' });
+    assert.deepEqual(JSON.parse(dispatch.init.body), {
+      ref: 'main',
+      inputs: { refresh_id: body.refreshId },
+    });
 
     await Promise.all(pending);
     assert.ok(await env.SNAPSHOT.get('snapshot'));
@@ -78,7 +81,7 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
   }
 });
 
-test('manual refresh enforces origin without cooldown', async () => {
+test('manual refresh enforces origin and a per-IP cooldown', async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (input) => {
     const url = String(input);
@@ -96,33 +99,62 @@ test('manual refresh enforces origin without cooldown', async () => {
     const forbidden = await worker.fetch(request('https://evil.example', '203.0.113.11'), env, { waitUntil: () => {} });
     assert.equal(forbidden.status, 403);
 
-    const first = await worker.fetch(request('https://chunyu8866.github.io', '203.0.113.11'), env, {
+    const first = await worker.fetch(request('https://yin0612.github.io', '203.0.113.11'), env, {
       waitUntil: (promise) => pending.push(promise),
     });
     assert.equal(first.status, 202);
 
-    const second = await worker.fetch(request('https://chunyu8866.github.io', '203.0.113.11'), env, {
+    const second = await worker.fetch(request('https://yin0612.github.io', '203.0.113.11'), env, {
       waitUntil: () => {},
     });
-    assert.equal(second.status, 202);
+    assert.equal(second.status, 429);
+    const cooled = await second.json();
+    assert.equal(cooled.error, 'REFRESH_COOLDOWN');
+    assert.ok(cooled.retryAfterSeconds > 0 && cooled.retryAfterSeconds <= 300);
+
+    // 節流以來源 IP 為單位，不應波及其他使用者。
+    const otherClient = await worker.fetch(request('https://yin0612.github.io', '203.0.113.99'), env, {
+      waitUntil: (promise) => pending.push(promise),
+    });
+    assert.equal(otherClient.status, 202);
   } finally {
     await Promise.all(pending);
     globalThis.fetch = originalFetch;
   }
 });
 
-test('manual refresh reports missing GitHub configuration instead of claiming success', async () => {
-  const response = await worker.fetch(
-    new Request('https://worker.example/api/refresh', {
-      method: 'POST',
-      headers: { Origin: 'https://chunyu8866.github.io', 'CF-Connecting-IP': '203.0.113.12' },
-    }),
-    { SNAPSHOT: memoryKv() },
-    { waitUntil: () => {} },
-  );
+// 沒有 GITHUB_TOKEN 只代表深度分析（Actions/Python）無法觸發；Worker 自己的快速
+// 更新仍會重抓 RSS 並產生新快照，使用者確實會拿到新新聞。因此這裡要照常受理，
+// 但把 deep 明確標成 unavailable，不能整個拒絕、也不能假裝深度分析成功。
+test('manual refresh still runs the fast path when GitHub dispatch is not configured', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response('<rss><channel></channel></rss>');
+  const env = { SNAPSHOT: memoryKv() };
+  const pending = [];
+  try {
+    const response = await worker.fetch(
+      new Request('https://worker.example/api/refresh', {
+        method: 'POST',
+        headers: { Origin: 'https://yin0612.github.io', 'CF-Connecting-IP': '203.0.113.12' },
+      }),
+      env,
+      { waitUntil: (promise) => pending.push(promise) },
+    );
 
-  assert.equal(response.status, 503);
-  assert.deepEqual(await response.json(), { error: 'GITHUB_DISPATCH_NOT_CONFIGURED' });
+    assert.equal(response.status, 202);
+    const body = await response.json();
+    assert.equal(body.status, 'accepted');
+    assert.equal(body.fast, 'running');
+    assert.equal(body.deep, 'unavailable');
+
+    await Promise.all(pending);
+    const state = JSON.parse(await env.SNAPSHOT.get(`refresh:${body.refreshId}`));
+    assert.equal(state.deep.status, 'unavailable');
+    assert.equal(state.deep.error, 'GITHUB_TOKEN_NOT_CONFIGURED');
+    assert.equal(state.fast.status, 'completed');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test('refresh status endpoint returns correct schema', async () => {

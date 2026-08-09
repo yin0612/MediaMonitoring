@@ -41,8 +41,20 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
+      # 管線以 exit 2 表示「這一輪沒抓到任何新文章」（來源全掛或全被時間過濾）。
+      # 此時 JSON 仍已寫入還原後的最後良好快照，照樣部署比整輪放棄更好；
+      # 只有真正的例外（非 0 非 2）才讓工作失敗。
       - name: Refresh news data
-        run: python -m opinion_pipeline.cli --restore-base-url https://yin0612.github.io/MediaMonitoring
+        run: |
+          set +e
+          python -m opinion_pipeline.cli --restore-base-url https://yin0612.github.io/MediaMonitoring
+          status=$?
+          set -e
+          if [ "$status" -eq 2 ]; then
+            echo "::warning::本輪沒有取得新文章，將以還原的最後良好快照繼續部署。"
+            exit 0
+          fi
+          exit "$status"
         env:
           PYTHONPATH: src
           PYTHONIOENCODING: utf-8
@@ -58,11 +70,18 @@ jobs:
         working-directory: web
         run: npm ci
 
-      - name: Validate production Worker URL
+      # Worker 是選配的加速層，不是新聞更新的必要條件。先前這一步在
+      # repository variable 未設定時直接 exit 1，導致整條新聞更新管線每次都掛掉、
+      # 網站資料停止更新。改為降級建置：沒有 Worker 就走 Pages 靜態快照模式。
+      - name: Resolve frontend build mode
+        id: build-mode
         run: |
-          if [ -z "${VITE_API_BASE_URL}" ]; then
-            echo "VITE_API_BASE_URL is required for production"
-            exit 1
+          if [ -n "${VITE_API_BASE_URL}" ]; then
+            echo "allow_static_only=false" >> "$GITHUB_OUTPUT"
+            echo "Worker API base 已設定，前端將優先讀取即時快照。"
+          else
+            echo "allow_static_only=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::未設定 repository variable VITE_API_BASE_URL，改以 Pages 靜態快照模式建置。新聞仍每 5 分鐘更新，但「立即更新」只能重讀最新快照，無法即時重抓。"
           fi
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
@@ -72,6 +91,7 @@ jobs:
         run: npm run build
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          ALLOW_STATIC_ONLY: ${{ steps.build-mode.outputs.allow_static_only }}
 
       - name: Deploy to gh-pages
         run: |
@@ -82,7 +102,10 @@ jobs:
           cp -R web/dist /tmp/media-monitoring-dist
 
           git checkout --orphan gh-pages-temp
-          git rm -rf .
+          git rm -rf . > /dev/null
+          # git rm 只清掉被追蹤的檔案，連 .gitignore 也一起消失；若不清未追蹤檔，
+          # 後面的 git add . 會把 web/node_modules 整包提交進 gh-pages。
+          git clean -fdx
 
           cp -R /tmp/media-monitoring-dist/. .
 

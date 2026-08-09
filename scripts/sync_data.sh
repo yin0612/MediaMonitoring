@@ -17,7 +17,7 @@ echo "=========================================="
 
 # 嘗試執行本地 Python 資料擷取與分析管線
 if command -v python3 >/dev/null 2>&1; then
-    echo "[1/2] 正在執行 Python 管線 (擷取 35 家新聞 RSS 與 Google Trends)..."
+    echo "[1/2] 正在執行 Python 管線 (擷取 config/sources.yml 全部來源與 Google Trends)..."
     if python3 -m opinion_pipeline.cli; then
         echo "✅ 本地管線執行成功，已更新 web/public/data/*.json"
         

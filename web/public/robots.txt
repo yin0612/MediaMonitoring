@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://chunyu8866.github.io/MediaMonitoringDB/sitemap.xml
+Sitemap: https://yin0612.github.io/MediaMonitoring/sitemap.xml

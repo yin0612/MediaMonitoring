@@ -436,7 +436,9 @@ def run(
                 "status": archive_status,
                 "lastFastAt": generated_at if current_items else None,
                 "lastDeepAt": generated_at if topics else None,
-                "methodVersion": "news-heat-v4-37-sources",
+                # 前端會把這個字串解析成「算法 v4 · N 家媒體」顯示給使用者，
+                # 所以數量必須由實際來源清單推導，不能寫死。
+                "methodVersion": f"news-heat-v4-{len(sources)}-sources",
                 "scheduleDaysUntilPause": None,
                 "coverage": {"keywordWindowHours": 24, "trendBucketMinutes": 60, "archiveDays": 7, "sourceCount": len(sources)},
                 "stateRestoreFailed": not bool(current_items or restored_items) and bool(restore_base_url),

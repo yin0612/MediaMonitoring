@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "description": "台灣輿情分析與即時關鍵字熱度儀表板（GitHub Pages 靜態前端）",
+  "scripts": {
     "dev": "vite",
     "check:prod-env": "node scripts/check-production-env.mjs",
     "build": "npm run check:prod-env && tsc --noEmit && vite build",

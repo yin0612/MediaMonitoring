@@ -105,6 +105,15 @@ export async function requestManualRefresh(): Promise<ManualRefreshResponse> {
     body = await response.json();
   } catch {}
   const payload = body && typeof body === 'object' ? (body as Record<string, unknown>) : {};
+  // Worker 對每個 IP 有五分鐘節流；把剩餘秒數講清楚，別讓使用者以為按鈕壞了。
+  if (response.status === 429) {
+    const retryAfterSeconds =
+      typeof payload.retryAfterSeconds === 'number' ? payload.retryAfterSeconds : 300;
+    throw new DataFetchError(
+      'refresh',
+      `剛剛已經觸發過更新，請於 ${retryAfterSeconds} 秒後再試`,
+    );
+  }
   if (!response.ok) {
     throw new DataFetchError('refresh', `手動更新失敗（HTTP ${response.status}）`);
   }

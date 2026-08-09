@@ -7,7 +7,7 @@ workers_dev = true
 ALLOWED_ORIGIN = "https://yin0612.github.io"
 ARCHIVE_BASE_URL = "https://yin0612.github.io/MediaMonitoring"
 
-# 每 5 分鐘由 Worker 自行抓取 29 家來源並重算快照，寫入 KV，讓儀表板新鮮度脫離 GitHub cron
+# 每 5 分鐘由 Worker 自行抓取 sources.js 全部來源並重算快照，寫入 KV，讓儀表板新鮮度脫離 GitHub cron
 [triggers]
 crons = ["*/5 * * * *"]
 

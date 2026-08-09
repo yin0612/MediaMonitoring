@@ -8,7 +8,7 @@ const baseInput: HomeInputs = {
     lastDeepAt: '2026-07-26T00:50:00Z',
     methodVersion: 'v2',
     scheduleDaysUntilPause: 30,
-    coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 7 },
+    coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 7, sourceCount: 37 },
     stateRestoreFailed: false,
   },
   keywords: {

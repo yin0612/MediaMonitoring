@@ -89,7 +89,9 @@ function ManualRefreshButton() {
 
     try {
       if (!isManualRefreshConfigured()) {
-        setMessage('已強制繞過快取，重新載入全站最新數據');
+        // 沒有 Worker 時，瀏覽器無法安全地重抓來源，但仍可繞過快取取得
+        // 排程剛發布的最新快照。訊息要說明實際做了什麼，不要暗示重新抓取。
+        setMessage('已重新載入最新發布的資料（新聞每 5 分鐘自動更新）');
         dispatchGlobalRefresh({ reason: 'manual', bypassCache: true });
         window.setTimeout(() => setMessage(''), 4_000);
         return;
@@ -126,7 +128,9 @@ function ManualRefreshButton() {
           break;
         }
 
-        if (status.deep.status === 'failed') {
+        // deep 為 unavailable（未設定 GitHub Token）或 failed 時不會再有進展，
+        // 別讓使用者對著轉圈等滿 60 秒。
+        if (status.deep.status === 'failed' || status.deep.status === 'unavailable') {
           break;
         }
 
@@ -142,6 +146,9 @@ function ManualRefreshButton() {
       }
       window.setTimeout(() => setMessage(''), 4_000);
     } catch (error) {
+      // Worker 連不上、被節流或回應異常時，至少要把畫面上的資料重讀一次，
+      // 否則按鈕看起來就像沒反應。
+      dispatchGlobalRefresh({ reason: 'manual', bypassCache: true });
       setMessage((error as Error).message);
       window.setTimeout(() => setMessage(''), 4_000);
     } finally {

@@ -115,11 +115,24 @@ def test_new_taiwan_rss_sources_are_enabled_and_metadata_only():
         assert source["crawl"] == {"enabled": False, "url": ""}
 
 
-def test_product_source_count_copy_and_method_versions_match_the_37_source_registry():
-    assert "37 個台灣公開新聞來源" in Path("web/index.html").read_text(encoding="utf-8")
-    assert "news-heat-v4-37-sources" in Path("src/opinion_pipeline/cli.py").read_text(encoding="utf-8")
+def test_user_facing_source_count_matches_the_actual_registry():
+    """來源數量出現在使用者看得到的地方，必須跟實際清單一致。
+
+    先前 methodVersion 與行銷文案各自寫死數量，結果 README、腳本、meta 與
+    前端文案一度出現 29／33／35／37 四個版本。改為由 config 推導後，
+    這個測試負責擋住任何再度寫死的數量。
+    """
+    source_count = len(load_sources(Path("config/sources.yml")))
+
+    # 前端 SEO 文案仍是靜態字串，所以在這裡跟實際清單對帳。
+    assert f"{source_count} 個台灣公開新聞來源" in Path("web/index.html").read_text(encoding="utf-8")
+
+    # 兩端的 methodVersion 都必須推導而來，不能是寫死的字面數量。
+    cli_source = Path("src/opinion_pipeline/cli.py").read_text(encoding="utf-8")
+    assert 'f"news-heat-v4-{len(sources)}-sources"' in cli_source
+
     worker_index = Path("worker/src/index.js").read_text(encoding="utf-8")
-    assert "news-heat-v4-37-sources-worker" in worker_index
+    assert "`news-heat-v4-${NEWS_SOURCES.length}-sources-worker`" in worker_index
 
 
 def test_rss_source_with_a_valid_empty_feed_is_healthy(monkeypatch):

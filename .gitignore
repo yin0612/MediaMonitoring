@@ -8,6 +8,7 @@ __pycache__/
 .env
 .env.local
 bin_tools/
+.uv_python/
 
 # Build outputs & caches
 dist/
@@ -18,5 +19,6 @@ build/
 
 # OS & IDE
 .DS_Store
+__MACOSX/
 .vscode/
 .idea/

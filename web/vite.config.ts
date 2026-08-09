@@ -35,5 +35,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
     globals: true,
+    // 預設的 forks pool 在含空白與非 ASCII 字元的 Windows 專案路徑下無法啟動
+    // worker（Timeout waiting for worker to respond），整份測試會大量誤報失敗。
+    // threads 在 jsdom 下行為一致，且此專案實測快約一個量級。
+    pool: 'threads',
   },
 });

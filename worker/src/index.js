@@ -12,6 +12,12 @@ import { withSentiment } from './analysis.js';
 import { NEWS_SOURCES } from './sources.js';
 
 const TRENDS_URL = 'https://trends.google.com/trending/rss?geo=TW&hl=zh-TW';
+// 正式站身分只在這裡定義一次；wrangler.toml 的 vars 才是部署時的權威值。
+// 先前這兩個字串在檔內散落 8 份且殘留舊帳號，var 一漏設就會安靜地去讀別人的站。
+const DEFAULT_PAGES_ORIGIN = 'https://yin0612.github.io';
+const DEFAULT_ARCHIVE_BASE_URL = `${DEFAULT_PAGES_ORIGIN}/MediaMonitoring`;
+const USER_AGENT = `MediaMonitoring/1.0 (+${DEFAULT_ARCHIVE_BASE_URL}/)`;
+const archiveBase = (env) => (env.ARCHIVE_BASE_URL || DEFAULT_ARCHIVE_BASE_URL).replace(/\/$/, '');
 const SNAPSHOT_SCHEMA = '2.1.0';
 const SNAPSHOT_KEY = 'snapshot';
 const DAY_MS = 86_400_000;
@@ -62,7 +68,7 @@ const envelope = (data) => ({ schemaVersion: '2.0.0', generatedAt: new Date().to
 
 const corsHeaders = (request, env) => {
   const origin = request.headers.get('Origin') || '';
-  const allowed = env.ALLOWED_ORIGIN || 'https://chunyu8866.github.io';
+  const allowed = env.ALLOWED_ORIGIN || DEFAULT_PAGES_ORIGIN;
   const isLocal = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
   return {
     'Access-Control-Allow-Origin': origin === allowed || isLocal ? origin : allowed,
@@ -74,7 +80,7 @@ const corsHeaders = (request, env) => {
 
 const isAllowedOrigin = (request, env) => {
   const origin = request.headers.get('Origin') || '';
-  const allowed = env.ALLOWED_ORIGIN || 'https://chunyu8866.github.io';
+  const allowed = env.ALLOWED_ORIGIN || DEFAULT_PAGES_ORIGIN;
   return origin === allowed || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
 };
 
@@ -99,7 +105,7 @@ async function fetchText(url, attempts = 2, timeoutMs = 5_000) {
         headers: {
           Accept: 'application/rss+xml, application/xml, text/xml, */*',
           'Accept-Language': 'zh-TW,zh;q=0.9',
-          'User-Agent': 'MediaMonitoringDemo/1.0 (+https://chunyu8866.github.io/MediaMonitoringDB/)',
+          'User-Agent': USER_AGENT,
         },
       });
       if (!response.ok) throw new Error(`HTTP_${response.status}`);
@@ -115,10 +121,10 @@ async function fetchText(url, attempts = 2, timeoutMs = 5_000) {
 }
 
 async function archiveItems(env, range = '24h') {
-  const base = env.ARCHIVE_BASE_URL || 'https://chunyu8866.github.io/MediaMonitoringDB';
+  const base = archiveBase(env);
   const preferred = range === '7d' ? 'news-archive' : 'recent';
   try {
-    const response = await fetch(`${base.replace(/\/$/, '')}/data/${preferred}.json`);
+    const response = await fetch(`${base}/data/${preferred}.json`);
     if (!response.ok) throw new Error(`HTTP_${response.status}`);
     const body = await response.json();
     return Array.isArray(body?.data?.items) ? body.data.items : [];
@@ -126,7 +132,7 @@ async function archiveItems(env, range = '24h') {
     if (preferred === 'news-archive') return [];
     // 舊部署尚未提供 recent 時，才退回完整 archive。
     try {
-      const response = await fetch(`${base.replace(/\/$/, '')}/data/news-archive.json`);
+      const response = await fetch(`${base}/data/news-archive.json`);
       if (!response.ok) return [];
       const body = await response.json();
       return Array.isArray(body?.data?.items) ? body.data.items : [];
@@ -138,9 +144,9 @@ async function archiveItems(env, range = '24h') {
 
 /** 取 Pages recent.json（Actions 產出的近 24 小時清單）補齊 Worker 未即時抓取的 14 家來源。 */
 async function pagesRecentItems(env) {
-  const base = env.ARCHIVE_BASE_URL || 'https://chunyu8866.github.io/MediaMonitoringDB';
+  const base = archiveBase(env);
   try {
-    const response = await fetch(`${base.replace(/\/$/, '')}/data/recent.json`);
+    const response = await fetch(`${base}/data/recent.json`);
     if (!response.ok) return [];
     const body = await response.json();
     return Array.isArray(body?.data?.items) ? body.data.items : [];
@@ -151,9 +157,9 @@ async function pagesRecentItems(env) {
 
 /** 深度分析由 GitHub Actions/Python 產生；Worker 只搬運公開快照，避免 Free Cron 超過 10 ms CPU。 */
 async function pagesSourceStates(env) {
-  const base = env.ARCHIVE_BASE_URL || 'https://chunyu8866.github.io/MediaMonitoringDB';
+  const base = archiveBase(env);
   try {
-    const response = await fetch(`${base.replace(/\/$/, '')}/data/sources.json`);
+    const response = await fetch(`${base}/data/sources.json`);
     if (!response.ok) return new Map();
     const body = await response.json();
     const now = Date.now();
@@ -218,9 +224,9 @@ function isTrustworthyPageSourceState(source, now) {
 }
 
 async function pagesAnalysisEnvelope(env, name) {
-  const base = env.ARCHIVE_BASE_URL || 'https://chunyu8866.github.io/MediaMonitoringDB';
+  const base = archiveBase(env);
   try {
-    const response = await fetch(`${base.replace(/\/$/, '')}/data/${name}.json`);
+    const response = await fetch(`${base}/data/${name}.json`);
     if (!response.ok) return null;
     const body = await response.json();
     if (!body?.data || typeof body.schemaVersion !== 'string') return null;
@@ -329,9 +335,9 @@ async function handleTrends(request, env) {
       60,
     );
   } catch {
-    const base = env.ARCHIVE_BASE_URL || 'https://chunyu8866.github.io/MediaMonitoringDB';
+    const base = archiveBase(env);
     try {
-      const response = await fetch(`${base.replace(/\/$/, '')}/data/trends.json`);
+      const response = await fetch(`${base}/data/trends.json`);
       const previous = await response.json();
       previous.data.status = 'stale';
       previous.data.stale = true;
@@ -354,7 +360,7 @@ async function readSnapshot(env) {
 const snapshotEnvelope = (data, generatedAt) => ({ schemaVersion: SNAPSHOT_SCHEMA, generatedAt, data });
 
 // Cron 對每個官方 RSS URL 只嘗試一次，把 subrequest 保持在 Worker 免費層 50 上限以下並預留 redirect 餘裕。
-// 29 家完整白名單交給合併的 Pages archive（Actions 以未被限流的 IP 補齊 29 家來源），
+// 完整白名單交給合併的 Pages archive（Actions 以未被限流的 IP 補齊其餘來源），
 // 這些來源標記 viaPages，狀態依合併庫是否有近況決定，避免 Google News 對 Worker 限流。
 async function fetchSourceItems(source, attempts = 2) {
   if (!rssUrls(source).length) return { items: [], accessMode: 'google-news', ok: false, errorCode: null, viaPages: true };
@@ -363,7 +369,7 @@ async function fetchSourceItems(source, attempts = 2) {
   return { items: [], accessMode: 'official-rss', ok: false, errorCode: result.errorCode || 'FETCH_ERROR', viaPages: false };
 }
 
-/** 每 5 分鐘由 Cron 觸發：抓 29 家來源、與上一份快照合併成 7 天滾動庫、重算儀表板並寫入 KV。 */
+/** 每 5 分鐘由 Cron 觸發：抓全部來源、與上一份快照合併成 7 天滾動庫、重算儀表板並寫入 KV。 */
 async function buildSnapshot(env) {
   const now = Date.now();
   const generatedAt = new Date(now).toISOString();
@@ -495,7 +501,7 @@ async function buildSnapshot(env) {
           pagesTopics?.generatedAt
           || previous?.files?.meta?.data?.lastDeepAt
           || null,
-        methodVersion: 'news-heat-v4-37-sources-worker',
+        methodVersion: `news-heat-v4-${NEWS_SOURCES.length}-sources-worker`,
         scheduleDaysUntilPause: null,
         coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 7 },
         stateRestoreFailed: false,
@@ -561,9 +567,38 @@ async function runDeepRefresh(env, refreshId) {
   });
 }
 
+/**
+ * 每個來源 IP 五分鐘只允許手動觸發一次。
+ * 一次手動更新會拉 37 家 RSS 並踢一輪 GitHub Actions（Python 管線＋前端建置＋
+ * gh-pages 強制推送），公開站台若不設節流，單一使用者連點就能把 Actions 額度
+ * 與 KV 寫入吃光。KV 為最終一致，極短時間內的連點仍可能漏掉一次；這是節流，
+ * 不是安全控制。
+ */
+async function refreshCooldown(env, request) {
+  const ip = request.headers.get('CF-Connecting-IP') || '';
+  if (!ip) return { key: null, retryAfterSeconds: 0 };
+  const key = `refresh-cooldown:${ip}`;
+  const raw = await env.SNAPSHOT.get(key);
+  const startedAt = raw ? Number.parseInt(raw, 10) : Number.NaN;
+  if (!Number.isFinite(startedAt)) return { key, retryAfterSeconds: 0 };
+  const elapsed = Date.now() - startedAt;
+  if (elapsed < 0 || elapsed >= REFRESH_COOLDOWN_MS) return { key, retryAfterSeconds: 0 };
+  return { key, retryAfterSeconds: Math.ceil((REFRESH_COOLDOWN_MS - elapsed) / 1000) };
+}
+
 async function handleRefresh(request, env, ctx) {
   if (!isAllowedOrigin(request, env)) return json(request, env, { error: 'ORIGIN_NOT_ALLOWED' }, 403);
   if (!env.SNAPSHOT) return json(request, env, { error: 'SNAPSHOT_NOT_CONFIGURED' }, 503);
+
+  const { key: cooldownKey, retryAfterSeconds } = await refreshCooldown(env, request);
+  if (retryAfterSeconds > 0) {
+    return json(request, env, { error: 'REFRESH_COOLDOWN', retryAfterSeconds }, 429);
+  }
+  if (cooldownKey) {
+    await env.SNAPSHOT.put(cooldownKey, String(Date.now()), {
+      expirationTtl: Math.ceil(REFRESH_COOLDOWN_MS / 1000),
+    });
+  }
 
   const refreshId = createRefreshId();
   const requestedAt = new Date().toISOString();
@@ -636,11 +671,12 @@ async function triggerGitHubActions(env, automatedRefresh = false, refreshId = n
         Authorization: `Bearer ${env.GITHUB_TOKEN}`,
         Accept: 'application/vnd.github+json',
         'Content-Type': 'application/json',
-        'User-Agent': 'MediaMonitoringDemo-Worker/1.0',
+        'User-Agent': USER_AGENT,
         'X-GitHub-Api-Version': '2022-11-28',
       },
+      // Cron 觸發沒有 refreshId 可回報，就不要塞 client_payload: { refreshId: null }。
       body: JSON.stringify(automatedRefresh
-        ? { event_type: 'scheduled-refresh', client_payload: { refreshId } }
+        ? { event_type: 'scheduled-refresh', ...(refreshId ? { client_payload: { refreshId } } : {}) }
         : { ref: 'main', inputs: refreshId ? { refresh_id: refreshId } : {} }),
     });
     return response.ok ? { ok: true } : { ok: false, reason: `HTTP_${response.status}` };

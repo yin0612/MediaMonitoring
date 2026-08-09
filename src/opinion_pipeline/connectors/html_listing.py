@@ -19,7 +19,7 @@ _JSON_LD_RE = re.compile(
     re.IGNORECASE,
 )
 _ARTICLE_TYPES = {"Article", "NewsArticle", "ReportageNewsArticle"}
-_USER_AGENT = "MediaMonitoringDemo/1.0 (+https://chunyu8866.github.io/MediaMonitoringDB/)"
+_USER_AGENT = "MediaMonitoring/1.0 (+https://yin0612.github.io/MediaMonitoring/)"
 _ANCHOR_RE = re.compile(r"<a\b[^>]*href=[\"']([^\"']+)[\"'][^>]*>([\s\S]*?)</a>", re.IGNORECASE)
 
 
