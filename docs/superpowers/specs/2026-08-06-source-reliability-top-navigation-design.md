@@ -1,4 +1,4 @@
-# MediaMonitoringDB 來源可靠性與 Apple 式頂部導覽設計
+# MediaMonitoring 來源可靠性與 Apple 式頂部導覽設計
 
 **日期：** 2026-08-06
 **狀態：** 使用者已授權自行決策並一次完成

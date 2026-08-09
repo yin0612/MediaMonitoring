@@ -101,7 +101,7 @@ Expected: both commands exit 0.
 Worker mode:
 
 ```powershell
-$env:VITE_API_BASE_URL='https://media-monitoring-demo.chunyu8866-media-monitoring.workers.dev'
+$env:VITE_API_BASE_URL='https://media-monitoring-demo.yin0612-media-monitoring.workers.dev'
 Remove-Item Env:ALLOW_STATIC_ONLY -ErrorAction SilentlyContinue
 npm.cmd run build
 ```
@@ -123,7 +123,7 @@ Expected: both builds exit 0.
 
 **Interfaces:**
 - Consumes: Wrangler OAuth for the managed account and the existing `GITHUB_TOKEN` secret
-- Produces: `https://media-monitoring-demo.chunyu8866-media-monitoring.workers.dev`
+- Produces: `https://media-monitoring-demo.yin0612-media-monitoring.workers.dev`
 
 - [ ] **Step 1: Deploy the Worker**
 
@@ -165,7 +165,7 @@ Expected: HTTP 200 for GETs, HTTP 204 for OPTIONS, exact `Access-Control-Allow-O
 - [ ] **Step 1: Update the repository variable**
 
 ```powershell
-gh variable set VITE_API_BASE_URL --repo yin0612/MediaMonitoring --body "https://media-monitoring-demo.chunyu8866-media-monitoring.workers.dev"
+gh variable set VITE_API_BASE_URL --repo yin0612/MediaMonitoring --body "https://media-monitoring-demo.yin0612-media-monitoring.workers.dev"
 gh variable get VITE_API_BASE_URL --repo yin0612/MediaMonitoring
 ```
 

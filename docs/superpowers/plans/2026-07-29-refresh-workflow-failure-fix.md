@@ -119,7 +119,7 @@ const dispatch = calls.find(({ url }) => url.includes('api.github.com'));
 assert.ok(dispatch, 'expected a manual GitHub Actions dispatch');
 assert.equal(
   dispatch.url,
-  'https://api.github.com/repos/ChunYu8866/MediaMonitoringDB/actions/workflows/deploy-web.yml/dispatches',
+  'https://api.github.com/repos/yin0612/MediaMonitoring/actions/workflows/refresh-data.yml/dispatches',
 );
 assert.deepEqual(JSON.parse(dispatch.init.body), { ref: 'main' });
 ```
@@ -129,7 +129,7 @@ assert.deepEqual(JSON.parse(dispatch.init.body), { ref: 'main' });
 ```js
 assert.equal(
   dispatch.url,
-  'https://api.github.com/repos/ChunYu8866/MediaMonitoringDB/dispatches',
+  'https://api.github.com/repos/yin0612/MediaMonitoring/dispatches',
 );
 assert.deepEqual(JSON.parse(dispatch.init.body), { event_type: 'scheduled-refresh' });
 ```
@@ -372,7 +372,7 @@ Expected: `git diff --check` 無輸出；工作樹乾淨；最近提交只包含
 
 **Files:**
 - Publish: branch `codex/fix-refresh-workflow-notifications`
-- Verify: GitHub Actions and `https://chunyu8866.github.io/MediaMonitoringDB/`
+- Verify: GitHub Actions and `https://yin0612.github.io/MediaMonitoring/`
 
 **Interfaces:**
 - Consumes: 已通過全部本機驗證的分支。
@@ -406,7 +406,7 @@ Expected: build 與 deploy 均為 success，完整測試步驟均執行。
 - [ ] **Step 4: 觸發並監看 scheduled-refresh 工作流程**
 
 ```powershell
-gh api --method POST repos/ChunYu8866/MediaMonitoringDB/dispatches -f event_type=scheduled-refresh
+gh api --method POST repos/yin0612/MediaMonitoring/dispatches -f event_type=scheduled-refresh
 gh run list --workflow deploy-web.yml --branch main --event repository_dispatch --limit 1
 gh run watch <refresh-run-id> --exit-status
 gh run view <refresh-run-id> --json jobs
@@ -417,7 +417,7 @@ Expected: build 與 deploy success；`Python 測試`、`安裝 Worker 相依套�
 - [ ] **Step 5: 驗證正式網站**
 
 ```powershell
-curl.exe -L --fail --silent --show-error -o NUL -w "%{http_code}" "https://chunyu8866.github.io/MediaMonitoringDB/"
+curl.exe -L --fail --silent --show-error -o NUL -w "%{http_code}" "https://yin0612.github.io/MediaMonitoring/"
 ```
 
 Expected: `200`。

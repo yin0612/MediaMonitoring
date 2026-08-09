@@ -165,7 +165,7 @@ Expected: current Worker reports `error` for the healthy zero-item Pages source.
 
 ```js
 async function pagesSourceStates(env) {
-  const base = env.ARCHIVE_BASE_URL || 'https://chunyu8866.github.io/MediaMonitoringDB';
+  const base = env.ARCHIVE_BASE_URL || 'https://yin0612.github.io/MediaMonitoring';
   try {
     const response = await fetch(`${base.replace(/\/$/, '')}/data/sources.json`);
     if (!response.ok) return new Map();

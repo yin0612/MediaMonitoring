@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Turn MediaMonitoringDB into an Apple-style opinion decision workspace that surfaces actionable daily signals, exposes every route on mobile, teaches advanced analysis, and preserves all existing data/API contracts.
+**Goal:** Turn MediaMonitoring into an Apple-style opinion decision workspace that surfaces actionable daily signals, exposes every route on mobile, teaches advanced analysis, and preserves all existing data/API contracts.
 
 **Architecture:** Keep the Python pipeline, Worker, public JSON envelopes, routing, and fallback paths unchanged. Add pure TypeScript view-model modules for decision insights and presets, small React presentation components for the new workflows, and a single Apple visual-system stylesheet layered over the existing route-specific layout rules.
 

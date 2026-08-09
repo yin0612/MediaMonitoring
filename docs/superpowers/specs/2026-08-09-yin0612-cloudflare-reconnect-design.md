@@ -12,8 +12,8 @@
 - GitHub remote 為 `https://github.com/yin0612/MediaMonitoring.git`；登入者 `yin0612` 對倉庫有 Admin 權限。
 - GitHub Pages 正常，但仍由遠端 `main` 的 `1c63a9b` 建置。
 - Repository variable `VITE_API_BASE_URL` 指向 `media-monitoring-demo.media-monitoring-worker.workers.dev`。
-- 該 Worker 仍允許 `https://shueisha0612.github.io`，因此 `https://yin0612.github.io` 的瀏覽器請求會被 CORS 阻擋。
-- 本機 Wrangler 登入的 Cloudflare 帳號可管理 `media-monitoring-demo.chunyu8866-media-monitoring.workers.dev`。該 Worker 的既有 `SNAPSHOT` binding 使用 KV namespace `7b3cce6f054f4918bf5a27dc5386a322`，並已有 `GITHUB_TOKEN` secret。
+- 該 Worker 當時允許的 Origin 與 `https://yin0612.github.io` 不一致，因此瀏覽器請求會被 CORS 阻擋。
+- 本機 Wrangler 登入的 Cloudflare 帳號可管理 `media-monitoring-demo.yin0612-media-monitoring.workers.dev`。該 Worker 的既有 `SNAPSHOT` binding 使用 KV namespace `7b3cce6f054f4918bf5a27dc5386a322`，並已有 `GITHUB_TOKEN` secret。
 - 倉庫的 `worker/wrangler.toml` 目前引用另一個帳號的 KV namespace `7f726665db69456aba1da52ddeeeb563`，不能直接部署到目前登入的帳號。
 
 ## 修正範圍
@@ -22,7 +22,7 @@
 2. 保留 Worker 名稱 `media-monitoring-demo`、Cron、現有 secret 與既有 KV 資料。
 3. 以目前本機程式部署 Worker；程式中既有的 `ALLOWED_ORIGIN`、`ARCHIVE_BASE_URL` 與 GitHub repository 常數已是 `yin0612`／`MediaMonitoring`。
 4. Worker 驗證通過後，把 GitHub repository variable `VITE_API_BASE_URL` 改為：
-   `https://media-monitoring-demo.chunyu8866-media-monitoring.workers.dev`
+   `https://media-monitoring-demo.yin0612-media-monitoring.workers.dev`
 5. 將修正 branch 快轉回本機 `main`，再推送 `main`；不強制推送、不改寫遠端歷史。
 
 ## 資料流
@@ -30,12 +30,12 @@
 ```text
 yin0612.github.io/MediaMonitoring
   -> VITE_API_BASE_URL
-  -> media-monitoring-demo.chunyu8866-media-monitoring.workers.dev
+  -> media-monitoring-demo.yin0612-media-monitoring.workers.dev
   -> SNAPSHOT KV
   -> yin0612/MediaMonitoring refresh-data.yml（需要既有 GITHUB_TOKEN）
 ```
 
-Worker 網址中的舊字樣只是 Cloudflare 帳號的 workers.dev 子網域，不參與 GitHub 身分或 repository 授權判定。實際整合由 CORS Origin、Pages archive URL、GitHub repository 常數與 Token 權限決定。
+Worker 網址中的帳號子網域不參與 GitHub 身分或 repository 授權判定。實際整合由 CORS Origin、Pages archive URL、GitHub repository 常數與 Token 權限決定；後續再將子網域統一為 `yin0612` 專屬名稱。
 
 ## 失敗處理
 
@@ -67,6 +67,6 @@ Worker 網址中的舊字樣只是 Cloudflare 帳號的 workers.dev 子網域，
 ## 非目標
 
 - 不搬移或重建 Cloudflare 帳號。
-- 不嘗試控制目前指向 `shueisha0612.github.io` 的另一個 Worker。
-- 不更名 Cloudflare workers.dev 帳號子網域。
+- 不控制本專案以外的 Worker。
+- 本階段不更名 Cloudflare workers.dev 帳號子網域；後續由專屬名稱遷移規格接手。
 - 不重構與本次重新接線無關的應用程式功能。

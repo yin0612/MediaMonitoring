@@ -1,4 +1,4 @@
-# MediaMonitoringDB Apple 式決策工作台設計規格
+# MediaMonitoring Apple 式決策工作台設計規格
 
 **日期：** 2026-08-06
 **狀態：** 已由使用者授權自行決策並一次完成
