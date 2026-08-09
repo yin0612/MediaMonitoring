@@ -97,7 +97,7 @@ export function buildDecisionBrief(
       label: rising ? '90 分鐘動能' : '最高關鍵字熱度',
       value: rising ? `+${rising.delta} 篇` : `${Math.round(topKeyword.heat)}`,
       detail: rising ? `${rising.term}・共 ${rising.recentMentions} 篇報導` : `${topKeyword.term}・24 小時 ${topKeyword.mentions24h} 篇`,
-      to: '/keywords',
+      to: `/search?q=${encodeURIComponent(rising ? rising.term : topKeyword.term)}`,
     });
   }
 
@@ -124,11 +124,11 @@ export function buildDecisionBrief(
   });
 
   const headline = rising
-    ? `${rising.term}正在升溫`
+    ? `「${rising.term}」議題近期聲量升溫`
     : topKeyword
-      ? `${topKeyword.term}是目前最高熱度訊號`
+      ? `「${topKeyword.term}」為目前最高熱度關鍵字`
       : topTopic
-        ? `${topTopic.label}最受關注`
+        ? `「${topTopic.label}」最受新聞關注`
         : '即時新聞動態監測中';
 
   const baseSummary = rising
@@ -138,6 +138,13 @@ export function buildDecisionBrief(
       : topTopic
         ? `${topTopic.label}目前累積 ${topTopic.size} 篇相關新聞。`
         : '系統正在持續監測 37 家新聞媒體。資料快照更新後，此處將自動呈現最新議題。';
+
+  const activeTerm = rising ? rising.term : topKeyword?.term || '';
+  const primaryAction = activeTerm
+    ? { to: `/search?q=${encodeURIComponent(activeTerm)}`, label: `即時搜尋「${activeTerm}」新聞` }
+    : topTopic
+      ? { to: '/topics', label: '查看事件脈絡' }
+      : { to: '/search', label: '主動搜尋新聞' };
 
   return {
     eyebrow: '今日決策摘要',
@@ -149,8 +156,6 @@ export function buildDecisionBrief(
         : baseSummary,
     confidence,
     signals: signals.slice(0, 3),
-    primaryAction: topKeyword
-      ? { to: '/keywords', label: '查看關鍵字趨勢' }
-      : { to: '/topics', label: '查看事件脈絡' },
+    primaryAction,
   };
 }

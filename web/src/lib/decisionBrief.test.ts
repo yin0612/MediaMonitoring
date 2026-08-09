@@ -65,8 +65,8 @@ describe('buildDecisionBrief', () => {
 
     expect(result).toMatchObject({
       confidence: 'good',
-      headline: '台積電正在升溫',
-      primaryAction: { to: '/keywords', label: '查看關鍵字趨勢' },
+      headline: '「台積電」議題近期聲量升溫',
+      primaryAction: { to: '/search?q=%E5%8F%B0%E7%A9%8D%E9%9B%BB', label: '即時搜尋「台積電」新聞' },
     });
     expect(result.summary).toContain('近 90 分鐘');
     expect(result.signals.map((signal) => signal.kind)).toEqual(['momentum', 'topic', 'coverage']);
@@ -75,9 +75,9 @@ describe('buildDecisionBrief', () => {
   it('falls back to the hottest keyword when nothing is rising', () => {
     const result = buildDecisionBrief({ ...baseInput, recent: { items: [] } }, now);
 
-    expect(result.headline).toBe('台積電是目前最高熱度訊號');
+    expect(result.headline).toBe('「台積電」為目前最高熱度關鍵字');
     expect(result.summary).toContain('熱度 88');
-    expect(result.primaryAction.to).toBe('/keywords');
+    expect(result.primaryAction.to).toBe('/search?q=%E5%8F%B0%E7%A9%8D%E9%9B%BB');
   });
 
   it('uses limited confidence and explicit wording for stale analysis', () => {

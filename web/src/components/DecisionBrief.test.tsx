@@ -24,7 +24,7 @@ describe('DecisionBrief', () => {
     expect(screen.getByRole('region', { name: '今日決策摘要' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '台積電正在升溫' })).toBeInTheDocument();
     expect(screen.getByText('資料完整')).toBeInTheDocument();
-    expect(screen.getAllByRole('link')).toHaveLength(4);
+    expect(screen.getAllByRole('link')).toHaveLength(5);
     expect(screen.getByRole('link', { name: '查看關鍵字趨勢' })).toHaveAttribute('href', '/keywords');
   });
 

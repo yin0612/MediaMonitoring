@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom';
 import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import type { EChartsOption } from 'echarts';
 import { fetchTrends, searchNews } from '../api/search';
@@ -19,7 +20,9 @@ const RANGES: { value: SearchRange; label: string }[] = [
 ];
 
 export function SearchPage() {
-  const [query, setQuery] = useState('');
+  const [searchParams] = useSearchParams();
+  const initialQueryParam = searchParams.get('q');
+  const [query, setQuery] = useState(initialQueryParam ?? '');
   const [range, setRange] = useState<SearchRange>('7d');
   const [result, setResult] = useState<Envelope<SearchData> | null>(null);
   const [searching, setSearching] = useState(false);
@@ -82,6 +85,14 @@ export function SearchPage() {
       else setSearching(false);
     }
   }, [range]);
+
+  useEffect(() => {
+    if (initialQueryParam && initialQueryParam.trim().length >= 2) {
+      const q = initialQueryParam.trim();
+      setQuery(q);
+      void runSearch(q);
+    }
+  }, [initialQueryParam, runSearch]);
 
   useEffect(() => {
     if (!result) return undefined;

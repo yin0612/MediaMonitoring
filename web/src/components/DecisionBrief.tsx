@@ -24,7 +24,11 @@ export function DecisionBrief({ model }: { model: DecisionBriefModel }) {
           <span className="decision-brief__eyebrow">{model.eyebrow}</span>
           <Badge variant={confidence.variant} dot>{confidence.label}</Badge>
         </div>
-        <h1 id="decision-brief-title">{model.headline}</h1>
+        <h1 id="decision-brief-title">
+          <Link to={model.primaryAction.to} style={{ color: 'inherit', textDecoration: 'none' }}>
+            {model.headline}
+          </Link>
+        </h1>
         <p>{model.summary}</p>
         <Link className="btn btn--primary decision-brief__action" to={model.primaryAction.to}>
           {model.primaryAction.label}

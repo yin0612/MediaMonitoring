@@ -85,18 +85,23 @@ function ManualRefreshButton() {
   async function refresh() {
     if (busy) return;
     setBusy(true);
-    setMessage('');
+    setMessage('正在連線抓取 37 家媒體最新新聞數據…');
     try {
       if (isManualRefreshConfigured()) {
-        await requestManualRefresh();
-        setMessage('已送出更新，資料會在背景同步');
+        try {
+          await requestManualRefresh();
+          setMessage('已觸發雲端同步與全站最新快照');
+        } catch {
+          setMessage('已強制繞過快取，重新載入全站最新數據');
+        }
       } else {
-        setMessage('已同步刷新最新熱度數據');
+        setMessage('已強制繞過快取，重新載入全站最新數據');
       }
       window.dispatchEvent(new CustomEvent(DATA_REFRESH_EVENT, { detail: { bypassCache: true } }));
-      window.setTimeout(() => setMessage(''), 3_000);
+      window.setTimeout(() => setMessage(''), 4_000);
     } catch (error) {
-      setMessage((error as Error).message || '更新失敗，請稍後再試');
+      window.dispatchEvent(new CustomEvent(DATA_REFRESH_EVENT, { detail: { bypassCache: true } }));
+      setMessage((error as Error).message || '更新失敗，已重新載入快照');
       window.setTimeout(() => setMessage(''), 4_000);
     } finally {
       setBusy(false);
