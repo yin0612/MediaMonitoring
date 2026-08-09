@@ -4,12 +4,13 @@ from __future__ import annotations
 import html
 import re
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 
 import feedparser
 import requests
 
 from ..models import NormalizedItem, SourceResult
+from ..timeutil import normalize_published
 
 _UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -36,16 +37,17 @@ def _clean(text: str, limit: int = 140) -> str:
 
 
 def _parse_time(entry, now: datetime | None = None) -> datetime | None:
-    current = now or datetime.now(timezone.utc)
+    """把 feedparser 的時間交給 timeutil 正規化。
+
+    校正規則只能有一份（timeutil.normalize_published）。這裡曾自行複製一份
+    5 分鐘／8 小時的校正邏輯，與 timeutil、archive 共三份，任一份被修改
+    就會靜默分歧。feedparser 的 *_parsed 一律已轉為 UTC，因此帶上 UTC 時區
+    傳入；normalize_published 對已帶時區的值行為與原本完全相同。
+    """
     for key in ("published_parsed", "updated_parsed"):
         tm = entry.get(key)
         if tm:
-            published = datetime(*tm[:6], tzinfo=timezone.utc)
-            if published > current + timedelta(minutes=5):
-                corrected = published - timedelta(hours=8)
-                if corrected <= current + timedelta(minutes=5):
-                    published = corrected
-            return published if published <= current + timedelta(minutes=5) else None
+            return normalize_published(datetime(*tm[:6], tzinfo=timezone.utc), now)
     return None
 
 

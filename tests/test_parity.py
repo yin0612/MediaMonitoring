@@ -34,7 +34,7 @@ def _python_output() -> dict:
             items,
             load_watch_config(Path("config/watch_terms.yml")),
             now,
-            fixture["enabledSourceCount"],
+            enabled_source_count=fixture["enabledSourceCount"],
         ),
         "entities": build_entities(items, load_entity_lexicon(Path("config/entities.yml"))),
         "topics": build_topics(items, load_sentiment_lexicon(Path("config/sentiment.yml"))),

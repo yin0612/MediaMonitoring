@@ -13,6 +13,8 @@ from opinion_pipeline.timeutil import normalize_published
 
 
 NOW = datetime(2026, 7, 22, 12, 0, tzinfo=timezone.utc)
+# 熱度的 diversity 分母。測試必須明講，否則熱度會隨預設值悄悄改變。
+ENABLED_SOURCES = 24
 
 WATCH_CONFIG = {
     "watch_terms": [
@@ -55,7 +57,9 @@ def test_keywords_are_computed_from_real_items_with_bounded_heat():
 
 
 def test_watch_terms_stay_visible_at_zero_heat_without_matches():
-    keywords = build_keywords([item("tvbs", "無關新聞", 1)], WATCH_CONFIG, NOW)
+    keywords = build_keywords(
+        [item("tvbs", "無關新聞", 1)], WATCH_CONFIG, NOW, enabled_source_count=ENABLED_SOURCES
+    )
     typhoon = next(k for k in keywords if k["term"] == "颱風")
 
     assert typhoon["heat"] == 0
@@ -65,7 +69,7 @@ def test_watch_terms_stay_visible_at_zero_heat_without_matches():
 
 def test_keywords_only_count_the_last_24_hours():
     items = [item("tvbs", "台積電舊聞", 30), item("cna", "台積電新訊", 2)]
-    keywords = build_keywords(items, WATCH_CONFIG, NOW)
+    keywords = build_keywords(items, WATCH_CONFIG, NOW, enabled_source_count=ENABLED_SOURCES)
     tsmc = next(k for k in keywords if k["term"] == "台積電")
 
     assert tsmc["mentions24h"] == 1
@@ -161,3 +165,14 @@ def test_promote_resolves_multi_step_fragments():
 
     assert "無人" not in terms, f"碎片詞不應出現：{terms}"
     assert any("無人機" in term for term in terms), f"應升級為無人機：{terms}"
+
+
+def test_build_keywords_refuses_to_guess_the_enabled_source_count():
+    """來源數是 diversity 的分母。先前預設 24（實際 37），沿用預設值會靜默偏高。
+
+    這個測試防止預設值被重新加回來。
+    """
+    import pytest
+
+    with pytest.raises(TypeError):
+        build_keywords([item("tvbs", "台積電", 1)], WATCH_CONFIG, NOW)  # type: ignore[call-arg]

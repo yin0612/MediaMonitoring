@@ -6,6 +6,12 @@
 規則：
 - 命中詞前 `negation_window` 個字內若出現否定詞，該詞極性反轉（「不看好」→ 負向）。
 - 分數 = (正分 - 負分) / (正分 + 負分)，落在 -1..1；正負相等時為中立。
+
+已知限制（刻意保留，Worker 端 analysis.js 行為完全相同以維持 parity）：
+每個詞只採計**第一次出現**的位置，否定判斷也只看那個位置。因此「不看好後續，
+但看好長線」這種同詞多次、極性不一致的句子只會反映第一次的判讀。要改動這點
+必須同時修改兩端，並且需要人工標註集證明改動確實更準；在 macro-F1 達到 0.70
+之前，這裡一律只當 baseline，不宜為了直覺而調整演算法。
 """
 from __future__ import annotations
 
@@ -67,6 +73,8 @@ def classify(text: str, lexicon: SentimentLexicon) -> dict:
 
     for polarity, table in (("positive", lexicon.positive), ("negative", lexicon.negative)):
         for term, weight in table.items():
+            # 只取第一次出現；同詞多次且極性不一致時不會被完整反映。
+            # 這是刻意的 baseline 限制，與 Worker 端一致，詳見模組 docstring。
             index = text.find(term)
             if index < 0:
                 continue

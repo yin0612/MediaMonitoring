@@ -254,3 +254,13 @@ test('parseTrendsRss reads Taiwan Trending Now RSS and preserves all related new
   assert.equal(result[0].news[0].source, '中央社');
   assert.equal(result[0].news.length, 2);
 });
+
+// 來源數是 volume/diversity 的分母。先前預設為 6（實際 37），沿用預設值會把熱度
+// 嚴重高估且完全不報錯，因此改為必填；這個測試防止預設值被重新加回來。
+test('calculateMetrics refuses to guess the enabled source count', () => {
+  const items = [{ source: 'tvbs', publishedAt: new Date().toISOString(), title: '標題', url: 'https://a/1' }];
+  assert.throws(() => calculateMetrics(items, '24h', Date.now()), /enabledSourceCount/);
+  assert.throws(() => calculateMetrics(items, '24h', Date.now(), 0), /enabledSourceCount/);
+  // 明確給值時照常運作。
+  assert.equal(calculateMetrics(items, '24h', Date.now(), 37).mentions, 1);
+});

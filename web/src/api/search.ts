@@ -22,7 +22,13 @@ export interface HeatInput {
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 
-/** 新聞熱度：聲量 50%、加速度 33%、來源多樣性 17%。 */
+/**
+ * 搜尋結果熱度：聲量 50%、加速度 33%、來源多樣性 17%。
+ *
+ * 與 Worker 的 `calculateMetrics` 使用同一套分量定義，兩條路徑數字一致。
+ * 但這**不是**關鍵字熱度榜的公式（那邊用 log1p 聲量與熵多樣性），
+ * 詳見 worker/src/core.js 的 calculateMetrics 註解。
+ */
 export function calculateNewsHeat(input: HeatInput): number {
   return Math.round(
     100 *
@@ -105,6 +111,14 @@ const RANGE_MS: Record<SearchRange, number> = {
 
 const SOURCE_COUNT = NEWS_SOURCE_IDS.length;
 
+/**
+ * Worker 不可用時，用 Pages 快照在瀏覽器端算出與 Worker 相同形狀的搜尋結果。
+ *
+ * 刻意與 Worker 的 handleSearch 保持一致：同樣先取前 100 筆再計算 metrics。
+ * 因此 `metrics.mentions` 上限為 100，命中數超過 100 時會低報；命中數達到
+ * 來源數（37）時 volume 即飽和為 1.0。兩端一致是為了讓使用者不會因為
+ * Worker 是否可用而看到不同數字，代價是熱門查詢的熱度區辨力有限。
+ */
 export function buildStaticSearchData(
   allItems: SearchArticle[],
   query: string,

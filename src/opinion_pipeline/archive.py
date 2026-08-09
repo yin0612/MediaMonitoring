@@ -7,6 +7,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from .models import NormalizedItem
 from .sentiment import SentimentLexicon, classify
+from .timeutil import normalize_published
 
 
 RANGE_HOURS = {"1h": 1, "6h": 6, "24h": 24, "7d": 24 * 7}
@@ -84,14 +85,17 @@ def item_to_public(entry: NormalizedItem, lexicon: SentimentLexicon | None = Non
 
 
 def public_to_item(value: dict, now: datetime | None = None) -> NormalizedItem | None:
+    """把公開 JSON 還原成內部項目；時間一律交給 timeutil 正規化。
+
+    這裡原本自行複製了一份 5 分鐘／8 小時校正邏輯（與 timeutil、rss 共三份）。
+    改為委派後，帶時區的輸入行為完全相同，而缺時區的輸入會依規則視為台北時間，
+    不再因為 naive 與 aware 無法比較而被整筆丟棄。
+    """
     try:
-        current = now or datetime.now(timezone.utc)
-        published = datetime.fromisoformat(str(value["publishedAt"]).replace("Z", "+00:00"))
-        if published > current + timedelta(minutes=5):
-            corrected = published - timedelta(hours=8)
-            if corrected <= current + timedelta(minutes=5):
-                published = corrected
-        if published > current + timedelta(minutes=5):
+        published = normalize_published(
+            datetime.fromisoformat(str(value["publishedAt"]).replace("Z", "+00:00")), now
+        )
+        if published is None:
             return None
         return NormalizedItem(
             source=str(value["source"]),

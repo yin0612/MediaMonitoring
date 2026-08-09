@@ -161,7 +161,11 @@ def build_keywords(
     items: list[NormalizedItem],
     watch_config: dict,
     now: datetime | None = None,
-    enabled_source_count: int = 24,
+    *,
+    # 必填：這個值是 diversity 分量的分母，直接決定顯示給使用者的熱度。
+    # 先前預設為 24，實際來源已是 37；沿用預設值會產出看似正常但偏高的熱度，
+    # 而且不會有任何錯誤訊息。寧可要求呼叫端明講。
+    enabled_source_count: int,
 ) -> list[dict]:
     now = now or datetime.now(timezone.utc)
     window_start = now - KEYWORD_WINDOW

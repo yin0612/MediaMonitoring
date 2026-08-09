@@ -140,7 +140,12 @@ export function extractAutoTerms(items, cfg = AUTO_TERMS, watchTerms = WATCH_TER
   return chosen;
 }
 
-export function buildKeywords(items, now = Date.now(), enabledSourceCount = 24, watchTerms = WATCH_TERMS) {
+// enabledSourceCount 為必填，理由同 core.js 的 calculateMetrics：它是 diversity 的分母。
+// 先前預設 24，實際來源 37，沿用預設值會靜默產出偏高的熱度。
+export function buildKeywords(items, now = Date.now(), enabledSourceCount, watchTerms = WATCH_TERMS) {
+  if (!Number.isFinite(enabledSourceCount) || enabledSourceCount < 1) {
+    throw new TypeError('buildKeywords 需要明確的 enabledSourceCount（≥1）');
+  }
   const windowStart = now - KEYWORD_WINDOW_MS;
   const recent = items.filter((item) => Date.parse(item.publishedAt) >= windowStart);
   const autoTerms = extractAutoTerms(recent);
@@ -437,6 +442,8 @@ export function classifySentiment(text, lexicon = SENTIMENT_LEXICON) {
     ['negative', lexicon.negative],
   ]) {
     for (const { term, weight } of table) {
+      // 只取第一次出現，與 sentiment.py 的 text.find 對齊（parity 要求）。
+      // 同詞多次且極性不一致時不會被完整反映，這是刻意的 baseline 限制。
       const index = text.indexOf(term);
       if (index < 0) continue;
       let effective = polarity;

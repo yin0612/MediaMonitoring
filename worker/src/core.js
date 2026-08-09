@@ -365,7 +365,28 @@ export function parseTrendsRss(xml) {
 
 const clamp01 = (value) => Math.min(1, Math.max(0, value));
 
-export function calculateMetrics(items, range, now = Date.now(), enabledSourceCount = 6) {
+/**
+ * 搜尋結果的熱度。
+ *
+ * 注意：這**不是**關鍵字熱度榜用的公式。兩者權重相同（0.50/0.33/0.17），但分量定義不同：
+ *   - 搜尋（本函式與前端 buildStaticSearchData）：volume = 命中數 / 來源數，
+ *     diversity = 命中來源數 / 來源數。
+ *   - 關鍵字榜（analysis.js buildKeywords / analysis.py build_keywords）：
+ *     volume = log1p(命中數) / log1p(當期最大值)，diversity = 來源分布熵 / ln(來源數)。
+ *
+ * 已知飽和特性：呼叫端會先 `.slice(0, 100)` 再計算，因此 mentions 上限為 100，
+ * 且命中數達到來源數（37）時 volume 就固定為 1.0，熱門查詢之間會失去區辨力。
+ * 前端 fallback 採用相同公式與相同切片，兩條路徑數字一致（無 parity 問題）。
+ * 要改變這個定義會直接改動使用者看到的數字，屬於產品決策，不應在重構中順手調整。
+ *
+ * enabledSourceCount 為必填：它是 volume 與 diversity 的分母。
+ * 先前預設為 6（實際來源 37），一旦被沿用就會把熱度嚴重高估且不會報錯。
+ * core.js 刻意不引入 sources.js 以保持純函式，因此改為缺少即拋錯，而非猜一個值。
+ */
+export function calculateMetrics(items, range, now = Date.now(), enabledSourceCount) {
+  if (!Number.isFinite(enabledSourceCount) || enabledSourceCount < 1) {
+    throw new TypeError('calculateMetrics 需要明確的 enabledSourceCount（≥1）');
+  }
   if (items.length === 0) {
     return { heat: 0, mentions: 0, sourceCount: 0, volume: 0, acceleration: 0, diversity: 0 };
   }
