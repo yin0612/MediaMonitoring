@@ -11,6 +11,7 @@ import { SOURCE_META } from '../lib/sources';
 import { useChartTokens } from '../lib/theme';
 import type { Envelope, SearchArticle, SearchData, SearchRange } from '../types/contracts';
 import { PageHeader } from '../components/PageHeader';
+import { DATA_REFRESH_EVENT } from '../api/refreshCoordinator';
 import { AnalysisLauncher } from '../components/AnalysisLauncher';
 import type { TopicInput } from '../lib/analysisPresets';
 
@@ -68,11 +69,16 @@ export function AdvancedAnalysisPage() {
     const refresh = () => {
       if (document.visibilityState === 'visible') void runAnalysis(true);
     };
+    const onGlobalRefresh = () => {
+      void runAnalysis(true);
+    };
     const timer = window.setInterval(refresh, REFRESH_INTERVALS.search);
     document.addEventListener('visibilitychange', refresh);
+    window.addEventListener(DATA_REFRESH_EVENT, onGlobalRefresh);
     return () => {
       window.clearInterval(timer);
       document.removeEventListener('visibilitychange', refresh);
+      window.removeEventListener(DATA_REFRESH_EVENT, onGlobalRefresh);
     };
   }, [results.length, runAnalysis]);
 

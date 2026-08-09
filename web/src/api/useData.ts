@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Envelope } from '../types/contracts';
 import { fetchData } from './client';
+import { DATA_REFRESH_EVENT, type RefreshEventDetail } from './refreshCoordinator';
 
 /** 靜態 JSON 的自動刷新間隔；快照由 GitHub Actions 產生，過短只是浪費請求。 */
 export const DATA_REFRESH_MS = 90_000;
-export const DATA_REFRESH_EVENT = 'media-monitoring:refresh';
 
 export interface AsyncState<T> {
   loading: boolean;
@@ -34,7 +34,7 @@ export function useData<T>(name: string, refreshMs: number = DATA_REFRESH_MS): A
         setLoading(true);
         setError(null);
       }
-      fetchData<T>(name, bypassCache)
+      fetchData<T>(name, { bypassCache })
         .then((env) => {
           if (cancelled) return;
           hasData.current = true;
@@ -55,20 +55,31 @@ export function useData<T>(name: string, refreshMs: number = DATA_REFRESH_MS): A
     };
 
     load(false);
-    const onManualRefresh = (ev: Event) => {
-      const custom = ev as CustomEvent<{ bypassCache?: boolean }>;
+    const onRefresh = (ev: Event) => {
+      const custom = ev as CustomEvent<RefreshEventDetail>;
       load(true, Boolean(custom.detail?.bypassCache));
     };
-    window.addEventListener(DATA_REFRESH_EVENT, onManualRefresh);
+    
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        load(true);
+      }
+    };
+
+    window.addEventListener(DATA_REFRESH_EVENT, onRefresh);
+    document.addEventListener('visibilitychange', onVisibility);
+
     const timer = refreshMs > 0
       ? setInterval(() => {
           if (document.visibilityState === 'visible') load(true);
         }, refreshMs)
       : null;
+
     return () => {
       cancelled = true;
       if (timer) clearInterval(timer);
-      window.removeEventListener(DATA_REFRESH_EVENT, onManualRefresh);
+      window.removeEventListener(DATA_REFRESH_EVENT, onRefresh);
+      document.removeEventListener('visibilitychange', onVisibility);
     };
   }, [name, nonce, refreshMs]);
 

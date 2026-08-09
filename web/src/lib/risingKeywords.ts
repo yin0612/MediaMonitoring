@@ -29,8 +29,9 @@ const NOISE_STOPWORDS = new Set([
 function isInvalidRisingTerm(term: string): boolean {
   const lower = term.toLowerCase().trim();
   if (NOISE_STOPWORDS.has(lower)) return true;
-  if (/^歲[男女兒婦翁童幼]/.test(lower) || /歲[男女兒婦翁童幼]$/.test(lower)) return true;
-  if (/^\d+歲?$/.test(lower)) return true;
+  if (/^\d*歲[男女兒婦翁童幼人]/.test(lower) || /歲[男女兒婦翁童幼人]$/.test(lower)) return true;
+  if (/\d+歲/.test(lower)) return true;
+  if (/(大戰|大展|展覽|大賽|比賽|活動|報導|表示|市場|產業|公司|集團|單位|代表)/.test(lower)) return true;
   return false;
 }
 

@@ -30,18 +30,7 @@ if ! git diff-index --quiet HEAD --; then
 fi
 git push origin main || true
 
-# 3. 直推已編譯靜態檔至 gh-pages 分支
-echo "[3/3] 正在發布已編譯網頁至 gh-pages 分支..."
-cd "$PROJECT_ROOT/web/dist"
-rm -rf .git
-git init
-git branch -M gh-pages
-git remote add origin "$REMOTE_URL"
-git config user.name "yin0612"
-git config user.email "yin0612@users.noreply.github.com"
-git add .
-git commit -m "Deploy web dist: $(date '+%Y-%m-%d %H:%M:%S')"
-git push origin gh-pages --force
+# 3. (已交由 GitHub Actions refresh-data.yml 自動部署 gh-pages，不再於本機直推)
 
 echo "=========================================="
 echo "✅ 發布完成！已成功將最新網頁直接部署至 GitHub Pages。"

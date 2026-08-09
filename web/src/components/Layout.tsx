@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { DATA_REFRESH_EVENT, useData } from '../api/useData';
-import { isManualRefreshConfigured, requestManualRefresh } from '../api/client';
+import { useData } from '../api/useData';
+import { dispatchGlobalRefresh } from '../api/refreshCoordinator';
+import { fetchRefreshStatus, isManualRefreshConfigured, requestManualRefresh } from '../api/client';
 import type { Meta } from '../types/contracts';
 import { GLOBAL_STATUS_LABEL } from '../lib/sources';
 import { fmtRelative } from '../lib/format';
@@ -85,23 +86,63 @@ function ManualRefreshButton() {
   async function refresh() {
     if (busy) return;
     setBusy(true);
-    setMessage('正在連線抓取 37 家媒體最新新聞數據…');
+
     try {
-      if (isManualRefreshConfigured()) {
-        try {
-          await requestManualRefresh();
-          setMessage('已觸發雲端同步與全站最新快照');
-        } catch {
-          setMessage('已強制繞過快取，重新載入全站最新數據');
-        }
-      } else {
+      if (!isManualRefreshConfigured()) {
         setMessage('已強制繞過快取，重新載入全站最新數據');
+        dispatchGlobalRefresh({ reason: 'manual', bypassCache: true });
+        window.setTimeout(() => setMessage(''), 4_000);
+        return;
       }
-      window.dispatchEvent(new CustomEvent(DATA_REFRESH_EVENT, { detail: { bypassCache: true } }));
+
+      const request = await requestManualRefresh();
+      setMessage('正在更新新聞…');
+
+      let fastDone = false;
+      let deepDone = false;
+
+      for (let attempt = 0; attempt < 30; attempt += 1) {
+        const status = await fetchRefreshStatus(request.refreshId);
+
+        if (status.fast.status === 'completed' && !fastDone) {
+          fastDone = true;
+          setMessage('新聞已更新，正在同步分析…');
+          dispatchGlobalRefresh({
+            reason: 'manual',
+            refreshId: request.refreshId,
+            requestedAt: request.requestedAt,
+            bypassCache: true,
+          });
+        }
+
+        if (status.deep.status === 'completed') {
+          deepDone = true;
+          dispatchGlobalRefresh({
+            reason: 'manual',
+            refreshId: request.refreshId,
+            requestedAt: request.requestedAt,
+            bypassCache: true,
+          });
+          break;
+        }
+
+        if (status.deep.status === 'failed') {
+          break;
+        }
+
+        await new Promise((resolve) => window.setTimeout(resolve, 2000));
+      }
+
+      if (fastDone && deepDone) {
+        setMessage('全部資料已更新');
+      } else if (fastDone) {
+        setMessage('新聞已更新，部分分析資料仍在同步');
+      } else {
+        setMessage('更新未完成，系統仍會自動重試');
+      }
       window.setTimeout(() => setMessage(''), 4_000);
     } catch (error) {
-      window.dispatchEvent(new CustomEvent(DATA_REFRESH_EVENT, { detail: { bypassCache: true } }));
-      setMessage((error as Error).message || '更新失敗，已重新載入快照');
+      setMessage((error as Error).message);
       window.setTimeout(() => setMessage(''), 4_000);
     } finally {
       setBusy(false);

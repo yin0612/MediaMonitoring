@@ -75,6 +75,8 @@ export interface Meta {
   lastFastAt: string | null;
   /** 深度 NLP 管線最後成功時間。 */
   lastDeepAt: string | null;
+  fastSnapshotId?: string | null;
+  deepSnapshotId?: string | null;
   /** 方法版本，用於前端顯示「方法說明」。 */
   methodVersion: string;
   /**
@@ -90,6 +92,7 @@ export interface Meta {
     trendBucketMinutes: number;
     /** 快照保留天數。 */
     archiveDays: number;
+    sourceCount: number;
   };
   /** 若無法還原上一版快照為 true，代表歷史資料可能不完整。 */
   stateRestoreFailed: boolean;

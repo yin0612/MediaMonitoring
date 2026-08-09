@@ -9,6 +9,7 @@ import { fmtDateTime, fmtNum, fmtTime } from '../lib/format';
 import { useChartTokens } from '../lib/theme';
 import { nextRefreshSeconds, REFRESH_INTERVALS, searchArticlesToTrendNews } from '../lib/refresh';
 import type { Envelope, SearchData, SearchRange, TrendItem, TrendsData } from '../types/contracts';
+import { DATA_REFRESH_EVENT } from '../api/refreshCoordinator';
 
 const RANGES: { value: SearchRange; label: string }[] = [
   { value: '1h', label: '1 小時' },
@@ -108,6 +109,19 @@ export function SearchPage() {
       document.removeEventListener('visibilitychange', refresh);
     };
   }, [refreshing, result, runSearch, searching, selectedTrend]);
+
+  useEffect(() => {
+    const refresh = () => {
+      void loadTrends();
+      if (result && result.data.query) {
+        void runSearch(result.data.query, selectedTrend, true);
+      }
+    };
+    window.addEventListener(DATA_REFRESH_EVENT, refresh);
+    return () => {
+      window.removeEventListener(DATA_REFRESH_EVENT, refresh);
+    };
+  }, [loadTrends, result, runSearch, selectedTrend]);
 
   useEffect(() => {
     if (!lastUpdatedAt) return undefined;

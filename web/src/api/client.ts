@@ -44,7 +44,36 @@ function workerDataUrl(name: string): string | null {
 
 export interface ManualRefreshResponse {
   status: 'accepted';
-  retryAfterSeconds: number;
+  refreshId: string;
+  requestedAt: string;
+  fast: 'running' | 'completed' | 'failed';
+  deep: 'queued' | 'running' | 'completed' | 'failed' | 'unavailable';
+}
+
+export interface RefreshStatus {
+  refreshId: string;
+  requestedAt: string;
+  fast: {
+    status: 'running' | 'completed' | 'failed';
+    generatedAt: string | null;
+    error: string | null;
+  };
+  deep: {
+    status: 'queued' | 'running' | 'completed' | 'failed' | 'unavailable';
+    generatedAt: string | null;
+    error: string | null;
+  };
+}
+
+export async function fetchRefreshStatus(refreshId: string): Promise<RefreshStatus> {
+  const base = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+  const response = await fetch(`${base}/api/refresh/status?id=${encodeURIComponent(refreshId)}`, {
+    cache: 'no-store',
+  });
+  if (!response.ok) {
+    throw new DataFetchError('refresh', `無法取得更新狀態（HTTP ${response.status}）`);
+  }
+  return response.json();
 }
 
 /** 是否設定了 Worker 網址；未設定時前端不應顯示手動更新入口。 */
@@ -74,22 +103,15 @@ export async function requestManualRefresh(): Promise<ManualRefreshResponse> {
   let body: unknown = null;
   try {
     body = await response.json();
-  } catch {
-    // Keep a stable error below when the Worker does not return JSON.
-  }
-  const payload = body && typeof body === 'object' ? body as Record<string, unknown> : {};
+  } catch {}
+  const payload = body && typeof body === 'object' ? (body as Record<string, unknown>) : {};
   if (!response.ok) {
-    const retryAfter = typeof payload.retryAfterSeconds === 'number' ? payload.retryAfterSeconds : null;
-    const suffix = retryAfter ? `，請 ${retryAfter} 秒後再試` : '';
-    throw new DataFetchError('refresh', `手動更新失敗（HTTP ${response.status}）${suffix}`);
+    throw new DataFetchError('refresh', `手動更新失敗（HTTP ${response.status}）`);
   }
-  if (payload.status !== 'accepted' || !Number.isInteger(payload.retryAfterSeconds)) {
+  if (payload.status !== 'accepted' || typeof payload.refreshId !== 'string') {
     throw new DataFetchError('refresh', '手動更新回應格式不正確');
   }
-  return {
-    status: 'accepted',
-    retryAfterSeconds: payload.retryAfterSeconds as number,
-  };
+  return payload as unknown as ManualRefreshResponse;
 }
 
 /** 由 Worker KV 提供的即時快照檔名；news-archive（7 天）與 trends 仍走 Pages/各自端點。 */
@@ -133,7 +155,11 @@ async function fetchEnvelope<T>(name: string, url: string, cache: RequestCache):
  * 若設定了 Worker API base，優先讀 Worker 的即時快照（每 5 分鐘更新）；
  * Worker 尚未產生快照或連線失敗時，改讀 GitHub Pages 靜態檔（last-good）。
  */
-export async function fetchData<T>(name: string, bypassCache = false): Promise<Envelope<T>> {
+export async function fetchData<T>(
+  name: string,
+  options?: { bypassCache?: boolean },
+): Promise<Envelope<T>> {
+  const bypassCache = options?.bypassCache ?? false;
   const workerUrl = WORKER_FILES.has(name) ? workerDataUrl(name) : null;
   let workerEnv: Envelope<T> | null = null;
   if (workerUrl) {

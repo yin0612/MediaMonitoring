@@ -516,22 +516,105 @@ async function handleData(request, env, url) {
   return json(request, env, { error: 'SNAPSHOT_UNAVAILABLE' }, 503);
 }
 
+function createRefreshId() {
+  return crypto.randomUUID();
+}
+
+async function patchRefreshState(env, refreshId, partial) {
+  const key = `refresh:${refreshId}`;
+  try {
+    const raw = await env.SNAPSHOT.get(key);
+    const state = raw ? JSON.parse(raw) : null;
+    if (!state) return;
+    const newState = { ...state, ...partial };
+    await env.SNAPSHOT.put(key, JSON.stringify(newState), { expirationTtl: 3600 });
+  } catch (e) {
+    console.error('Failed to patch refresh state', e);
+  }
+}
+
+async function runFastRefresh(env, refreshId) {
+  try {
+    const files = await buildSnapshot(env);
+    const generatedAt = files?.meta?.generatedAt || new Date().toISOString();
+    await patchRefreshState(env, refreshId, {
+      fast: { status: 'completed', generatedAt, error: null },
+    });
+  } catch (error) {
+    await patchRefreshState(env, refreshId, {
+      fast: { status: 'failed', generatedAt: null, error: error?.message || 'FAST_REFRESH_FAILED' },
+    });
+  }
+}
+
+async function runDeepRefresh(env, refreshId) {
+  if (!env.GITHUB_TOKEN) return;
+  const result = await triggerGitHubActions(env, false, refreshId);
+  if (!result.ok) {
+    await patchRefreshState(env, refreshId, {
+      deep: { status: 'failed', generatedAt: null, error: result.reason },
+    });
+    return;
+  }
+  await patchRefreshState(env, refreshId, {
+    deep: { status: 'queued', generatedAt: null, error: null },
+  });
+}
+
 async function handleRefresh(request, env, ctx) {
   if (!isAllowedOrigin(request, env)) return json(request, env, { error: 'ORIGIN_NOT_ALLOWED' }, 403);
   if (!env.SNAPSHOT) return json(request, env, { error: 'SNAPSHOT_NOT_CONFIGURED' }, 503);
-  if (!env.GITHUB_TOKEN) return json(request, env, { error: 'GITHUB_DISPATCH_NOT_CONFIGURED' }, 503);
 
-  const dispatch = await triggerGitHubActions(env);
-  if (!dispatch.ok) return json(request, env, { error: 'GITHUB_DISPATCH_FAILED' }, 503);
+  const refreshId = createRefreshId();
+  const requestedAt = new Date().toISOString();
 
-  const snapshotJob = buildSnapshot(env).catch(() => {});
-  if (ctx?.waitUntil) ctx.waitUntil(snapshotJob);
-  else await snapshotJob;
-  return json(request, env, { status: 'accepted', retryAfterSeconds: 0 }, 202);
+  const state = {
+    refreshId,
+    requestedAt,
+    fast: { status: 'running', generatedAt: null, error: null },
+    deep: {
+      status: env.GITHUB_TOKEN ? 'queued' : 'unavailable',
+      generatedAt: null,
+      error: env.GITHUB_TOKEN ? null : 'GITHUB_TOKEN_NOT_CONFIGURED',
+    },
+  };
+
+  await env.SNAPSHOT.put(`refresh:${refreshId}`, JSON.stringify(state), { expirationTtl: 3600 });
+
+  const fastJob = runFastRefresh(env, refreshId);
+  const deepJob = runDeepRefresh(env, refreshId);
+
+  if (ctx?.waitUntil) {
+    ctx.waitUntil(fastJob.catch(() => {}));
+    ctx.waitUntil(deepJob.catch(() => {}));
+  }
+
+  return json(
+    request,
+    env,
+    {
+      status: 'accepted',
+      refreshId,
+      requestedAt,
+      fast: state.fast.status,
+      deep: state.deep.status,
+    },
+    202,
+  );
+}
+
+async function handleRefreshStatus(request, env, url) {
+  const refreshId = url.searchParams.get('id');
+  if (!refreshId) return json(request, env, { error: 'REFRESH_ID_REQUIRED' }, 400);
+
+  const raw = await env.SNAPSHOT.get(`refresh:${refreshId}`);
+  if (!raw) return json(request, env, { error: 'REFRESH_NOT_FOUND' }, 404);
+
+  return json(request, env, JSON.parse(raw), 200);
 }
 
 const GITHUB_REPO = 'yin0612/MediaMonitoring';
-const GITHUB_WORKFLOW = 'deploy-web.yml';
+const GITHUB_WORKFLOW = 'refresh-data.yml';
 
 /**
  * 主動踢動 GitHub Actions，取代不可靠的 GitHub 內建 schedule 觸發
@@ -541,7 +624,7 @@ const GITHUB_WORKFLOW = 'deploy-web.yml';
  * （repo+workflow scope 的 PAT，經 `wrangler secret put` 存入，不進 git）；
  * 未設定時直接跳過，不影響快照本身的產生。
  */
-async function triggerGitHubActions(env, automatedRefresh = false) {
+async function triggerGitHubActions(env, automatedRefresh = false, refreshId = null) {
   if (!env.GITHUB_TOKEN) return { ok: false, reason: 'NOT_CONFIGURED' };
   try {
     const endpoint = automatedRefresh
@@ -557,8 +640,8 @@ async function triggerGitHubActions(env, automatedRefresh = false) {
         'X-GitHub-Api-Version': '2022-11-28',
       },
       body: JSON.stringify(automatedRefresh
-        ? { event_type: 'scheduled-refresh' }
-        : { ref: 'main' }),
+        ? { event_type: 'scheduled-refresh', client_payload: { refreshId } }
+        : { ref: 'main', inputs: refreshId ? { refresh_id: refreshId } : {} }),
     });
     return response.ok ? { ok: true } : { ok: false, reason: `HTTP_${response.status}` };
   } catch {
@@ -576,6 +659,7 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders(request, env) });
     const url = new URL(request.url);
     if (request.method === 'POST' && url.pathname === '/api/refresh') return handleRefresh(request, env, ctx);
+    if (request.method === 'GET' && url.pathname === '/api/refresh/status') return handleRefreshStatus(request, env, url);
     if (!['GET', 'HEAD'].includes(request.method)) return json(request, env, { error: 'METHOD_NOT_ALLOWED' }, 405);
     // KV snapshots are refreshed manually; bypass the edge cache for data so the next read sees it.
     const cacheable = request.method === 'GET' && url.pathname === '/api/trends';

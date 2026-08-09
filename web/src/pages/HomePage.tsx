@@ -129,7 +129,7 @@ export function HomePage() {
       <Card title="資料涵蓋與方法" hint="先了解資料，再解讀數字">
         <div className="home-method">
           <div>
-            <strong>35 個公開新聞來源 · {snapshot.meta?.coverage.archiveDays ?? 7} 天封存</strong>
+            <strong>{snapshot.meta?.coverage.sourceCount ?? snapshot.sourceCount} 個公開新聞來源 · {snapshot.meta?.coverage.archiveDays ?? 7} 天封存</strong>
             <p>首頁摘要與分析頁都會標示資料時間、來源異常及實驗性限制。情緒是可追溯的詞典 baseline，不是模型準確度保證。</p>
           </div>
           <div className="home-method__actions">

@@ -1,0 +1,94 @@
+name: Refresh data and deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      refresh_id:
+        required: false
+        type: string
+
+  repository_dispatch:
+    types:
+      - scheduled-refresh
+      - manual-refresh
+
+  schedule:
+    - cron: "*/5 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: media-monitoring-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Refresh news data
+        run: python -m opinion_pipeline.cli --restore-base-url https://yin0612.github.io/MediaMonitoring
+        env:
+          PYTHONPATH: src
+          PYTHONIOENCODING: utf-8
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: web
+        run: npm ci
+
+      - name: Validate production Worker URL
+        run: |
+          if [ -z "${VITE_API_BASE_URL}" ]; then
+            echo "VITE_API_BASE_URL is required for production"
+            exit 1
+          fi
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+
+      - name: Build frontend
+        working-directory: web
+        run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+
+      - name: Deploy to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          rm -rf /tmp/media-monitoring-dist
+          cp -R web/dist /tmp/media-monitoring-dist
+
+          git checkout --orphan gh-pages-temp
+          git rm -rf .
+
+          cp -R /tmp/media-monitoring-dist/. .
+
+          echo "${GITHUB_SHA}" > source-main-sha.txt
+          echo "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" > build-at.txt
+
+          git add .
+          git commit -m "Deploy web dist: $(date '+%Y-%m-%d %H:%M:%S')"
+          git push origin HEAD:gh-pages --force

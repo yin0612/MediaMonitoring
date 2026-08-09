@@ -58,7 +58,11 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
     assert.equal(response.status, 202);
     assert.equal(response.headers.get('Access-Control-Allow-Origin'), 'https://chunyu8866.github.io');
     assert.match(response.headers.get('Access-Control-Allow-Methods'), /POST/);
-    assert.deepEqual(await response.json(), { status: 'accepted', retryAfterSeconds: 0 });
+    const body = await response.json();
+    assert.equal(body.status, 'accepted');
+    assert.ok(body.refreshId);
+    assert.equal(body.fast, 'running');
+    assert.equal(body.deep, 'queued');
     const dispatch = calls.find(({ url }) => url.includes('api.github.com'));
     assert.ok(dispatch, 'expected a manual GitHub Actions dispatch');
     assert.equal(
@@ -119,6 +123,22 @@ test('manual refresh reports missing GitHub configuration instead of claiming su
 
   assert.equal(response.status, 503);
   assert.deepEqual(await response.json(), { error: 'GITHUB_DISPATCH_NOT_CONFIGURED' });
+});
+
+test('refresh status endpoint returns correct schema', async () => {
+  const env = { SNAPSHOT: memoryKv() };
+  await env.SNAPSHOT.put('refresh:12345', JSON.stringify({
+    refreshId: '12345',
+    requestedAt: new Date().toISOString(),
+    fast: { status: 'completed', generatedAt: new Date().toISOString(), error: null },
+    deep: { status: 'queued', generatedAt: null, error: null }
+  }));
+  const request = new Request('https://worker.example/api/refresh/status?id=12345');
+  const response = await worker.fetch(request, env);
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.refreshId, '12345');
+  assert.equal(body.fast.status, 'completed');
 });
 
 test('24h search merges Google News results with the low-frequency Pages snapshot', async () => {

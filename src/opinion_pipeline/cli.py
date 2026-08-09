@@ -438,7 +438,7 @@ def run(
                 "lastDeepAt": generated_at if topics else None,
                 "methodVersion": "news-heat-v4-37-sources",
                 "scheduleDaysUntilPause": None,
-                "coverage": {"keywordWindowHours": 24, "trendBucketMinutes": 60, "archiveDays": 7},
+                "coverage": {"keywordWindowHours": 24, "trendBucketMinutes": 60, "archiveDays": 7, "sourceCount": len(sources)},
                 "stateRestoreFailed": not bool(current_items or restored_items) and bool(restore_base_url),
             },
             generated_at,
