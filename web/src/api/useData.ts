@@ -29,12 +29,12 @@ export function useData<T>(name: string, refreshMs: number = DATA_REFRESH_MS): A
   useEffect(() => {
     let cancelled = false;
 
-    const load = (silent: boolean) => {
+    const load = (silent: boolean, bypassCache = false) => {
       if (!silent) {
         setLoading(true);
         setError(null);
       }
-      fetchData<T>(name)
+      fetchData<T>(name, bypassCache)
         .then((env) => {
           if (cancelled) return;
           hasData.current = true;
@@ -55,7 +55,10 @@ export function useData<T>(name: string, refreshMs: number = DATA_REFRESH_MS): A
     };
 
     load(false);
-    const onManualRefresh = () => load(true);
+    const onManualRefresh = (ev: Event) => {
+      const custom = ev as CustomEvent<{ bypassCache?: boolean }>;
+      load(true, Boolean(custom.detail?.bypassCache));
+    };
     window.addEventListener(DATA_REFRESH_EVENT, onManualRefresh);
     const timer = refreshMs > 0
       ? setInterval(() => {

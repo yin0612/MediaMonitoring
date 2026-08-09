@@ -30,10 +30,10 @@ function majorOf(version: string): number {
 }
 
 /** 以 Vite base 為基準組出 Pages 靜態資料檔的完整路徑（備援用）。 */
-function pagesUrl(name: string): string {
+function pagesUrl(name: string, bypassCache = false): string {
   const base = import.meta.env.BASE_URL || '/';
   const sep = base.endsWith('/') ? '' : '/';
-  return `${base}${sep}data/${name}.json`;
+  return `${base}${sep}data/${name}.json${bypassCache ? `?v=${Date.now()}` : ''}`;
 }
 
 /** Worker /api/data 端點（由 Cron 每 5 分鐘更新的即時快照）。未設定 API base 時為空。 */
@@ -133,7 +133,7 @@ async function fetchEnvelope<T>(name: string, url: string, cache: RequestCache):
  * 若設定了 Worker API base，優先讀 Worker 的即時快照（每 5 分鐘更新）；
  * Worker 尚未產生快照或連線失敗時，改讀 GitHub Pages 靜態檔（last-good）。
  */
-export async function fetchData<T>(name: string): Promise<Envelope<T>> {
+export async function fetchData<T>(name: string, bypassCache = false): Promise<Envelope<T>> {
   const workerUrl = WORKER_FILES.has(name) ? workerDataUrl(name) : null;
   if (workerUrl) {
     try {
@@ -143,7 +143,7 @@ export async function fetchData<T>(name: string): Promise<Envelope<T>> {
       // Worker 無快照或離線 → 退回 Pages 靜態檔。
     }
   }
-  return fetchEnvelope<T>(name, pagesUrl(name), 'no-cache');
+  return fetchEnvelope<T>(name, pagesUrl(name, bypassCache), 'no-cache');
 }
 
 /** 明確讀取 Pages last-good；用於 Worker 搜尋失敗後，避免再讀到截短的 Worker 快照。 */

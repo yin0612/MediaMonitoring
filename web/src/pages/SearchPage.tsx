@@ -161,6 +161,15 @@ export function SearchPage() {
     };
   }, [result, tokens]);
 
+  const realtimeItems = useMemo(
+    () => trends?.data.items.filter((item) => item.isRealtime) ?? [],
+    [trends],
+  );
+  const rssItems = useMemo(
+    () => trends?.data.items.filter((item) => !item.isRealtime) ?? [],
+    [trends],
+  );
+
   return (
     <div>
       <section className="search-hero">
@@ -200,9 +209,9 @@ export function SearchPage() {
       <section className="trends-section" aria-labelledby="trends-title">
         <div className="section-row">
           <div>
-            <h2 id="trends-title">台灣 Google 熱門搜尋（包含網頁版即時榜與 RSS）</h2>
+            <h2 id="trends-title">台灣 Google 熱門搜尋</h2>
             <p>
-              已整合 Google Trends 網頁版即時搜尋榜（如：停班）與 RSS 頻道，本次提供 {trends?.data.items.length ?? 0} 筆；每 2 分鐘自動檢查更新。
+              已將熱搜資料分類為「網頁即時榜」（如：停班）與「每日新聞熱搜榜 (RSS)」，方便對照最新發燒主題；本站每 2 分鐘自動檢查更新。
               {trends && <> <a href={trends.data.sourceUrl} target="_blank" rel="noreferrer noopener">查看資料源</a></>}
             </p>
           </div>
@@ -213,13 +222,36 @@ export function SearchPage() {
         ) : !trends ? (
           <LoadingState label="讀取台灣熱門搜尋…" />
         ) : (
-          <div className="trend-chips">
-            {trends.data.items.slice(0, 16).map((item) => (
-              <button key={`${item.title}-${item.publishedAt}`} type="button" onClick={() => void selectTrend(item)}>
-                <strong>{item.title}</strong>
-                <span>{item.approximateTraffic || '未提供搜尋量'} · {item.isRealtime ? '網頁即時榜' : item.news.length ? `${item.news.length} 則新聞` : '點擊載入新聞'}</span>
-              </button>
-            ))}
+          <div className="grid cols-2" style={{ gap: '16px' }}>
+            <Card title="網頁即時榜 (Google Trends)" hint="網頁即時搜尋量暴增主題（如：停班）">
+              {realtimeItems.length === 0 ? (
+                <p className="small muted">暫無網頁即時榜資料</p>
+              ) : (
+                <div className="trend-chips">
+                  {realtimeItems.slice(0, 10).map((item) => (
+                    <button key={`${item.title}-${item.publishedAt}`} type="button" onClick={() => void selectTrend(item)}>
+                      <strong>{item.title}</strong>
+                      <span>{item.approximateTraffic || '未提供搜尋量'} · 網頁即時榜</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </Card>
+
+            <Card title="每日新聞熱搜榜 (RSS)" hint="Google 官方 RSS 頻道定時推播與相關新聞">
+              {rssItems.length === 0 ? (
+                <p className="small muted">暫無新聞熱搜 RSS 資料</p>
+              ) : (
+                <div className="trend-chips">
+                  {rssItems.slice(0, 10).map((item) => (
+                    <button key={`${item.title}-${item.publishedAt}`} type="button" onClick={() => void selectTrend(item)}>
+                      <strong>{item.title}</strong>
+                      <span>{item.approximateTraffic || '未提供搜尋量'} · {item.news.length ? `${item.news.length} 則新聞` : '點擊載入新聞'}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </Card>
           </div>
         )}
       </section>

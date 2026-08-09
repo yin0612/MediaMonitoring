@@ -91,9 +91,9 @@ function ManualRefreshButton() {
         await requestManualRefresh();
         setMessage('已送出更新，資料會在背景同步');
       } else {
-        setMessage('已重新載入最新熱度數據');
+        setMessage('已同步刷新最新熱度數據');
       }
-      window.dispatchEvent(new Event(DATA_REFRESH_EVENT));
+      window.dispatchEvent(new CustomEvent(DATA_REFRESH_EVENT, { detail: { bypassCache: true } }));
       window.setTimeout(() => setMessage(''), 3_000);
     } catch (error) {
       setMessage((error as Error).message || '更新失敗，請稍後再試');
