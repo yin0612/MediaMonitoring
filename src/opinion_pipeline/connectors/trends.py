@@ -48,6 +48,7 @@ def parse_trends_feed(raw: bytes) -> list[dict]:
                 "title": title,
                 "approximateTraffic": _text(entry, f"{{{_HT}}}approx_traffic"),
                 "publishedAt": published,
+                "isRealtime": False,
                 "news": news,
             }
         )

@@ -1,16 +1,23 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-08T14:21:14.291658Z",
+  "generatedAt": "2026-08-09T06:35:55.649817Z",
   "data": {
     "geo": "TW",
     "status": "ok",
     "stale": false,
-    "source": "google-trends-rss",
-    "sourceUrl": "https://trends.google.com/trending/rss?geo=TW&hl=zh-TW",
+    "source": "google-trends-realtime-and-rss",
+    "sourceUrl": "https://trends.google.com/trending?geo=TW&hl=zh-TW",
     "items": [
       {
-        "title": "停班",
+        "title": "白海豚停班停課",
         "approximateTraffic": "100,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "遣返",
+        "approximateTraffic": "10,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
@@ -23,28 +30,7 @@
         "news": []
       },
       {
-        "title": "淡水龍捲風",
-        "approximateTraffic": "10,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "中天新聞台",
-        "approximateTraffic": "5,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "遣返",
-        "approximateTraffic": "5,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "美光科技",
+        "title": "熱帶性低氣壓",
         "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
@@ -52,171 +38,243 @@
       },
       {
         "title": "藝人",
-        "approximateTraffic": "2,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "保險",
         "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "逐玉",
-        "approximateTraffic": "2,000+",
+        "title": "淡水龍捲風",
+        "approximateTraffic": "10,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "前列腺",
+        "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
         "title": "三商美邦",
-        "approximateTraffic": "1,000+",
+        "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "油價",
+        "title": "工會",
         "approximateTraffic": "2,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "許富凱",
-        "approximateTraffic": "1,000+",
+        "title": "王凱",
+        "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "郭忠祐",
-        "approximateTraffic": "2,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "賴瑞隆",
-        "approximateTraffic": "500+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "郭泓志",
-        "approximateTraffic": "1,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "劉亞仁",
-        "approximateTraffic": "500+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "血糖",
-        "approximateTraffic": "1,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "oner",
-        "approximateTraffic": "2,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "林炳生",
-        "approximateTraffic": "500+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "國旅補助",
+        "title": "垃圾",
         "approximateTraffic": "200+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
+        "publishedAt": "2026-08-09T05:50:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "竹南鎮代站崗顧垃圾包山防亂丟 第25天終見到沒有垃圾",
+            "source": "UDN",
+            "url": "https://udn.com/news/story/7324/9679808"
+          },
+          {
+            "title": "亂丟垃圾惹議！ 台東華源天空之鏡遭遊客＂潑水丟石＂",
+            "source": "Yahoo新聞",
+            "url": "https://tw.news.yahoo.com/%E4%BA%82%E4%B8%9F%E5%9E%83%E5%9C%BE%E6%83%B9%E8%AD%B0%EF%BC%81-%E5%8F%B0%E6%9D%B1%E8%8F%AF%E6%BA%90%E5%A4%A9%E7%A9%BA%E4%B9%8B%E9%8F%A1%E9%81%AD%E9%81%8A%E5%AE%A2%EF%BC%82%E6%BD%91%E6%B0%B4%E4%B8%9F%E7%9F%B3%EF%BC%82-111255490.html"
+          },
+          {
+            "title": "朝聖「天空之鏡」搞破壞！ 客竟丟石、倒不明液體",
+            "source": "東森新聞",
+            "url": "https://news.ebc.net.tw/news/living/565157"
+          }
+        ]
       },
       {
-        "title": "寬魚國際",
-        "approximateTraffic": "1,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "財閥x刑警",
-        "approximateTraffic": "1,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "林煒",
-        "approximateTraffic": "500+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "aubl",
+        "title": "中国男子篮球职业联赛",
         "approximateTraffic": "200+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
+        "publishedAt": "2026-08-09T05:50:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "大学生球员成CBA选秀主角 高校体育培育沃土",
+            "source": "中华网",
+            "url": "https://news.china.com/socialgd/10000169/20260807/49661280.html"
+          },
+          {
+            "title": "今日：2026选秀22次弃权，青训球员为何比大学生更快适应？",
+            "source": "搜狐网",
+            "url": "https://m.sohu.com/a/1060199325_122344180?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334"
+          },
+          {
+            "title": "CBA选秀大会今日开启：广州获得状元签，江苏与宁波紧随其后！",
+            "source": "搜狐网",
+            "url": "https://roll.sohu.com/a/1056193137_121921085"
+          }
+        ]
       },
       {
-        "title": "民視新聞台",
+        "title": "重陽節",
         "approximateTraffic": "500+",
-        "publishedAt": "",
-        "isRealtime": true,
+        "publishedAt": "2026-08-09T05:40:00Z",
+        "isRealtime": false,
         "news": []
       },
       {
-        "title": "葉門",
-        "approximateTraffic": "1,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "林慶順",
-        "approximateTraffic": "500+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "t1oner",
-        "approximateTraffic": "1,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "3653",
-        "approximateTraffic": "200+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "基隆淹水",
+        "title": "愛莉莎莎",
         "approximateTraffic": "100+",
-        "publishedAt": "",
-        "isRealtime": true,
+        "publishedAt": "2026-08-09T05:40:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "派助理颱風天「肉身護植栽」 愛莉莎莎遭轟：命比不上植物",
+            "source": "Yahoo新聞",
+            "url": "https://tw.news.yahoo.com/%E6%B4%BE%E5%8A%A9%E7%90%86%E9%A2%B1%E9%A2%A8%E5%A4%A9-%E8%82%89%E8%BA%AB%E8%AD%B7%E6%A4%8D%E6%A0%BD-%E6%84%9B%E8%8E%89%E8%8E%8E%E8%8E%8E%E9%81%AD%E8%BD%9F-%E5%91%BD%E6%AF%94%E4%B8%8D%E4%B8%8A%E6%A4%8D%E7%89%A9-031500637.html"
+          },
+          {
+            "title": "主機、商品全泡水！3C Tim哥成受災戶崩潰",
+            "source": "鏡週刊Mirror Media",
+            "url": "https://www.mirrormedia.mg/external/setn_1886391"
+          },
+          {
+            "title": "慘淪白海豚受災戶！網紅Tim哥公司淹水　貨物泡湯、員工急救電腦",
+            "source": "NOWnews今日新聞",
+            "url": "https://www.nownews.com/news/6864312"
+          }
+        ]
+      },
+      {
+        "title": "三立新聞網",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-09T05:30:00Z",
+        "isRealtime": false,
         "news": []
+      },
+      {
+        "title": "秀姑巒山",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-09T05:30:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "55歲女攀「八大秀」失聯4天！同行山友已獲救 女兒急求助：剩我媽媽還沒找到",
+            "source": "Yahoo新聞",
+            "url": "https://tw.news.yahoo.com/55%E6%AD%B2%E5%A5%B3%E6%94%80-%E5%85%AB%E5%A4%A7%E7%A7%80-%E5%A4%B1%E8%81%AF4%E5%A4%A9-%E5%90%8C%E8%A1%8C%E5%B1%B1%E5%8F%8B%E5%B7%B2%E7%8D%B2%E6%95%91-%E5%A5%B3%E5%85%92%E6%80%A5%E6%B1%82%E5%8A%A9-100719954.html"
+          },
+          {
+            "title": "55歲婦八通關登山失聯！同行友人獲救 家屬急喊：剩媽媽沒找到 | TVBS",
+            "source": "LINE TODAY",
+            "url": "https://today.line.me/tw/v3/article/2Dq13je"
+          },
+          {
+            "title": "花蓮局玉里消防分隊相關報導",
+            "source": "三立新聞",
+            "url": "https://www.setn.com/klist/774265"
+          }
+        ]
+      },
+      {
+        "title": "賣空",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-09T05:20:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "《大賣空》原型警告1987崩盤重演可信嗎？ 專家：「萬年空頭」忽略美股重要事實| 全球財經| 全球",
+            "source": "UDN",
+            "url": "https://udn.com/news/story/6811/9679580"
+          },
+          {
+            "title": "麥可貝瑞放空Oracle、Nebius 鎖定表外負債風險",
+            "source": "台視全球資訊網",
+            "url": "https://www.ttv.com.tw/finance/view/?i=0820260710371B3CF4DD1F7F4769A72B3E04700E91DB0698&from=587"
+          },
+          {
+            "title": "美股反彈藏隱憂？專家示警「重演1987年崩盤慘況」 點名7檔提醒| TVBS",
+            "source": "LINE TODAY",
+            "url": "https://today.line.me/tw/v3/article/l2RrzEX"
+          }
+        ]
+      },
+      {
+        "title": "iphone17 漲價",
+        "approximateTraffic": "500+",
+        "publishedAt": "2026-08-09T05:10:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "iPhone Ultra摺疊機「5大特點」配得起Ultra名字！果粉看完更心動",
+            "source": "udn科技玩家",
+            "url": "https://tech.udn.com/tech/story/123151/9674247"
+          },
+          {
+            "title": "蘋果要出手了？爆料：iPhone 17最快下週突襲漲價 恐不等9月",
+            "source": "自由電子報3C科技",
+            "url": "https://3c.ltn.com.tw/news/67137"
+          },
+          {
+            "title": "蘋果摺疊iPhone、Pixel 11、Meta眼鏡發表會時間表｜2026年8、9月科技大事彙整",
+            "source": "數位時代",
+            "url": "https://www.bnext.com.tw/article/91787/apple-foldable-iphone-pixel-11-meta-glasses-2026-launch-calendar"
+          }
+        ]
+      },
+      {
+        "title": "股息",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-09T05:00:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "股息4,257億！台股迎新資金潮 341檔月底前派發",
+            "source": "UDN",
+            "url": "https://udn.com/news/story/7251/9678264"
+          },
+          {
+            "title": "四公股金控下週除權息！現金殖利率均破3％ 存股族提前卡位",
+            "source": "自由時報",
+            "url": "https://stock.ltn.com.tw/article/zqqvphmktz6w"
+          },
+          {
+            "title": "金控股除權息旺季開跑，8月逾千億現金流將回到哪裡？-黃詠晴",
+            "source": "CMoney投資網誌",
+            "url": "https://cmnews.com.tw/article/huangyongqing-69e64d24-8f40-11f1-83be-360af75ef46b"
+          }
+        ]
+      },
+      {
+        "title": "柯富仁",
+        "approximateTraffic": "1000+",
+        "publishedAt": "2026-08-09T04:50:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "「落後群創」真是最後稻草？彭双浪欽點接班人、友達二把手柯富仁無預警「裸辭」投變數",
+            "source": "TechNews 科技新報",
+            "url": "https://finance.technews.tw/2026/08/09/auo-president-vs-ceo/"
+          },
+          {
+            "title": "改組不到一個月，總經理就請辭⋯友達董事長親揭後續盤算",
+            "source": "商周",
+            "url": "https://www.businessweekly.com.tw/Archive/Article?StrId=7014526"
+          },
+          {
+            "title": "友達二把手柯富仁裸辭內幕！彭双浪親自找回來的接班人，為何最後撕破臉？「落後群創」成最後稻草？ - 上市櫃",
+            "source": "旺得富理財網",
+            "url": "https://wantrich.chinatimes.com/news/20260807900002-420101"
+          }
+        ]
       }
     ]
   }

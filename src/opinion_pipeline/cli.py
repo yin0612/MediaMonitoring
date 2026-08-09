@@ -400,19 +400,12 @@ def run(
     try:
         realtime_items = fetch_realtime_web_trends("TW", timeout)
         rss_items = parse_trends_feed(_fetch_bytes(TRENDS_URL, timeout))
-        seen_titles = set()
-        merged = []
         for item in realtime_items:
-            t = item["title"].lower()
-            if t not in seen_titles:
-                seen_titles.add(t)
-                merged.append(item)
+            item["isRealtime"] = True
         for item in rss_items:
-            t = item["title"].lower()
-            if t not in seen_titles:
-                seen_titles.add(t)
-                merged.append(item)
-        trends_items = prepare_trends_items(merged[:30])
+            item["isRealtime"] = False
+        merged = realtime_items[:15] + rss_items[:15]
+        trends_items = prepare_trends_items(merged)
     except Exception:  # noqa: BLE001 - 趨勢失敗不阻擋新聞部署
         trends_items = []
         previous = output_dir / "trends.json"
