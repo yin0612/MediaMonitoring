@@ -592,6 +592,7 @@ test('30d search falls back to the full archive with explicit incomplete coverag
     assert.equal(body.data.status, 'partial');
     assert.equal(body.data.coverage.complete, false);
     assert.equal(body.data.coverage.actualFrom, oldPublishedAt);
+    assert.ok(body.data.coverage.coveredDays >= 1);
     assert.ok(requested.some((url) => url.endsWith('/data/news-archive.json')));
     assert.ok(!requested.some((url) => url.endsWith('/data/recent.json')));
   } finally {
@@ -629,6 +630,7 @@ test('30d archive fallback stays partial when the D1 index is not configured', a
     assert.equal(body.data.status, 'partial');
     assert.equal(body.data.coverage.complete, false);
     assert.equal(body.data.coverage.actualFrom, oldPublishedAt);
+    assert.equal(body.data.coverage.coveredDays, 2);
   } finally {
     globalThis.fetch = originalFetch;
   }

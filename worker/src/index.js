@@ -434,10 +434,14 @@ async function handleSearch(request, env, url) {
   const coverageTimestamps = [...archived.items, ...liveItems]
     .map((item) => Date.parse(item.publishedAt))
     .filter(Number.isFinite);
+  const coveredDays = new Set(
+    coverageTimestamps.map((timestamp) => new Date(timestamp).toISOString().slice(0, 10)),
+  ).size;
   const actualFromMs = coverageTimestamps.length ? Math.min(...coverageTimestamps) : Number.NaN;
   const actualToMs = coverageTimestamps.length ? Math.max(...coverageTimestamps) : Number.NaN;
   const coverageComplete = historicalRange
     && Number.isFinite(actualFromMs)
+    && coveredDays >= requestedDays
     && actualFromMs <= requestedFromMs + DAY_MS
     && actualToMs >= responseNow - DAY_MS;
   const degradedHistory = historicalRange && (
@@ -467,6 +471,7 @@ async function handleSearch(request, env, url) {
         actualTo: Number.isFinite(actualToMs) ? new Date(actualToMs).toISOString() : null,
         complete: coverageComplete && !historicalIndexFailed,
         articleCount: archived.items.length,
+        coveredDays,
       },
     } : {}),
   };
