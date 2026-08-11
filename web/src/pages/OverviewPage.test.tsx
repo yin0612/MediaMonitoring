@@ -23,7 +23,12 @@ const keyword = (term: string) => ({
   term,
   kind: 'auto' as const,
   heat: 80,
-  mentions24h: 2,
+  mentions24h: 8,
+  burstCurrent: 8,
+  burstSourceCount: 4,
+  burstBaseline: [1, 1, 2, 1, 2, 1, 1],
+  burstBaselineMedian: 1,
+  burstScore: 7,
   components: { volume: 0, acceleration: 0, diversity: 0, weights: { volume: 0.5, acceleration: 0.33, diversity: 0.17 } },
   sourceShare: {},
   trend: Array.from({ length: 24 }, (_, i) => ({ t: `2026-07-26T${String(i).padStart(2, '0')}:00:00Z`, heat: 1, mentions: 1 })),
@@ -44,8 +49,9 @@ describe('OverviewPage', () => {
     render(<ThemeProvider><MemoryRouter><OverviewPage /></MemoryRouter></ThemeProvider>);
     expect(screen.getByRole('heading', { name: '近期升溫關鍵字' })).toBeInTheDocument();
     expect(screen.getAllByText('地震').length).toBeGreaterThan(0);
-    expect(screen.getByText('+2 篇')).toBeInTheDocument();
-    expect(screen.getByText('新出現')).toBeInTheDocument();
+    expect(screen.getByText('當期 8 篇／4 家')).toBeInTheDocument();
+    expect(screen.getByText('基線中位 1')).toBeInTheDocument();
+    expect(screen.getByText('burst 7.0')).toBeInTheDocument();
     expect(screen.queryByText('80', { selector: '.heatbar__value' })).not.toBeInTheDocument();
   });
 });

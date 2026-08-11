@@ -182,10 +182,19 @@ export function buildKeywords(items, now = Date.now(), enabledSourceCount, watch
   );
 
   const bucketMs = KEYWORD_WINDOW_MS / TREND_BUCKETS;
+  const burstWindowMs = 60 * 60 * 1000;
+  const burstCurrentStart = now - burstWindowMs;
+  const baselineCoverageStart = burstCurrentStart - 7 * 24 * 60 * 60 * 1000;
+  const validHistory = items.map((item) => Date.parse(item.publishedAt)).filter((value) => Number.isFinite(value) && value <= now);
+  const baselineComplete = validHistory.length > 0 && Math.min(...validHistory) <= baselineCoverageStart;
   const computed = definitions.map((definition) => {
     const anyOf = definition.anyOf.map(casefold);
     const exclude = definition.exclude.map(casefold);
     const matched = recent.filter((item) => matchesFolded(foldOf(item), anyOf, exclude));
+    const historicalMatched = items.filter((item) => {
+      const publishedAt = Date.parse(item.publishedAt);
+      return Number.isFinite(publishedAt) && publishedAt <= now && matchesFolded(foldOf(item), anyOf, exclude);
+    });
     const sourceCounts = {};
     for (const item of matched) sourceCounts[item.source] = (sourceCounts[item.source] || 0) + 1;
     const total = matched.length;
@@ -196,10 +205,18 @@ export function buildKeywords(items, now = Date.now(), enabledSourceCount, watch
       const index = Math.min(TREND_BUCKETS - 1, Math.floor((Date.parse(item.publishedAt) - windowStart) / bucketMs));
       buckets[index] += 1;
     }
-    const currentSources = new Set(
-      matched.filter((item) => Date.parse(item.publishedAt) >= now - bucketMs).map((item) => item.source),
-    );
-    const burstScore = robustBurstScore(buckets.at(-1), buckets.slice(-8, -1), currentSources.size);
+    const currentItems = historicalMatched.filter((item) => Date.parse(item.publishedAt) >= burstCurrentStart);
+    const currentSources = new Set(currentItems.map((item) => item.source));
+    const baseline = Array.from({ length: 7 }, (_, index) => {
+      const end = now - (index + 1) * 24 * 60 * 60 * 1000;
+      const start = end - burstWindowMs;
+      return historicalMatched.filter((item) => {
+        const publishedAt = Date.parse(item.publishedAt);
+        return publishedAt >= start && publishedAt < end;
+      }).length;
+    });
+    const baselineMedian = median(baseline);
+    const burstScore = robustBurstScore(currentItems.length, baselineComplete ? baseline : [], currentSources.size);
     const recent6 = buckets.slice(-6).reduce((a, b) => a + b, 0);
     const previous6 = buckets.slice(-12, -6).reduce((a, b) => a + b, 0);
     let acceleration = 0;
@@ -207,7 +224,18 @@ export function buildKeywords(items, now = Date.now(), enabledSourceCount, watch
       const raw = clamp01(0.5 + (recent6 - previous6) / (2 * Math.max(1, recent6, previous6)));
       acceleration = 0.5 + (raw - 0.5) * Math.min(1, total / 10);
     }
-    return { definition, matched: total, share, buckets, acceleration, burstScore };
+    return {
+      definition,
+      matched: total,
+      share,
+      buckets,
+      acceleration,
+      burstScore,
+      burstCurrent: currentItems.length,
+      burstSourceCount: currentSources.size,
+      burstBaseline: baseline,
+      burstBaselineMedian: baselineMedian,
+    };
   });
 
   const maxMentions = Math.max(0, ...computed.map((entry) => entry.matched));
@@ -230,6 +258,10 @@ export function buildKeywords(items, now = Date.now(), enabledSourceCount, watch
       heat,
       mentions24h: total,
       burstScore: entry.burstScore,
+      burstCurrent: entry.burstCurrent,
+      burstSourceCount: entry.burstSourceCount,
+      burstBaseline: entry.burstBaseline,
+      burstBaselineMedian: entry.burstBaselineMedian,
       components: {
         volume: Math.round(volume * 1000) / 1000,
         acceleration: Math.round(entry.acceleration * 1000) / 1000,

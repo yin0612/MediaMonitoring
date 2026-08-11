@@ -59,7 +59,7 @@ function confidenceOf(
 
 export function buildDecisionBrief(
   input: HomeInputs,
-  generatedAt?: string | null,
+  _generatedAt?: string | null,
   availability: DecisionDataAvailability = ALL_DATA_AVAILABLE,
 ): DecisionBriefModel {
   const keywords = [...input.keywords.keywords].sort((a, b) => b.heat - a.heat);
@@ -72,8 +72,7 @@ export function buildDecisionBrief(
   const requiredDataAvailable = Object.values(availability).every(Boolean);
   const confidence = confidenceOf(input, coverage.enabled, coverage.healthy, requiredDataAvailable);
 
-  const referenceTime = generatedAt ?? input.meta?.lastFastAt ?? '';
-  const rising = getRisingKeywords(input.recent.items, keywords, referenceTime, 90)[0] ?? null;
+  const rising = getRisingKeywords(keywords)[0] ?? null;
 
   if (!rising && !topKeyword && !topTopic && input.recent.items.length === 0) {
     return {
@@ -94,9 +93,9 @@ export function buildDecisionBrief(
   if (topKeyword) {
     signals.push({
       kind: 'momentum',
-      label: rising ? '90 分鐘動能' : '最高關鍵字熱度',
-      value: rising ? `+${rising.delta} 篇` : `${Math.round(topKeyword.heat)}`,
-      detail: rising ? `${rising.term}・共 ${rising.recentMentions} 篇報導` : `${topKeyword.term}・24 小時 ${topKeyword.mentions24h} 篇`,
+      label: rising ? '7 日基線動能' : '最高關鍵字熱度',
+      value: rising ? `burst ${rising.burstScore.toFixed(1)}` : `${Math.round(topKeyword.heat)}`,
+      detail: rising ? `${rising.term}・當期 ${rising.currentMentions} 篇／${rising.sourceCount} 家` : `${topKeyword.term}・24 小時 ${topKeyword.mentions24h} 篇`,
       to: `/search?q=${encodeURIComponent(rising ? rising.term : topKeyword.term)}`,
     });
   }
@@ -132,7 +131,7 @@ export function buildDecisionBrief(
         : '即時新聞動態監測中';
 
   const baseSummary = rising
-    ? `近 90 分鐘共有 ${rising.recentMentions} 篇新聞共同提及「${rising.term}」（較前一時段增加 ${rising.delta} 篇）；目前最大事件為${topTopic?.label ?? '尚待分類'}。`
+    ? `最近 1 小時共有 ${rising.currentMentions} 篇、${rising.sourceCount} 家來源提及「${rising.term}」（前 7 日同時段中位數 ${rising.baselineMedian}，burst ${rising.burstScore.toFixed(1)}）；目前最大事件為${topTopic?.label ?? '尚待分類'}。`
     : topKeyword
       ? `${topKeyword.term}目前熱度 ${Math.round(topKeyword.heat)}，24 小時命中 ${topKeyword.mentions24h} 篇。`
       : topTopic

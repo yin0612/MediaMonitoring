@@ -48,11 +48,7 @@ export function OverviewPage() {
   const totalMentions = keywords.reduce((a, k) => a + k.mentions24h, 0);
   const hottest = keywords[0];
   const recentItems = getRecentItems(recent.data?.items ?? [], 7);
-  const risingKeywords = getRisingKeywords(
-    recent.data?.items ?? [],
-    keywords,
-    recent.envelope?.generatedAt ?? new Date().toISOString(),
-  );
+  const risingKeywords = getRisingKeywords(keywords);
 
   // 熱度趨勢（前 5 詞多線）；依所選時間範圍取尾段
   const sliceTail = <T,>(arr: T[]) => arr.slice(-rangePoints);
@@ -239,7 +235,7 @@ export function OverviewPage() {
             </div>
           </Card>
 
-          <Card title="近期升溫關鍵字" hint="最近 1.5 小時 vs 前一個 1.5 小時；僅列出出現次數增加的詞">
+          <Card title="近期升溫關鍵字" hint="最近 1 小時 vs 前 7 日同時段 median/MAD；至少 5 篇、3 家來源">
             {recent.loading ? <LoadingState label="分析近期新聞中…" /> : recent.error ? (
               <div className="state state--compact">近期新聞暫時無法載入，升溫分析稍後再試。</div>
             ) : risingKeywords.length === 0 ? (
@@ -249,9 +245,9 @@ export function OverviewPage() {
                 {risingKeywords.map((item) => (
                   <div className="rising-keyword-row" key={item.term}>
                     <strong>{item.term}</strong>
-                    <span className="rising-keyword-count">近 {item.recentMentions} 篇／前 {item.previousMentions} 篇</span>
-                    <span className="rising-keyword-delta">+{item.delta} 篇</span>
-                    <span className="rising-keyword-percent">{item.changePercent === null ? '新出現' : `+${item.changePercent}%`}</span>
+                    <span className="rising-keyword-count">當期 {item.currentMentions} 篇／{item.sourceCount} 家</span>
+                    <span className="rising-keyword-delta">基線中位 {item.baselineMedian}</span>
+                    <span className="rising-keyword-percent">burst {item.burstScore.toFixed(1)}</span>
                   </div>
                 ))}
               </div>

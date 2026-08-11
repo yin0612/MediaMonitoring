@@ -293,15 +293,24 @@ export function AdvancedAnalysisPage() {
           <div className="grid cols-3 analysis-terms">
             {successful.map((result) => {
               const items = result.response?.data.items ?? [];
-              const timestamps = items.map((item) => Date.parse(item.publishedAt)).filter(Number.isFinite);
-              const midpoint = timestamps.length ? (Math.min(...timestamps) + Math.max(...timestamps)) / 2 : Date.now();
-              const stats = extractTermStats(items, midpoint, [result.query, result.name]);
+              const referenceTime = Date.parse(
+                result.response?.data.coverage?.requestedTo || result.response?.generatedAt || '',
+              );
+              const stats = extractTermStats(
+                items,
+                Number.isFinite(referenceTime) ? referenceTime : Date.now(),
+                [result.query, result.name],
+              );
               return (
-                <Card key={result.name} title={`${result.name} 關聯詞`} hint="TOP 詞頻／近期升溫">
+                <Card key={result.name} title={`${result.name} 關聯詞`} hint="TOP 詞頻／7 日同時段 median/MAD 升溫">
                   <h3 className="analysis-subtitle">熱門關聯詞</h3>
                   <div className="term-cloud">{stats.top.map((term) => <span key={term.term}>{term.term} <b>{term.count}</b></span>)}</div>
                   <h3 className="analysis-subtitle">近期升溫詞</h3>
-                  <div className="term-cloud rising">{stats.rising.map((term) => <span key={term.term}>{term.term} <b>+{term.change}</b></span>)}</div>
+                  <div className="term-cloud rising">{stats.rising.map((term) => (
+                    <span key={term.term}>
+                      {term.term} <b>{term.current} 篇／{term.sourceCount} 家・基線 {term.baselineMedian}・burst {term.burstScore?.toFixed(1)}</b>
+                    </span>
+                  ))}</div>
                 </Card>
               );
             })}

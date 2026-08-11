@@ -88,7 +88,9 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
       <pubDate>${new Date().toUTCString()}</pubDate></item></channel></rss>`);
   };
 
-  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret' };
+  const env = {
+    SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret', DB: deepLockD1(),
+  };
   const pending = [];
   try {
     const response = await worker.fetch(
@@ -149,7 +151,9 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
     return new Response('<rss><channel></channel></rss>');
   };
 
-  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret' };
+  const env = {
+    SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret', DB: deepLockD1(),
+  };
   const request = (origin, ip) => new Request('https://worker.example/api/refresh', {
     method: 'POST',
     headers: { Origin: origin, 'CF-Connecting-IP': ip, 'Content-Type': 'application/json' },
@@ -238,6 +242,32 @@ test('refresh status endpoint returns correct schema', async () => {
   assert.equal(body.fast.status, 'completed');
   assert.equal(body.deep.status, 'queued');
   assert.equal(body.requestedAt, requestedAt);
+});
+
+test('manual refresh reports a missing D1 lock as unavailable, not rate-limited', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => String(input).includes('turnstile')
+    ? Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' })
+    : new Response('<rss><channel></channel></rss>');
+  const env = {
+    SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret',
+  };
+  const pending = [];
+  try {
+    const response = await worker.fetch(new Request('https://worker.example/api/refresh', {
+      method: 'POST',
+      headers: { Origin: 'https://yin0612.github.io', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
+    }), env, { waitUntil: (promise) => pending.push(promise) });
+    const body = await response.json();
+
+    assert.equal(body.deep, 'unavailable');
+    const deep = JSON.parse(await env.SNAPSHOT.get(`refresh:${body.refreshId}:deep`));
+    assert.equal(deep.error, 'DEEP_REFRESH_LOCK_NOT_CONFIGURED');
+  } finally {
+    await Promise.all(pending);
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test('manual refresh requires a valid Turnstile token when protection is configured', async () => {
@@ -341,6 +371,24 @@ test('manual refresh rejects oversized request bodies before verification', asyn
     body: JSON.stringify({ turnstileToken: 'x' }),
   }), { SNAPSHOT: memoryKv(), TURNSTILE_SECRET_KEY: 'turnstile-secret' }, { waitUntil: () => {} });
   assert.equal(response.status, 413);
+});
+
+test('manual refresh measures actual UTF-8 body size when Content-Length is absent', async () => {
+  const request = new Request('https://worker.example/api/refresh', {
+    method: 'POST',
+    headers: { Origin: 'https://yin0612.github.io', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ turnstileToken: '測'.repeat(2_000) }),
+  });
+  assert.equal(request.headers.get('Content-Length'), null);
+
+  const response = await worker.fetch(
+    request,
+    { SNAPSHOT: memoryKv(), TURNSTILE_SECRET_KEY: 'turnstile-secret' },
+    { waitUntil: () => {} },
+  );
+
+  assert.equal(response.status, 413);
+  assert.deepEqual(await response.json(), { error: 'REQUEST_TOO_LARGE' });
 });
 
 test('refresh callback completes deep analysis without overwriting fast state', async () => {
@@ -457,6 +505,49 @@ test('30d search reads historical articles from D1 without live RSS fanout', asy
   }
 });
 
+test('30d search falls back to the full archive with explicit incomplete coverage when D1 fails', async () => {
+  const originalFetch = globalThis.fetch;
+  const requested = [];
+  const oldPublishedAt = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString();
+  const currentPubDate = new Date(Date.now() - 60 * 60 * 1000).toUTCString();
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    requested.push(url);
+    if (url.endsWith('/data/news-archive.json')) {
+      return Response.json({
+        schemaVersion: '2.1.0',
+        generatedAt: new Date().toISOString(),
+        data: {
+          status: 'ok', stale: false, items: [{
+            id: 'archive-old', source: 'cna', title: '台積電十日前新聞', excerpt: '',
+            publishedAt: oldPublishedAt, url: 'https://example.com/archive-old', sentiment: null,
+          }],
+        },
+      });
+    }
+    if (url.includes('news.google.com')) return new Response('<rss><channel></channel></rss>');
+    return new Response(`<rss><channel><item><guid>${encodeURIComponent(url)}</guid><title>台積電即時新聞</title>
+      <link>https://example.com/current/${encodeURIComponent(url)}</link><pubDate>${currentPubDate}</pubDate></item></channel></rss>`);
+  };
+  const env = {
+    DB: { prepare: () => { throw new Error('D1 unavailable'); } },
+    ARCHIVE_BASE_URL: 'https://pages.example',
+  };
+  try {
+    const response = await worker.fetch(new Request('https://worker.example/api/search?q=台積電&range=30d'), env);
+    const body = await response.json();
+
+    assert.equal(response.status, 200);
+    assert.equal(body.data.status, 'partial');
+    assert.equal(body.data.coverage.complete, false);
+    assert.equal(body.data.coverage.actualFrom, oldPublishedAt);
+    assert.ok(requested.some((url) => url.endsWith('/data/news-archive.json')));
+    assert.ok(!requested.some((url) => url.endsWith('/data/recent.json')));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 function memoryKv() {
   const store = new Map();
   return { get: async (key) => store.get(key) ?? null, put: async (key, value) => void store.set(key, value), _store: store };
@@ -467,6 +558,17 @@ async function runScheduled(env) {
   const ctx = { waitUntil: (promise) => pending.push(promise) };
   await worker.scheduled({ cron: '*/5 * * * *' }, env, ctx);
   await Promise.all(pending);
+}
+
+function deepLockD1() {
+  let claimed = false;
+  return {
+    prepare: () => ({ bind: () => ({ run: async () => {
+      const changes = claimed ? 0 : 1;
+      claimed = true;
+      return { meta: { changes } };
+    } }) }),
+  };
 }
 
 function queryOnlyD1(rows) {

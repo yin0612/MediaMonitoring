@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { archivePreviousUtcDay, pruneHistoricalArticles, queryHistoricalArticles, upsertArticles } from '../src/storage.js';
+import {
+  archivePreviousUtcDay, pruneHistoricalArticles, queryHistoricalArticles, queryHistoricalCoverage, upsertArticles,
+} from '../src/storage.js';
 
 const article = (id, publishedAt) => ({
   id,
@@ -26,7 +28,7 @@ test('upsertArticles writes canonical article rows through D1 batch', async () =
   };
   await upsertArticles(db, [article('a1', '2026-08-10T12:00:00Z')], 1786363200000);
   assert.equal(calls.length, 1);
-  assert.match(calls[0].sql, /ON CONFLICT\(id\) DO UPDATE/);
+  assert.match(calls[0].sql, /ON CONFLICT DO UPDATE/);
   assert.deepEqual(calls[0].args.slice(0, 7), [
     'a1', 'cna', 'headline a1', 'summary', 1786363200000, 'https://example.com/a1',
     JSON.stringify({ label: 'neutral', score: 0, matched: [] }),
@@ -47,6 +49,15 @@ test('queryHistoricalArticles applies the boolean query in D1 without a silent r
   assert.match(statement, /NOT LIKE \?4/);
   assert.doesNotMatch(statement, /LIMIT\s+10000/i);
   assert.deepEqual(bindings.slice(2), ['%台積電%', '%股價%']);
+});
+
+test('queryHistoricalCoverage keeps an empty D1 window explicitly empty', async () => {
+  const db = {
+    prepare: () => ({ bind: () => ({ first: async () => ({ actual_from: null, actual_to: null, article_count: 0 }) }) }),
+  };
+  assert.deepEqual(await queryHistoricalCoverage(db, '30d'), {
+    actualFrom: null, actualTo: null, articleCount: 0,
+  });
 });
 
 test('pruneHistoricalArticles removes only records older than 90 days', async () => {

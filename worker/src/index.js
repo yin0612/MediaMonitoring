@@ -137,22 +137,30 @@ async function fetchText(url, attempts = 2, timeoutMs = 5_000) {
 
 async function archiveItems(env, range = '24h') {
   const base = archiveBase(env);
-  const preferred = range === '7d' ? 'news-archive' : 'recent';
-  try {
-    const response = await fetch(`${base}/data/${preferred}.json`);
+  const preferred = ['7d', '30d'].includes(range) ? 'news-archive' : 'recent';
+  const load = async (name) => {
+    const response = await fetch(`${base}/data/${name}.json`);
     if (!response.ok) throw new Error(`HTTP_${response.status}`);
     const body = await response.json();
-    return Array.isArray(body?.data?.items) ? body.data.items : [];
+    return {
+      items: Array.isArray(body?.data?.items) ? body.data.items : [],
+      generatedAt: typeof body?.generatedAt === 'string' ? body.generatedAt : null,
+      status: typeof body?.data?.status === 'string' ? body.data.status : 'partial',
+      stale: body?.data?.stale !== false,
+      file: name,
+    };
+  };
+  try {
+    return await load(preferred);
   } catch {
-    if (preferred === 'news-archive') return [];
+    if (preferred === 'news-archive') {
+      return { items: [], generatedAt: null, status: 'error', stale: true, file: preferred };
+    }
     // 舊部署尚未提供 recent 時，才退回完整 archive。
     try {
-      const response = await fetch(`${base}/data/news-archive.json`);
-      if (!response.ok) return [];
-      const body = await response.json();
-      return Array.isArray(body?.data?.items) ? body.data.items : [];
+      return await load('news-archive');
     } catch {
-      return [];
+      return { items: [], generatedAt: null, status: 'error', stale: true, file: 'news-archive' };
     }
   }
 }
@@ -273,6 +281,7 @@ async function handleSearch(request, env, url) {
     return json(request, env, { error: error.message }, 400);
   }
 
+  let historicalIndexFailed = false;
   if (env.DB && ['7d', '30d'].includes(input.range)) {
     try {
       const now = Date.now();
@@ -324,6 +333,7 @@ async function handleSearch(request, env, url) {
         items,
       }));
     } catch (error) {
+      historicalIndexFailed = true;
       console.error(JSON.stringify({ event: 'd1_search_failed', range: input.range, error: error?.message }));
     }
   }
@@ -373,12 +383,28 @@ async function handleSearch(request, env, url) {
   // 統計要描述「全部命中」，回傳清單才截斷。先前是先 slice(0,100) 再算 metrics，
   // 命中 300 篇時聲量會顯示 100，是直接錯誤的數字而非取捨。
   // 逐篇情緒只算在實際回傳的那 100 筆，維持 Worker 的 CPU 預算。
-  const matched = filterAndDedupe([...liveItems, ...archived], input.query, input.range);
+  const matched = filterAndDedupe([...liveItems, ...archived.items], input.query, input.range);
   const items = matched.slice(0, MAX_SEARCH_ITEMS).map(withSentiment);
   const enabledCount = NEWS_SOURCES.length;
   const failures = runs.filter((run) => ['error', 'degraded'].includes(run.status)).length;
-  const stale = liveItems.length === 0 && archived.length > 0;
-  const status = stale ? 'stale' : failures ? 'partial' : 'ok';
+  const stale = liveItems.length === 0 && archived.items.length > 0;
+  const historicalRange = ['7d', '30d'].includes(input.range);
+  const requestedDays = input.range === '30d' ? 30 : 7;
+  const responseNow = Date.now();
+  const requestedFromMs = responseNow - requestedDays * DAY_MS;
+  const coverageTimestamps = [...archived.items, ...liveItems]
+    .map((item) => Date.parse(item.publishedAt))
+    .filter(Number.isFinite);
+  const actualFromMs = coverageTimestamps.length ? Math.min(...coverageTimestamps) : Number.NaN;
+  const actualToMs = coverageTimestamps.length ? Math.max(...coverageTimestamps) : Number.NaN;
+  const coverageComplete = historicalRange
+    && Number.isFinite(actualFromMs)
+    && actualFromMs <= requestedFromMs + DAY_MS
+    && actualToMs >= responseNow - DAY_MS;
+  const degradedHistory = historicalRange && (
+    historicalIndexFailed || !coverageComplete || archived.status !== 'ok' || archived.stale
+  );
+  const status = stale ? 'stale' : (failures || degradedHistory) ? 'partial' : 'ok';
   const sourceCounts = Object.fromEntries(
     [...new Set(matched.map((item) => item.source))].map((source) => [source, matched.filter((item) => item.source === source).length]),
   );
@@ -392,6 +418,16 @@ async function handleSearch(request, env, url) {
     sourceCounts,
     sources: runs.map(({ items: _items, ...source }) => source),
     items,
+    ...(historicalRange ? {
+      coverage: {
+        requestedFrom: new Date(requestedFromMs).toISOString(),
+        requestedTo: new Date(responseNow).toISOString(),
+        actualFrom: Number.isFinite(actualFromMs) ? new Date(actualFromMs).toISOString() : null,
+        actualTo: Number.isFinite(actualToMs) ? new Date(actualToMs).toISOString() : null,
+        complete: coverageComplete && !historicalIndexFailed,
+        articleCount: archived.items.length,
+      },
+    } : {}),
   };
   return json(request, env, envelope(data));
 }
@@ -771,7 +807,11 @@ async function verifyTurnstile(request, env) {
   }
   let payload;
   try {
-    payload = await request.json();
+    const rawBody = await request.text();
+    if (new TextEncoder().encode(rawBody).byteLength > REFRESH_BODY_MAX_BYTES) {
+      return { ok: false, status: 413, error: 'REQUEST_TOO_LARGE' };
+    }
+    payload = JSON.parse(rawBody);
   } catch {
     return { ok: false, status: 403, error: 'TURNSTILE_REQUIRED' };
   }
@@ -803,15 +843,22 @@ async function verifyTurnstile(request, env) {
 }
 
 async function claimDeepRefreshSlot(env) {
-  if (!env.GITHUB_TOKEN) return false;
-  const key = 'refresh-deep-cooldown';
+  if (!env.GITHUB_TOKEN) return { claimed: false, reason: 'GITHUB_TOKEN_NOT_CONFIGURED' };
+  if (!env.DB) return { claimed: false, reason: 'DEEP_REFRESH_LOCK_NOT_CONFIGURED' };
   const now = Date.now();
-  const previous = Number.parseInt(await env.SNAPSHOT.get(key) || '', 10);
-  if (Number.isFinite(previous) && now - previous >= 0 && now - previous < DEEP_REFRESH_COOLDOWN_MS) {
-    return false;
+  try {
+    const result = await env.DB.prepare(`
+      INSERT INTO refresh_locks (name, claimed_at) VALUES ('manual-deep', ?1)
+      ON CONFLICT(name) DO UPDATE SET claimed_at = excluded.claimed_at
+      WHERE refresh_locks.claimed_at <= ?2
+    `).bind(now, now - DEEP_REFRESH_COOLDOWN_MS).run();
+    return Number(result?.meta?.changes || 0) > 0
+      ? { claimed: true, reason: null }
+      : { claimed: false, reason: 'DEEP_REFRESH_RATE_LIMITED' };
+  } catch (error) {
+    console.error(JSON.stringify({ event: 'deep_refresh_lock_failed', error: error?.message }));
+    return { claimed: false, reason: 'DEEP_REFRESH_LOCK_FAILED' };
   }
-  await env.SNAPSHOT.put(key, String(now), { expirationTtl: Math.ceil(DEEP_REFRESH_COOLDOWN_MS / 1000) });
-  return true;
 }
 
 async function handleRefresh(request, env, ctx) {
@@ -832,16 +879,22 @@ async function handleRefresh(request, env, ctx) {
 
   const refreshId = createRefreshId();
   const requestedAt = new Date().toISOString();
-  const dispatchDeep = await claimDeepRefreshSlot(env);
+  const deepClaim = await claimDeepRefreshSlot(env);
+  const dispatchDeep = deepClaim.claimed;
+  const deepUnavailable = [
+    'GITHUB_TOKEN_NOT_CONFIGURED',
+    'DEEP_REFRESH_LOCK_NOT_CONFIGURED',
+    'DEEP_REFRESH_LOCK_FAILED',
+  ].includes(deepClaim.reason);
 
   const state = {
     refreshId,
     requestedAt,
     fast: { status: 'running', generatedAt: null, error: null },
     deep: {
-      status: dispatchDeep ? 'queued' : (env.GITHUB_TOKEN ? 'skipped' : 'unavailable'),
+      status: dispatchDeep ? 'queued' : (deepUnavailable ? 'unavailable' : 'skipped'),
       generatedAt: null,
-      error: dispatchDeep ? null : (env.GITHUB_TOKEN ? 'DEEP_REFRESH_RATE_LIMITED' : 'GITHUB_TOKEN_NOT_CONFIGURED'),
+      error: deepClaim.reason,
     },
   };
 

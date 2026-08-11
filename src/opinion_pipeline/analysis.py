@@ -262,9 +262,19 @@ def build_keywords(
         )
 
     bucket_ms = KEYWORD_WINDOW / TREND_BUCKETS
+    burst_window = timedelta(hours=1)
+    burst_current_start = now - burst_window
+    baseline_coverage_start = burst_current_start - timedelta(days=7)
+    valid_history = [item.published_at for item in items if item.published_at <= now]
+    baseline_complete = bool(valid_history) and min(valid_history) <= baseline_coverage_start
     computed: list[dict] = []
     for definition in definitions:
         matched = [item for item in recent if _matches(item.search_text, definition["any_of"], definition["exclude"])]
+        historical_matched = [
+            item for item in items
+            if item.published_at <= now
+            and _matches(item.search_text, definition["any_of"], definition["exclude"])
+        ]
         source_counts: dict[str, int] = {}
         for item in matched:
             source_counts[item.source] = source_counts.get(item.source, 0) + 1
@@ -274,11 +284,16 @@ def build_keywords(
         for item in matched:
             index = min(TREND_BUCKETS - 1, int((item.published_at - window_start) / bucket_ms))
             buckets[index] += 1
-        current_sources = {
-            item.source for item in matched if item.published_at >= now - bucket_ms
-        }
+        current_items = [item for item in historical_matched if burst_current_start <= item.published_at <= now]
+        current_sources = {item.source for item in current_items}
+        baseline = []
+        for days_ago in range(1, 8):
+            end = now - timedelta(days=days_ago)
+            start = end - burst_window
+            baseline.append(sum(start <= item.published_at < end for item in historical_matched))
+        baseline_median = median(baseline)
         burst_score = robust_burst_score(
-            buckets[-1], buckets[-8:-1], source_count=len(current_sources)
+            len(current_items), baseline if baseline_complete else [], source_count=len(current_sources)
         )
         recent6 = sum(buckets[-6:])
         previous6 = sum(buckets[-12:-6])
@@ -296,6 +311,10 @@ def build_keywords(
                 "buckets": buckets,
                 "acceleration": acceleration,
                 "burstScore": burst_score,
+                "burstCurrent": len(current_items),
+                "burstSourceCount": len(current_sources),
+                "burstBaseline": baseline,
+                "burstBaselineMedian": baseline_median,
             }
         )
 
@@ -324,6 +343,10 @@ def build_keywords(
             "heat": heat,
             "mentions24h": total,
             "burstScore": entry["burstScore"],
+            "burstCurrent": entry["burstCurrent"],
+            "burstSourceCount": entry["burstSourceCount"],
+            "burstBaseline": entry["burstBaseline"],
+            "burstBaselineMedian": entry["burstBaselineMedian"],
             "components": {
                 "volume": _js_round(volume, 3),
                 "acceleration": _js_round(acceleration, 3),

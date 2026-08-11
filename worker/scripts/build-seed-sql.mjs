@@ -17,7 +17,7 @@ const statements = items
     ${quote(item.id)}, ${quote(item.source)}, ${quote(item.title)}, ${quote(item.excerpt || '')},
     ${Date.parse(item.publishedAt)}, ${quote(item.url)}, ${quote(item.sentiment ? JSON.stringify(item.sentiment) : null)},
     ${quote(JSON.stringify({ pipeline: 'pages-backfill', source: item.source }))}, ${ingestedAt}
-  ) ON CONFLICT(id) DO UPDATE SET
+  ) ON CONFLICT DO UPDATE SET
     source_id=excluded.source_id, title=excluded.title, excerpt=excluded.excerpt,
     published_at=excluded.published_at, canonical_url=excluded.canonical_url,
     sentiment_json=excluded.sentiment_json, provenance_json=excluded.provenance_json,

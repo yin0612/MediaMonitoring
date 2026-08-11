@@ -179,8 +179,16 @@ export interface Keyword {
   heat: number;
   /** 最近 24 小時命中新聞數。 */
   mentions24h: number;
-  /** 最近一個小時相對前七個小時的 median/MAD 升溫分數；低支持時為 null。 */
+  /** 最近一小時相對前七日同時段的 median/MAD 升溫分數；低支持或歷史不足時為 null。 */
   burstScore?: number | null;
+  /** 最近一小時的原始命中篇數。 */
+  burstCurrent?: number;
+  /** 最近一小時的命中來源數。 */
+  burstSourceCount?: number;
+  /** 前七日相同一小時時段的逐日命中數。 */
+  burstBaseline?: number[];
+  /** 前七日相同時段命中數的中位數。 */
+  burstBaselineMedian?: number;
   /** 熱度公式分解。 */
   components: HeatComponents;
   /** 各來源提及占比（0–1，加總約為 1）。 */

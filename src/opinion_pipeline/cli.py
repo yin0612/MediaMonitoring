@@ -356,15 +356,14 @@ def collect_sources(
 
 def source_status_record(
     run_: dict,
-    items: list,
     now: datetime,
     generated_at: str,
     restored_state: dict | None = None,
 ) -> dict:
-    """Build one source record from the declared 24-hour quality window."""
+    """Build quality evidence only from this fetch run's declared 24-hour window."""
     window_start = now - timedelta(hours=24)
     window_items = [
-        item for item in items
+        item for item in run_["items"]
         if item.source == run_["id"] and item.published_at >= window_start
     ]
     restored_state = restored_state or {}
@@ -474,7 +473,7 @@ def run(
             {
                 "sources": [
                     source_status_record(
-                        run_, items, now, generated_at, restored_states.get(run_["id"])
+                        run_, now, generated_at, restored_states.get(run_["id"])
                     )
                     for run_ in runs
                 ]

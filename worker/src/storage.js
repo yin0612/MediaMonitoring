@@ -78,8 +78,10 @@ export async function queryHistoricalCoverage(db, range, now = Date.now()) {
     WHERE published_at >= ?1 AND published_at <= ?2
   `).bind(cutoff, now + 5 * 60 * 1000).first();
   return {
-    actualFrom: Number.isFinite(Number(row?.actual_from)) ? new Date(Number(row.actual_from)).toISOString() : null,
-    actualTo: Number.isFinite(Number(row?.actual_to)) ? new Date(Number(row.actual_to)).toISOString() : null,
+    actualFrom: row?.actual_from != null && Number.isFinite(Number(row.actual_from))
+      ? new Date(Number(row.actual_from)).toISOString() : null,
+    actualTo: row?.actual_to != null && Number.isFinite(Number(row.actual_to))
+      ? new Date(Number(row.actual_to)).toISOString() : null,
     articleCount: Number(row?.article_count || 0),
   };
 }
@@ -93,7 +95,7 @@ export async function upsertArticles(db, articles, ingestedAt = Date.now()) {
       id, source_id, title, excerpt, published_at, canonical_url,
       sentiment_json, provenance_json, ingested_at
     ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
-    ON CONFLICT(id) DO UPDATE SET
+    ON CONFLICT DO UPDATE SET
       source_id = excluded.source_id,
       title = excluded.title,
       excerpt = excluded.excerpt,

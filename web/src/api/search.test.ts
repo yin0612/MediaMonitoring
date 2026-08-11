@@ -145,6 +145,23 @@ describe('static snapshot fallback', () => {
     expect(data.items).toHaveLength(1);
   });
 
+  it('marks an incomplete 30-day static archive with an explicit coverage window', () => {
+    const now = Date.parse('2026-07-22T12:00:00Z');
+    const data = buildStaticSearchData([{
+      id: '1', source: 'cna', title: '台積電十日前新聞', excerpt: '',
+      publishedAt: '2026-07-12T12:00:00Z', url: 'https://example.com/1', sentiment: null,
+    }], '台積電', '30d', now);
+
+    expect(data.status).toBe('stale');
+    expect(data.coverage).toMatchObject({
+      requestedFrom: '2026-06-22T12:00:00.000Z',
+      requestedTo: '2026-07-22T12:00:00.000Z',
+      actualFrom: '2026-07-12T12:00:00.000Z',
+      actualTo: '2026-07-12T12:00:00.000Z',
+      complete: false,
+    });
+  });
+
   it('returns zero heat when no article matches', () => {
     const data = buildStaticSearchData([], '不存在詞', '24h', Date.parse('2026-07-22T12:00:00Z'));
     expect(data.metrics.mentions).toBe(0);

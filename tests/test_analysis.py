@@ -77,6 +77,25 @@ def test_keywords_only_count_the_last_24_hours():
     assert tsmc["mentions24h"] == 1
 
 
+def test_keyword_burst_uses_seven_prior_days_at_the_same_hour_and_exposes_evidence():
+    items = [
+        *[item(source, f"台積電當期{index}", 0.5) for index, source in enumerate(["cna", "ltn", "udn", "tvbs", "pts"])],
+        *[item("cna", f"台積電基線{day}", day * 24 + 0.5) for day in range(1, 8)],
+        item("cna", "歷史涵蓋證據", 7 * 24 + 1.5),
+    ]
+
+    tsmc = next(
+        keyword for keyword in build_keywords(items, WATCH_CONFIG, NOW, enabled_source_count=ENABLED_SOURCES)
+        if keyword["term"] == "台積電"
+    )
+
+    assert tsmc["burstCurrent"] == 5
+    assert tsmc["burstSourceCount"] == 5
+    assert tsmc["burstBaseline"] == [1, 1, 1, 1, 1, 1, 1]
+    assert tsmc["burstBaselineMedian"] == 1
+    assert tsmc["burstScore"] == 4
+
+
 def test_auto_terms_prefer_longer_ngrams_and_skip_stopwords_and_watch_terms():
     items = [
         item("tvbs", "快訊 電價調漲方案出爐", 1),

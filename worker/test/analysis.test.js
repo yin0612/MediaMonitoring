@@ -60,6 +60,22 @@ test('keywords only count the last 24 hours', () => {
   assert.equal(keywords.find((k) => k.term === '台積電').mentions24h, 1);
 });
 
+test('keyword burst uses seven prior days at the same hour and exposes evidence', () => {
+  const items = [
+    ...['cna', 'ltn', 'udn', 'tvbs', 'pts'].map((source, index) => item(source, `台積電當期${index}`, 0.5)),
+    ...Array.from({ length: 7 }, (_, index) => item('cna', `台積電基線${index + 1}`, (index + 1) * 24 + 0.5)),
+    item('cna', '歷史涵蓋證據', 7 * 24 + 1.5),
+  ];
+
+  const tsmc = buildKeywords(items, NOW, 24, WATCH).find((keyword) => keyword.term === '台積電');
+
+  assert.equal(tsmc.burstCurrent, 5);
+  assert.equal(tsmc.burstSourceCount, 5);
+  assert.deepEqual(tsmc.burstBaseline, [1, 1, 1, 1, 1, 1, 1]);
+  assert.equal(tsmc.burstBaselineMedian, 1);
+  assert.equal(tsmc.burstScore, 4);
+});
+
 test('auto terms skip stopwords, single-source fragments and watch terms', () => {
   const items = [
     item('tvbs', '快訊 電價調漲方案出爐', 1),

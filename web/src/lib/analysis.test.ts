@@ -33,18 +33,29 @@ describe('transparent analysis statistics', () => {
     expect(stats.rising.some((term) => term.term === '先進製程')).toBe(false);
   });
 
-  it('requires five current documents, three sources and seven baseline buckets for rising terms', () => {
+  it('uses the same one-hour slot on seven prior days and exposes the evidence', () => {
     const items = [
-      article('先進製程基準', '2026-07-22T00:00:00Z', 'cna'),
-      article('先進製程展望一', '2026-07-22T07:30:00Z', 'cna'),
-      article('先進製程展望二', '2026-07-22T07:40:00Z', 'udn'),
-      article('先進製程展望三', '2026-07-22T07:50:00Z', 'ltn'),
-      article('先進製程展望四', '2026-07-22T08:00:00Z', 'cna'),
-      article('先進製程展望五', '2026-07-22T08:05:00Z', 'udn'),
+      ...Array.from({ length: 7 }, (_, index) => article(
+        `先進製程基準${index + 1}`,
+        new Date(Date.parse('2026-07-22T12:00:00Z') - (index + 1) * 24 * 60 * 60 * 1000 - 30 * 60 * 1000).toISOString(),
+        'cna',
+      )),
+      article('歷史涵蓋證據', '2026-07-15T10:00:00Z', 'cna'),
+      article('先進製程展望一', '2026-07-22T11:10:00Z', 'cna'),
+      article('先進製程展望二', '2026-07-22T11:20:00Z', 'udn'),
+      article('先進製程展望三', '2026-07-22T11:30:00Z', 'ltn'),
+      article('先進製程展望四', '2026-07-22T11:40:00Z', 'cna'),
+      article('先進製程展望五', '2026-07-22T11:50:00Z', 'udn'),
     ];
-    const stats = extractTermStats(items, Date.parse('2026-07-22T04:00:00Z'));
+    const stats = extractTermStats(items, Date.parse('2026-07-22T12:00:00Z'));
     const rising = stats.rising.find((term) => term.term === '先進製程');
-    expect(rising?.change).toBe(5);
-    expect(rising?.burstScore).toBe(5);
+    expect(rising).toMatchObject({
+      current: 5,
+      sourceCount: 3,
+      baseline: [1, 1, 1, 1, 1, 1, 1],
+      baselineMedian: 1,
+      change: 4,
+      burstScore: 4,
+    });
   });
 });

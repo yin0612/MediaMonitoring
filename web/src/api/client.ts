@@ -167,6 +167,7 @@ async function fetchEnvelope<T>(name: string, url: string, cache: RequestCache, 
  */
 const DATA_CACHE_TTL_MS = 45_000;
 const WORKER_DEADLINE_MS = 2_000;
+const PAGES_DEADLINE_MS = 4_000;
 const dataCache = new Map<string, { expiresAt: number; value: Envelope<unknown> }>();
 const inFlight = new Map<string, Promise<Envelope<unknown>>>();
 
@@ -247,7 +248,11 @@ async function loadData<T>(name: string, bypassCache: boolean): Promise<Envelope
     ? fetchEnvelope<T>(name, workerUrl, 'no-store', workerController.signal)
         .finally(() => { if (workerTimer !== null) window.clearTimeout(workerTimer); })
     : Promise.resolve<Envelope<T> | null>(null);
-  const pagesRequest = fetchEnvelope<T>(name, pagesUrl(name, bypassCache), 'no-cache');
+  const pagesController = new AbortController();
+  const pagesTimer = window.setTimeout(() => pagesController.abort(), PAGES_DEADLINE_MS);
+  const pagesRequest = fetchEnvelope<T>(
+    name, pagesUrl(name, bypassCache), 'no-cache', pagesController.signal,
+  ).finally(() => window.clearTimeout(pagesTimer));
   const [workerResult, pagesResult] = await Promise.allSettled([workerRequest, pagesRequest]);
   const workerEnv = workerResult.status === 'fulfilled' ? workerResult.value : null;
   const pagesEnv = pagesResult.status === 'fulfilled' ? pagesResult.value : null;

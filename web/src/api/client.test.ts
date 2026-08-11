@@ -147,4 +147,28 @@ describe('data arbitration and request coordination', () => {
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
   });
+
+  it('returns a healthy Worker snapshot when Pages exceeds its deadline', async () => {
+    vi.useFakeTimers();
+    __resetDataCacheForTests();
+    vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
+    vi.stubGlobal('fetch', vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes('worker.example')) {
+        return Promise.resolve(Response.json({
+          schemaVersion: '2.1.0', generatedAt: '2026-08-11T12:00:00Z', data: { marker: 'worker' },
+        }));
+      }
+      return new Promise<Response>((_, reject) => {
+        init?.signal?.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError')));
+      });
+    }));
+
+    const pending = fetchData<{ marker: string }>('keywords', { bypassCache: true });
+    await vi.advanceTimersByTimeAsync(4_000);
+    await expect(pending).resolves.toMatchObject({ data: { marker: 'worker' } });
+
+    vi.useRealTimers();
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
 });

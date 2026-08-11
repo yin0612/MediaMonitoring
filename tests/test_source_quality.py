@@ -34,11 +34,30 @@ def test_source_record_excludes_retained_articles_outside_its_24_hour_window():
     run = {
         "id": "cna", "name": "中央社", "ok": True, "accessMode": "official-rss",
         "latencyMs": 50, "crawlAttempted": True, "errorCode": None, "dropped": {},
+        "items": [article(2), article(30, "")],
     }
     value = source_status_record(
-        run, [article(2), article(30, "")], NOW, "2026-08-11T12:00:00Z"
+        run, NOW, "2026-08-11T12:00:00Z"
     )
     assert value["windowHours"] == 24
     assert value["itemCount"] == 1
     assert value["officialItemCount"] == 1
     assert value["excerptRate"] == 1.0
+
+
+def test_source_record_never_attributes_restored_fallback_items_to_current_official_run():
+    run = {
+        "id": "cna", "name": "中央社", "ok": True, "accessMode": "official-rss",
+        "latencyMs": 50, "crawlAttempted": False, "errorCode": None, "dropped": {},
+        "items": [article(2)],
+    }
+    restored_google_item = article(3)
+
+    value = source_status_record(
+        run, NOW, "2026-08-11T12:00:00Z", {"accessMode": "google-news"}
+    )
+
+    assert restored_google_item not in run["items"]
+    assert value["accessMode"] == "official-rss"
+    assert value["officialItemCount"] == 1
+    assert value["fallbackItemCount"] == 0

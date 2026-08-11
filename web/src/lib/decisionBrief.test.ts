@@ -21,6 +21,11 @@ const baseInput: HomeInputs = {
       kind: 'manual',
       heat: 88,
       mentions24h: 24,
+      burstCurrent: 8,
+      burstSourceCount: 4,
+      burstBaseline: [1, 1, 2, 1, 2, 1, 1],
+      burstBaselineMedian: 1,
+      burstScore: 7,
       components: {
         volume: 0.9,
         acceleration: 0.8,
@@ -68,12 +73,18 @@ describe('buildDecisionBrief', () => {
       headline: '「台積電」議題近期聲量升溫',
       primaryAction: { to: '/search?q=%E5%8F%B0%E7%A9%8D%E9%9B%BB', label: '即時搜尋「台積電」新聞' },
     });
-    expect(result.summary).toContain('近 90 分鐘');
+    expect(result.summary).toContain('前 7 日同時段中位數 1');
     expect(result.signals.map((signal) => signal.kind)).toEqual(['momentum', 'topic', 'coverage']);
   });
 
   it('falls back to the hottest keyword when nothing is rising', () => {
-    const result = buildDecisionBrief({ ...baseInput, recent: { items: [] } }, now);
+    const result = buildDecisionBrief({
+      ...baseInput,
+      keywords: {
+        keywords: baseInput.keywords.keywords.map((keyword) => ({ ...keyword, burstScore: null })),
+      },
+      recent: { items: [] },
+    }, now);
 
     expect(result.headline).toBe('「台積電」為目前最高熱度關鍵字');
     expect(result.summary).toContain('熱度 88');
