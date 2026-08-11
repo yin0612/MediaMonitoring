@@ -50,6 +50,14 @@ a { color: #2456cf; font-weight: 800; }
 .machine-suggestion { background: #fffdf5; border-color: #f0d993; }
 .machine-suggestion pre { background: #172033; border-radius: 10px; color: #eaf1ff; margin: 16px 0 0; overflow: auto; padding: 14px; }
 .annotation-form { display: grid; gap: 20px; }
+.quick-panel { background: #f7faff; border: 1px solid #cfe0ff; border-radius: 12px; display: grid; gap: 12px; padding: 16px; }
+.quick-panel h3 { font-size: .95rem; margin: 0; }
+.quick-row { align-items: flex-start; display: grid; gap: 8px; grid-template-columns: 90px minmax(0, 1fr); }
+.quick-row > span { color: #5c697d; font-size: .85rem; font-weight: 800; padding-top: 8px; }
+.quick-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.quick-choice { background: #fff; border: 1px solid #b9c5d7; color: #24344e; padding: 7px 10px; }
+.quick-choice:hover:not(:disabled), .quick-choice[aria-pressed="true"] { background: #356cf5; border-color: #356cf5; color: #fff; }
+.entity-row { margin-top: -8px; }
 fieldset { border: 1px solid #dce3ef; border-radius: 10px; margin: 0; padding: 14px; }
 legend { font-weight: 800; padding: 0 5px; }
 .choices { display: flex; flex-wrap: wrap; gap: 10px 16px; }
@@ -61,4 +69,6 @@ legend { font-weight: 800; padding: 0 5px; }
   .sidebar { position: static; }
   .file-grid, .field-grid { grid-template-columns: 1fr; }
   .section-heading { align-items: stretch; flex-direction: column; }
+  .quick-row { grid-template-columns: 1fr; }
+  .quick-row > span { padding-top: 0; }
 }
