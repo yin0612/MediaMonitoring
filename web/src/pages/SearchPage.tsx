@@ -12,6 +12,9 @@ import type { Envelope, Meta, SearchData, SearchRange, TrendItem, TrendsData } f
 import { DATA_REFRESH_EVENT } from '../api/refreshCoordinator';
 import { useData } from '../api/useData';
 import { isArchive30dReady } from '../lib/coverage';
+import { SOURCE_META } from '../lib/sources';
+
+const SOURCE_COUNT = Object.keys(SOURCE_META).length;
 
 const RANGES: { value: SearchRange; label: string }[] = [
   { value: '1h', label: '1 小時' },
@@ -307,11 +310,11 @@ export function SearchPage() {
             </div>
             {trends && <a href={trends.data.sourceUrl} target="_blank" rel="noreferrer noopener">開啟 Google Trends RSS</a>}
           </div>
-          <Card title="Google Trends 相關新聞" hint={trendNewsFallback ? 'Trends 未附新聞，已重用 35 家媒體即時搜尋結果；不重複計入熱度' : '由 Google Trends RSS 提供；不納入下方 35 家媒體熱度統計'}>
+          <Card title="Google Trends 相關新聞" hint={trendNewsFallback ? `Trends 未附新聞，已重用 ${SOURCE_COUNT} 家媒體即時搜尋結果；不重複計入熱度` : `由 Google Trends RSS 提供；不納入下方 ${SOURCE_COUNT} 家媒體熱度統計`}>
             {trendNewsLoading ? (
               <LoadingState label="正在即時搜尋相關新聞…" />
             ) : selectedTrend.news.length === 0 ? (
-              <EmptyState title="Google Trends 未附相關新聞" desc="仍可查看下方 35 家媒體的關鍵字搜尋結果。" />
+              <EmptyState title="Google Trends 未附相關新聞" desc={`仍可查看下方 ${SOURCE_COUNT} 家媒體的關鍵字搜尋結果。`} />
             ) : (
               <div className="trend-news-list">
                 {selectedTrend.news.map((news) => (

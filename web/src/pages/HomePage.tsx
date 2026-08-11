@@ -90,7 +90,7 @@ export function HomePage() {
               {(eventData.events.length ? eventData.events.slice(0, 4) : snapshot.topTopics).map((topic) => (
                 <Link className="home-topic-row" to="/topics" key={topic.id}>
                   {'representativeTitle' in topic
-                    ? <span><strong>{topic.representativeTitle}</strong><small>{topic.articleCount} 篇報導 · {topic.sourceCount} 個來源</small></span>
+                    ? <span><strong>{topic.representativeTitle}</strong><small>{topic.articleCount} 篇報導 · {topic.sourceCount} 個來源{topic.sourceConcentration !== undefined ? ` · 集中度 ${topic.sourceConcentration.toFixed(3)}` : ''}</small></span>
                     : <span><strong>{topic.label}</strong><small>{topic.size} 篇 · {topic.terms.slice(0, 3).join('、')}</small></span>}
                 </Link>
               ))}

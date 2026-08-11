@@ -121,7 +121,7 @@ const MAX_SEARCH_ITEMS = 100;
  * 因此 `metrics.mentions` 會誠實反映命中總數。兩端一致是為了讓使用者不會因為
  * Worker 是否可用而看到不同數字。
  *
- * 仍存在的取捨：volume = 命中數 / 來源數，命中達 37 篇即飽和為 1.0，
+ * 仍存在的取捨：volume = 命中數 / 啟用來源數，命中達到來源數即飽和為 1.0，
  * 熱門查詢之間的熱度區辨力有限。要改這個定義屬產品決策。
  */
 export function buildStaticSearchData(

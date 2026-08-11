@@ -782,7 +782,17 @@ async function handleHealth(request, env) {
     turnstile: { configured: Boolean(env.TURNSTILE_SECRET_KEY) },
   };
   if (!env.SNAPSHOT) {
-    return json(request, env, envelope({ status: 'error', dependencies }), 503, 30);
+    return json(request, env, envelope({
+      status: 'error',
+      dependencies,
+      checks: {
+        kv: 'missing',
+        sourceHealthy: 0,
+        sourceTotal: 0,
+        lastDeepAgeSeconds: null,
+        lastDispatch: dependencies.githubDispatch.configured ? 'configured' : 'not_configured',
+      },
+    }), 503, 30);
   }
 
   const snapshot = await readSnapshot(env);
@@ -793,14 +803,27 @@ async function handleHealth(request, env) {
     ? Math.max(0, Math.round((Date.now() - timestamp) / 1000))
     : null;
   dependencies.snapshot.sourceStatus = snapshot?.files?.meta?.data?.status || null;
+  const sourceRows = snapshot?.files?.sources?.data?.sources;
+  const sourceList = Array.isArray(sourceRows) ? sourceRows : [];
+  const lastDeepAt = snapshot?.files?.meta?.data?.lastDeepAt;
+  const lastDeepTimestamp = Date.parse(String(lastDeepAt || ''));
+  const checks = {
+    kv: dependencies.snapshot.available ? 'ok' : 'invalid_snapshot',
+    sourceHealthy: sourceList.filter((source) => source?.status === 'ok').length,
+    sourceTotal: sourceList.length,
+    lastDeepAgeSeconds: Number.isFinite(lastDeepTimestamp)
+      ? Math.max(0, Math.round((Date.now() - lastDeepTimestamp) / 1000))
+      : null,
+    lastDispatch: dependencies.githubDispatch.configured ? 'configured' : 'not_configured',
+  };
   const stale = !dependencies.snapshot.available
     || dependencies.snapshot.ageSeconds * 1000 > HEALTH_MAX_SNAPSHOT_AGE_MS;
-  if (stale) return json(request, env, envelope({ status: 'error', dependencies }), 503, 30);
+  if (stale) return json(request, env, envelope({ status: 'error', dependencies, checks }), 503, 30);
 
   const degraded = dependencies.snapshot.sourceStatus !== 'ok'
     || !dependencies.githubDispatch.configured
     || !dependencies.turnstile.configured;
-  return json(request, env, envelope({ status: degraded ? 'degraded' : 'ok', dependencies }), 200, 30);
+  return json(request, env, envelope({ status: degraded ? 'degraded' : 'ok', dependencies, checks }), 200, 30);
 }
 
 async function readRefreshPart(env, refreshId, part) {

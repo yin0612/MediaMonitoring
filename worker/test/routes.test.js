@@ -17,7 +17,10 @@ test('health endpoint returns schema v2 and localhost CORS', async () => {
   const generatedAt = new Date().toISOString();
   await env.SNAPSHOT.put('snapshot', JSON.stringify({
     generatedAt,
-    files: { meta: { generatedAt, data: { status: 'ok', lastFastAt: generatedAt } } },
+    files: {
+      meta: { generatedAt, data: { status: 'ok', lastFastAt: generatedAt, lastDeepAt: generatedAt } },
+      sources: { data: { sources: [{ status: 'ok' }, { status: 'degraded' }] } },
+    },
   }));
   const request = new Request('https://worker.example/api/health', {
     headers: { Origin: 'http://localhost:5173' },
@@ -36,6 +39,11 @@ test('health endpoint returns schema v2 and localhost CORS', async () => {
   assert.equal(body.data.dependencies.snapshot.available, true);
   assert.equal(body.data.dependencies.githubDispatch.configured, true);
   assert.equal(body.data.dependencies.turnstile.configured, true);
+  assert.equal(body.data.checks.kv, 'ok');
+  assert.equal(body.data.checks.sourceHealthy, 1);
+  assert.equal(body.data.checks.sourceTotal, 2);
+  assert.equal(body.data.checks.lastDispatch, 'configured');
+  assert.equal(body.data.checks.lastDeepAgeSeconds, 0);
 });
 
 test('health endpoint returns 503 when snapshot storage is missing or stale', async () => {

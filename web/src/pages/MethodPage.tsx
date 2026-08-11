@@ -120,7 +120,7 @@ export function MethodPage() {
       <div style={{ marginTop: 16 }}>
         <div id="formula" className="method-anchor" />
         <Card title="熱度計算方法">
-          <p className="small" style={{ marginTop: 0 }}>每次快照（約每 15 分鐘，best effort）由近 24 小時新聞重算，固定落在 0–100：</p>
+          <p className="small" style={{ marginTop: 0 }}>每次快照（約每 {m?.coverage.deepScheduleMinutes ?? 15} 分鐘，best effort）由近 24 小時新聞重算，固定落在 0–100：</p>
           <div
             style={{
               background: 'var(--page)',

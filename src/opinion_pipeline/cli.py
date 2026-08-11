@@ -24,7 +24,7 @@ from .archive import coverage_window, dedupe_items, item_to_public, public_to_it
 from .connectors.google_news import fetch_google_news
 from .connectors.html_listing import crawl_due, fetch_listing_source
 from .connectors.rss import _fetch_bytes, fetch_source
-from .sentiment import SentimentLexicon, aggregate, classify, load_sentiment_lexicon
+from .sentiment import SentimentLexicon, aggregate, build_target_stances, classify, load_sentiment_lexicon
 from .connectors.trends import fetch_realtime_web_trends, parse_trends_feed
 from .models import SourceResult
 from .quality import assess_source_quality
@@ -123,6 +123,22 @@ def _topic_breakdown(topic_id: str, terms: tuple[str, ...], matched: list) -> tu
         )[:3]
         preferred = [item for item in event_items if not _is_ticker_noise(item)] or event_items
         preferred = sorted(preferred, key=lambda item: item.published_at, reverse=True)
+        source_counts = Counter(item.source for item in event_items)
+        source_timeline: dict[str, list[dict]] = {}
+        for source in sorted(source_counts):
+            by_source_day = Counter(
+                item.published_at.astimezone(timezone.utc).date().isoformat()
+                for item in event_items
+                if item.source == source
+            )
+            source_timeline[source] = [
+                {"date": source_date, "mentions": by_source_day[source_date]}
+                for source_date in sorted(by_source_day)
+            ]
+        source_concentration = round(
+            sum((count / len(event_items)) ** 2 for count in source_counts.values()),
+            3,
+        )
         events.append(
             {
                 "id": f"{topic_id}-{date}-{terms.index(anchor) + 1}",
@@ -130,6 +146,9 @@ def _topic_breakdown(topic_id: str, terms: tuple[str, ...], matched: list) -> tu
                 "label": anchor,
                 "size": len(event_items),
                 "terms": event_terms,
+                "sourceCounts": dict(sorted(source_counts.items())),
+                "sourceConcentration": source_concentration,
+                "sourceTimeline": source_timeline,
                 "articles": [
                     {
                         "title": item.title,
@@ -145,7 +164,11 @@ def _topic_breakdown(topic_id: str, terms: tuple[str, ...], matched: list) -> tu
     return ranked_terms, timeline, events[:8]
 
 
-def build_topics(items: list, lexicon: SentimentLexicon | None = None) -> list[dict]:
+def build_topics(
+    items: list,
+    lexicon: SentimentLexicon | None = None,
+    entity_lexicon: list[dict] | None = None,
+) -> list[dict]:
     """Build transparent keyword groups from real archive metadata only."""
     lexicon = lexicon or SentimentLexicon()
     topics = []
@@ -178,28 +201,29 @@ def build_topics(items: list, lexicon: SentimentLexicon | None = None) -> list[d
                     }
                 )
 
-        topics.append(
-            {
-                "id": topic_id,
-                "label": label,
-                "terms": ranked_terms,
-                "size": len(matched),
-                "sentiment": aggregate([verdict["label"] for _, verdict in judged]),
-                "evidence": evidence,
-                "timeline": timeline,
-                "events": events,
-                "summarySentences": summaries,
-                "articles": [
-                    {
-                        "title": item.title,
-                        "source": item.source,
-                        "url": item.url,
-                        "publishedAt": item.published_at.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
-                    }
-                    for item in preferred[:5]
-                ],
-            }
-        )
+        topic = {
+            "id": topic_id,
+            "label": label,
+            "terms": ranked_terms,
+            "size": len(matched),
+            "sentiment": aggregate([verdict["label"] for _, verdict in judged]),
+            "evidence": evidence,
+            "timeline": timeline,
+            "events": events,
+            "summarySentences": summaries,
+            "articles": [
+                {
+                    "title": item.title,
+                    "source": item.source,
+                    "url": item.url,
+                    "publishedAt": item.published_at.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+                }
+                for item in preferred[:5]
+            ],
+        }
+        if entity_lexicon is not None:
+            topic["targetStances"] = build_target_stances(matched, entity_lexicon, lexicon)
+        topics.append(topic)
     return topics
 
 
@@ -471,7 +495,8 @@ def run(
         output_dir / "recent.json",
         envelope({"items": [item_to_public(entry, sentiment_lexicon) for entry in recent_items]}, generated_at),
     )
-    topics = build_topics(items, sentiment_lexicon)
+    entity_lexicon = load_entity_lexicon(entities_config_path)
+    topics = build_topics(items, sentiment_lexicon, entity_lexicon)
     write_json(
         output_dir / "topics.json",
         envelope({"stale": stale, "experimental": True, "topics": topics}, generated_at),

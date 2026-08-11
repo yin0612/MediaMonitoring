@@ -69,6 +69,7 @@ export function buildDecisionBrief(
   const topKeyword = activeKeywords[0] ?? null;
   const topTopic = activeTopics[0] ?? null;
   const coverage = sourceCoverage(input);
+  const configuredSourceCount = input.meta?.coverage.sourceCount ?? coverage.enabled;
   const requiredDataAvailable = Object.values(availability).every(Boolean);
   const confidence = confidenceOf(input, coverage.enabled, coverage.healthy, requiredDataAvailable);
 
@@ -136,7 +137,7 @@ export function buildDecisionBrief(
       ? `${topKeyword.term}目前熱度 ${Math.round(topKeyword.heat)}，24 小時命中 ${topKeyword.mentions24h} 篇。`
       : topTopic
         ? `${topTopic.label}目前累積 ${topTopic.size} 篇相關新聞。`
-        : '系統正在持續監測 37 家新聞媒體。資料快照更新後，此處將自動呈現最新議題。';
+        : `系統正在持續監測 ${configuredSourceCount} 家新聞媒體。資料快照更新後，此處將自動呈現最新議題。`;
 
   const activeTerm = rising ? rising.term : topKeyword?.term || '';
   const primaryAction = activeTerm
