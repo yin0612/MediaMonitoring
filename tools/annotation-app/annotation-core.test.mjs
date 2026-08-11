@@ -4,6 +4,7 @@ import test from 'node:test';
 import {
   machineSuggestionFor,
   parseJsonl,
+  safeArticleUrl,
   serializeJsonl,
   updateAnnotation,
   validateRows,
@@ -44,6 +45,14 @@ test('parses and serializes JSONL without changing article metadata', () => {
   const reparsed = parseJsonl(serializeJsonl(rows));
 
   assert.deepEqual(reparsed, [sampleRow]);
+});
+
+test('accepts only HTTP(S) article links from imported files', () => {
+  assert.equal(safeArticleUrl('https://example.com/article'), 'https://example.com/article');
+  assert.equal(safeArticleUrl('http://example.com/article'), 'http://example.com/article');
+  assert.equal(safeArticleUrl('javascript:alert(1)'), null);
+  assert.equal(safeArticleUrl('data:text/html,unsafe'), null);
+  assert.equal(safeArticleUrl('not a URL'), null);
 });
 
 test('writes consensus labels immutably and preserves source metadata', () => {

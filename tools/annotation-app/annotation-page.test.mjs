@@ -18,6 +18,7 @@ test('local annotation page exposes local imports, reviewer modes, and JSONL dow
   assert.match(html, /Machine suggestions are references only/);
   assert.match(app, /updateAnnotation/);
   assert.match(app, /machineSuggestionFor/);
+  assert.match(app, /safeArticleUrl/);
   assert.match(app, /URL\.createObjectURL/);
   assert.match(css, /\.machine-suggestion/);
 });

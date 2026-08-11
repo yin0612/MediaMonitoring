@@ -2,6 +2,7 @@ import {
   labelsFor,
   machineSuggestionFor,
   parseJsonl,
+  safeArticleUrl,
   serializeJsonl,
   updateAnnotation,
   validateRows,
@@ -103,8 +104,9 @@ function render() {
   byId('article-time').textContent = row.publishedAt || '';
   byId('article-title').textContent = row.title || '（無標題）';
   byId('article-excerpt').textContent = row.excerpt || '（無摘要；資料不足時請使用 uncertain，勿猜測。）';
-  byId('article-link').href = row.url || '#';
-  byId('article-link').hidden = !row.url;
+  const articleUrl = safeArticleUrl(row.url);
+  byId('article-link').href = articleUrl || '#';
+  byId('article-link').hidden = !articleUrl;
   showLabels(labelsFor(row, state.mode));
   showMachineSuggestion(row);
   byId('previous-row').disabled = state.index === 0;

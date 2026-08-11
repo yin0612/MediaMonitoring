@@ -48,6 +48,16 @@ export function parseJsonl(text) {
   });
 }
 
+export function safeArticleUrl(value) {
+  if (typeof value !== 'string' || !value.trim()) return null;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : null;
+  } catch {
+    return null;
+  }
+}
+
 export function serializeJsonl(rows) {
   if (!Array.isArray(rows)) throw new TypeError('Rows must be an array.');
   return rows.map((row) => JSON.stringify(row)).join('\n') + (rows.length ? '\n' : '');
