@@ -25,11 +25,22 @@ def coverage_window(items: list, now: datetime, *, days: int = 30) -> dict[str, 
     actual_from = timestamps[0] if timestamps else None
     actual_to = timestamps[-1] if timestamps else None
     requested_from = now - timedelta(days=days)
-    complete = bool(timestamps) and actual_from <= requested_from + timedelta(days=1) and actual_to >= now - timedelta(days=1)
+    covered_dates = {
+        value.date()
+        for value in timestamps
+        if requested_from <= value <= now
+    }
+    complete = (
+        bool(timestamps)
+        and len(covered_dates) >= days
+        and actual_from <= requested_from + timedelta(days=1)
+        and actual_to >= now - timedelta(days=1)
+    )
     iso = lambda value: value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z") if value else None
     return {
         "actualFrom": iso(actual_from),
         "actualTo": iso(actual_to),
+        "coveredDays": len(covered_dates),
         "complete": complete,
     }
 

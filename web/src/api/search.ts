@@ -136,6 +136,9 @@ export function buildStaticSearchData(
     .filter((timestamp) => Number.isFinite(timestamp) && timestamp >= cutoff && timestamp <= now + 5 * 60 * 1000);
   const actualFromMs = coverageTimestamps.length ? Math.min(...coverageTimestamps) : Number.NaN;
   const actualToMs = coverageTimestamps.length ? Math.max(...coverageTimestamps) : Number.NaN;
+  const coveredDays = new Set(
+    coverageTimestamps.map((timestamp) => new Date(timestamp).toISOString().slice(0, 10)),
+  ).size;
   const historicalRange = range === '7d' || range === '30d';
   const coverageComplete = historicalRange
     && Number.isFinite(actualFromMs)
@@ -198,6 +201,7 @@ export function buildStaticSearchData(
         actualTo: Number.isFinite(actualToMs) ? new Date(actualToMs).toISOString() : null,
         complete: coverageComplete,
         articleCount: allItems.length,
+        coveredDays,
       },
     } : {}),
   };

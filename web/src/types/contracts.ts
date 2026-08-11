@@ -103,6 +103,8 @@ export interface Meta {
     /** Maximum number of recent items exposed by this pipeline. */
     recentCap?: number;
     sourceCount: number;
+    /** Number of distinct UTC calendar days represented by the archive. */
+    coveredDays?: number;
     /** 真實 archive 是否已覆蓋宣告的完整保留窗。 */
     complete?: boolean;
     actualFrom?: string | null;
@@ -420,6 +422,7 @@ export interface SearchData {
     actualTo: string | null;
     complete?: boolean;
     articleCount?: number;
+    coveredDays?: number;
   };
 }
 

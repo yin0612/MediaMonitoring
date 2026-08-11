@@ -1468,6 +1468,20 @@ test('scheduled build writes a snapshot that /api/data serves per file', async (
         data: { stale: false, experimental: true, topics: [] },
       });
     }
+    if (url.endsWith('/data/meta.json')) {
+      return Response.json({
+        schemaVersion: '2.1.0',
+        generatedAt: new Date().toISOString(),
+        data: {
+          coverage: {
+            complete: true,
+            coveredDays: 30,
+            actualFrom: new Date(Date.now() - 29 * 24 * 60 * 60 * 1000).toISOString(),
+            actualTo: new Date().toISOString(),
+          },
+        },
+      });
+    }
     if (hasHost(url, 'news.google.com') && new URL(url).pathname === '/rss/search') {
       const domain = new URL(url).searchParams.get('q').match(/site:(\S+)/)[1];
       return new Response(`<rss><channel><item><guid>g-${domain}</guid>
@@ -1495,6 +1509,7 @@ test('scheduled build writes a snapshot that /api/data serves per file', async (
       deepScheduleMinutes: meta.data.coverage.deepScheduleMinutes,
       recentCap: meta.data.coverage.recentCap,
     }, { fastScheduleMinutes: 5, deepScheduleMinutes: 15, recentCap: 120 });
+    assert.equal(meta.data.coverage.coveredDays, 30);
 
     const sources = await (await worker.fetch(new Request('https://worker.example/api/data?name=sources'), env)).json();
     assert.equal(sources.data.sources.length, 37);
@@ -1582,6 +1597,34 @@ test('scheduled marks reused deep analysis stale when Pages fetch fails', async 
     const keywords = await (await worker.fetch(new Request('https://worker.example/api/data?name=keywords'), env)).json();
     assert.equal(keywords.data.keywords[0].id, 'last-good');
     assert.equal(keywords.data.stale, true);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('scheduled metadata does not retain a previous complete archive claim after a sparse refresh', async () => {
+  const originalFetch = globalThis.fetch;
+  let complete = true;
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.endsWith('/data/recent.json')) return Response.json({ data: { items: [] } });
+    if (url.endsWith('/data/meta.json')) {
+      return Response.json({
+        schemaVersion: '2.1.0',
+        generatedAt: new Date().toISOString(),
+        data: { coverage: { complete, coveredDays: complete ? 30 : 4 } },
+      });
+    }
+    return new Response('<rss><channel></channel></rss>');
+  };
+  const env = { SNAPSHOT: memoryKv() };
+  try {
+    await runScheduled(env);
+    complete = false;
+    await runScheduled(env);
+    const meta = await (await worker.fetch(new Request('https://worker.example/api/data?name=meta'), env)).json();
+    assert.equal(meta.data.coverage.complete, false);
+    assert.equal(meta.data.coverage.coveredDays, 4);
   } finally {
     globalThis.fetch = originalFetch;
   }
