@@ -94,8 +94,14 @@ export interface Meta {
     keywordWindowHours: number;
     /** 趨勢 bucket 長度（分鐘）。 */
     trendBucketMinutes: number;
+    /** Cloudflare fast cron interval; optional for legacy snapshots. */
+    fastScheduleMinutes?: number;
+    /** GitHub deep cron interval; optional for legacy snapshots. */
+    deepScheduleMinutes?: number;
     /** 快照保留天數。 */
     archiveDays: number;
+    /** Maximum number of recent items exposed by this pipeline. */
+    recentCap?: number;
     sourceCount: number;
     /** 真實 archive 是否已覆蓋宣告的完整保留窗。 */
     complete?: boolean;

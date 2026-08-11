@@ -29,3 +29,17 @@ Every row is marked `provenance.kind=machine-draft` and
 `humanVerified=false`. Keep the official `annotations` fields in
 `annotation-candidates.jsonl` empty until a human annotator completes and
 reviews them. Do not tune rules or thresholds against the `test` split.
+
+## Evaluation (after human labeling)
+
+Run the evaluator against a JSONL export that contains completed
+`annotations` fields (the machine draft is accepted as input for a dry run):
+
+```powershell
+python scripts/evaluate_annotations.py --input benchmarks/annotation-machine-draft.jsonl
+```
+
+The report computes Cohen's kappa for double-annotated categorical fields and
+macro-F1 for machine suggestions against consensus human labels. It exits with
+code `2` and reports `insufficient_labels` until at least one row has completed
+human labels; it never writes or changes the official annotations.

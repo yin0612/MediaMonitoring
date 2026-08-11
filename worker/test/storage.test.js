@@ -53,10 +53,13 @@ test('queryHistoricalArticles applies the boolean query in D1 without a silent r
 
 test('queryHistoricalCoverage keeps an empty D1 window explicitly empty', async () => {
   const db = {
-    prepare: () => ({ bind: () => ({ first: async () => ({ actual_from: null, actual_to: null, article_count: 0 }) }) }),
+    prepare: (sql) => {
+      assert.match(sql, /COUNT\(DISTINCT strftime\('%Y-%m-%d'/);
+      return { bind: () => ({ first: async () => ({ actual_from: null, actual_to: null, article_count: 0, covered_days: 0 }) }) };
+    },
   };
   assert.deepEqual(await queryHistoricalCoverage(db, '30d'), {
-    actualFrom: null, actualTo: null, articleCount: 0,
+    actualFrom: null, actualTo: null, articleCount: 0, coveredDays: 0,
   });
 });
 

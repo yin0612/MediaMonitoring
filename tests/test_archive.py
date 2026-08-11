@@ -59,6 +59,12 @@ def test_coverage_window_marks_short_archive_incomplete():
     assert result["complete"] is False
 
 
+def test_pipeline_meta_publishes_schedule_and_recent_caps():
+    assert cli.FAST_SCHEDULE_MINUTES == 5
+    assert cli.DEEP_SCHEDULE_MINUTES == 15
+    assert cli.RECENT_ITEMS_CAP == 800
+
+
 def test_public_item_never_contains_full_content_field():
     public = item_to_public(item("cna", "1", "測試新聞", 1))
 

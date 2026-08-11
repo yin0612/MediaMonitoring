@@ -25,6 +25,9 @@ const DAY_MS = 86_400_000;
 const FUTURE_TOLERANCE_MS = 5 * 60 * 1000;
 const REFRESH_COOLDOWN_MS = 5 * 60 * 1000;
 const DEEP_REFRESH_COOLDOWN_MS = 15 * 60 * 1000;
+const FAST_SCHEDULE_MINUTES = 5;
+const DEEP_SCHEDULE_MINUTES = 15;
+const RECENT_ITEMS_CAP = 120;
 const REFRESH_BODY_MAX_BYTES = 4_096;
 const TURNSTILE_ACTION = 'manual_refresh';
 const SOURCE_HEALTH_MAX_AGE_MS = 30 * 60 * 1000;
@@ -346,6 +349,7 @@ async function handleSearch(request, env, url) {
       const actualFromMs = Date.parse(historicalCoverage.actualFrom || '');
       const actualToMs = Date.parse(historicalCoverage.actualTo || '');
       const coverageComplete = historicalCoverage.articleCount > 0
+        && historicalCoverage.coveredDays >= requestedDays
         && actualFromMs <= requestedFromMs + DAY_MS
         && actualToMs >= now - DAY_MS;
       return json(request, env, envelope({
@@ -360,6 +364,7 @@ async function handleSearch(request, env, url) {
           actualTo: historicalCoverage.actualTo,
           complete: coverageComplete,
           articleCount: historicalCoverage.articleCount,
+          coveredDays: historicalCoverage.coveredDays,
         },
         metrics: calculateMetrics(matched, input.range, now, NEWS_SOURCES.length),
         timeline: timelineFor(matched, input.range, now),
@@ -687,7 +692,7 @@ async function buildSnapshot(env) {
   };
 
   const files = {
-    recent: snapshotEnvelope({ items: merged.slice(0, 120) }, generatedAt),
+    recent: snapshotEnvelope({ items: merged.slice(0, RECENT_ITEMS_CAP) }, generatedAt),
     keywords:
       pagesKeywords
       || staleAnalysisEnvelope(previous?.files?.keywords)
@@ -718,7 +723,10 @@ async function buildSnapshot(env) {
         coverage: {
           keywordWindowHours: 24,
           trendBucketMinutes: 60,
+          fastScheduleMinutes: FAST_SCHEDULE_MINUTES,
+          deepScheduleMinutes: DEEP_SCHEDULE_MINUTES,
           archiveDays: 30,
+          recentCap: RECENT_ITEMS_CAP,
           ...archiveCoverage,
         },
         stateRestoreFailed: false,
@@ -1099,9 +1107,15 @@ export default {
   async scheduled(event, env, ctx) {
     const deepCron = event?.cron === '2,17,32,47 * * * *';
     if (deepCron) {
-      ctx.waitUntil(triggerGitHubActions(env, true).then((result) => {
+      ctx.waitUntil((async () => {
+        const claim = await claimDeepRefreshSlot(env);
+        if (!claim.claimed) {
+          console.warn(JSON.stringify({ event: 'scheduled_deep_dispatch_skipped', reason: claim.reason }));
+          return;
+        }
+        const result = await triggerGitHubActions(env, true);
         if (!result.ok) console.error(JSON.stringify({ event: 'scheduled_deep_dispatch_failed', reason: result.reason }));
-      }));
+      })());
       return;
     }
     ctx.waitUntil(buildSnapshot(env).catch((error) => {

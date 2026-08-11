@@ -64,6 +64,14 @@ def test_registry_contains_exactly_the_requested_37_news_sources():
     assert not {"mirror", "currents", "bluesky"}.intersection(SOURCE_IDS)
 
 
+def test_public_index_declares_browser_security_policy():
+    index = Path("web/index.html").read_text(encoding="utf-8")
+    assert 'http-equiv="Content-Security-Policy"' in index
+    assert 'name="referrer"' in index
+    assert 'http-equiv="Permissions-Policy"' in index
+    assert "frame-ancestors 'none'" in index
+
+
 def test_worker_and_frontend_source_registries_stay_in_sync_with_the_yaml():
     """三處來源清單（Python/Worker/前端）必須一致，避免加來源時漏改。"""
     import re

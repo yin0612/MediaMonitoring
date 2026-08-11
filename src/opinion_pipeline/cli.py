@@ -34,6 +34,9 @@ from .timeutil import FUTURE_TOLERANCE
 
 SCHEMA_VERSION = "2.1.0"
 TRENDS_URL = "https://trends.google.com/trending/rss?geo=TW&hl=zh-TW"
+FAST_SCHEDULE_MINUTES = 5
+DEEP_SCHEDULE_MINUTES = 15
+RECENT_ITEMS_CAP = 800
 
 TOPIC_DEFINITIONS = (
     ("finance", "財經與產業", ("台積電", "半導體", "股市", "經濟", "產業")),
@@ -463,7 +466,7 @@ def run(
     )
     # recent.json 供前端「近期內容」與 Worker cron 補齊非 RSS 來源；取近 24 小時、上限 800 筆。
     day_cut = now - timedelta(hours=24)
-    recent_items = [entry for entry in items if entry.published_at >= day_cut][:800]
+    recent_items = [entry for entry in items if entry.published_at >= day_cut][:RECENT_ITEMS_CAP]
     write_json(
         output_dir / "recent.json",
         envelope({"items": [item_to_public(entry, sentiment_lexicon) for entry in recent_items]}, generated_at),
@@ -562,7 +565,10 @@ def run(
                 "coverage": {
                     "keywordWindowHours": 24,
                     "trendBucketMinutes": 60,
+                    "fastScheduleMinutes": FAST_SCHEDULE_MINUTES,
+                    "deepScheduleMinutes": DEEP_SCHEDULE_MINUTES,
                     "archiveDays": 30,
+                    "recentCap": RECENT_ITEMS_CAP,
                     "sourceCount": len(sources),
                     **archive_coverage,
                 },
