@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { DataFetchError, requestManualRefresh } from './client';
+import { __resetDataCacheForTests, DataFetchError, fetchData, requestManualRefresh } from './client';
 
 describe('manual refresh API', () => {
   it('posts to the Worker refresh endpoint without exposing credentials', async () => {
@@ -19,10 +19,11 @@ describe('manual refresh API', () => {
     );
     vi.stubGlobal('fetch', fetchMock);
 
-    await expect(requestManualRefresh()).resolves.toEqual(accepted);
+    await expect(requestManualRefresh('turnstile-token')).resolves.toEqual(accepted);
     expect(fetchMock).toHaveBeenCalledWith('https://worker.example/api/refresh', {
       method: 'POST',
-      headers: { Accept: 'application/json' },
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ turnstileToken: 'turnstile-token' }),
     });
 
     vi.unstubAllEnvs();
@@ -61,5 +62,113 @@ describe('manual refresh API', () => {
     vi.stubEnv('VITE_API_BASE_URL', '');
     await expect(requestManualRefresh()).rejects.toBeInstanceOf(DataFetchError);
     vi.unstubAllEnvs();
+  });
+});
+
+describe('data arbitration and request coordination', () => {
+  it('keeps the older but materially higher-quality source snapshot', async () => {
+    __resetDataCacheForTests();
+    vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
+    const envelope = (generatedAt: string, qualityScore: number, marker: string) => ({
+      schemaVersion: '2.1.0',
+      generatedAt,
+      data: { marker, sources: [{ id: 'cna', qualityScore }] },
+    });
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => Response.json(
+      String(input).includes('worker.example')
+        ? envelope('2026-08-11T12:00:00Z', 0.3, 'worker')
+        : envelope('2026-08-11T11:55:00Z', 0.9, 'pages'),
+    )));
+
+    const result = await fetchData<{ marker: string; sources: unknown[] }>('sources', { bypassCache: true });
+    expect(result.data.marker).toBe('pages');
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  it('deduplicates simultaneous reads of the same file', async () => {
+    __resetDataCacheForTests();
+    vi.stubEnv('VITE_API_BASE_URL', '');
+    const fetchMock = vi.fn(async () => Response.json({
+      schemaVersion: '2.1.0', generatedAt: '2026-08-11T12:00:00Z', data: { keywords: [] },
+    }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    await Promise.all([fetchData('keywords'), fetchData('keywords')]);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  it('starts Pages immediately and falls back when the Worker exceeds its deadline', async () => {
+    vi.useFakeTimers();
+    __resetDataCacheForTests();
+    vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes('worker.example')) {
+        return new Promise<Response>((_, reject) => {
+          init?.signal?.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError')));
+        });
+      }
+      return Promise.resolve(Response.json({
+        schemaVersion: '2.1.0', generatedAt: '2026-08-11T12:00:00Z', data: { marker: 'pages' },
+      }));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const pending = fetchData<{ marker: string }>('keywords', { bypassCache: true });
+    await Promise.resolve();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    await vi.advanceTimersByTimeAsync(2_500);
+    await expect(pending).resolves.toMatchObject({ data: { marker: 'pages' } });
+
+    vi.useRealTimers();
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  it('keeps duplicate recent content and provenance from the newer envelope', async () => {
+    __resetDataCacheForTests();
+    vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
+    const recent = (generatedAt: string, marker: string, excerpt: string) => ({
+      schemaVersion: '2.1.0', generatedAt, pipeline: { id: marker },
+      data: { marker, items: [{ id: marker, source: 'cna', title: '同一則新聞', excerpt, publishedAt: generatedAt, url: 'https://example.com/story' }] },
+    });
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => Response.json(
+      String(input).includes('worker.example')
+        ? recent('2026-08-11T12:00:00Z', 'worker', 'new')
+        : recent('2026-08-11T11:00:00Z', 'pages', 'old'),
+    )));
+
+    const result = await fetchData<{ marker: string; items: Array<{ excerpt: string }> }>('recent', { bypassCache: true });
+    expect(result.data.marker).toBe('worker');
+    expect(result.data.items[0].excerpt).toBe('new');
+    expect(result.pipeline).toEqual({ id: 'worker' });
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  it('returns a healthy Worker snapshot when Pages exceeds its deadline', async () => {
+    vi.useFakeTimers();
+    __resetDataCacheForTests();
+    vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
+    vi.stubGlobal('fetch', vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes('worker.example')) {
+        return Promise.resolve(Response.json({
+          schemaVersion: '2.1.0', generatedAt: '2026-08-11T12:00:00Z', data: { marker: 'worker' },
+        }));
+      }
+      return new Promise<Response>((_, reject) => {
+        init?.signal?.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError')));
+      });
+    }));
+
+    const pending = fetchData<{ marker: string }>('keywords', { bypassCache: true });
+    await vi.advanceTimersByTimeAsync(4_000);
+    await expect(pending).resolves.toMatchObject({ data: { marker: 'worker' } });
+
+    vi.useRealTimers();
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
   });
 });

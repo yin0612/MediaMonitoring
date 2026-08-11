@@ -87,6 +87,7 @@ export function sourceColorValue(id: SourceId, tokens: ChartTokens): string {
 /** 狀態 → 徽章樣式與中文標籤。 */
 export const STATUS_LABEL: Record<SourceStatus, { label: string; variant: string }> = {
   ok: { label: '正常', variant: 'good' },
+  empty: { label: '本窗無資料', variant: 'muted' },
   stale: { label: '資料過期', variant: 'warning' },
   degraded: { label: '降級', variant: 'serious' },
   error: { label: '錯誤', variant: 'critical' },

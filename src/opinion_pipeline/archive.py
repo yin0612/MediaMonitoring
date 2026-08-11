@@ -10,7 +10,7 @@ from .sentiment import SentimentLexicon, classify
 from .timeutil import normalize_published
 
 
-RANGE_HOURS = {"1h": 1, "6h": 6, "24h": 24, "7d": 24 * 7}
+RANGE_HOURS = {"1h": 1, "6h": 6, "24h": 24, "7d": 24 * 7, "30d": 24 * 30}
 _TRACKING_KEYS = {"fbclid", "gclid", "ref", "source"}
 
 

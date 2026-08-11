@@ -1,15 +1,12 @@
-import type { Keyword, RecentItem } from '../types/contracts';
+import type { Keyword } from '../types/contracts';
 
 export interface RisingKeyword {
   term: string;
-  recentMentions: number;
-  previousMentions: number;
-  delta: number;
-  changePercent: number | null;
-}
-
-function timestamp(value: Date | string): number {
-  return value instanceof Date ? value.getTime() : Date.parse(value);
+  currentMentions: number;
+  sourceCount: number;
+  baseline: number[];
+  baselineMedian: number;
+  burstScore: number;
 }
 
 const NOISE_STOPWORDS = new Set([
@@ -35,49 +32,25 @@ function isInvalidRisingTerm(term: string): boolean {
   return false;
 }
 
-/** Compare the latest and preceding half-open time windows using existing keyword terms. */
-export function getRisingKeywords(
-  items: RecentItem[],
-  keywords: Keyword[],
-  now: Date | string,
-  windowMinutes = 90,
-): RisingKeyword[] {
-  const end = timestamp(now);
-  const windowMs = Math.max(1, windowMinutes) * 60_000;
-  if (!Number.isFinite(end)) return [];
-
-  const recentStart = end - windowMs;
-  const previousStart = recentStart - windowMs;
-  const counts = new Map<string, { recent: number; previous: number }>();
-  const terms = keywords
-    .map((keyword) => keyword.term.trim())
-    .filter((term) => Boolean(term) && !isInvalidRisingTerm(term));
-
-  for (const item of items) {
-    const published = timestamp(item.publishedAt);
-    if (!Number.isFinite(published) || published < previousStart || published >= end) continue;
-    const bucket = published >= recentStart ? 'recent' : 'previous';
-    const haystack = `${item.title} ${item.excerpt}`.toLocaleLowerCase('zh-TW');
-    const matched = new Set(terms.filter((term) => haystack.includes(term.toLocaleLowerCase('zh-TW'))));
-    for (const term of matched) {
-      const count = counts.get(term) ?? { recent: 0, previous: 0 };
-      count[bucket] += 1;
-      counts.set(term, count);
-    }
-  }
-
-  return [...counts.entries()]
-    .map(([term, count]) => {
-      const delta = count.recent - count.previous;
-      return {
-        term,
-        recentMentions: count.recent,
-        previousMentions: count.previous,
-        delta,
-        changePercent: count.previous > 0 ? Math.round((delta / count.previous) * 100) : null,
-      };
-    })
-    .filter((item) => item.recentMentions >= 2 && item.delta > 0)
-    .sort((a, b) => b.delta - a.delta || b.recentMentions - a.recentMentions || a.term.localeCompare(b.term, 'zh-Hant'))
+/** Use only the pipeline's auditable seven-day same-hour burst evidence. */
+export function getRisingKeywords(keywords: Keyword[]): RisingKeyword[] {
+  return keywords
+    .filter((keyword) => !isInvalidRisingTerm(keyword.term))
+    .filter((keyword) => (
+      typeof keyword.burstScore === 'number'
+      && keyword.burstScore > 0
+      && (keyword.burstCurrent ?? 0) >= 5
+      && (keyword.burstSourceCount ?? 0) >= 3
+      && keyword.burstBaseline?.length === 7
+    ))
+    .map((keyword) => ({
+      term: keyword.term,
+      currentMentions: keyword.burstCurrent ?? 0,
+      sourceCount: keyword.burstSourceCount ?? 0,
+      baseline: keyword.burstBaseline ?? [],
+      baselineMedian: keyword.burstBaselineMedian ?? 0,
+      burstScore: keyword.burstScore as number,
+    }))
+    .sort((a, b) => b.burstScore - a.burstScore || b.currentMentions - a.currentMentions || a.term.localeCompare(b.term, 'zh-Hant'))
     .slice(0, 5);
 }

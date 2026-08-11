@@ -131,6 +131,16 @@ export function buildStaticSearchData(
   now = Date.now(),
 ): SearchData {
   const cutoff = now - RANGE_MS[range];
+  const coverageTimestamps = allItems
+    .map((item) => Date.parse(item.publishedAt))
+    .filter((timestamp) => Number.isFinite(timestamp) && timestamp >= cutoff && timestamp <= now + 5 * 60 * 1000);
+  const actualFromMs = coverageTimestamps.length ? Math.min(...coverageTimestamps) : Number.NaN;
+  const actualToMs = coverageTimestamps.length ? Math.max(...coverageTimestamps) : Number.NaN;
+  const historicalRange = range === '7d' || range === '30d';
+  const coverageComplete = historicalRange
+    && Number.isFinite(actualFromMs)
+    && actualFromMs <= cutoff + 24 * 60 * 60 * 1000
+    && actualToMs >= now - 24 * 60 * 60 * 1000;
   const matched = allItems
     .filter((item) => Date.parse(item.publishedAt) >= cutoff)
     .filter((item) => matchesAdvancedQuery(`${item.title} ${item.excerpt}`, query.trim()))
@@ -180,6 +190,16 @@ export function buildStaticSearchData(
       errorCode: 'STATIC_SNAPSHOT',
     })),
     items,
+    ...(historicalRange ? {
+      coverage: {
+        requestedFrom: new Date(cutoff).toISOString(),
+        requestedTo: new Date(now).toISOString(),
+        actualFrom: Number.isFinite(actualFromMs) ? new Date(actualFromMs).toISOString() : null,
+        actualTo: Number.isFinite(actualToMs) ? new Date(actualToMs).toISOString() : null,
+        complete: coverageComplete,
+        articleCount: allItems.length,
+      },
+    } : {}),
   };
 }
 

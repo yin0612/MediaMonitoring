@@ -3,14 +3,14 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import yaml from 'js-yaml';
+import { load as loadYaml } from 'js-yaml';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '..', '..');
 
-const watch = yaml.load(readFileSync(resolve(repoRoot, 'config/watch_terms.yml'), 'utf8')) || {};
-const entities = yaml.load(readFileSync(resolve(repoRoot, 'config/entities.yml'), 'utf8')) || {};
-const sentiment = yaml.load(readFileSync(resolve(repoRoot, 'config/sentiment.yml'), 'utf8')) || {};
+const watch = loadYaml(readFileSync(resolve(repoRoot, 'config/watch_terms.yml'), 'utf8')) || {};
+const entities = loadYaml(readFileSync(resolve(repoRoot, 'config/entities.yml'), 'utf8')) || {};
+const sentiment = loadYaml(readFileSync(resolve(repoRoot, 'config/sentiment.yml'), 'utf8')) || {};
 
 const watchTerms = (watch.watch_terms || []).map((entry) => ({
   id: entry.id ?? entry.display,

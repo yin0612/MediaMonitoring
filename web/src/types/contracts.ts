@@ -15,6 +15,10 @@ export interface Envelope<T> {
   schemaVersion: string;
   /** 該檔案產生時間（ISO 8601、UTC）。 */
   generatedAt: string;
+  pipeline?: 'fast-worker' | 'deep-github' | string;
+  window?: { actualFrom: string | null; actualTo: string | null };
+  quality?: { status: string; score?: number };
+  provenance?: { method: string; reproducible: boolean };
   data: T;
 }
 
@@ -61,7 +65,7 @@ export type SourceId =
   | 'mnews'
   | 'mirrormedia';
 
-export type SourceStatus = 'ok' | 'stale' | 'degraded' | 'disabled' | 'error';
+export type SourceStatus = 'ok' | 'empty' | 'stale' | 'degraded' | 'disabled' | 'error';
 
 /** 全域資料新鮮度狀態。 */
 export type GlobalStatus = 'ok' | 'partial' | 'stale' | 'error';
@@ -117,6 +121,21 @@ export interface SourceHealth {
   stale: boolean;
   /** 最近一次成功取得的項目數。 */
   itemCount: number;
+  windowHours?: number;
+  newestItemAt?: string | null;
+  transportOk?: boolean;
+  fallbackUsed?: boolean;
+  officialItemCount?: number;
+  fallbackItemCount?: number;
+  excerptRate?: number;
+  latencyMs?: number;
+  qualityScore?: number;
+  qualityComponents?: {
+    availability: number;
+    freshness: number;
+    excerpt: number;
+    access: number;
+  };
   /** 這次擷取被捨棄的項目統計（診斷用，例如 invalid_time）。 */
   dropped?: Record<string, number>;
 }
@@ -160,6 +179,16 @@ export interface Keyword {
   heat: number;
   /** 最近 24 小時命中新聞數。 */
   mentions24h: number;
+  /** 最近一小時相對前七日同時段的 median/MAD 升溫分數；低支持或歷史不足時為 null。 */
+  burstScore?: number | null;
+  /** 最近一小時的原始命中篇數。 */
+  burstCurrent?: number;
+  /** 最近一小時的命中來源數。 */
+  burstSourceCount?: number;
+  /** 前七日相同一小時時段的逐日命中數。 */
+  burstBaseline?: number[];
+  /** 前七日相同時段命中數的中位數。 */
+  burstBaselineMedian?: number;
   /** 熱度公式分解。 */
   components: HeatComponents;
   /** 各來源提及占比（0–1，加總約為 1）。 */
@@ -315,7 +344,7 @@ export interface SearchArticle extends RecentItem {
 export interface SearchSourceStatus {
   id: SourceId;
   displayName: string;
-  status: Extract<SourceStatus, 'ok' | 'stale' | 'degraded' | 'error' | 'disabled'>;
+  status: Extract<SourceStatus, 'ok' | 'empty' | 'stale' | 'degraded' | 'error' | 'disabled'>;
   itemCount: number;
   errorCode: string | null;
 }
@@ -345,6 +374,32 @@ export interface SearchData {
   sourceCounts: Partial<Record<SourceId, number>>;
   sources: SearchSourceStatus[];
   items: SearchArticle[];
+  coverage?: {
+    requestedFrom: string;
+    requestedTo: string;
+    actualFrom: string | null;
+    actualTo: string | null;
+    complete?: boolean;
+    articleCount?: number;
+  };
+}
+
+export interface EventCluster {
+  id: string;
+  representativeTitle: string;
+  articleCount: number;
+  sourceCount: number;
+  startedAt: string;
+  updatedAt: string;
+  sourceCounts: Partial<Record<SourceId, number>>;
+  articles: Array<{ title: string; source: SourceId; url: string; publishedAt: string }>;
+}
+
+export interface EventsData {
+  stale: boolean;
+  experimental: boolean;
+  method: string;
+  events: EventCluster[];
 }
 
 export interface NewsArchiveData {

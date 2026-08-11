@@ -4,6 +4,8 @@ from pathlib import Path
 from opinion_pipeline.analysis import (
     build_entities,
     build_keywords,
+    cluster_events,
+    robust_burst_score,
     extract_auto_terms,
     load_entity_lexicon,
     load_watch_config,
@@ -75,6 +77,25 @@ def test_keywords_only_count_the_last_24_hours():
     assert tsmc["mentions24h"] == 1
 
 
+def test_keyword_burst_uses_seven_prior_days_at_the_same_hour_and_exposes_evidence():
+    items = [
+        *[item(source, f"台積電當期{index}", 0.5) for index, source in enumerate(["cna", "ltn", "udn", "tvbs", "pts"])],
+        *[item("cna", f"台積電基線{day}", day * 24 + 0.5) for day in range(1, 8)],
+        item("cna", "歷史涵蓋證據", 7 * 24 + 1.5),
+    ]
+
+    tsmc = next(
+        keyword for keyword in build_keywords(items, WATCH_CONFIG, NOW, enabled_source_count=ENABLED_SOURCES)
+        if keyword["term"] == "台積電"
+    )
+
+    assert tsmc["burstCurrent"] == 5
+    assert tsmc["burstSourceCount"] == 5
+    assert tsmc["burstBaseline"] == [1, 1, 1, 1, 1, 1, 1]
+    assert tsmc["burstBaselineMedian"] == 1
+    assert tsmc["burstScore"] == 4
+
+
 def test_auto_terms_prefer_longer_ngrams_and_skip_stopwords_and_watch_terms():
     items = [
         item("tvbs", "快訊 電價調漲方案出爐", 1),
@@ -114,6 +135,9 @@ def test_entities_cooccurrence_counts_documents_not_inferences():
     assert any(
         {edge["source"], edge["target"]} == {tsmc_id, moea_id} and edge["weight"] == 2 for edge in graph["edges"]
     )
+    edge = next(edge for edge in graph["edges"] if {edge["source"], edge["target"]} == {tsmc_id, moea_id})
+    assert edge["jaccard"] == 1.0
+    assert edge["npmi"] > 0
     assert all("範例" not in node["name"] for node in graph["nodes"])
 
 
@@ -176,3 +200,21 @@ def test_build_keywords_refuses_to_guess_the_enabled_source_count():
 
     with pytest.raises(TypeError):
         build_keywords([item("tvbs", "台積電", 1)], WATCH_CONFIG, NOW)  # type: ignore[call-arg]
+
+
+def test_event_clustering_groups_similar_cross_source_titles_within_48_hours():
+    items = [
+        item("cna", "台積電法說會：今年資本支出上修", 1),
+        item("ltn", "台積電法說會 今年資本支出上修", 2),
+        item("tvbs", "颱風海上警報發布", 3),
+    ]
+    events = cluster_events(items, threshold=0.6)
+    assert events[0]["articleCount"] == 2
+    assert events[0]["sourceCount"] == 2
+    assert events[0]["articles"][0]["url"].startswith("https://example.com/")
+
+
+def test_robust_burst_uses_median_and_mad_and_requires_support():
+    assert robust_burst_score(12, [2, 3, 3, 4, 3, 2, 3], source_count=4) > 5
+    assert robust_burst_score(4, [0, 0, 0, 0, 0, 0, 0], source_count=4) is None
+    assert robust_burst_score(12, [2, 3, 3, 4, 3, 2, 3], source_count=2) is None

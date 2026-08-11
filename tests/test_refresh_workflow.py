@@ -28,9 +28,10 @@ def test_refresh_workflow_accepts_every_trigger_the_worker_uses() -> None:
     workflow = load_workflow(REFRESH_WORKFLOW)
     triggers = workflow["on"]
 
-    # 排程是備援，workflow_dispatch 是 Worker 手動更新的目標，
+    # 排程是低頻備援，workflow_dispatch 是 Worker 手動更新的目標，
     # repository_dispatch 是 Worker Cron 的目標。缺一種就會有一條更新路徑失效。
     assert "schedule" in triggers
+    assert triggers["schedule"] == [{"cron": "37 * * * *"}]
     assert "workflow_dispatch" in triggers
     assert WORKER_DISPATCH_EVENT in triggers["repository_dispatch"]["types"]
 
@@ -74,3 +75,47 @@ def test_refresh_skips_the_test_suite_that_ci_already_runs() -> None:
     )
     assert "pytest" in ci_commands
     assert "npm test" in ci_commands
+
+
+def test_refresh_uses_official_pages_artifacts_without_force_pushing_a_branch() -> None:
+    body = REFRESH_WORKFLOW.read_text(encoding="utf-8")
+    workflow = load_workflow(REFRESH_WORKFLOW)
+    refresh_job = workflow["jobs"]["refresh"]
+    deploy_job = workflow["jobs"]["deploy"]
+
+    assert workflow["permissions"] == {"contents": "read"}
+    assert refresh_job["permissions"] == {"contents": "read"}
+    assert "environment" not in refresh_job
+    assert deploy_job["permissions"]["contents"] == "read"
+    assert deploy_job["permissions"]["pages"] == "write"
+    assert deploy_job["permissions"]["id-token"] == "write"
+    assert deploy_job["environment"]["name"] == "github-pages"
+    assert "actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9" in body
+    assert "actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128" in body
+    assert "gh-pages" not in body
+    assert "--force" not in body
+
+
+def test_hourly_fallback_skips_when_last_deep_is_younger_than_25_minutes() -> None:
+    workflow = load_workflow(REFRESH_WORKFLOW)
+    guard = workflow["jobs"]["guard"]
+    commands = " ".join(step.get("run", "") for step in guard["steps"])
+    assert "lastDeepAt" in commands
+    assert "1500" in commands
+    assert workflow["jobs"]["refresh"]["needs"] == "guard"
+    assert "should_run" in workflow["jobs"]["refresh"]["if"]
+
+
+def test_actions_are_pinned_and_manual_refresh_reports_its_terminal_state() -> None:
+    for workflow_path in (REFRESH_WORKFLOW, CI_WORKFLOW):
+        body = workflow_path.read_text(encoding="utf-8")
+        uses = re.findall(r"uses:\s*([^\s]+)", body)
+        assert uses, f"{workflow_path.name} 應使用 actions"
+        for action in uses:
+            ref = action.rsplit("@", 1)[-1]
+            assert re.fullmatch(r"[0-9a-f]{40}", ref), f"{action} 未固定完整 commit SHA"
+
+    refresh_body = REFRESH_WORKFLOW.read_text(encoding="utf-8")
+    assert "WORKER_CALLBACK_TOKEN" in refresh_body
+    assert "/api/refresh/callback" in refresh_body
+    assert "refresh_id" in refresh_body

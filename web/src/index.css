@@ -1545,6 +1545,7 @@ table.data th.num {
   margin-bottom: 28px;
 }
 .search-hero h1 {
+  text-wrap: balance;
   margin: 14px 0 8px;
   font-size: clamp(26px, 4vw, 42px);
   line-height: 1.18;

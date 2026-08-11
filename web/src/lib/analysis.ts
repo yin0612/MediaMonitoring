@@ -1,6 +1,15 @@
 import type { ArticleSentiment, SearchArticle } from '../types/contracts';
 
-export interface TermStat { term: string; count: number; change: number }
+export interface TermStat {
+  term: string;
+  count: number;
+  current: number;
+  sourceCount: number;
+  baseline: number[];
+  baselineMedian: number;
+  change: number;
+  burstScore: number | null;
+}
 
 const STOPWORDS = new Set(['新聞', '表示', '指出', '今天', '目前', '相關', '最新', '台灣', '報導', '消息']);
 
@@ -56,25 +65,63 @@ function words(text: string): string[] {
   return [...base, ...compounds];
 }
 
-export function extractTermStats(items: SearchArticle[], midpoint: number, excluded: string[] = []): { top: TermStat[]; rising: TermStat[] } {
+const median = (values: number[]): number => {
+  const sorted = [...values].sort((a, b) => a - b);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
+};
+
+function robustBurstScore(current: number, baseline: number[], sourceCount: number): number | null {
+  if (current < 5 || sourceCount < 3 || baseline.length < 7) return null;
+  const center = median(baseline);
+  const mad = median(baseline.map((value) => Math.abs(value - center)));
+  return Math.round(((current - center) / Math.max(1, 1.4826 * mad)) * 1_000) / 1_000;
+}
+
+export function extractTermStats(items: SearchArticle[], referenceTime: number, excluded: string[] = []): { top: TermStat[]; rising: TermStat[] } {
   const excludedSet = new Set(excluded.map((term) => term.toLocaleLowerCase('zh-TW')));
-  const counts = new Map<string, { recent: number; previous: number }>();
+  const timestamps = items.map((item) => Date.parse(item.publishedAt)).filter(Number.isFinite);
+  const hourMs = 60 * 60 * 1000;
+  const currentStart = referenceTime - hourMs;
+  const baselineCoverageStart = currentStart - 7 * 24 * hourMs;
+  const baselineComplete = timestamps.length > 0 && Math.min(...timestamps) <= baselineCoverageStart;
+  const counts = new Map<string, { count: number; current: number; baseline: number[]; currentSources: Set<string> }>();
   for (const item of items) {
-    const period = Date.parse(item.publishedAt) >= midpoint ? 'recent' : 'previous';
+    const timestamp = Date.parse(item.publishedAt);
     for (const term of new Set(words(`${item.title} ${item.excerpt}`))) {
       if (excludedSet.has(term.toLocaleLowerCase('zh-TW'))) continue;
-      const value = counts.get(term) ?? { recent: 0, previous: 0 };
-      value[period] += 1;
+      const value = counts.get(term) ?? { count: 0, current: 0, baseline: new Array(7).fill(0), currentSources: new Set<string>() };
+      value.count += 1;
+      if (timestamp >= currentStart && timestamp <= referenceTime) {
+        value.current += 1;
+        value.currentSources.add(item.source);
+      } else {
+        for (let index = 0; index < 7; index += 1) {
+          const end = referenceTime - (index + 1) * 24 * hourMs;
+          if (timestamp >= end - hourMs && timestamp < end) value.baseline[index] += 1;
+        }
+      }
       counts.set(term, value);
     }
   }
-  const values = [...counts.entries()].map(([term, value]) => ({
-    term,
-    count: value.recent + value.previous,
-    change: value.recent - value.previous,
-  }));
+  const values = [...counts.entries()].map(([term, value]) => {
+    const baselineMedian = median(value.baseline);
+    return {
+      term,
+      count: value.count,
+      current: value.current,
+      sourceCount: value.currentSources.size,
+      baseline: value.baseline,
+      baselineMedian,
+      change: value.current - baselineMedian,
+      burstScore: robustBurstScore(value.current, baselineComplete ? value.baseline : [], value.currentSources.size),
+    };
+  });
   return {
     top: [...values].sort((a, b) => b.count - a.count || b.change - a.change).slice(0, 10),
-    rising: values.filter((item) => item.change > 0).sort((a, b) => b.change - a.change || b.count - a.count).slice(0, 10),
+    rising: values
+      .filter((item) => item.burstScore !== null && item.burstScore > 0)
+      .sort((a, b) => (b.burstScore ?? 0) - (a.burstScore ?? 0) || b.count - a.count)
+      .slice(0, 10),
   };
 }

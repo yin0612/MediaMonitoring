@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { useData } from '../api/useData';
-import { dispatchGlobalRefresh } from '../api/refreshCoordinator';
-import { fetchRefreshStatus, isManualRefreshConfigured, requestManualRefresh } from '../api/client';
+import { dispatchGlobalRefresh, pollRefreshStatus } from '../api/refreshCoordinator';
+import { isManualRefreshConfigured, requestManualRefresh } from '../api/client';
+import { requestTurnstileToken } from '../api/turnstile';
 import type { Meta } from '../types/contracts';
 import { GLOBAL_STATUS_LABEL } from '../lib/sources';
 import { fmtRelative } from '../lib/format';
@@ -97,15 +98,16 @@ function ManualRefreshButton() {
         return;
       }
 
-      const request = await requestManualRefresh();
+      const turnstileToken = await requestTurnstileToken();
+      const request = await requestManualRefresh(turnstileToken);
       setMessage('正在更新新聞…');
 
       let fastDone = false;
       let deepDone = false;
+      const deepDeferred = request.deep === 'skipped';
 
-      for (let attempt = 0; attempt < 30; attempt += 1) {
-        const status = await fetchRefreshStatus(request.refreshId);
-
+      await pollRefreshStatus(request.refreshId, {
+        onStatus: (status) => {
         if (status.fast.status === 'completed' && !fastDone) {
           fastDone = true;
           setMessage('新聞已更新，正在同步分析…');
@@ -125,19 +127,13 @@ function ManualRefreshButton() {
             requestedAt: request.requestedAt,
             bypassCache: true,
           });
-          break;
         }
+        },
+      });
 
-        // deep 為 unavailable（未設定 GitHub Token）或 failed 時不會再有進展，
-        // 別讓使用者對著轉圈等滿 60 秒。
-        if (status.deep.status === 'failed' || status.deep.status === 'unavailable') {
-          break;
-        }
-
-        await new Promise((resolve) => window.setTimeout(resolve, 2000));
-      }
-
-      if (fastDone && deepDone) {
+      if (fastDone && deepDeferred) {
+        setMessage('新聞已更新；深度分析將依排程同步');
+      } else if (fastDone && deepDone) {
         setMessage('全部資料已更新');
       } else if (fastDone) {
         setMessage('新聞已更新，部分分析資料仍在同步');

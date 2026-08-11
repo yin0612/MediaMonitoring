@@ -1,0 +1,63 @@
+from datetime import datetime, timedelta, timezone
+
+from opinion_pipeline.models import NormalizedItem
+from opinion_pipeline.quality import assess_source_quality
+from opinion_pipeline.cli import source_status_record
+
+
+NOW = datetime(2026, 8, 11, 12, 0, tzinfo=timezone.utc)
+
+
+def article(hours: int, excerpt: str = "摘要") -> NormalizedItem:
+    return NormalizedItem("cna", str(hours), "標題", excerpt, "https://example.com/a", NOW - timedelta(hours=hours))
+
+
+def test_quality_marks_transport_success_without_articles_empty():
+    value = assess_source_quality(True, [], "official-rss", NOW, latency_ms=120)
+    assert value["status"] == "empty"
+    assert value["transportOk"] is True
+    assert value["qualityScore"] < 0.5
+
+
+def test_quality_exposes_recomputable_freshness_excerpt_and_fallback_parts():
+    value = assess_source_quality(True, [article(2), article(4, "")], "google-news", NOW, latency_ms=830)
+    assert value["status"] == "degraded"
+    assert value["fallbackUsed"] is True
+    assert value["excerptRate"] == 0.5
+    assert value["newestItemAt"] == "2026-08-11T10:00:00Z"
+    assert value["fallbackItemCount"] == 2
+    assert value["officialItemCount"] == 0
+    assert set(value["qualityComponents"]) == {"availability", "freshness", "excerpt", "access"}
+
+
+def test_source_record_excludes_retained_articles_outside_its_24_hour_window():
+    run = {
+        "id": "cna", "name": "中央社", "ok": True, "accessMode": "official-rss",
+        "latencyMs": 50, "crawlAttempted": True, "errorCode": None, "dropped": {},
+        "items": [article(2), article(30, "")],
+    }
+    value = source_status_record(
+        run, NOW, "2026-08-11T12:00:00Z"
+    )
+    assert value["windowHours"] == 24
+    assert value["itemCount"] == 1
+    assert value["officialItemCount"] == 1
+    assert value["excerptRate"] == 1.0
+
+
+def test_source_record_never_attributes_restored_fallback_items_to_current_official_run():
+    run = {
+        "id": "cna", "name": "中央社", "ok": True, "accessMode": "official-rss",
+        "latencyMs": 50, "crawlAttempted": False, "errorCode": None, "dropped": {},
+        "items": [article(2)],
+    }
+    restored_google_item = article(3)
+
+    value = source_status_record(
+        run, NOW, "2026-08-11T12:00:00Z", {"accessMode": "google-news"}
+    )
+
+    assert restored_google_item not in run["items"]
+    assert value["accessMode"] == "official-rss"
+    assert value["officialItemCount"] == 1
+    assert value["fallbackItemCount"] == 0

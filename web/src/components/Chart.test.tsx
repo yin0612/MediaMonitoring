@@ -4,7 +4,7 @@ import type { CSSProperties } from 'react';
 import { Chart } from './Chart';
 import { ThemeProvider } from '../lib/theme';
 
-vi.mock('echarts-for-react', () => ({
+vi.mock('echarts-for-react/lib/core', () => ({
   default: ({ style }: { style: CSSProperties }) => <div data-testid="echarts" style={style} />,
 }));
 

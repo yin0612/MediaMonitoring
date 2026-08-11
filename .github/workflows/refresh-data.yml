@@ -1,45 +1,68 @@
 name: Refresh data and deploy
 
 on:
-  # 程式碼進 main 就重建並部署，否則修好的前端要等下一次排程才會上線，
-  # 而 GitHub 的 schedule 事件延遲可達數小時。
   push:
     branches:
       - main
-
   workflow_dispatch:
     inputs:
       refresh_id:
         required: false
         type: string
-
   repository_dispatch:
     types:
       - scheduled-refresh
-      - manual-refresh
-
+  # Cloudflare Worker 是主要排程；GitHub 僅保留每小時一次的 last-resort fallback。
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "37 * * * *"
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: media-monitoring-refresh
+  group: media-monitoring-pages
   cancel-in-progress: false
 
 jobs:
-  refresh:
+  guard:
+    name: Check whether a deep refresh is needed
     runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.decide.outputs.should_run }}
+    steps:
+      - name: Skip a fresh hourly fallback
+        id: decide
+        env:
+          META_URL: https://yin0612.github.io/MediaMonitoring/data/meta.json
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "schedule" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          last_deep="$(curl --fail --silent --show-error "$META_URL?v=$GITHUB_RUN_ID" | jq -r '.data.lastDeepAt // empty' || true)"
+          last_epoch="$(date -d "$last_deep" +%s 2>/dev/null || echo 0)"
+          now_epoch="$(date +%s)"
+          age_seconds=$((now_epoch - last_epoch))
+          if [ "$last_epoch" -gt 0 ] && [ "$age_seconds" -ge 0 ] && [ "$age_seconds" -lt 1500 ]; then
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "最近深度資料仍在 25 分鐘內，本次每小時備援不重複部署。"
+          else
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          fi
 
+  refresh:
+    name: Build Pages artifact
+    needs: guard
+    if: ${{ needs.guard.outputs.should_run == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
           cache: pip
@@ -47,9 +70,6 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
-      # 管線以 exit 2 表示「這一輪沒抓到任何新文章」（來源全掛或全被時間過濾）。
-      # 此時 JSON 仍已寫入還原後的最後良好快照，照樣部署比整輪放棄更好；
-      # 只有真正的例外（非 0 非 2）才讓工作失敗。
       - name: Refresh news data
         run: |
           set +e
@@ -57,7 +77,7 @@ jobs:
           status=$?
           set -e
           if [ "$status" -eq 2 ]; then
-            echo "::warning::本輪沒有取得新文章，將以還原的最後良好快照繼續部署。"
+            echo "::warning::本輪沒有取得新文章，改用還原的最後良好快照。"
             exit 0
           fi
           exit "$status"
@@ -66,7 +86,7 @@ jobs:
           PYTHONIOENCODING: utf-8
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "22"
           cache: npm
@@ -76,18 +96,14 @@ jobs:
         working-directory: web
         run: npm ci
 
-      # Worker 是選配的加速層，不是新聞更新的必要條件。先前這一步在
-      # repository variable 未設定時直接 exit 1，導致整條新聞更新管線每次都掛掉、
-      # 網站資料停止更新。改為降級建置：沒有 Worker 就走 Pages 靜態快照模式。
       - name: Resolve frontend build mode
         id: build-mode
         run: |
           if [ -n "${VITE_API_BASE_URL}" ]; then
             echo "allow_static_only=false" >> "$GITHUB_OUTPUT"
-            echo "Worker API base 已設定，前端將優先讀取即時快照。"
           else
             echo "allow_static_only=true" >> "$GITHUB_OUTPUT"
-            echo "::warning::未設定 repository variable VITE_API_BASE_URL，改以 Pages 靜態快照模式建置。新聞仍每 5 分鐘更新，但「立即更新」只能重讀最新快照，無法即時重抓。"
+            echo "::warning::未設定 VITE_API_BASE_URL，使用 Pages 靜態快照模式。"
           fi
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
@@ -97,27 +113,67 @@ jobs:
         run: npm run build
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
           ALLOW_STATIC_ONLY: ${{ steps.build-mode.outputs.allow_static_only }}
 
-      - name: Deploy to gh-pages
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: web/dist
+
+  deploy:
+    name: Deploy Pages
+    needs: refresh
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+
+  callback:
+    name: Report manual refresh result
+    needs: [refresh, deploy]
+    if: ${{ always() && github.event_name == 'workflow_dispatch' && inputs.refresh_id != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Report terminal state to Worker
+        continue-on-error: true
+        env:
+          REFRESH_ID: ${{ inputs.refresh_id }}
+          WORKER_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          WORKER_CALLBACK_TOKEN: ${{ secrets.WORKER_CALLBACK_TOKEN }}
+          REFRESH_RESULT: ${{ needs.refresh.result }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          rm -rf /tmp/media-monitoring-dist
-          cp -R web/dist /tmp/media-monitoring-dist
-
-          git checkout --orphan gh-pages-temp
-          git rm -rf . > /dev/null
-          # git rm 只清掉被追蹤的檔案，連 .gitignore 也一起消失；若不清未追蹤檔，
-          # 後面的 git add . 會把 web/node_modules 整包提交進 gh-pages。
-          git clean -fdx
-
-          cp -R /tmp/media-monitoring-dist/. .
-
-          echo "${GITHUB_SHA}" > source-main-sha.txt
-          echo "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" > build-at.txt
-
-          git add .
-          git commit -m "Deploy web dist: $(date '+%Y-%m-%d %H:%M:%S')"
-          git push origin HEAD:gh-pages --force
+          if [ -z "$WORKER_BASE_URL" ] || [ -z "$WORKER_CALLBACK_TOKEN" ]; then
+            echo "::warning::缺少 Worker callback 設定，無法回報 refresh 終態。"
+            exit 0
+          fi
+          if [ "$REFRESH_RESULT" = "success" ] && [ "$DEPLOY_RESULT" = "success" ]; then
+            callback_status="completed"
+            callback_error=""
+          else
+            callback_status="failed"
+            callback_error="refresh=$REFRESH_RESULT deploy=$DEPLOY_RESULT"
+          fi
+          generated_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          payload="$(jq -n \
+            --arg refreshId "$REFRESH_ID" \
+            --arg status "$callback_status" \
+            --arg generatedAt "$generated_at" \
+            --arg error "$callback_error" \
+            '{refreshId:$refreshId,status:$status,generatedAt:$generatedAt,error:$error}')"
+          curl --fail --silent --show-error \
+            -X POST "${WORKER_BASE_URL%/}/api/refresh/callback" \
+            -H "Authorization: Bearer $WORKER_CALLBACK_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data "$payload"

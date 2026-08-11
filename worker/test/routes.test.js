@@ -4,17 +4,72 @@ import assert from 'node:assert/strict';
 import worker from '../src/index.js';
 import { NEWS_SOURCES } from '../src/sources.js';
 
+function hasHost(value, hostname) {
+  try {
+    return new URL(value).hostname === hostname;
+  } catch {
+    return false;
+  }
+}
+
 test('health endpoint returns schema v2 and localhost CORS', async () => {
+  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'configured', TURNSTILE_SECRET_KEY: 'configured' };
+  const generatedAt = new Date().toISOString();
+  await env.SNAPSHOT.put('snapshot', JSON.stringify({
+    generatedAt,
+    files: { meta: { generatedAt, data: { status: 'ok', lastFastAt: generatedAt } } },
+  }));
   const request = new Request('https://worker.example/api/health', {
     headers: { Origin: 'http://localhost:5173' },
   });
-  const response = await worker.fetch(request, {});
+  const response = await worker.fetch(request, env);
   const body = await response.json();
 
   assert.equal(response.status, 200);
   assert.equal(response.headers.get('Access-Control-Allow-Origin'), 'http://localhost:5173');
+  assert.equal(response.headers.get('X-Content-Type-Options'), 'nosniff');
+  assert.equal(response.headers.get('X-Frame-Options'), 'DENY');
+  assert.equal(response.headers.get('Referrer-Policy'), 'no-referrer');
+  assert.match(response.headers.get('Content-Security-Policy'), /default-src 'none'/);
   assert.equal(body.schemaVersion, '2.0.0');
   assert.equal(body.data.status, 'ok');
+  assert.equal(body.data.dependencies.snapshot.available, true);
+  assert.equal(body.data.dependencies.githubDispatch.configured, true);
+  assert.equal(body.data.dependencies.turnstile.configured, true);
+});
+
+test('health endpoint returns 503 when snapshot storage is missing or stale', async () => {
+  const missingBinding = await worker.fetch(new Request('https://worker.example/api/health'), {});
+  assert.equal(missingBinding.status, 503);
+  assert.equal((await missingBinding.json()).data.status, 'error');
+
+  const env = { SNAPSHOT: memoryKv() };
+  const unavailable = await worker.fetch(new Request('https://worker.example/api/health'), env);
+  assert.equal(unavailable.status, 503);
+  assert.equal((await unavailable.json()).data.dependencies.snapshot.available, false);
+
+  const generatedAt = new Date(Date.now() - 16 * 60 * 1000).toISOString();
+  await env.SNAPSHOT.put('snapshot', JSON.stringify({
+    generatedAt,
+    files: { meta: { generatedAt, data: { status: 'ok', lastFastAt: generatedAt } } },
+  }));
+  const stale = await worker.fetch(new Request('https://worker.example/api/health'), env);
+  assert.equal(stale.status, 503);
+  assert.equal((await stale.json()).data.status, 'error');
+});
+
+test('health endpoint reports a serviceable partial snapshot as degraded', async () => {
+  const env = { SNAPSHOT: memoryKv() };
+  const generatedAt = new Date().toISOString();
+  await env.SNAPSHOT.put('snapshot', JSON.stringify({
+    generatedAt,
+    files: { meta: { generatedAt, data: { status: 'partial', lastFastAt: generatedAt } } },
+  }));
+  const response = await worker.fetch(new Request('https://worker.example/api/health'), env);
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.data.status, 'degraded');
+  assert.equal(body.data.dependencies.snapshot.sourceStatus, 'partial');
 });
 
 test('search endpoint rejects an invalid query before upstream requests', async () => {
@@ -34,13 +89,16 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
   globalThis.fetch = async (input, init) => {
     const url = String(input);
     calls.push({ url, init });
-    if (url.includes('api.github.com')) return new Response(null, { status: 204 });
+    if (url.includes('turnstile')) return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
     return new Response(`<rss><channel><item><guid>manual-${calls.length}</guid>
       <title>Manual refresh item</title><link>https://news.example/story</link>
       <pubDate>${new Date().toUTCString()}</pubDate></item></channel></rss>`);
   };
 
-  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
+  const env = {
+    SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret', DB: deepLockD1(),
+  };
   const pending = [];
   try {
     const response = await worker.fetch(
@@ -49,7 +107,9 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
         headers: {
           Origin: 'https://yin0612.github.io',
           'CF-Connecting-IP': '203.0.113.10',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
       }),
       env,
       { waitUntil: (promise) => pending.push(promise) },
@@ -63,7 +123,7 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
     assert.ok(body.refreshId);
     assert.equal(body.fast, 'running');
     assert.equal(body.deep, 'queued');
-    const dispatch = calls.find(({ url }) => url.includes('api.github.com'));
+    const dispatch = calls.find(({ url }) => hasHost(url, 'api.github.com'));
     assert.ok(dispatch, 'expected a manual GitHub Actions dispatch');
     assert.equal(
       dispatch.url,
@@ -76,6 +136,15 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
 
     await Promise.all(pending);
     assert.ok(await env.SNAPSHOT.get('snapshot'));
+    assert.ok(await env.SNAPSHOT.get(`refresh:${body.refreshId}:meta`));
+    assert.equal(
+      JSON.parse(await env.SNAPSHOT.get(`refresh:${body.refreshId}:fast`)).status,
+      'completed',
+    );
+    assert.equal(
+      JSON.parse(await env.SNAPSHOT.get(`refresh:${body.refreshId}:deep`)).status,
+      'queued',
+    );
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -85,14 +154,18 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (input) => {
     const url = String(input);
-    if (url.includes('api.github.com')) return new Response(null, { status: 204 });
+    if (url.includes('turnstile')) return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
     return new Response('<rss><channel></channel></rss>');
   };
 
-  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
+  const env = {
+    SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret', DB: deepLockD1(),
+  };
   const request = (origin, ip) => new Request('https://worker.example/api/refresh', {
     method: 'POST',
-    headers: { Origin: origin, 'CF-Connecting-IP': ip },
+    headers: { Origin: origin, 'CF-Connecting-IP': ip, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
   });
   const pending = [];
   try {
@@ -117,6 +190,7 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
       waitUntil: (promise) => pending.push(promise),
     });
     assert.equal(otherClient.status, 202);
+    assert.equal((await otherClient.json()).deep, 'skipped');
   } finally {
     await Promise.all(pending);
     globalThis.fetch = originalFetch;
@@ -128,14 +202,17 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
 // 但把 deep 明確標成 unavailable，不能整個拒絕、也不能假裝深度分析成功。
 test('manual refresh still runs the fast path when GitHub dispatch is not configured', async () => {
   const originalFetch = globalThis.fetch;
-  globalThis.fetch = async () => new Response('<rss><channel></channel></rss>');
-  const env = { SNAPSHOT: memoryKv() };
+  globalThis.fetch = async (input) => String(input).includes('turnstile')
+    ? Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' })
+    : new Response('<rss><channel></channel></rss>');
+  const env = { SNAPSHOT: memoryKv(), TURNSTILE_SECRET_KEY: 'turnstile-secret' };
   const pending = [];
   try {
     const response = await worker.fetch(
       new Request('https://worker.example/api/refresh', {
         method: 'POST',
-        headers: { Origin: 'https://yin0612.github.io', 'CF-Connecting-IP': '203.0.113.12' },
+        headers: { Origin: 'https://yin0612.github.io', 'CF-Connecting-IP': '203.0.113.12', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
       }),
       env,
       { waitUntil: (promise) => pending.push(promise) },
@@ -148,10 +225,11 @@ test('manual refresh still runs the fast path when GitHub dispatch is not config
     assert.equal(body.deep, 'unavailable');
 
     await Promise.all(pending);
-    const state = JSON.parse(await env.SNAPSHOT.get(`refresh:${body.refreshId}`));
-    assert.equal(state.deep.status, 'unavailable');
-    assert.equal(state.deep.error, 'GITHUB_TOKEN_NOT_CONFIGURED');
-    assert.equal(state.fast.status, 'completed');
+    const deep = JSON.parse(await env.SNAPSHOT.get(`refresh:${body.refreshId}:deep`));
+    const fast = JSON.parse(await env.SNAPSHOT.get(`refresh:${body.refreshId}:fast`));
+    assert.equal(deep.status, 'unavailable');
+    assert.equal(deep.error, 'GITHUB_TOKEN_NOT_CONFIGURED');
+    assert.equal(fast.status, 'completed');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -159,18 +237,201 @@ test('manual refresh still runs the fast path when GitHub dispatch is not config
 
 test('refresh status endpoint returns correct schema', async () => {
   const env = { SNAPSHOT: memoryKv() };
-  await env.SNAPSHOT.put('refresh:12345', JSON.stringify({
-    refreshId: '12345',
-    requestedAt: new Date().toISOString(),
-    fast: { status: 'completed', generatedAt: new Date().toISOString(), error: null },
-    deep: { status: 'queued', generatedAt: null, error: null }
-  }));
+  const requestedAt = new Date().toISOString();
+  const generatedAt = new Date().toISOString();
+  await env.SNAPSHOT.put('refresh:12345:meta', JSON.stringify({ refreshId: '12345', requestedAt }));
+  await env.SNAPSHOT.put('refresh:12345:fast', JSON.stringify({ status: 'completed', generatedAt, error: null }));
+  await env.SNAPSHOT.put('refresh:12345:deep', JSON.stringify({ status: 'queued', generatedAt: null, error: null }));
   const request = new Request('https://worker.example/api/refresh/status?id=12345');
   const response = await worker.fetch(request, env);
   const body = await response.json();
   assert.equal(response.status, 200);
   assert.equal(body.refreshId, '12345');
   assert.equal(body.fast.status, 'completed');
+  assert.equal(body.deep.status, 'queued');
+  assert.equal(body.requestedAt, requestedAt);
+});
+
+test('manual refresh reports a missing D1 lock as unavailable, not rate-limited', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => String(input).includes('turnstile')
+    ? Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' })
+    : new Response('<rss><channel></channel></rss>');
+  const env = {
+    SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret',
+  };
+  const pending = [];
+  try {
+    const response = await worker.fetch(new Request('https://worker.example/api/refresh', {
+      method: 'POST',
+      headers: { Origin: 'https://yin0612.github.io', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
+    }), env, { waitUntil: (promise) => pending.push(promise) });
+    const body = await response.json();
+
+    assert.equal(body.deep, 'unavailable');
+    const deep = JSON.parse(await env.SNAPSHOT.get(`refresh:${body.refreshId}:deep`));
+    assert.equal(deep.error, 'DEEP_REFRESH_LOCK_NOT_CONFIGURED');
+  } finally {
+    await Promise.all(pending);
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('manual refresh requires a valid Turnstile token when protection is configured', async () => {
+  const originalFetch = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (input) => {
+    calls.push(String(input));
+    return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
+  };
+  const env = {
+    SNAPSHOT: memoryKv(),
+    GITHUB_TOKEN: 'test-token',
+    TURNSTILE_SECRET_KEY: 'turnstile-secret',
+  };
+  try {
+    const missing = await worker.fetch(new Request('https://worker.example/api/refresh', {
+      method: 'POST',
+      headers: { Origin: 'https://yin0612.github.io', 'CF-Connecting-IP': '203.0.113.31', 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+    }), env, { waitUntil: () => {} });
+    assert.equal(missing.status, 403);
+    assert.deepEqual(await missing.json(), { error: 'TURNSTILE_REQUIRED' });
+    assert.equal(calls.length, 0);
+
+    const pending = [];
+    const accepted = await worker.fetch(new Request('https://worker.example/api/refresh', {
+      method: 'POST',
+      headers: {
+        Origin: 'https://yin0612.github.io',
+        'CF-Connecting-IP': '203.0.113.31',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
+    }), env, { waitUntil: (promise) => pending.push(promise) });
+    assert.equal(accepted.status, 202);
+    assert.ok(calls.some((url) => hasHost(url, 'challenges.cloudflare.com')));
+    await Promise.all(pending);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('manual refresh rejects a failed Turnstile verification', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    if (String(input).includes('turnstile')) return Response.json({ success: false, 'error-codes': ['invalid-input-response'] });
+    throw new Error('GitHub must not be called');
+  };
+  const env = {
+    SNAPSHOT: memoryKv(),
+    GITHUB_TOKEN: 'test-token',
+    TURNSTILE_SECRET_KEY: 'turnstile-secret',
+  };
+  try {
+    const response = await worker.fetch(new Request('https://worker.example/api/refresh', {
+      method: 'POST',
+      headers: {
+        Origin: 'https://yin0612.github.io',
+        'CF-Connecting-IP': '203.0.113.32',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ turnstileToken: 'bad-token' }),
+    }), env, { waitUntil: () => {} });
+    assert.equal(response.status, 403);
+    assert.deepEqual(await response.json(), { error: 'TURNSTILE_FAILED' });
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('manual refresh fails closed when Turnstile is missing or returns the wrong action', async () => {
+  const request = () => new Request('https://worker.example/api/refresh', {
+    method: 'POST',
+    headers: { Origin: 'https://yin0612.github.io', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ turnstileToken: 'client-token' }),
+  });
+  const missing = await worker.fetch(request(), { SNAPSHOT: memoryKv() }, { waitUntil: () => {} });
+  assert.equal(missing.status, 503);
+  assert.deepEqual(await missing.json(), { error: 'TURNSTILE_NOT_CONFIGURED' });
+
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => Response.json({
+    success: true, action: 'different_action', hostname: 'yin0612.github.io',
+  });
+  try {
+    const wrongAction = await worker.fetch(request(), {
+      SNAPSHOT: memoryKv(), TURNSTILE_SECRET_KEY: 'turnstile-secret',
+    }, { waitUntil: () => {} });
+    assert.equal(wrongAction.status, 403);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('manual refresh rejects oversized request bodies before verification', async () => {
+  const response = await worker.fetch(new Request('https://worker.example/api/refresh', {
+    method: 'POST',
+    headers: {
+      Origin: 'https://yin0612.github.io', 'Content-Type': 'application/json', 'Content-Length': '5000',
+    },
+    body: JSON.stringify({ turnstileToken: 'x' }),
+  }), { SNAPSHOT: memoryKv(), TURNSTILE_SECRET_KEY: 'turnstile-secret' }, { waitUntil: () => {} });
+  assert.equal(response.status, 413);
+});
+
+test('manual refresh measures actual UTF-8 body size when Content-Length is absent', async () => {
+  const request = new Request('https://worker.example/api/refresh', {
+    method: 'POST',
+    headers: { Origin: 'https://yin0612.github.io', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ turnstileToken: '測'.repeat(2_000) }),
+  });
+  assert.equal(request.headers.get('Content-Length'), null);
+
+  const response = await worker.fetch(
+    request,
+    { SNAPSHOT: memoryKv(), TURNSTILE_SECRET_KEY: 'turnstile-secret' },
+    { waitUntil: () => {} },
+  );
+
+  assert.equal(response.status, 413);
+  assert.deepEqual(await response.json(), { error: 'REQUEST_TOO_LARGE' });
+});
+
+test('refresh callback completes deep analysis without overwriting fast state', async () => {
+  const env = { SNAPSHOT: memoryKv(), REFRESH_CALLBACK_TOKEN: 'callback-secret' };
+  const requestedAt = new Date().toISOString();
+  await env.SNAPSHOT.put('refresh:callback-1:meta', JSON.stringify({ refreshId: 'callback-1', requestedAt }));
+  await env.SNAPSHOT.put('refresh:callback-1:fast', JSON.stringify({
+    status: 'completed', generatedAt: requestedAt, error: null,
+  }));
+  await env.SNAPSHOT.put('refresh:callback-1:deep', JSON.stringify({
+    status: 'queued', generatedAt: null, error: null,
+  }));
+
+  const denied = await worker.fetch(new Request('https://worker.example/api/refresh/callback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer wrong' },
+    body: JSON.stringify({ refreshId: 'callback-1', status: 'completed', generatedAt: requestedAt }),
+  }), env);
+  assert.equal(denied.status, 401);
+
+  const accepted = await worker.fetch(new Request('https://worker.example/api/refresh/callback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer callback-secret' },
+    body: JSON.stringify({ refreshId: 'callback-1', status: 'completed', generatedAt: requestedAt }),
+  }), env);
+  assert.equal(accepted.status, 200);
+
+  const status = await worker.fetch(
+    new Request('https://worker.example/api/refresh/status?id=callback-1'),
+    env,
+  );
+  const body = await status.json();
+  assert.equal(body.fast.status, 'completed');
+  assert.equal(body.deep.status, 'completed');
+  assert.equal(body.deep.generatedAt, requestedAt);
 });
 
 test('24h search merges Google News results with the low-frequency Pages snapshot', async () => {
@@ -182,7 +443,7 @@ test('24h search merges Google News results with the low-frequency Pages snapsho
   globalThis.fetch = async (input) => {
     const url = String(input);
     requested.push(url);
-    if (url.includes('news.google.com/rss/search')) {
+    if (hasHost(url, 'news.google.com') && new URL(url).pathname === '/rss/search') {
       return new Response(`<rss><channel><item><guid>g1</guid><title>台積電三立快訊</title>
         <link>https://news.google.com/rss/articles/g1</link>
         <pubDate>${recentPubDate}</pubDate>
@@ -216,6 +477,85 @@ test('24h search merges Google News results with the low-frequency Pages snapsho
   }
 });
 
+test('30d search reads historical articles from D1 without live RSS fanout', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    throw new Error(`unexpected network request: ${String(input)}`);
+  };
+  const publishedAt = Date.now() - 20 * 24 * 60 * 60 * 1000;
+  const env = {
+    DB: queryOnlyD1([{
+      id: 'd1-old-article',
+      source_id: 'cna',
+      title: '台積電二十天前的重大投資案',
+      excerpt: '歷史索引資料',
+      published_at: publishedAt,
+      canonical_url: 'https://www.cna.com.tw/news/afe/1.aspx',
+      sentiment_json: null,
+    }]),
+  };
+  try {
+    const response = await worker.fetch(
+      new Request('https://worker.example/api/search?q=台積電&range=30d'),
+      env,
+    );
+    const body = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(body.data.range, '30d');
+    assert.equal(body.data.metrics.mentions, 1);
+    assert.equal(body.data.items[0].id, 'd1-old-article');
+    assert.equal(body.data.coverage.actualFrom, new Date(publishedAt).toISOString());
+    assert.equal(body.data.coverage.actualTo, new Date(publishedAt).toISOString());
+    assert.equal(body.data.coverage.complete, false);
+    assert.equal(body.data.status, 'partial');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('30d search falls back to the full archive with explicit incomplete coverage when D1 fails', async () => {
+  const originalFetch = globalThis.fetch;
+  const requested = [];
+  const oldPublishedAt = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString();
+  const currentPubDate = new Date(Date.now() - 60 * 60 * 1000).toUTCString();
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    requested.push(url);
+    if (url.endsWith('/data/news-archive.json')) {
+      return Response.json({
+        schemaVersion: '2.1.0',
+        generatedAt: new Date().toISOString(),
+        data: {
+          status: 'ok', stale: false, items: [{
+            id: 'archive-old', source: 'cna', title: '台積電十日前新聞', excerpt: '',
+            publishedAt: oldPublishedAt, url: 'https://example.com/archive-old', sentiment: null,
+          }],
+        },
+      });
+    }
+    if (hasHost(url, 'news.google.com')) return new Response('<rss><channel></channel></rss>');
+    return new Response(`<rss><channel><item><guid>${encodeURIComponent(url)}</guid><title>台積電即時新聞</title>
+      <link>https://example.com/current/${encodeURIComponent(url)}</link><pubDate>${currentPubDate}</pubDate></item></channel></rss>`);
+  };
+  const env = {
+    DB: { prepare: () => { throw new Error('D1 unavailable'); } },
+    ARCHIVE_BASE_URL: 'https://pages.example',
+  };
+  try {
+    const response = await worker.fetch(new Request('https://worker.example/api/search?q=台積電&range=30d'), env);
+    const body = await response.json();
+
+    assert.equal(response.status, 200);
+    assert.equal(body.data.status, 'partial');
+    assert.equal(body.data.coverage.complete, false);
+    assert.equal(body.data.coverage.actualFrom, oldPublishedAt);
+    assert.ok(requested.some((url) => url.endsWith('/data/news-archive.json')));
+    assert.ok(!requested.some((url) => url.endsWith('/data/recent.json')));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 function memoryKv() {
   const store = new Map();
   return { get: async (key) => store.get(key) ?? null, put: async (key, value) => void store.set(key, value), _store: store };
@@ -224,9 +564,94 @@ function memoryKv() {
 async function runScheduled(env) {
   const pending = [];
   const ctx = { waitUntil: (promise) => pending.push(promise) };
-  await worker.scheduled({}, env, ctx);
+  await worker.scheduled({ cron: '*/5 * * * *' }, env, ctx);
   await Promise.all(pending);
 }
+
+function deepLockD1() {
+  let claimed = false;
+  return {
+    prepare: () => ({ bind: () => ({ run: async () => {
+      const changes = claimed ? 0 : 1;
+      claimed = true;
+      return { meta: { changes } };
+    } }) }),
+  };
+}
+
+function queryOnlyD1(rows) {
+  const published = rows.map((row) => Number(row.published_at)).filter(Number.isFinite);
+  return {
+    prepare: (sql) => ({
+      bind: () => ({
+        all: async () => ({ success: true, results: rows }),
+        first: async () => ({
+          actual_from: published.length ? Math.min(...published) : null,
+          actual_to: published.length ? Math.max(...published) : null,
+          article_count: published.length,
+        }),
+      }),
+    }),
+  };
+}
+
+test('Cloudflare fast and deep cron triggers have separate responsibilities', async () => {
+  const originalFetch = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    calls.push(url);
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
+    if (url.endsWith('/data/recent.json')) return Response.json({ data: { items: [] } });
+    if (url.endsWith('/data/sources.json')) return new Response('', { status: 503 });
+    if (['keywords', 'entities', 'topics'].some((name) => url.endsWith(`/data/${name}.json`))) {
+      return new Response('', { status: 503 });
+    }
+    return new Response('<rss><channel></channel></rss>');
+  };
+  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret' };
+  try {
+    const fastPending = [];
+    await worker.scheduled({ cron: '*/5 * * * *' }, env, { waitUntil: (promise) => fastPending.push(promise) });
+    await Promise.all(fastPending);
+    assert.ok(await env.SNAPSHOT.get('snapshot'));
+    assert.equal(calls.some((url) => hasHost(url, 'api.github.com')), false);
+
+    calls.length = 0;
+    const deepPending = [];
+    await worker.scheduled({ cron: '2,17,32,47 * * * *' }, env, { waitUntil: (promise) => deepPending.push(promise) });
+    await Promise.all(deepPending);
+    assert.deepEqual(calls, ['https://api.github.com/repos/yin0612/MediaMonitoring/dispatches']);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('a D1 persistence failure does not invalidate an already published KV snapshot', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.endsWith('/data/recent.json')) return Response.json({ data: { items: [] } });
+    if (url.endsWith('/data/sources.json')) return new Response('', { status: 503 });
+    if (['keywords', 'entities', 'topics', 'events'].some((name) => url.endsWith(`/data/${name}.json`))) {
+      return new Response('', { status: 503 });
+    }
+    return new Response('<rss><channel></channel></rss>');
+  };
+  const env = {
+    SNAPSHOT: memoryKv(),
+    DB: {
+      prepare: () => ({ bind: () => ({}) }),
+      batch: async () => { throw new Error('D1 unavailable'); },
+    },
+  };
+  try {
+    await runScheduled(env);
+    assert.ok(await env.SNAPSHOT.get('snapshot'));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
 
 const freshTimestamp = (offsetMs = 0) => new Date(Date.now() + offsetMs).toISOString();
 
@@ -327,16 +752,16 @@ test('Pages-first scheduled snapshot skips official RSS for complete fresh sourc
 
     assert.equal(calls.filter((url) => officialUrls.has(url)).length, 0);
     assert.deepEqual(sources.data.sources.map((source) => source.id), NEWS_SOURCES.map((source) => source.id));
-    assert.equal(byId.get('tvbs').status, 'ok');
+    assert.equal(byId.get('tvbs').status, 'empty');
     assert.equal(byId.get('tvbs').itemCount, 0);
     assert.equal(byId.get('cti').status, 'error');
     assert.equal(byId.get('cti').stale, true);
     assert.equal(byId.get('cti').errorCode, 'HTTP_403');
-    assert.equal(byId.get('era').status, 'ok');
+    assert.equal(byId.get('era').status, 'degraded');
     assert.equal(byId.get('era').stale, false);
     assert.equal(byId.get('era').itemCount, 1);
     assert.equal(byId.get('era').errorCode, null);
-    assert.equal(byId.get('ttv').status, 'stale');
+    assert.equal(byId.get('ttv').status, 'error');
     assert.equal(byId.get('ttv').stale, true);
     assert.equal(byId.get('ttv').errorCode, 'ARCHIVE_STALE');
     assert.equal(meta.data.status, 'partial');
@@ -451,7 +876,7 @@ test('Pages-first rejects unknown source IDs and falls back to official RSS', as
   await assertPagesEvidenceFallsBack(pageStates);
 });
 
-test('Pages source health preserves healthy zero-item evidence in scheduled snapshots', async () => {
+test('Pages source health identifies successful zero-item evidence as empty', async () => {
   const expected = pagesSourceState();
   const originalFetch = installPagesSourceHealthFetch(expected);
   const env = { SNAPSHOT: memoryKv(), ARCHIVE_BASE_URL: 'https://pages.example/' };
@@ -460,23 +885,28 @@ test('Pages source health preserves healthy zero-item evidence in scheduled snap
     const body = await (await worker.fetch(new Request('https://worker.example/api/data?name=sources'), env)).json();
     const era = body.data.sources.find((source) => source.id === 'era');
 
-    assert.equal(era.status, 'ok');
+    assert.equal(era.status, 'empty');
     assert.equal(era.stale, false);
     assert.equal(era.itemCount, 0);
     assert.equal(era.lastSuccessAt, expected.lastSuccessAt);
     assert.equal(era.errorCode, null);
     assert.equal(era.accessMode, expected.accessMode);
+    assert.equal(era.transportOk, true);
+    assert.equal(era.fallbackUsed, true);
+    assert.equal(era.excerptRate, 0);
+    assert.equal(typeof era.qualityScore, 'number');
+    assert.deepEqual(Object.keys(era.qualityComponents).sort(), ['access', 'availability', 'excerpt', 'freshness']);
   } finally {
     globalThis.fetch = originalFetch;
   }
 });
 
-test('scheduled treats valid empty official RSS as healthy without weakening feed errors', async (t) => {
+test('scheduled distinguishes valid empty official RSS from feed errors', async (t) => {
   const cases = [
     {
       name: 'valid empty feed',
       xml: '<?xml version="1.0"?><rss version="2.0"><channel><title>Empty</title></channel></rss>',
-      status: 'ok',
+      status: 'empty',
       errorCode: null,
       itemCount: 0,
     },
@@ -486,7 +916,7 @@ test('scheduled treats valid empty official RSS as healthy without weakening fee
         <channel><title>Taipei Times</title></channel>
         <item><title>RDF headline</title><link>https://www.taipeitimes.com/News/front/archives/2026/08/06/1</link>
         <dc:date>${freshTimestamp(-60_000)}</dc:date></item></rdf:RDF>`,
-      status: 'ok',
+      status: 'degraded',
       errorCode: null,
     },
     {
@@ -599,7 +1029,7 @@ test('Pages source health preserves true error evidence when no recent items exi
   }
 });
 
-test('Pages source health does not override the existing recent-item fallback', async () => {
+test('Pages source health marks an existing recent-item fallback as degraded', async () => {
   const pageError = pagesSourceState({
     status: 'error',
     stale: true,
@@ -621,7 +1051,7 @@ test('Pages source health does not override the existing recent-item fallback', 
     const body = await (await worker.fetch(new Request('https://worker.example/api/data?name=sources'), env)).json();
     const era = body.data.sources.find((source) => source.id === 'era');
 
-    assert.equal(era.status, 'ok');
+    assert.equal(era.status, 'degraded');
     assert.equal(era.stale, false);
     assert.equal(era.itemCount, 1);
     assert.notEqual(era.lastSuccessAt, pageError.lastSuccessAt);
@@ -758,7 +1188,7 @@ test('Pages source health rejects ancient envelopes and ancient attempts', async
   }
 });
 
-test('scheduled meta status is derived from finalized healthy-empty source states', async () => {
+test('scheduled meta status is partial when every transport is healthy but content is empty', async () => {
   const originalFetch = globalThis.fetch;
   const pageStates = NEWS_SOURCES.map((source) => pagesSourceState({
     id: source.id,
@@ -785,8 +1215,8 @@ test('scheduled meta status is derived from finalized healthy-empty source state
     await runScheduled(env);
     const sources = await (await worker.fetch(new Request('https://worker.example/api/data?name=sources'), env)).json();
     const meta = await (await worker.fetch(new Request('https://worker.example/api/data?name=meta'), env)).json();
-    assert.equal(sources.data.sources.every((source) => source.status === 'ok'), true);
-    assert.equal(meta.data.status, 'ok');
+    assert.equal(sources.data.sources.every((source) => source.status === 'empty'), true);
+    assert.equal(meta.data.status, 'partial');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -798,13 +1228,13 @@ test('scheduled subrequest budget uses one attempt per official URL and keeps re
   globalThis.fetch = async (input) => {
     const url = String(input);
     calls.push(url);
-    if (url.includes('api.github.com')) return new Response(null, { status: 204 });
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
     return new Response('', { status: 503 });
   };
   const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
   const officialUrls = NEWS_SOURCES.flatMap((source) => source.rssUrls || (source.rssUrl ? [source.rssUrl] : []));
-  const pagesReadCount = 5;
-  const dispatchCount = 1;
+  const pagesReadCount = 6;
+  const dispatchCount = 0;
   const safeThreshold = 40;
   try {
     await runScheduled(env);
@@ -846,7 +1276,7 @@ test('scheduled build writes a snapshot that /api/data serves per file', async (
         data: { stale: false, experimental: true, topics: [] },
       });
     }
-    if (url.includes('news.google.com/rss/search')) {
+    if (hasHost(url, 'news.google.com') && new URL(url).pathname === '/rss/search') {
       const domain = new URL(url).searchParams.get('q').match(/site:(\S+)/)[1];
       return new Response(`<rss><channel><item><guid>g-${domain}</guid>
         <title>台積電擴廠與經濟部會談 - 中央社</title>
@@ -962,9 +1392,9 @@ test('scheduled dispatches GitHub Actions when a token is configured', async () 
   globalThis.fetch = async (input, init) => {
     const url = String(input);
     calls.push({ url, init });
-    if (url.includes('news.google.com/rss/search') || url.includes('api.github.com')) {
-      return new Response(url.includes('api.github.com') ? '' : '<rss><channel></channel></rss>', {
-        status: url.includes('api.github.com') ? 204 : 200,
+    if (hasHost(url, 'news.google.com') || hasHost(url, 'api.github.com')) {
+      return new Response(hasHost(url, 'api.github.com') ? '' : '<rss><channel></channel></rss>', {
+        status: hasHost(url, 'api.github.com') ? 204 : 200,
       });
     }
     return new Response('<rss><channel></channel></rss>');
@@ -972,10 +1402,10 @@ test('scheduled dispatches GitHub Actions when a token is configured', async () 
   const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
   try {
     const pending = [];
-    await worker.scheduled({}, env, { waitUntil: (p) => pending.push(p) });
+    await worker.scheduled({ cron: '2,17,32,47 * * * *' }, env, { waitUntil: (p) => pending.push(p) });
     await Promise.all(pending);
 
-    const dispatch = calls.find((c) => c.url.includes('api.github.com'));
+    const dispatch = calls.find((c) => hasHost(c.url, 'api.github.com'));
     assert.ok(dispatch, 'expected a call to the GitHub Actions dispatch endpoint');
     assert.equal(
       dispatch.url,
@@ -1002,7 +1432,7 @@ test('scheduled skips the GitHub dispatch call when no token is configured', asy
     await worker.scheduled({}, env, { waitUntil: (p) => pending.push(p) });
     await Promise.all(pending);
 
-    assert.ok(!calls.some((url) => url.includes('api.github.com')));
+    assert.ok(!calls.some((url) => hasHost(url, 'api.github.com')));
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -1050,7 +1480,7 @@ test('search metrics count every match while the payload stays capped', async ()
   globalThis.fetch = async (input) => {
     const url = String(input);
     if (url.endsWith('/data/recent.json')) return Response.json({ data: { items: archived } });
-    if (url.includes('news.google.com')) return new Response('<rss><channel></channel></rss>');
+    if (hasHost(url, 'news.google.com')) return new Response('<rss><channel></channel></rss>');
     return new Response(`<rss><channel><item><guid>x</guid><title>無關</title>
       <link>https://news.example/other</link><pubDate>${pubDate}</pubDate></item></channel></rss>`);
   };

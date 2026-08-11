@@ -7,12 +7,28 @@ workers_dev = true
 ALLOWED_ORIGIN = "https://yin0612.github.io"
 ARCHIVE_BASE_URL = "https://yin0612.github.io/MediaMonitoring"
 
-# 每 5 分鐘由 Worker 自行抓取 sources.js 全部來源並重算快照，寫入 KV，讓儀表板新鮮度脫離 GitHub cron
+# 快管線每 5 分鐘更新 KV；深管線每 15 分鐘錯開 2 分鐘觸發 GitHub Actions。
 [triggers]
-crons = ["*/5 * * * *"]
+crons = ["*/5 * * * *", "2,17,32,47 * * * *"]
+
+[observability]
+enabled = true
+head_sampling_rate = 0.1
 
 # 單一鍵 "snapshot" 儲存整份快照（archive/recent/keywords/entities/sources/meta）
 # 一次執行只寫一個鍵，288 次/日，遠低於免費層 1000 寫入/日限制
 [[kv_namespaces]]
 binding = "SNAPSHOT"
 id = "7f726665db69456aba1da52ddeeeb563"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "media-monitoring-archive"
+database_id = "47b47466-faff-4533-a5b8-c8cef08108dd"
+migrations_dir = "migrations"
+
+# R2 第一次使用需先在 Cloudflare Dashboard 啟用帳號 entitlement。
+# 啟用後建立 `media-monitoring-archive`，再取消下列 binding 註解；程式在未配置時安全略過。
+# [[r2_buckets]]
+# binding = "ARCHIVE_BUCKET"
+# bucket_name = "media-monitoring-archive"

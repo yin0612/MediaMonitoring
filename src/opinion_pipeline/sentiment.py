@@ -104,6 +104,40 @@ def classify(text: str, lexicon: SentimentLexicon) -> dict:
     return {"label": label, "score": round(score, 3), "matched": matched[:6]}
 
 
+def classify_target(
+    text: str,
+    target: str,
+    aliases: list[str],
+    lexicon: SentimentLexicon,
+    *,
+    context_chars: int = 16,
+) -> dict:
+    """Lexicon baseline scoped to the local context of a named target.
+
+    No target mention or no polarity evidence returns ``uncertain`` instead of
+    forcing a whole-document label onto the target.
+    """
+    mentions = [(text.find(name), name) for name in [target, *aliases] if name and text.find(name) >= 0]
+    if not mentions:
+        return {"target": target, "label": "uncertain", "score": 0.0, "evidence": []}
+    index, name = min(mentions, key=lambda value: value[0])
+    # Keep a narrower leading window so unrelated headline sentiment before the
+    # target does not dominate; retain more following context for predicates.
+    start = max(0, index - min(8, context_chars))
+    end = min(len(text), index + len(name) + context_chars)
+    context = text[start:end]
+    verdict = classify(context, lexicon)
+    if not verdict["matched"]:
+        return {"target": target, "label": "uncertain", "score": 0.0, "evidence": []}
+    return {
+        "target": target,
+        "label": verdict["label"],
+        "score": verdict["score"],
+        "evidence": verdict["matched"],
+        "context": context,
+    }
+
+
 def aggregate(labels: list[str]) -> dict[str, float]:
     """把逐篇標籤彙總成主題層的三分比例（總和為 1）。"""
     if not labels:

@@ -317,6 +317,15 @@ export function SearchPage() {
             <div>
               <h2>「{result.data.query}」分析結果</h2>
               <p>資料產生時間：{fmtDateTime(result.generatedAt)}</p>
+              {result.data.coverage && (
+                <p className="small muted">
+                  實際資料窗：{result.data.coverage.actualFrom ? fmtDateTime(result.data.coverage.actualFrom) : '尚無資料'}
+                  {' '}至 {result.data.coverage.actualTo ? fmtDateTime(result.data.coverage.actualTo) : '尚無資料'}
+                </p>
+              )}
+              {result.data.coverage?.complete === false && (
+                <Banner variant="warning">目前歷史索引尚未覆蓋完整的所選期間；統計只代表上方標示的實際資料窗。</Banner>
+              )}
             </div>
             <Badge variant={result.data.stale ? 'warning' : result.data.status === 'partial' ? 'serious' : 'good'} dot>
               {result.data.stale ? '最後快照' : result.data.status === 'partial' ? '部分來源異常' : '即時來源'}
