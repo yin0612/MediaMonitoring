@@ -197,6 +197,45 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
   }
 });
 
+test('manual refresh cooldown is atomic for concurrent requests from one IP', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.includes('turnstile')) {
+      return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
+    }
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
+    return new Response('<rss><channel></channel></rss>');
+  };
+
+  const env = {
+    SNAPSHOT: memoryKv(),
+    GITHUB_TOKEN: 'test-token',
+    TURNSTILE_SECRET_KEY: 'turnstile-secret',
+    DB: atomicRefreshLockD1(),
+  };
+  const makeRequest = () => new Request('https://worker.example/api/refresh', {
+    method: 'POST',
+    headers: {
+      Origin: 'https://yin0612.github.io',
+      'CF-Connecting-IP': '203.0.113.42',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
+  });
+  const pending = [];
+  try {
+    const responses = await Promise.all([
+      worker.fetch(makeRequest(), env, { waitUntil: (promise) => pending.push(promise) }),
+      worker.fetch(makeRequest(), env, { waitUntil: (promise) => pending.push(promise) }),
+    ]);
+    assert.deepEqual(responses.map((response) => response.status).sort((left, right) => left - right), [202, 429]);
+  } finally {
+    await Promise.all(pending);
+    globalThis.fetch = originalFetch;
+  }
+});
+
 // 沒有 GITHUB_TOKEN 只代表深度分析（Actions/Python）無法觸發；Worker 自己的快速
 // 更新仍會重抓 RSS 並產生新快照，使用者確實會拿到新新聞。因此這裡要照常受理，
 // 但把 deep 明確標成 unavailable，不能整個拒絕、也不能假裝深度分析成功。
@@ -608,13 +647,22 @@ async function runScheduled(env) {
 }
 
 function deepLockD1() {
-  let claimed = false;
+  return atomicRefreshLockD1();
+}
+
+function atomicRefreshLockD1() {
+  const claimed = new Set();
   return {
-    prepare: () => ({ bind: () => ({ run: async () => {
-      const changes = claimed ? 0 : 1;
-      claimed = true;
-      return { meta: { changes } };
-    } }) }),
+    prepare: (sql) => ({
+      bind: (...args) => ({
+        run: async () => {
+          const name = sql.includes("'manual-deep'") ? 'manual-deep' : String(args[0]);
+          if (claimed.has(name)) return { meta: { changes: 0 } };
+          claimed.add(name);
+          return { meta: { changes: 1 } };
+        },
+      }),
+    }),
   };
 }
 

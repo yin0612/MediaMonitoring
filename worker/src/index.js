@@ -835,6 +835,31 @@ async function runDeepRefresh(env, refreshId) {
 async function refreshCooldown(env, request) {
   const ip = request.headers.get('CF-Connecting-IP') || '';
   if (!ip) return { key: null, retryAfterSeconds: 0 };
+
+  // KV has no compare-and-set operation. When D1 is available, claim the
+  // per-IP slot with the same atomic lock primitive used by deep refreshes.
+  // The raw client address is hashed so it is never persisted in D1.
+  if (env.DB) {
+    const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
+    const hash = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join('');
+    const name = `manual-ip:${hash.slice(0, 32)}`;
+    const now = Date.now();
+    try {
+      const result = await env.DB.prepare(`
+        INSERT INTO refresh_locks (name, claimed_at) VALUES (?1, ?2)
+        ON CONFLICT(name) DO UPDATE SET claimed_at = excluded.claimed_at
+        WHERE refresh_locks.claimed_at <= ?3
+      `).bind(name, now, now - REFRESH_COOLDOWN_MS).run();
+      if (Number(result?.meta?.changes || 0) > 0) {
+        return { key: null, retryAfterSeconds: 0 };
+      }
+      return { key: null, retryAfterSeconds: Math.ceil(REFRESH_COOLDOWN_MS / 1000) };
+    } catch (error) {
+      console.error(JSON.stringify({ event: 'refresh_cooldown_lock_failed', error: error?.message }));
+      return { key: null, retryAfterSeconds: 0, error: 'REFRESH_RATE_LIMIT_UNAVAILABLE' };
+    }
+  }
+
   const key = `refresh-cooldown:${ip}`;
   const raw = await env.SNAPSHOT.get(key);
   const startedAt = raw ? Number.parseInt(raw, 10) : Number.NaN;
@@ -915,7 +940,8 @@ async function handleRefresh(request, env, ctx) {
   const turnstile = await verifyTurnstile(request, env);
   if (!turnstile.ok) return json(request, env, { error: turnstile.error }, turnstile.status);
 
-  const { key: cooldownKey, retryAfterSeconds } = await refreshCooldown(env, request);
+  const { key: cooldownKey, retryAfterSeconds, error: cooldownError } = await refreshCooldown(env, request);
+  if (cooldownError) return json(request, env, { error: cooldownError }, 503);
   if (retryAfterSeconds > 0) {
     return json(request, env, { error: 'REFRESH_COOLDOWN', retryAfterSeconds }, 429);
   }
