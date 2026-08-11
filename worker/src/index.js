@@ -70,7 +70,38 @@ async function fetchOfficialItems(source, attempts = 2) {
   };
 }
 
-const envelope = (data) => ({ schemaVersion: '2.0.0', generatedAt: new Date().toISOString(), data });
+const envelopeTimestamp = (value) => {
+  const timestamp = Date.parse(String(value || ''));
+  return Number.isFinite(timestamp) ? new Date(timestamp).toISOString() : null;
+};
+
+const envelopeWindow = (data, generatedAt) => {
+  const coverage = data?.coverage;
+  const coveredFrom = envelopeTimestamp(coverage?.actualFrom);
+  const coveredTo = envelopeTimestamp(coverage?.actualTo);
+  if (coveredFrom || coveredTo) return { actualFrom: coveredFrom, actualTo: coveredTo || generatedAt };
+
+  const timestamps = (Array.isArray(data?.items) ? data.items : [])
+    .map((item) => Date.parse(String(item?.publishedAt || '')))
+    .filter(Number.isFinite);
+  return {
+    actualFrom: timestamps.length ? new Date(Math.min(...timestamps)).toISOString() : null,
+    actualTo: timestamps.length ? new Date(Math.max(...timestamps)).toISOString() : generatedAt,
+  };
+};
+
+const envelope = (data) => {
+  const generatedAt = new Date().toISOString();
+  return {
+    schemaVersion: '2.0.0',
+    generatedAt,
+    pipeline: 'worker-live',
+    window: envelopeWindow(data, generatedAt),
+    quality: { status: data?.status || (data?.stale ? 'stale' : 'available') },
+    provenance: { method: 'worker-public-metadata', reproducible: true },
+    data,
+  };
+};
 
 const corsHeaders = (request, env) => {
   const origin = request.headers.get('Origin') || '';

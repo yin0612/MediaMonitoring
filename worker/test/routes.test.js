@@ -508,6 +508,10 @@ test('30d search reads historical articles from D1 without live RSS fanout', asy
     assert.equal(body.data.coverage.actualTo, new Date(publishedAt).toISOString());
     assert.equal(body.data.coverage.complete, false);
     assert.equal(body.data.status, 'partial');
+    assert.equal(body.pipeline, 'worker-live');
+    assert.equal(body.window.actualFrom, new Date(publishedAt).toISOString());
+    assert.equal(body.window.actualTo, new Date(publishedAt).toISOString());
+    assert.equal(body.provenance.reproducible, true);
   } finally {
     globalThis.fetch = originalFetch;
   }
