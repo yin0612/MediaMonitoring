@@ -6,10 +6,10 @@
 
 ## 目前可用功能
 
-- 新聞關鍵字搜尋：`1h`、`6h`、`24h`、`7d`。
+- 新聞關鍵字搜尋：`1h`、`6h`、`12h`、`24h`、`7d`、`30d`；`7d/30d` 會回報實際歷史覆蓋範圍，資料不足時標示 `partial`／`stale`。
 - 關鍵字熱度（真實資料）：由近 24 小時新聞重算 `100 × (0.50V + 0.33A + 0.17D)`，其中 `V = log1p(命中數) / log1p(當期最大值)`、`D = 來源分布熵 / ln(來源數)`；人工監測詞來自 `config/watch_terms.yml`，自動熱詞由標題 n-gram 統計（跨 ≥3 家媒體才入榜）。
-- 搜尋結果的熱度是**另一套分量定義**：權重相同，但 `V = 命中數 / 來源數`、`D = 命中來源數 / 來源數`，且統計在取前 100 筆之後計算。因此搜尋頁的 `聲量` 上限為 100，命中數達 37 篇後 `V` 即飽和為 1.0，熱門詞之間的熱度差異有限。Worker 與離線 fallback 使用完全相同的公式與切片，數字不會因 Worker 是否可用而改變。
-- 近期升溫關鍵字：以最近 90 分鐘與前一個 90 分鐘為兩個半開時間窗，列出出現至少 2 篇且頻率增加的既有關鍵字；這是描述性頻率訊號，不等於趨勢預測、因果判斷或完整全網監測。
+- 搜尋結果的熱度是**另一套分量定義**：權重相同，但 `V = 命中數 / 來源數`、`D = 命中來源數 / 來源數`；統計先對全部去重命中計算，再只回傳前 100 筆文章。因此回傳清單的大小不會改變聲量與來源指標。Worker 與 Pages fallback 使用相同公式。
+- 近期升溫關鍵字：以最近 1 小時與前 7 個「同一時段」日基線比較，採 median/MAD 穩健分數；目前至少 5 篇且涵蓋至少 3 家來源、並具備完整 7 日基線才會宣稱升溫，否則回傳 `null`。這是描述性頻率訊號，不等於趨勢預測、因果判斷或完整全網監測。
 - 人物與組織共現網絡（真實資料）：以 `config/entities.yml` 的公眾人物／ORG 詞典比對近 24 小時新聞，同篇共現建邊；共現不代表支持、反對或因果。
 - 實驗性詞典情緒：由管線填入逐篇 `label`、`score`、`matched`，主題頁顯示正負代表文章與命中詞；未達 macro-F1 0.70 前只視為 baseline。已知限制：每個情緒詞只採計第一次出現的位置，否定判斷也只看該位置，因此同詞多次且極性不一致的句子只會反映第一次的判讀（Python 與 Worker 兩端行為一致）。
 - 台灣 Google Trends RSS：熱門字、約略搜尋量、發布時間與相關新聞。
@@ -28,24 +28,25 @@
 ```text
 瀏覽器（GitHub Pages 前端）
   ├─ 儀表板資料：先讀 Worker /api/data?name=…（每 5 分鐘更新），失敗改讀 Pages public/data
-  ├─ 新聞搜尋：Worker /api/search（即時）；失敗時 24h 內先讀 recent，7d 按 manifest 讀日分檔
+  ├─ 新聞搜尋：Worker /api/search（即時）；失敗時 24h 內先讀 recent，7d/30d 按 manifest 讀日分檔
   └─ Google Trends：Worker /api/trends（快取 60 秒），失敗改讀 Pages trends
 
 Cloudflare Worker（免費層）
   ├─ Cron */5：抓 37 家來源 → 合併近 24 小時工作集 → 重算逐篇輕量情緒與 sources/meta → 寫入 KV
+  ├─ Cron 以每 15 分鐘錯開觸發 deep GitHub Actions，重算歷史 archive 與深度分析
   ├─ keywords/entities/topics：搬運 Actions/Python 公開快照，避免 Free Cron 的 10 ms CPU 上限
   ├─ /api/data：從 KV 取儀表板各檔（新鮮度 ≤5 分鐘）
   ├─ /api/search、/api/trends、/api/health
   └─ 分析邏輯（analysis.js）與 config 由 config/*.yml 於部署前產生（gen-config），與 Python 端同一套規則
 
-GitHub Actions（每 5 分鐘 best effort，作為備援；排程觸發跳過重複測試以縮短延遲）
+GitHub Actions（push／手動／Worker deep 觸發；另保留每小時一次的 last-resort fallback）
   ├─ Python 管線 → public/data/*.json（含熱詞、人物／組織、主題次事件與逐篇情緒）
   ├─ archive → 完整相容檔 + news-archive-index.json + UTC 日分檔
   ├─ Google News RSS 補充 → 官方 RSS 不可用的來源每次執行都有新資料
   └─ 官網 metadata 管線 → 每個來源最多每 6 小時一次
 ```
 
-新聞僅保存來源、標題、最多 140 字短摘要、發布時間與原文 URL；不保存或重製全文與圖片。7 天搜尋僅涵蓋已啟用來源的快照，不代表完整全網新聞。
+新聞僅保存來源、標題、最多 140 字短摘要、發布時間與原文 URL；不保存或重製全文與圖片。7 天與 30 天搜尋僅涵蓋已啟用來源的快照，不代表完整全網新聞；未完成回填時會顯示實際覆蓋區間。
 
 ## 一鍵執行與持續更新
 
@@ -77,7 +78,7 @@ npm run dev
 ```
 
 若 Worker 搜尋不可用，前端直接以 Pages 的 `recent.json`（最長 24 小時）或
-`news-archive-index.json`＋日分檔（7 天）搜尋最後快照；完整
+`news-archive-index.json`＋日分檔（7 天／30 天）搜尋最後快照；完整
 `news-archive.json` 只保留給舊部署相容。要使用即時 Worker，複製
 `web/.env.example` 為 `web/.env.local` 並設定：
 
@@ -119,10 +120,9 @@ Token 必須具備觸發該 repository workflow 的權限；同時將 `web/.env.
 
 ## GitHub Pages
 
-1. Repository `Settings → Pages → Source` 選擇 **Deploy from a branch**，分支選 `gh-pages`、路徑 `/`。
-   `refresh-data.yml` 會把建置結果強制推到 `gh-pages`，再由 GitHub 自動發布；**不要**選 GitHub Actions，否則這條部署路徑不會生效。
+1. Repository `Settings → Pages → Source` 選擇 **GitHub Actions**。`refresh-data.yml` 會產生 Pages artifact，並由 `actions/deploy-pages` 發布；不需要 `gh-pages` 分支。
 2. 推送至 `main`，或手動執行 `Refresh data and deploy`。
-3. 排程每 5 分鐘嘗試更新一次；GitHub 對 `schedule` 事件會依負載大量延後或合併，實際間隔可能遠大於 5 分鐘，故 UI 一律顯示實際資料時間。部署 Worker 後由 Worker 的 Cron 主動觸發，時間才會穩定。
+3. Cloudflare Worker 以 `*/5` 執行 fast 快照、以每 15 分鐘錯開的 Cron 觸發 deep Actions；GitHub 另保留每小時一次、且僅在 `lastDeepAt` 超過 25 分鐘時才執行的 fallback。UI 一律顯示實際資料時間。
 4. `VITE_API_BASE_URL` 未設定時仍會照常建置與部署（靜態快照模式），只是沒有即時更新能力。
 
 正式站點：<https://yin0612.github.io/MediaMonitoring/>
@@ -151,6 +151,18 @@ npm run typecheck
 npm run build
 # 另於 web 目錄執行：npm run test -- ../web/test/route-smoke.test.tsx
 ```
+
+## 人工評測集
+
+`benchmarks/annotation-candidates.jsonl` 是由目前 archive 可重現產生的 1,000 筆分層候選集（train 700、dev 150、test 150），其中 100 筆保留雙人標註。檔案只提供待標註的文章與空白欄位；在人工完成 `eventCluster`、`topics`、`entities`、`textTone`、`target` 與 `targetStance` 前，不宣稱 Cohen's kappa 或 held-out macro-F1。
+
+重新產生候選集：
+
+```powershell
+python scripts/build_benchmark.py --size 1000
+```
+
+R2 歷史物件儲存是可選功能；需先在 Cloudflare 帳號啟用 R2 entitlement，再建立 `media-monitoring-archive` bucket 並取消 `worker/wrangler.toml` 的 binding 註解。未啟用時，D1 與 Pages archive 仍可提供搜尋，但不會假裝有 R2 備份。
 
 官方 RSS 來源、驗證結果與使用限制整理於
 [docs/official-rss-sources.md](docs/official-rss-sources.md)。根目錄 README 是目前功能、架構、執行方式與部署流程的單一維護入口。
