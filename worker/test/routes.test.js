@@ -1463,6 +1463,10 @@ test('scheduled build writes a snapshot that /api/data serves per file', async (
     const sources = await (await worker.fetch(new Request('https://worker.example/api/data?name=sources'), env)).json();
     assert.equal(sources.data.sources.length, 37);
 
+    const recent = await (await worker.fetch(new Request('https://worker.example/api/data?name=recent'), env)).json();
+    assert.ok(recent.window.actualFrom, 'recent envelope should expose its actual lower bound');
+    assert.ok(recent.window.actualTo, 'recent envelope should expose its actual upper bound');
+
     const keywords = await (await worker.fetch(new Request('https://worker.example/api/data?name=keywords'), env)).json();
     assert.equal(keywords.data.keywords[0].id, 'pages-only');
 

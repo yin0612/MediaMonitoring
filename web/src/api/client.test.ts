@@ -127,23 +127,35 @@ describe('data arbitration and request coordination', () => {
     vi.unstubAllGlobals();
   });
 
-  it('keeps duplicate recent content and provenance from the newer envelope', async () => {
+  it('merges recent snapshots by item freshness with auditable merged metadata', async () => {
     __resetDataCacheForTests();
     vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
-    const recent = (generatedAt: string, marker: string, excerpt: string) => ({
-      schemaVersion: '2.1.0', generatedAt, pipeline: { id: marker },
-      data: { marker, items: [{ id: marker, source: 'cna', title: '同一則新聞', excerpt, publishedAt: generatedAt, url: 'https://example.com/story' }] },
+    const recent = (generatedAt: string, marker: string, items: unknown[]) => ({
+      schemaVersion: '2.1.0', generatedAt, pipeline: marker,
+      quality: { status: marker === 'pages' ? 'partial' : 'ok', score: 0.8 },
+      provenance: { method: `${marker}-snapshot`, reproducible: true },
+      data: { marker, items },
     });
     vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => Response.json(
       String(input).includes('worker.example')
-        ? recent('2026-08-11T12:00:00Z', 'worker', 'new')
-        : recent('2026-08-11T11:00:00Z', 'pages', 'old'),
+        ? recent('2026-08-11T12:00:00Z', 'worker', [
+          { id: 'duplicate-worker', source: 'cna', title: 'duplicate', excerpt: 'worker-old', publishedAt: '2026-08-11T10:00:00Z', url: 'https://example.com/story' },
+        ])
+        : recent('2026-08-11T11:00:00Z', 'pages', [
+          { id: 'duplicate-pages', source: 'cna', title: 'duplicate', excerpt: 'pages-new', publishedAt: '2026-08-11T11:30:00Z', url: 'https://example.com/story' },
+          { id: 'pages-unique', source: 'ltn', title: 'unique', excerpt: 'unique', publishedAt: '2026-08-11T09:00:00Z', url: 'https://example.com/unique' },
+        ]),
     )));
 
     const result = await fetchData<{ marker: string; items: Array<{ excerpt: string }> }>('recent', { bypassCache: true });
     expect(result.data.marker).toBe('worker');
-    expect(result.data.items[0].excerpt).toBe('new');
-    expect(result.pipeline).toEqual({ id: 'worker' });
+    expect(result.data.items.map((item) => item.excerpt)).toEqual(['pages-new', 'unique']);
+    expect(result.generatedAt).toBe('2026-08-11T12:00:00Z');
+    expect(result.pipeline).toBe('merged-worker-pages');
+    expect(result.provenance).toEqual({ method: 'canonical-url-newer-merge', reproducible: true });
+    expect(result.window).toEqual({ actualFrom: '2026-08-11T09:00:00.000Z', actualTo: '2026-08-11T11:30:00.000Z' });
+    expect(result.quality?.status).toBe('degraded');
+    expect(result.quality?.score).toBeGreaterThan(0);
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
   });

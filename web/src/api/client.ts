@@ -201,16 +201,48 @@ function mergeRecent<T>(workerEnv: Envelope<T>, pagesEnv: Envelope<T>): Envelope
   const fallbackEnv = preferredEnv === workerEnv ? pagesEnv : workerEnv;
   const preferredData = preferredEnv.data as Record<string, unknown>;
   const fallbackData = fallbackEnv.data as Record<string, unknown>;
-  const merged = new Map<string, Record<string, unknown>>();
-  for (const item of [...fallbackData.items as unknown[], ...preferredData.items as unknown[]] as Array<Record<string, unknown>>) {
-    const url = String(item.url || '').replace(/[?#].*$/, '').replace(/\/$/, '').toLowerCase();
-    const key = url || `${String(item.source)}:${String(item.title).replace(/\s/g, '').toLowerCase()}`;
-    merged.set(key, item);
-  }
+  const merged = new Map<string, { item: Record<string, unknown>; itemTime: number; envelopeTime: number }>();
+  const addItems = (items: unknown[], envelopeTime: number) => {
+    for (const item of items as Array<Record<string, unknown>>) {
+      const url = String(item.url || '').replace(/[?#].*$/, '').replace(/\/$/, '').toLowerCase();
+      const key = url || `${String(item.source)}:${String(item.title).replace(/\s/g, '').toLowerCase()}`;
+      const publishedAt = Date.parse(String(item.publishedAt || ''));
+      const candidate = { item, itemTime: Number.isFinite(publishedAt) ? publishedAt : 0, envelopeTime };
+      const current = merged.get(key);
+      if (!current || candidate.itemTime > current.itemTime
+        || (candidate.itemTime === current.itemTime && candidate.envelopeTime >= current.envelopeTime)) {
+        merged.set(key, candidate);
+      }
+    }
+  };
+  addItems(fallbackData.items as unknown[], Date.parse(fallbackEnv.generatedAt) || 0);
+  addItems(preferredData.items as unknown[], Date.parse(preferredEnv.generatedAt) || 0);
   const items = [...merged.values()]
+    .map(({ item }) => item)
     .sort((a, b) => Date.parse(String(b.publishedAt)) - Date.parse(String(a.publishedAt)))
     .slice(0, 800);
-  return { ...preferredEnv, data: { ...fallbackData, ...preferredData, items } as T };
+  const timestamps = items.map((item) => Date.parse(String(item.publishedAt || ''))).filter(Number.isFinite);
+  const qualityStatuses = [workerEnv.quality?.status, pagesEnv.quality?.status].filter(Boolean);
+  const status = qualityStatuses.some((value) => ['error', 'degraded', 'partial', 'stale', 'empty'].includes(value as string))
+    ? 'degraded'
+    : 'ok';
+  const mergedData = { ...fallbackData, ...preferredData, items };
+  const qualityScore = envelopeQuality('recent', { ...preferredEnv, data: mergedData } as Envelope<unknown>);
+  return {
+    ...preferredEnv,
+    generatedAt: preferredEnv.generatedAt,
+    pipeline: 'merged-worker-pages',
+    window: {
+      actualFrom: timestamps.length ? new Date(Math.min(...timestamps)).toISOString() : null,
+      actualTo: timestamps.length ? new Date(Math.max(...timestamps)).toISOString() : null,
+    },
+    quality: { status, score: qualityScore },
+    provenance: {
+      method: 'canonical-url-newer-merge',
+      reproducible: Boolean(workerEnv.provenance?.reproducible && pagesEnv.provenance?.reproducible),
+    },
+    data: mergedData as T,
+  };
 }
 
 function arbitrate<T>(name: string, workerEnv: Envelope<T>, pagesEnv: Envelope<T>): Envelope<T> {
