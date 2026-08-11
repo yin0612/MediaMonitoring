@@ -19,7 +19,7 @@ import yaml
 from time import monotonic
 
 from .analysis import build_entities, build_keywords, cluster_events, load_entity_lexicon, load_watch_config
-from .archive import dedupe_items, item_to_public, public_to_item
+from .archive import coverage_window, dedupe_items, item_to_public, public_to_item
 from .connectors.google_news import fetch_google_news
 from .connectors.html_listing import crawl_due, fetch_listing_source
 from .connectors.rss import _fetch_bytes, fetch_source
@@ -246,6 +246,7 @@ def write_archive_files(
                 "totalItems": len(public_items),
                 "retentionDays": retention_days,
                 "days": days,
+                **coverage_window(retained_items, reference_time, days=retention_days),
             },
             generated_at,
         ),
@@ -413,6 +414,7 @@ def run(
         for entry in dedupe_items(current_items + restored_items)
         if cutoff <= entry.published_at <= future_limit
     ]
+    archive_coverage = coverage_window(items, now, days=30)
     ok_count = sum(1 for run_ in runs if run_["ok"])
     archive_status = "ok" if ok_count == len(runs) else ("partial" if ok_count else "stale")
     stale = not current_items and bool(restored_items)
@@ -526,7 +528,13 @@ def run(
                 # 所以數量必須由實際來源清單推導，不能寫死。
                 "methodVersion": f"news-heat-v4-{len(sources)}-sources",
                 "scheduleDaysUntilPause": None,
-                "coverage": {"keywordWindowHours": 24, "trendBucketMinutes": 60, "archiveDays": 30, "sourceCount": len(sources)},
+                "coverage": {
+                    "keywordWindowHours": 24,
+                    "trendBucketMinutes": 60,
+                    "archiveDays": 30,
+                    "sourceCount": len(sources),
+                    **archive_coverage,
+                },
                 "stateRestoreFailed": not bool(current_items or restored_items) and bool(restore_base_url),
             },
             generated_at,

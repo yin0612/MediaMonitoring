@@ -57,7 +57,7 @@ export function MethodPage() {
         {m && (
           <div className="small muted" style={{ marginTop: 14, display: 'flex', gap: 18, flexWrap: 'wrap' }}>
             <span>方法版本：<strong>{m.methodVersion}</strong></span>
-            <span>統計視窗：關鍵字 {m.coverage.keywordWindowHours} 小時 · 趨勢每 {m.coverage.trendBucketMinutes} 分鐘一點 · 快照保留 {m.coverage.archiveDays} 天</span>
+            <span>統計視窗：關鍵字 {m.coverage.keywordWindowHours} 小時 · 趨勢每 {m.coverage.trendBucketMinutes} 分鐘一點 · {m.coverage.complete === false ? '實際資料窗未滿 30 日' : `快照保留 ${m.coverage.archiveDays} 天`}</span>
           </div>
         )}
       </Card>

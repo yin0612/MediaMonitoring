@@ -97,6 +97,10 @@ export interface Meta {
     /** 快照保留天數。 */
     archiveDays: number;
     sourceCount: number;
+    /** 真實 archive 是否已覆蓋宣告的完整保留窗。 */
+    complete?: boolean;
+    actualFrom?: string | null;
+    actualTo?: string | null;
   };
   /** 若無法還原上一版快照為 true，代表歷史資料可能不完整。 */
   stateRestoreFailed: boolean;

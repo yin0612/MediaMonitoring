@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from opinion_pipeline.archive import dedupe_items, filter_items, item_to_public, public_to_item
+from opinion_pipeline.archive import coverage_window, dedupe_items, filter_items, item_to_public, public_to_item
 from opinion_pipeline import cli
 from opinion_pipeline.connectors.trends import parse_trends_feed
 from opinion_pipeline.connectors import rss
@@ -41,6 +41,22 @@ def test_filter_items_matches_title_or_excerpt_and_enforces_range():
     result = filter_items([recent, old, unrelated], "台積電", "24h", NOW)
 
     assert [entry.source_item_id for entry in result] == ["1"]
+
+
+def test_coverage_window_reports_actual_dates_and_requires_full_retention():
+    values = [item("cna", "old", "old", 29 * 24), item("ltn", "new", "new", 1)]
+
+    result = coverage_window(values, NOW, days=30)
+
+    assert result["actualFrom"] == (NOW - timedelta(days=29)).isoformat().replace("+00:00", "Z")
+    assert result["actualTo"] == (NOW - timedelta(hours=1)).isoformat().replace("+00:00", "Z")
+    assert result["complete"] is True
+
+
+def test_coverage_window_marks_short_archive_incomplete():
+    result = coverage_window([item("cna", "new", "new", 3 * 24)], NOW, days=30)
+
+    assert result["complete"] is False
 
 
 def test_public_item_never_contains_full_content_field():

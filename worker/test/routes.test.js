@@ -1268,7 +1268,7 @@ test('scheduled subrequest budget uses one attempt per official URL and keeps re
   };
   const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
   const officialUrls = NEWS_SOURCES.flatMap((source) => source.rssUrls || (source.rssUrl ? [source.rssUrl] : []));
-  const pagesReadCount = 6;
+  const pagesReadCount = 7;
   const dispatchCount = 0;
   const safeThreshold = 40;
   try {

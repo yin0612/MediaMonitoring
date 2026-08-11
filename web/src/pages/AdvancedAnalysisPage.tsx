@@ -9,12 +9,14 @@ import { fmtDateTime, fmtNum, fmtTime } from '../lib/format';
 import { REFRESH_INTERVALS } from '../lib/refresh';
 import { SOURCE_META } from '../lib/sources';
 import { useChartTokens } from '../lib/theme';
-import type { Envelope, SearchArticle, SearchData, SearchRange } from '../types/contracts';
+import type { Envelope, Meta, SearchArticle, SearchData, SearchRange } from '../types/contracts';
 import { PageHeader } from '../components/PageHeader';
 import { DATA_REFRESH_EVENT } from '../api/refreshCoordinator';
 import { AnalysisLauncher } from '../components/AnalysisLauncher';
 import type { TopicInput } from '../lib/analysisPresets';
 import { analysisExportCsv, downloadText, type AnalysisExport } from '../lib/exportAnalysis';
+import { useData } from '../api/useData';
+import { isArchive30dReady } from '../lib/coverage';
 
 interface TopicResult extends TopicInput { response?: Envelope<SearchData>; error?: string }
 interface SavedAnalysis { name: string; topics: TopicInput[]; range: SearchRange }
@@ -58,6 +60,8 @@ export function AdvancedAnalysisPage() {
   const [savedName, setSavedName] = useState('');
   const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalysis[]>(loadSavedAnalyses);
   const tokens = useChartTokens();
+  const meta = useData<Meta>('meta');
+  const archive30dReady = isArchive30dReady(meta.data);
 
   const runAnalysis = useCallback(async (background = false) => {
     const active = topics
@@ -247,8 +251,23 @@ export function AdvancedAnalysisPage() {
             </div>
           ))}
           <div className="analysis-actions">
-            <select value={range} onChange={(event) => setRange(event.target.value as SearchRange)} aria-label="分析時間範圍">
-              {RANGES.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            <select
+              value={range}
+              onChange={(event) => {
+                const nextRange = event.target.value as SearchRange;
+                if (nextRange === '30d' && !archive30dReady) {
+                  setFormError('30 日資料尚未完整建置，暫時無法選取。');
+                  return;
+                }
+                setRange(nextRange);
+              }}
+              aria-label="分析時間範圍"
+            >
+              {RANGES.map((item) => (
+                <option key={item.value} value={item.value} disabled={item.value === '30d' && !archive30dReady}>
+                  {item.value === '30d' && !archive30dReady ? '30 日（資料建置中）' : item.label}
+                </option>
+              ))}
             </select>
             <button className="btn search-submit" type="submit" disabled={loading}>{loading ? '分析中…' : '開始分析'}</button>
             <input value={savedName} onChange={(event) => setSavedName(event.target.value)} placeholder="分析名稱" aria-label="分析名稱" />

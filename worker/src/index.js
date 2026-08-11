@@ -541,9 +541,9 @@ async function buildSnapshot(env) {
   //  3. 上一份 KV 快照的 recent（Worker 自身近況）
   // 7 天完整 archive 不進 KV；搜尋的 7 天範圍仍由 /api/search + Pages 提供。
   const previousRecent = previous?.files?.recent?.data?.items ?? [];
-  const [pagesRecent, pagesKeywords, pagesEntities, pagesTopics, pagesEvents, pageSourceStates] = await Promise.all([
+  const [pagesRecent, pagesKeywords, pagesEntities, pagesTopics, pagesEvents, pagesMeta, pageSourceStates] = await Promise.all([
     pagesRecentItems(env),
-    ...['keywords', 'entities', 'topics', 'events'].map((name) => pagesAnalysisEnvelope(env, name)),
+    ...['keywords', 'entities', 'topics', 'events', 'meta'].map((name) => pagesAnalysisEnvelope(env, name)),
     pagesSourceStates(env),
   ]);
   const pagesSourceMapComplete = NEWS_SOURCES.every((source) => pageSourceStates.has(source.id));
@@ -647,6 +647,13 @@ async function buildSnapshot(env) {
   const healthySourceCount = sources.filter((source) => source.status === 'ok').length;
   const serviceableSourceCount = sources.filter((source) => !['stale', 'error'].includes(source.status)).length;
   const status = healthySourceCount === sources.length ? 'ok' : serviceableSourceCount ? 'partial' : 'stale';
+  const pagesCoverage = pagesMeta?.data?.coverage;
+  const previousCoverage = previous?.files?.meta?.data?.coverage;
+  const archiveCoverage = {
+    complete: pagesCoverage?.complete === true || previousCoverage?.complete === true,
+    actualFrom: pagesCoverage?.actualFrom || previousCoverage?.actualFrom || null,
+    actualTo: pagesCoverage?.actualTo || previousCoverage?.actualTo || null,
+  };
 
   const files = {
     recent: snapshotEnvelope({ items: merged.slice(0, 120) }, generatedAt),
@@ -677,7 +684,12 @@ async function buildSnapshot(env) {
           || null,
         methodVersion: `news-heat-v4-${NEWS_SOURCES.length}-sources-worker`,
         scheduleDaysUntilPause: null,
-        coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 30 },
+        coverage: {
+          keywordWindowHours: 24,
+          trendBucketMinutes: 60,
+          archiveDays: 30,
+          ...archiveCoverage,
+        },
         stateRestoreFailed: false,
       },
       generatedAt,

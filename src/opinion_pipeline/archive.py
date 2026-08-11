@@ -14,6 +14,26 @@ RANGE_HOURS = {"1h": 1, "6h": 6, "24h": 24, "7d": 24 * 7, "30d": 24 * 30}
 _TRACKING_KEYS = {"fbclid", "gclid", "ref", "source"}
 
 
+def coverage_window(items: list, now: datetime, *, days: int = 30) -> dict[str, object]:
+    """Return a truthful archive window instead of equating retention with coverage."""
+    timestamps = sorted(
+        item.published_at
+        for item in items
+        if getattr(item, "published_at", None) is not None
+        and item.published_at <= now
+    )
+    actual_from = timestamps[0] if timestamps else None
+    actual_to = timestamps[-1] if timestamps else None
+    requested_from = now - timedelta(days=days)
+    complete = bool(timestamps) and actual_from <= requested_from + timedelta(days=1) and actual_to >= now - timedelta(days=1)
+    iso = lambda value: value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z") if value else None
+    return {
+        "actualFrom": iso(actual_from),
+        "actualTo": iso(actual_to),
+        "complete": complete,
+    }
+
+
 def canonical_url(url: str) -> str:
     parts = urlsplit(url.strip())
     query = [
