@@ -68,7 +68,6 @@ jobs:
       - name: Responsive browser E2E
         working-directory: web
         run: npm run test:e2e
-
       - name: Typecheck
         working-directory: web
         run: npm run typecheck
