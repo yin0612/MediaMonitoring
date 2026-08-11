@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
@@ -256,10 +257,40 @@ def write_archive_files(
 def restore_items(base_url: str) -> list:
     if not base_url:
         return []
-    try:
-        response = requests.get(f"{base_url.rstrip('/')}/data/news-archive.json", timeout=10)
+    base = base_url.rstrip("/")
+
+    def fetch_values(url: str) -> list[dict]:
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
-        values = response.json().get("data", {}).get("items", [])
+        payload = response.json()
+        values = payload.get("data", {}).get("items", []) if isinstance(payload, dict) else []
+        return values if isinstance(values, list) else []
+
+    # Prefer the manifest's daily chunks so a large archive is not silently
+    # reduced to the legacy compatibility file on every scheduled rebuild.
+    try:
+        index_response = requests.get(f"{base}/data/news-archive-index.json", timeout=10)
+        index_response.raise_for_status()
+        index_payload = index_response.json()
+        days = index_payload.get("data", {}).get("days", []) if isinstance(index_payload, dict) else []
+        values: list[dict] = []
+        for day in days if isinstance(days, list) else []:
+            file_name = day.get("file") if isinstance(day, dict) else None
+            if not isinstance(file_name, str) or not re.fullmatch(r"news-archive/\d{4}-\d{2}-\d{2}", file_name):
+                continue
+            try:
+                values.extend(fetch_values(f"{base}/data/{file_name}.json"))
+            except (requests.RequestException, ValueError, TypeError):
+                continue
+        restored = [entry for value in values if (entry := public_to_item(value)) is not None]
+        if restored:
+            return restored
+    except (requests.RequestException, ValueError, TypeError):
+        pass
+
+    # Keep compatibility with older deployments that publish only this file.
+    try:
+        values = fetch_values(f"{base}/data/news-archive.json")
         return [entry for value in values if (entry := public_to_item(value)) is not None]
     except (requests.RequestException, ValueError, TypeError):
         return []

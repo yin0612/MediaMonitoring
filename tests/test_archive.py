@@ -249,6 +249,77 @@ def test_restore_items_returns_empty_list_when_snapshot_is_unavailable(monkeypat
     assert cli.restore_items("https://pages.example") == []
 
 
+def test_restore_items_loads_manifest_daily_chunks_before_compat_snapshot(monkeypatch):
+    values = {
+        "https://pages.example/data/news-archive-index.json": {
+            "data": {
+                "days": [
+                    {"file": "news-archive/2026-07-22"},
+                    {"file": "news-archive/2026-07-21"},
+                ]
+            }
+        },
+        "https://pages.example/data/news-archive/2026-07-22.json": {
+            "data": {"items": [{"id": "new", "source": "cna", "title": "new", "url": "https://example.com/new", "publishedAt": "2026-07-22T08:00:00Z"}]}
+        },
+        "https://pages.example/data/news-archive/2026-07-21.json": {
+            "data": {"items": [{"id": "old", "source": "ltn", "title": "old", "url": "https://example.com/old", "publishedAt": "2026-07-21T08:00:00Z"}]}
+        },
+    }
+
+    class Response:
+        def __init__(self, payload):
+            self.payload = payload
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return self.payload
+
+    calls = []
+
+    def fake_get(url, **_kwargs):
+        calls.append(url)
+        if url not in values:
+            raise AssertionError(f"unexpected restore URL: {url}")
+        return Response(values[url])
+
+    monkeypatch.setattr(cli.requests, "get", fake_get)
+
+    restored = cli.restore_items("https://pages.example")
+
+    assert {entry.source_item_id for entry in restored} == {"new", "old"}
+    assert calls == [
+        "https://pages.example/data/news-archive-index.json",
+        "https://pages.example/data/news-archive/2026-07-22.json",
+        "https://pages.example/data/news-archive/2026-07-21.json",
+    ]
+
+
+def test_restore_items_falls_back_to_compat_snapshot_when_manifest_is_unavailable(monkeypatch):
+    compat_url = "https://pages.example/data/news-archive.json"
+
+    class Response:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {"data": {"items": [{"id": "compat", "source": "cna", "title": "compat", "url": "https://example.com/compat", "publishedAt": "2026-07-22T08:00:00Z"}]}}
+
+    def fake_get(url, **_kwargs):
+        if url.endswith("news-archive-index.json"):
+            raise cli.requests.ConnectionError()
+        assert url == compat_url
+        return Response()
+
+    monkeypatch.setattr(cli.requests, "get", fake_get)
+
+    restored = cli.restore_items("https://pages.example")
+
+    assert [entry.source_item_id for entry in restored] == ["compat"]
+
+
 def test_restored_items_are_restricted_to_current_source_allowlist():
     allowed = item("tvbs", "1", "保留", 1)
     removed = item("mirror", "2", "移除", 1)
