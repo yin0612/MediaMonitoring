@@ -64,6 +64,10 @@ export function AdvancedAnalysisPage() {
   const archive30dReady = isArchive30dReady(meta.data);
 
   const runAnalysis = useCallback(async (background = false) => {
+    if (range === '30d' && !archive30dReady) {
+      setFormError('30 日資料尚未完整建置，暫時無法分析。');
+      return;
+    }
     const active = topics
       .map((topic) => ({ name: topic.name.trim() || topic.query.trim(), query: topic.query.trim() }))
       .filter((topic) => topic.query);
@@ -80,7 +84,7 @@ export function AdvancedAnalysisPage() {
     setResults(settled);
     setLastUpdatedAt(Date.now());
     setLoading(false);
-  }, [range, topics]);
+  }, [archive30dReady, range, topics]);
 
   useEffect(() => {
     if (results.length === 0) return undefined;
@@ -108,9 +112,10 @@ export function AdvancedAnalysisPage() {
     const nextTopics = [...presetTopics.map((topic) => ({ ...topic }))];
     while (nextTopics.length < 3) nextTopics.push({ name: '', query: '' });
     setTopics(nextTopics.slice(0, 3));
-    setRange(presetRange);
+    const nextRange = presetRange === '30d' && !archive30dReady ? '7d' : presetRange;
+    setRange(nextRange);
     setResults([]);
-    setFormError(null);
+    setFormError(nextRange === '7d' && presetRange === '30d' ? '30 日資料尚未完整建置，已改用 7 日範圍。' : null);
     setLastUpdatedAt(null);
     setTopicFilter('all');
     setSourceFilter('all');

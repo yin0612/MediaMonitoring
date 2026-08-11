@@ -66,6 +66,10 @@ export function SearchPage() {
 
   const runSearch = useCallback(async (term: string, trend: TrendItem | null = null, background = false, targetRange?: SearchRange) => {
     const activeRange = targetRange ?? range;
+    if (activeRange === '30d' && !archive30dReady) {
+      setSearchError('30 日資料尚未完整建置，暫時無法搜尋。');
+      return null;
+    }
     const normalized = term.trim();
     if (normalized.length < 2 || normalized.length > 50) {
       setSearchError('請輸入 2 至 50 個字元的關鍵字。');
@@ -89,7 +93,7 @@ export function SearchPage() {
       if (background) setRefreshing(false);
       else setSearching(false);
     }
-  }, [range]);
+  }, [archive30dReady, range]);
 
   useEffect(() => {
     if (initialQueryParam && initialQueryParam.trim().length >= 2) {
