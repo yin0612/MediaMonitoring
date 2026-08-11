@@ -166,7 +166,7 @@ python scripts/evaluate_annotations.py `
   --machine-draft benchmarks/annotation-machine-draft.jsonl
 ```
 
-輸出的 `machineMacroF1` 是機器草稿與人工標註的比較結果；只有 100 筆雙人標註都完成後才會輸出 Cohen's kappa。未達預先設定的 held-out 品質門檻前，事件、情緒與目標式立場都必須維持「實驗性」描述。
+輸出的 `machineMacroF1` 只使用 `split: "test"` 的 150 筆保留測試集比較機器草稿與人工標註；只有指定的 100 筆雙人標註、且每個分類欄位都完成後才會輸出 Cohen's kappa。未達預先設定的 held-out 品質門檻前，事件、情緒與目標式立場都必須維持「實驗性」描述。
 
 重新產生候選集：
 

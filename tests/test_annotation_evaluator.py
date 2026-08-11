@@ -14,24 +14,49 @@ def test_annotation_evaluator_reports_insufficient_human_labels():
     assert report["missingHumanLabels"] == 1
 
 
-def test_annotation_evaluator_computes_kappa_and_machine_macro_f1():
+def test_annotation_evaluator_uses_only_held_out_rows_and_gates_incomplete_kappa():
     rows = [
-        {"sampleId": "a", "annotations": {"textTone": "positive", "annotator1": {"textTone": "positive"}, "annotator2": {"textTone": "positive"}}, "machineSuggested": {"textTone": "positive"}},
-        {"sampleId": "b", "annotations": {"textTone": "negative", "annotator1": {"textTone": "negative"}, "annotator2": {"textTone": "positive"}}, "machineSuggested": {"textTone": "positive"}},
-        {"sampleId": "c", "annotations": {"textTone": "neutral", "annotator1": {"textTone": "neutral"}, "annotator2": {"textTone": "neutral"}}, "machineSuggested": {"textTone": "negative"}},
+        {"sampleId": "a", "split": "train", "doubleAnnotation": True, "annotations": {"textTone": "positive", "annotator1": {"textTone": "positive"}, "annotator2": {"textTone": "positive"}}, "machineSuggested": {"textTone": "negative"}},
+        {"sampleId": "b", "split": "test", "doubleAnnotation": True, "annotations": {"textTone": "negative", "annotator1": {"textTone": "negative"}, "annotator2": {"textTone": "positive"}}, "machineSuggested": {"textTone": "negative"}},
+        {"sampleId": "c", "split": "test", "doubleAnnotation": True, "annotations": {"textTone": "neutral", "annotator1": {"textTone": "neutral"}, "annotator2": {"textTone": "neutral"}}, "machineSuggested": {"textTone": "neutral"}},
     ]
     report = evaluate_rows(rows)
     assert report["status"] == "ok"
     assert report["humanLabelRows"] == 3
-    assert report["doubleAnnotatedRows"] == 3
-    assert report["metrics"]["textTone"]["cohenKappa"] == 0.5
-    assert report["metrics"]["textTone"]["machineMacroF1"] > 0.2
+    assert report["heldOutHumanLabelRows"] == 2
+    assert report["requiredDoubleAnnotationRows"] == 3
+    assert report["metrics"]["textTone"]["doubleAnnotatedRows"] == 3
+    assert report["metrics"]["textTone"]["cohenKappa"] is None
+    assert report["metrics"]["textTone"]["machineMacroF1"] == 1.0
+
+
+def test_annotation_evaluator_emits_kappa_only_after_all_100_required_pairs_complete():
+    rows = [
+        {
+            "sampleId": str(index),
+            "split": "test",
+            "doubleAnnotation": True,
+            "annotations": {
+                "textTone": "positive",
+                "annotator1": {"textTone": "positive"},
+                "annotator2": {"textTone": "positive"},
+            },
+            "machineSuggested": {"textTone": "positive"},
+        }
+        for index in range(100)
+    ]
+
+    report = evaluate_rows(rows)
+
+    assert report["requiredDoubleAnnotationRows"] == 100
+    assert report["metrics"]["textTone"]["doubleAnnotatedRows"] == 100
+    assert report["metrics"]["textTone"]["cohenKappa"] == 1.0
 
 
 def test_machine_draft_is_attached_by_sample_id_without_mutating_human_labels():
     rows = [
-        {"sampleId": "a", "annotations": {"textTone": "positive"}},
-        {"sampleId": "b", "annotations": {"textTone": "negative"}},
+        {"sampleId": "a", "split": "test", "annotations": {"textTone": "positive"}},
+        {"sampleId": "b", "split": "test", "annotations": {"textTone": "negative"}},
     ]
     drafts = [
         {"sampleId": "a", "machineSuggested": {"textTone": "positive"}},

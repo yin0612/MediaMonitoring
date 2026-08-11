@@ -9,6 +9,7 @@ from typing import Any
 
 
 CATEGORICAL_FIELDS = ("eventCluster", "textTone", "target", "targetStance")
+REQUIRED_DOUBLE_ANNOTATION_ROWS = 100
 VALID_LABELS = {
     "textTone": {"positive", "neutral", "negative", "uncertain"},
     "targetStance": {"positive", "neutral", "negative", "uncertain"},
@@ -98,16 +99,33 @@ def _macro_f1(predicted: list[str], actual: list[str]) -> float | None:
 
 def evaluate_rows(rows: list[dict]) -> dict:
     human_rows = [row for row in rows if any(_gold(row, field) for field in CATEGORICAL_FIELDS)]
-    double_rows = [row for row in rows if all(_annotator_value(row, name, "textTone") for name in ("annotator1", "annotator2"))]
+    held_out_rows = [row for row in human_rows if row.get("split") == "test"]
+    required_double_rows = [row for row in rows if row.get("doubleAnnotation") is True]
+    completed_double_rows = [
+        row
+        for row in required_double_rows
+        if all(_annotator_value(row, annotator, field) for annotator in ("annotator1", "annotator2") for field in CATEGORICAL_FIELDS)
+    ]
     metrics = {}
     for field in CATEGORICAL_FIELDS:
-        pairs = [(_annotator_value(row, "annotator1", field), _annotator_value(row, "annotator2", field)) for row in rows]
+        pairs = [
+            (_annotator_value(row, "annotator1", field), _annotator_value(row, "annotator2", field))
+            for row in required_double_rows
+        ]
         pairs = [(a, b) for a, b in pairs if a and b]
-        actual_pred = [(_gold(row, field), _value((row.get("machineSuggested") or {}).get(field))) for row in human_rows]
+        actual_pred = [
+            (_gold(row, field), _value((row.get("machineSuggested") or {}).get(field)))
+            for row in held_out_rows
+        ]
         actual_pred = [(a, p) for a, p in actual_pred if a and p]
+        kappa_ready = (
+            len(required_double_rows) == REQUIRED_DOUBLE_ANNOTATION_ROWS
+            and len(pairs) == REQUIRED_DOUBLE_ANNOTATION_ROWS
+        )
         metrics[field] = {
             "doubleAnnotatedRows": len(pairs),
-            "cohenKappa": _kappa([a for a, _ in pairs], [b for _, b in pairs]),
+            "cohenKappa": _kappa([a for a, _ in pairs], [b for _, b in pairs]) if kappa_ready else None,
+            "machineEvaluatedRows": len(actual_pred),
             "machineMacroF1": _macro_f1([p for _, p in actual_pred], [a for a, _ in actual_pred]),
         }
     status = "ok" if human_rows else "insufficient_labels"
@@ -115,8 +133,10 @@ def evaluate_rows(rows: list[dict]) -> dict:
         "status": status,
         "totalRows": len(rows),
         "humanLabelRows": len(human_rows),
+        "heldOutHumanLabelRows": len(held_out_rows),
         "missingHumanLabels": len(rows) - len(human_rows),
-        "doubleAnnotatedRows": len(double_rows),
+        "requiredDoubleAnnotationRows": len(required_double_rows),
+        "doubleAnnotatedRows": len(completed_double_rows),
         "metrics": metrics,
     }
 
