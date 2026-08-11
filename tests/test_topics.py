@@ -107,6 +107,7 @@ def test_topic_event_exposes_source_timeline_and_concentration_without_stance_la
         "cna": [{"date": "2026-07-22", "mentions": 1}],
         "ltn": [{"date": "2026-07-22", "mentions": 1}],
     }
+    assert event["sourceTermCounts"]["台積電"] == {"cna": 1, "ltn": 1}
 
 
 def test_topics_include_conservative_target_stance_evidence_when_entity_lexicon_is_enabled():

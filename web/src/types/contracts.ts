@@ -242,6 +242,8 @@ export interface TopicEvent {
   /** Herfindahl concentration of article counts by source (0..1). */
   sourceConcentration?: number;
   sourceTimeline?: Partial<Record<SourceId, TopicTimelinePoint[]>>;
+  /** Counts of the event's topic terms in each source's titles. */
+  sourceTermCounts?: Record<string, Partial<Record<SourceId, number>>>;
   articles: TopicArticle[];
 }
 
@@ -431,6 +433,7 @@ export interface EventCluster {
   sourceCounts: Partial<Record<SourceId, number>>;
   sourceConcentration?: number;
   sourceTimeline?: Partial<Record<SourceId, TopicTimelinePoint[]>>;
+  sourceTermCounts?: Record<string, Partial<Record<SourceId, number>>>;
   articles: Array<{ title: string; source: SourceId; url: string; publishedAt: string }>;
 }
 

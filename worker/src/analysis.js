@@ -353,6 +353,17 @@ function topicBreakdown(id, terms, matched) {
     const sourceConcentration = Math.round(
       Object.values(sourceCounts).reduce((sum, count) => sum + (count / eventItems.length) ** 2, 0) * 1000,
     ) / 1000;
+    const sourceTermCounts = Object.fromEntries(eventTerms.map((term) => [
+      term,
+      Object.fromEntries(
+        Object.entries(eventItems.reduce((counts, item) => {
+          if (casefold(item.title).includes(casefold(term))) {
+            counts[item.source] = (counts[item.source] || 0) + 1;
+          }
+          return counts;
+        }, {})).sort(([a], [b]) => (a < b ? -1 : 1)),
+      ),
+    ]));
     return {
       id: `${id}-${date}-${terms.indexOf(anchor) + 1}`,
       date,
@@ -362,6 +373,7 @@ function topicBreakdown(id, terms, matched) {
       sourceCounts: Object.fromEntries(Object.entries(sourceCounts).sort(([a], [b]) => (a < b ? -1 : 1))),
       sourceConcentration,
       sourceTimeline: normalizedTimeline,
+      sourceTermCounts,
       articles: preferred.slice(0, 3).map((item) => ({
         title: item.title,
         source: item.source,

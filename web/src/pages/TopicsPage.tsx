@@ -172,6 +172,11 @@ function EventClusters({ topic }: { topic: Topic }) {
                 {event.sourceConcentration !== undefined && ` · 來源集中度 ${event.sourceConcentration.toFixed(3)}`}
               </div>
             )}
+            {event.sourceTermCounts && (
+              <div className="small muted">
+                標題詞分布：{Object.entries(event.sourceTermCounts).map(([term, counts]) => `${term}（${Object.entries(counts).map(([source, count]) => `${sourceShort(source as Topic['articles'][number]['source'])} ${count}`).join('、')}）`).join('；')}
+              </div>
+            )}
             <div className="topic-event__terms">
               {event.terms.map((term) => <span className="chip" key={term}>{term}</span>)}
             </div>

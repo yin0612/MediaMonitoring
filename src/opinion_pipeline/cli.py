@@ -139,6 +139,12 @@ def _topic_breakdown(topic_id: str, terms: tuple[str, ...], matched: list) -> tu
             sum((count / len(event_items)) ** 2 for count in source_counts.values()),
             3,
         )
+        source_term_counts = {
+            term: dict(sorted(
+                Counter(item.source for item in event_items if term.casefold() in item.title.casefold()).items()
+            ))
+            for term in event_terms
+        }
         events.append(
             {
                 "id": f"{topic_id}-{date}-{terms.index(anchor) + 1}",
@@ -149,6 +155,7 @@ def _topic_breakdown(topic_id: str, terms: tuple[str, ...], matched: list) -> tu
                 "sourceCounts": dict(sorted(source_counts.items())),
                 "sourceConcentration": source_concentration,
                 "sourceTimeline": source_timeline,
+                "sourceTermCounts": source_term_counts,
                 "articles": [
                     {
                         "title": item.title,

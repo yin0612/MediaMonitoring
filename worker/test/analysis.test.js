@@ -148,4 +148,5 @@ test('topics expose daily timelines and time-window event subclusters', () => {
     cna: [{ date: '2026-07-22', mentions: 1 }],
     ltn: [{ date: '2026-07-22', mentions: 1 }],
   });
+  assert.deepEqual(finance.events[0].sourceTermCounts['台積電'], { cna: 1, ltn: 1 });
 });
