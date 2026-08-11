@@ -90,8 +90,49 @@
                 <p class="eyebrow">3. HUMAN REVIEW</p>
                 <h2>標註欄位</h2>
               </div>
-              <button id="save-row" type="submit">儲存本筆標註</button>
+              <button id="save-row" type="submit">儲存並跳到下一題</button>
             </div>
+
+            <section class="quick-panel" aria-labelledby="quick-title">
+              <h3 id="quick-title">快速點選</h3>
+              <div class="quick-row">
+                <span>事件</span>
+                <div class="quick-choices">
+                  <button type="button" class="quick-choice" data-quick-event="uncertain">事件不明</button>
+                </div>
+              </div>
+              <div class="quick-row">
+                <span>文章語氣</span>
+                <div class="quick-choices">
+                  <button type="button" class="quick-choice" data-quick-select="text-tone" data-quick-value="positive">正向</button>
+                  <button type="button" class="quick-choice" data-quick-select="text-tone" data-quick-value="neutral">中性</button>
+                  <button type="button" class="quick-choice" data-quick-select="text-tone" data-quick-value="negative">負向</button>
+                  <button type="button" class="quick-choice" data-quick-select="text-tone" data-quick-value="uncertain">不確定</button>
+                </div>
+              </div>
+              <div class="quick-row">
+                <span>對象</span>
+                <div class="quick-choices">
+                  <button type="button" class="quick-choice" data-quick-target="uncertain">對象不明</button>
+                  <button type="button" class="quick-choice" data-quick-target="台灣">台灣</button>
+                  <button type="button" class="quick-choice" data-quick-target="中國">中國</button>
+                  <button type="button" class="quick-choice" data-quick-target="美國">美國</button>
+                  <button type="button" class="quick-choice" data-quick-target="川普">川普</button>
+                  <button type="button" class="quick-choice" data-quick-target="習近平">習近平</button>
+                  <button type="button" class="quick-choice" data-quick-target="賴清德">賴清德</button>
+                  <button type="button" class="quick-choice" data-quick-target="台積電">台積電</button>
+                </div>
+              </div>
+              <div class="quick-row">
+                <span>對象立場</span>
+                <div class="quick-choices">
+                  <button type="button" class="quick-choice" data-quick-select="target-stance" data-quick-value="positive">正向</button>
+                  <button type="button" class="quick-choice" data-quick-select="target-stance" data-quick-value="neutral">中性</button>
+                  <button type="button" class="quick-choice" data-quick-select="target-stance" data-quick-value="negative">負向</button>
+                  <button type="button" class="quick-choice" data-quick-select="target-stance" data-quick-value="uncertain">不確定</button>
+                </div>
+              </div>
+            </section>
 
             <div class="field-grid">
               <label>
@@ -144,6 +185,10 @@
               <input id="entities" placeholder="例如 川普, 聯準會" />
               <small>只列出可明確辨識的 PERSON／ORG canonical 名稱，不猜測同名。</small>
             </label>
+            <div class="quick-row entity-row">
+              <span>常用關鍵字</span>
+              <div id="entity-presets" class="quick-choices"></div>
+            </div>
           </form>
         </section>
       </section>

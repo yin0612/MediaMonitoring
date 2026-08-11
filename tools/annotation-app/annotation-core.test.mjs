@@ -2,7 +2,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  appendEntityKeyword,
+  DEFAULT_ENTITY_KEYWORDS,
   machineSuggestionFor,
+  nextIndexAfterSave,
   parseJsonl,
   safeArticleUrl,
   serializeJsonl,
@@ -112,4 +115,17 @@ test('reports the fields still missing from completed annotations', () => {
   });
   assert.equal(complete.completeRows, 1);
   assert.equal(complete.missingRows, 0);
+});
+
+test('moves to the next row after a saved annotation but stays on the last row', () => {
+  assert.equal(nextIndexAfterSave(0, 3), 1);
+  assert.equal(nextIndexAfterSave(2, 3), 2);
+  assert.equal(nextIndexAfterSave(0, 0), 0);
+});
+
+test('adds a default entity keyword once and exposes common quick choices', () => {
+  assert.ok(DEFAULT_ENTITY_KEYWORDS.includes('台灣'));
+  assert.ok(DEFAULT_ENTITY_KEYWORDS.includes('台積電'));
+  assert.deepEqual(appendEntityKeyword(['台灣'], '台積電'), ['台灣', '台積電']);
+  assert.deepEqual(appendEntityKeyword(['台灣'], '台灣'), ['台灣']);
 });

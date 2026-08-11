@@ -2,6 +2,7 @@ const LABEL_FIELDS = ['eventCluster', 'topics', 'entities', 'textTone', 'target'
 const REQUIRED_FIELDS = ['eventCluster', 'topics', 'textTone', 'target', 'targetStance'];
 const MODES = new Set(['consensus', 'annotator1', 'annotator2']);
 const TONES = new Set(['positive', 'neutral', 'negative', 'uncertain']);
+const DEFAULT_ENTITY_KEYWORDS = ['台灣', '中國', '美國', '川普', '習近平', '賴清德', '台積電', 'AI', '關稅', '颱風'];
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -14,6 +15,15 @@ function stringValue(value) {
 function stringList(value) {
   if (!Array.isArray(value)) return [];
   return [...new Set(value.map(stringValue).filter(Boolean))];
+}
+
+export function appendEntityKeyword(entities, keyword) {
+  return stringList([...(Array.isArray(entities) ? entities : []), keyword]);
+}
+
+export function nextIndexAfterSave(index, totalRows) {
+  if (!Number.isInteger(index) || !Number.isInteger(totalRows) || totalRows <= 0) return 0;
+  return Math.min(Math.max(index + 1, 0), totalRows - 1);
 }
 
 function normalizedLabels(labels) {
@@ -136,4 +146,4 @@ export function validateRows(rows) {
   };
 }
 
-export { LABEL_FIELDS, REQUIRED_FIELDS, TONES };
+export { DEFAULT_ENTITY_KEYWORDS, LABEL_FIELDS, REQUIRED_FIELDS, TONES };

@@ -1,6 +1,9 @@
 import {
+  appendEntityKeyword,
+  DEFAULT_ENTITY_KEYWORDS,
   labelsFor,
   machineSuggestionFor,
+  nextIndexAfterSave,
   parseJsonl,
   safeArticleUrl,
   serializeJsonl,
@@ -61,6 +64,20 @@ function showLabels(labels) {
   inputs.entities.value = (labels.entities || []).join(', ');
   const topics = new Set(labels.topics || []);
   document.querySelectorAll('#topic-choices input').forEach((input) => { input.checked = topics.has(input.value); });
+  updateQuickChoiceState();
+}
+
+function updateQuickChoiceState() {
+  document.querySelectorAll('[data-quick-select]').forEach((button) => {
+    const input = byId(button.dataset.quickSelect);
+    button.setAttribute('aria-pressed', String(input?.value === button.dataset.quickValue));
+  });
+  document.querySelectorAll('[data-quick-target]').forEach((button) => {
+    button.setAttribute('aria-pressed', String(inputs.target.value === button.dataset.quickTarget));
+  });
+  document.querySelectorAll('[data-quick-event]').forEach((button) => {
+    button.setAttribute('aria-pressed', String(inputs.eventCluster.value === button.dataset.quickEvent));
+  });
 }
 
 function showMachineSuggestion(row) {
@@ -155,13 +172,55 @@ byId('annotation-form').addEventListener('submit', (event) => {
   }
   try {
     state.rows = updateAnnotation(state.rows, state.index, labels, state.mode);
+    const nextIndex = nextIndexAfterSave(state.index, state.rows.length);
+    const movedForward = nextIndex !== state.index;
+    state.index = nextIndex;
     persist();
-    setStatus('save-status', '已儲存於本機瀏覽器；請定期下載 JSONL 備份。');
     render();
+    setStatus('save-status', movedForward
+      ? '已儲存，已切換到下一題。'
+      : '已儲存最後一題，現在可下載更新後的 JSONL。');
   } catch (error) {
     setStatus('save-status', error.message);
   }
 });
+
+document.querySelectorAll('[data-quick-select]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const input = byId(button.dataset.quickSelect);
+    if (!input) return;
+    input.value = button.dataset.quickValue;
+    updateQuickChoiceState();
+  });
+});
+
+document.querySelectorAll('[data-quick-target]').forEach((button) => {
+  button.addEventListener('click', () => {
+    inputs.target.value = button.dataset.quickTarget;
+    updateQuickChoiceState();
+  });
+});
+
+document.querySelectorAll('[data-quick-event]').forEach((button) => {
+  button.addEventListener('click', () => {
+    inputs.eventCluster.value = button.dataset.quickEvent;
+    updateQuickChoiceState();
+  });
+});
+
+function addEntityKeyword(keyword) {
+  const entities = inputs.entities.value.split(',').map((value) => value.trim()).filter(Boolean);
+  inputs.entities.value = appendEntityKeyword(entities, keyword).join(', ');
+}
+
+byId('entity-presets').replaceChildren(...DEFAULT_ENTITY_KEYWORDS.map((keyword) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'quick-choice';
+  button.textContent = keyword;
+  button.addEventListener('click', () => addEntityKeyword(keyword));
+  return button;
+}));
 
 byId('previous-row').addEventListener('click', () => { state.index -= 1; persist(); render(); });
 byId('next-row').addEventListener('click', () => { state.index += 1; persist(); render(); });
