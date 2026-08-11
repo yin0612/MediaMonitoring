@@ -17,6 +17,13 @@ def test_staging_uses_distinct_worker_and_storage_bindings():
     assert 'name = "media-monitoring-demo"' in production
 
 
+def test_staging_has_its_own_snapshot_refresh_trigger():
+    staging = STAGING.read_text(encoding="utf-8")
+
+    assert "[triggers]" in staging
+    assert 'crons = ["*/5 * * * *"]' in staging
+
+
 def test_staging_documentation_records_unavailable_paid_dependencies():
     documentation = (Path(__file__).parents[1] / "docs" / "staging.md").read_text(encoding="utf-8")
 

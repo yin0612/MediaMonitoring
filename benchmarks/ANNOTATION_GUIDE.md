@@ -43,7 +43,8 @@ Run the evaluator against a JSONL export that contains completed
 python scripts/evaluate_annotations.py --input benchmarks/annotation-machine-draft.jsonl
 ```
 
-The report computes Cohen's kappa for double-annotated categorical fields and
-macro-F1 for machine suggestions against consensus human labels. It exits with
+The report computes Cohen's kappa only after all 100 designated double-annotated
+rows are complete, and computes macro-F1 on the held-out `test` split for
+machine suggestions against consensus human labels. It exits with
 code `2` and reports `insufficient_labels` until at least one row has completed
 human labels; it never writes or changes the official annotations.
