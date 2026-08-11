@@ -386,18 +386,26 @@ def collect_source(source: dict, state: dict | None, now: datetime, timeout: int
     if rss_result is None or not rss_result.ok:
         google_result = fetch_google_news(source, timeout, max_items)
         crawl = source.get("crawl") or {}
-        if crawl.get("enabled") and crawl_due(state.get("lastCrawlAt") if state else None, now):
+        # The first successful transport is authoritative for this run.  Do not
+        # mix Google News and listing items under one accessMode, otherwise the
+        # quality counters would attribute one pipeline's items to another.
+        if (
+            not google_result.ok
+            and crawl.get("enabled")
+            and crawl_due(state.get("lastCrawlAt") if state else None, now)
+        ):
             crawl_attempted = True
             listing_result = fetch_listing_source(source, timeout, max_items)
 
     attempts = [result for result in (rss_result, google_result, listing_result) if result is not None]
     ok_attempts = [result for result in attempts if result.ok]
-    items = [entry for result in ok_attempts for entry in result.items]
-    if rss_result is not None and rss_result.ok:
+    selected_result = ok_attempts[0] if ok_attempts else None
+    items = list(selected_result.items) if selected_result else []
+    if selected_result is rss_result:
         access_mode = "official-rss"
-    elif google_result is not None and google_result.ok:
+    elif selected_result is google_result:
         access_mode = "google-news"
-    elif listing_result is not None and listing_result.ok:
+    elif selected_result is listing_result:
         access_mode = "site-listing"
     else:
         access_mode = "google-news" if not has_rss else "official-rss"

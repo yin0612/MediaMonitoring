@@ -5,9 +5,10 @@
 官網爬取，實測 GitHub runner 上整輪超過 20 分鐘，排程因此互相堆積。
 """
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from opinion_pipeline import cli
+from opinion_pipeline.models import NormalizedItem, SourceResult
 
 
 def _sources(count: int) -> list[dict]:
@@ -67,3 +68,37 @@ def test_collect_sources_passes_restored_state_for_each_source(monkeypatch):
 
 def test_collect_sources_handles_an_empty_registry():
     assert cli.collect_sources([], {}, datetime.now(timezone.utc), 20, 20) == []
+
+
+def test_collect_source_uses_one_successful_access_mode_for_items_and_quality(monkeypatch):
+    """不同 fallback 管道不能混入同一份、卻只標一個 accessMode。"""
+    now = datetime(2026, 8, 11, 12, tzinfo=timezone.utc)
+    source = {
+        "id": "demo",
+        "name": "Demo",
+        "domains": ["demo.example"],
+        "crawl": {"enabled": True, "url": "https://demo.example/news"},
+    }
+    google_item = NormalizedItem(
+        "demo", "google-1", "Google article", "摘要", "https://demo.example/google", now - timedelta(hours=1)
+    )
+    listing_item = NormalizedItem(
+        "demo", "listing-1", "Listing article", "摘要", "https://demo.example/listing", now - timedelta(hours=2)
+    )
+    monkeypatch.setattr(
+        cli,
+        "fetch_google_news",
+        lambda *_args: SourceResult("demo", "Demo", True, True, items=[google_item]),
+    )
+    monkeypatch.setattr(
+        cli,
+        "fetch_listing_source",
+        lambda *_args: SourceResult("demo", "Demo", True, True, items=[listing_item]),
+    )
+
+    result = cli.collect_source(source, None, now, 5, 20)
+
+    assert result["ok"] is True
+    assert result["accessMode"] == "google-news"
+    assert result["items"] == [google_item]
+    assert result["crawlAttempted"] is False
