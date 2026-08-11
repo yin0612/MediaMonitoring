@@ -1,11 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import type { CSSProperties } from 'react';
 import { Chart } from './Chart';
 import { ThemeProvider } from '../lib/theme';
 
-vi.mock('echarts-for-react/lib/core', () => ({
-  default: ({ style }: { style: CSSProperties }) => <div data-testid="echarts" style={style} />,
+vi.mock('echarts/core', () => ({
+  use: vi.fn(),
+  init: vi.fn(() => ({
+    setOption: vi.fn(),
+    resize: vi.fn(),
+    dispose: vi.fn(),
+  })),
 }));
 
 describe('Chart', () => {
