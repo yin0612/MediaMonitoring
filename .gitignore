@@ -22,3 +22,4 @@ build/
 __MACOSX/
 .vscode/
 .idea/
+.worktrees/
