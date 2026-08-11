@@ -48,12 +48,45 @@ TOPIC_DEFINITIONS = (
 )
 
 
+def _parse_envelope_timestamp(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed if parsed.tzinfo is not None else parsed.replace(tzinfo=timezone.utc)
+
+
+def _envelope_window(data: dict, generated_at: str) -> dict[str, str | None]:
+    coverage = data.get("coverage") if isinstance(data.get("coverage"), dict) else {}
+    covered_from = _parse_envelope_timestamp(coverage.get("actualFrom"))
+    covered_to = _parse_envelope_timestamp(coverage.get("actualTo"))
+    if covered_from or covered_to:
+        return {
+            "actualFrom": covered_from.isoformat().replace("+00:00", "Z") if covered_from else None,
+            "actualTo": covered_to.isoformat().replace("+00:00", "Z") if covered_to else generated_at,
+        }
+
+    timestamps = [
+        parsed
+        for item in data.get("items", [])
+        if isinstance(item, dict)
+        for parsed in [_parse_envelope_timestamp(item.get("publishedAt") or item.get("published_at"))]
+        if parsed is not None
+    ]
+    return {
+        "actualFrom": min(timestamps).isoformat().replace("+00:00", "Z") if timestamps else None,
+        "actualTo": max(timestamps).isoformat().replace("+00:00", "Z") if timestamps else generated_at,
+    }
+
+
 def envelope(data: dict, generated_at: str) -> dict:
     return {
         "schemaVersion": SCHEMA_VERSION,
         "generatedAt": generated_at,
         "pipeline": "deep-github",
-        "window": {"actualFrom": None, "actualTo": generated_at},
+        "window": _envelope_window(data, generated_at),
         "quality": {"status": data.get("status", "experimental")},
         "provenance": {"method": "public-metadata-only", "reproducible": True},
         "data": data,

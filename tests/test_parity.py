@@ -7,12 +7,29 @@ from datetime import datetime
 from pathlib import Path
 
 from opinion_pipeline.analysis import build_entities, build_keywords, load_entity_lexicon, load_watch_config
-from opinion_pipeline.cli import build_topics
+from opinion_pipeline.cli import build_topics, envelope
 from opinion_pipeline.models import NormalizedItem
 from opinion_pipeline.sentiment import load_sentiment_lexicon
 
 
 FIXTURE = Path("tests/fixtures/analysis-parity.json")
+
+
+def test_deep_envelope_reports_actual_item_window():
+    result = envelope(
+        {
+            "items": [
+                {"publishedAt": "2026-08-10T03:00:00Z"},
+                {"publishedAt": "2026-08-11T03:00:00Z"},
+            ]
+        },
+        "2026-08-11T04:00:00Z",
+    )
+
+    assert result["window"] == {
+        "actualFrom": "2026-08-10T03:00:00Z",
+        "actualTo": "2026-08-11T03:00:00Z",
+    }
 
 
 def _python_output() -> dict:

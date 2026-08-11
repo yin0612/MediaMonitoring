@@ -515,7 +515,7 @@ const snapshotEnvelope = (data, generatedAt) => ({
   schemaVersion: SNAPSHOT_SCHEMA,
   generatedAt,
   pipeline: 'fast-worker',
-  window: { actualFrom: null, actualTo: generatedAt },
+  window: envelopeWindow(data, generatedAt),
   quality: { status: data?.status || (data?.stale ? 'stale' : 'available') },
   provenance: { method: 'public-metadata-only', reproducible: true },
   data,
