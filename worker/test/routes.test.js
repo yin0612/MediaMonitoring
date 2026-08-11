@@ -556,6 +556,41 @@ test('30d search falls back to the full archive with explicit incomplete coverag
   }
 });
 
+test('30d archive fallback stays partial when the D1 index is not configured', async () => {
+  const originalFetch = globalThis.fetch;
+  const oldPublishedAt = new Date(Date.now() - 29 * 24 * 60 * 60 * 1000).toISOString();
+  const currentPublishedAt = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.endsWith('/data/news-archive.json')) {
+      return Response.json({
+        schemaVersion: '2.1.0',
+        generatedAt: new Date().toISOString(),
+        data: {
+          status: 'ok', stale: false, items: [
+            { id: 'archive-old', source: 'cna', title: 'query old', excerpt: '', publishedAt: oldPublishedAt, url: 'https://example.com/old' },
+            { id: 'archive-current', source: 'cna', title: 'query current', excerpt: '', publishedAt: currentPublishedAt, url: 'https://example.com/current' },
+          ],
+        },
+      });
+    }
+    if (hasHost(url, 'news.google.com')) return new Response('<rss><channel></channel></rss>');
+    return new Response('<rss><channel></channel></rss>');
+  };
+  try {
+    const response = await worker.fetch(new Request('https://worker.example/api/search?q=query&range=30d'), {
+      ARCHIVE_BASE_URL: 'https://pages.example',
+    });
+    const body = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(body.data.status, 'partial');
+    assert.equal(body.data.coverage.complete, false);
+    assert.equal(body.data.coverage.actualFrom, oldPublishedAt);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 function memoryKv() {
   const store = new Map();
   return { get: async (key) => store.get(key) ?? null, put: async (key, value) => void store.set(key, value), _store: store };

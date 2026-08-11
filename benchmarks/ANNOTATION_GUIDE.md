@@ -11,3 +11,21 @@
 - `test` split 在模型與 threshold 固定前不可查看或調參。
 
 人工標註完成前，產品中的事件、情緒、實體與敘事分析一律維持「實驗性」。
+
+## Machine draft (not human ground truth)
+
+Regenerate the independent provisional suggestions with:
+
+```powershell
+python scripts/build_annotation_machine_draft.py
+```
+
+The command writes `annotation-machine-draft.jsonl` and
+`annotation-machine-draft.csv`. It only uses existing archive sentiment,
+exact literal matches from `config/entities.yml`, and transparent topic
+keywords. Ambiguous fields are marked `uncertain`.
+
+Every row is marked `provenance.kind=machine-draft` and
+`humanVerified=false`. Keep the official `annotations` fields in
+`annotation-candidates.jsonl` empty until a human annotator completes and
+reviews them. Do not tune rules or thresholds against the `test` split.

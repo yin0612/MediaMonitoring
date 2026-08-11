@@ -281,8 +281,12 @@ async function handleSearch(request, env, url) {
     return json(request, env, { error: error.message }, 400);
   }
 
-  let historicalIndexFailed = false;
-  if (env.DB && ['7d', '30d'].includes(input.range)) {
+  const historicalRange = ['7d', '30d'].includes(input.range);
+  // Historical ranges are contractually D1-backed. A Pages archive is only a
+  // degraded recovery path when the index is unavailable, never a complete
+  // substitute that can silently claim full 7/30-day coverage.
+  let historicalIndexFailed = historicalRange && !env.DB;
+  if (env.DB && historicalRange) {
     try {
       const now = Date.now();
       const [indexed, historicalCoverage] = await Promise.all([
@@ -388,7 +392,6 @@ async function handleSearch(request, env, url) {
   const enabledCount = NEWS_SOURCES.length;
   const failures = runs.filter((run) => ['error', 'degraded'].includes(run.status)).length;
   const stale = liveItems.length === 0 && archived.items.length > 0;
-  const historicalRange = ['7d', '30d'].includes(input.range);
   const requestedDays = input.range === '30d' ? 30 : 7;
   const responseNow = Date.now();
   const requestedFromMs = responseNow - requestedDays * DAY_MS;
@@ -404,7 +407,9 @@ async function handleSearch(request, env, url) {
   const degradedHistory = historicalRange && (
     historicalIndexFailed || !coverageComplete || archived.status !== 'ok' || archived.stale
   );
-  const status = stale ? 'stale' : (failures || degradedHistory) ? 'partial' : 'ok';
+  const status = historicalIndexFailed
+    ? 'partial'
+    : stale ? 'stale' : (failures || degradedHistory) ? 'partial' : 'ok';
   const sourceCounts = Object.fromEntries(
     [...new Set(matched.map((item) => item.source))].map((source) => [source, matched.filter((item) => item.source === source).length]),
   );
