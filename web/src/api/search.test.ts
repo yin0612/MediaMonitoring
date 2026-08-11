@@ -158,6 +158,7 @@ describe('static snapshot fallback', () => {
       requestedTo: '2026-07-22T12:00:00.000Z',
       actualFrom: '2026-07-12T12:00:00.000Z',
       actualTo: '2026-07-12T12:00:00.000Z',
+      coveredDays: 1,
       complete: false,
     });
   });

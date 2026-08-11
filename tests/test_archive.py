@@ -50,13 +50,36 @@ def test_coverage_window_reports_actual_dates_and_requires_full_retention():
 
     assert result["actualFrom"] == (NOW - timedelta(days=29)).isoformat().replace("+00:00", "Z")
     assert result["actualTo"] == (NOW - timedelta(hours=1)).isoformat().replace("+00:00", "Z")
-    assert result["complete"] is True
+    assert result["coveredDays"] == 2
+    assert result["complete"] is False
 
 
 def test_coverage_window_marks_short_archive_incomplete():
     result = coverage_window([item("cna", "new", "new", 3 * 24)], NOW, days=30)
 
     assert result["complete"] is False
+
+
+def test_coverage_window_marks_sparse_archive_incomplete_even_when_endpoints_exist():
+    values = [
+        item("cna", "old", "old", 29 * 24),
+        item("ltn", "middle", "middle", 14 * 24),
+        item("tvbs", "new", "new", 1),
+    ]
+
+    result = coverage_window(values, NOW, days=30)
+
+    assert result["coveredDays"] == 3
+    assert result["complete"] is False
+
+
+def test_coverage_window_accepts_a_contiguous_thirty_day_archive():
+    values = [item("cna", str(age), "daily", age) for age in range(1, 30 * 24 + 1, 24)]
+
+    result = coverage_window(values, NOW, days=30)
+
+    assert result["coveredDays"] >= 30
+    assert result["complete"] is True
 
 
 def test_pipeline_meta_publishes_schedule_and_recent_caps():

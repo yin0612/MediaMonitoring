@@ -697,10 +697,14 @@ async function buildSnapshot(env) {
   const status = healthySourceCount === sources.length ? 'ok' : serviceableSourceCount ? 'partial' : 'stale';
   const pagesCoverage = pagesMeta?.data?.coverage;
   const previousCoverage = previous?.files?.meta?.data?.coverage;
+  const selectedCoverage = pagesCoverage && typeof pagesCoverage === 'object'
+    ? pagesCoverage
+    : previousCoverage;
   const archiveCoverage = {
-    complete: pagesCoverage?.complete === true || previousCoverage?.complete === true,
-    actualFrom: pagesCoverage?.actualFrom || previousCoverage?.actualFrom || null,
-    actualTo: pagesCoverage?.actualTo || previousCoverage?.actualTo || null,
+    complete: selectedCoverage?.complete === true,
+    coveredDays: Number(selectedCoverage?.coveredDays) || 0,
+    actualFrom: selectedCoverage?.actualFrom || null,
+    actualTo: selectedCoverage?.actualTo || null,
   };
 
   const files = {
