@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useData } from '../api/useData';
-import type { EntitiesData, KeywordsData, Meta, RecentData, SourcesData, TopicsData } from '../types/contracts';
+import type { EntitiesData, EventsData, KeywordsData, Meta, RecentData, SourcesData, TopicsData } from '../types/contracts';
 import { DataSection } from '../components/DataSection';
 import { Banner, Card, Freshness, HeatBar, SourceTag, StatTile } from '../components/ui';
 import { buildHomeSnapshot } from '../lib/home';
@@ -14,6 +14,7 @@ const EMPTY_TOPICS: TopicsData = { stale: false, experimental: true, topics: [] 
 const EMPTY_ENTITIES: EntitiesData = { stale: false, experimental: true, nodes: [], edges: [] };
 const EMPTY_RECENT: RecentData = { items: [] };
 const EMPTY_SOURCES: SourcesData = { sources: [] };
+const EMPTY_EVENTS: EventsData = { stale: false, experimental: true, method: '', events: [] };
 
 export function HomePage() {
   const meta = useData<Meta>('meta');
@@ -22,6 +23,8 @@ export function HomePage() {
   const entities = useData<EntitiesData>('entities');
   const recent = useData<RecentData>('recent');
   const sources = useData<SourcesData>('sources');
+  const events = useData<EventsData>('events');
+  const eventData = events.data ?? EMPTY_EVENTS;
   const homeInput = {
     meta: meta.data,
     keywords: keywords.data ?? EMPTY_KEYWORDS,
@@ -78,17 +81,14 @@ export function HomePage() {
           </Card>
         </DataSection>
 
-        <DataSection title="主要事件" loading={topics.loading} error={topics.error} onRetry={topics.reload} isEmpty={snapshot.topTopics.length === 0} emptyTitle="目前沒有主題資料">
-          <Card title="主要事件" hint={topics.data?.experimental ? '詞典分析，僅供研究參考' : undefined} right={<Link className="small" to="/topics">查看全部 →</Link>}>
+        <DataSection title="主要事件" loading={events.loading || topics.loading} error={events.error ?? topics.error} onRetry={events.reload} isEmpty={eventData.events.length === 0 && snapshot.topTopics.length === 0} emptyTitle="目前沒有事件資料">
+          <Card title="主要事件" hint="標題 3-gram 相似度事件分群，僅供研究參考" right={<Link className="small" to="/topics">查看全部 →</Link>}>
             <div className="home-topic-list">
-              {snapshot.topTopics.map((topic) => (
+              {(eventData.events.length ? eventData.events.slice(0, 4) : snapshot.topTopics).map((topic) => (
                 <Link className="home-topic-row" to="/topics" key={topic.id}>
-                  <span><strong>{topic.label}</strong><small>{topic.size} 篇 · {topic.terms.slice(0, 3).join('、')}</small></span>
-                  <span className="sentiment-mini" aria-label={'正向 ' + Math.round(topic.sentiment.positive * 100) + '%，中立 ' + Math.round(topic.sentiment.neutral * 100) + '%，負向 ' + Math.round(topic.sentiment.negative * 100) + '%'}>
-                    <i style={{ width: topic.sentiment.positive * 100 + '%' }} />
-                    <b style={{ width: topic.sentiment.neutral * 100 + '%' }} />
-                    <em style={{ width: topic.sentiment.negative * 100 + '%' }} />
-                  </span>
+                  {'representativeTitle' in topic
+                    ? <span><strong>{topic.representativeTitle}</strong><small>{topic.articleCount} 篇報導 · {topic.sourceCount} 個來源</small></span>
+                    : <span><strong>{topic.label}</strong><small>{topic.size} 篇 · {topic.terms.slice(0, 3).join('、')}</small></span>}
                 </Link>
               ))}
             </div>

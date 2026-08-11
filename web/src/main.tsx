@@ -21,7 +21,7 @@ export function App() {
   return (
     <StrictMode>
       <ThemeProvider>
-        <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <HashRouter>
           <Suspense fallback={<LoadingState label="載入分析工具…" />}>
             <Routes>
               <Route element={<Layout />}>

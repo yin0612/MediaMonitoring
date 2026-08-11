@@ -81,7 +81,7 @@ export function isManualRefreshConfigured(): boolean {
   return Boolean((import.meta.env.VITE_API_BASE_URL || '').trim());
 }
 
-export async function requestManualRefresh(): Promise<ManualRefreshResponse> {
+export async function requestManualRefresh(turnstileToken?: string): Promise<ManualRefreshResponse> {
   const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
   if (!apiBase) throw new DataFetchError('refresh', '尚未設定 Cloudflare Worker 網址，無法手動更新');
 
@@ -89,7 +89,8 @@ export async function requestManualRefresh(): Promise<ManualRefreshResponse> {
   try {
     response = await fetch(`${apiBase}/api/refresh`, {
       method: 'POST',
-      headers: { Accept: 'application/json' },
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ turnstileToken: turnstileToken || null }),
     });
   } catch {
     // 網路層失敗（Worker 未部署、DNS 解析不到、CORS 阻擋）。
@@ -124,7 +125,7 @@ export async function requestManualRefresh(): Promise<ManualRefreshResponse> {
 }
 
 /** 由 Worker KV 提供的即時快照檔名；news-archive（7 天）與 trends 仍走 Pages/各自端點。 */
-const WORKER_FILES = new Set(['meta', 'keywords', 'sources', 'recent', 'entities', 'topics']);
+const WORKER_FILES = new Set(['meta', 'keywords', 'sources', 'recent', 'entities', 'topics', 'events']);
 
 function validateEnvelope<T>(name: string, json: unknown): Envelope<T> {
   const env = json as Partial<Envelope<T>>;
@@ -142,10 +143,10 @@ function validateEnvelope<T>(name: string, json: unknown): Envelope<T> {
   return env as Envelope<T>;
 }
 
-async function fetchEnvelope<T>(name: string, url: string, cache: RequestCache): Promise<Envelope<T>> {
+async function fetchEnvelope<T>(name: string, url: string, cache: RequestCache, signal?: AbortSignal): Promise<Envelope<T>> {
   let res: Response;
   try {
-    res = await fetch(url, { cache });
+    res = await fetch(url, { cache, signal });
   } catch (err) {
     throw new DataFetchError(name, `無法連線取得 ${name}：${(err as Error).message}`);
   }
@@ -164,11 +165,75 @@ async function fetchEnvelope<T>(name: string, url: string, cache: RequestCache):
  * 若設定了 Worker API base，優先讀 Worker 的即時快照（每 5 分鐘更新）；
  * Worker 尚未產生快照或連線失敗時，改讀 GitHub Pages 靜態檔（last-good）。
  */
-export async function fetchData<T>(
-  name: string,
-  options?: { bypassCache?: boolean },
-): Promise<Envelope<T>> {
-  const bypassCache = options?.bypassCache ?? false;
+const DATA_CACHE_TTL_MS = 45_000;
+const dataCache = new Map<string, { expiresAt: number; value: Envelope<unknown> }>();
+const inFlight = new Map<string, Promise<Envelope<unknown>>>();
+
+function envelopeQuality(name: string, envelope: Envelope<unknown>): number {
+  const data = envelope.data as Record<string, unknown>;
+  const explicit = data?.quality as Record<string, unknown> | undefined;
+  if (typeof explicit?.score === 'number') return explicit.score;
+  if (name === 'sources' && Array.isArray(data?.sources)) {
+    const values = (data.sources as Array<Record<string, unknown>>)
+      .map((source) => source.qualityScore)
+      .filter((value): value is number => typeof value === 'number');
+    if (values.length) return values.reduce((sum, value) => sum + value, 0) / values.length;
+  }
+  if (name === 'recent' && Array.isArray(data?.items)) {
+    const items = data.items as Array<Record<string, unknown>>;
+    const excerptRate = items.length
+      ? items.filter((item) => String(item.excerpt || '').trim()).length / items.length
+      : 0;
+    return Math.min(1, items.length / 120) * 0.7 + excerptRate * 0.3;
+  }
+  return 0.5;
+}
+
+function mergeRecent<T>(workerEnv: Envelope<T>, pagesEnv: Envelope<T>): Envelope<T> {
+  const workerData = workerEnv.data as Record<string, unknown>;
+  const pagesData = pagesEnv.data as Record<string, unknown>;
+  if (!Array.isArray(workerData.items) || !Array.isArray(pagesData.items)) return workerEnv;
+  const merged = new Map<string, Record<string, unknown>>();
+  for (const item of [...pagesData.items, ...workerData.items] as Array<Record<string, unknown>>) {
+    const url = String(item.url || '').replace(/[?#].*$/, '').replace(/\/$/, '').toLowerCase();
+    const key = url || `${String(item.source)}:${String(item.title).replace(/\s/g, '').toLowerCase()}`;
+    if (!merged.has(key)) merged.set(key, item);
+  }
+  const items = [...merged.values()]
+    .sort((a, b) => Date.parse(String(b.publishedAt)) - Date.parse(String(a.publishedAt)))
+    .slice(0, 800);
+  const generatedAt = Date.parse(workerEnv.generatedAt) >= Date.parse(pagesEnv.generatedAt)
+    ? workerEnv.generatedAt
+    : pagesEnv.generatedAt;
+  return { ...workerEnv, generatedAt, data: { ...pagesData, ...workerData, items } as T };
+}
+
+function arbitrate<T>(name: string, workerEnv: Envelope<T>, pagesEnv: Envelope<T>): Envelope<T> {
+  if (name === 'recent') return mergeRecent(workerEnv, pagesEnv);
+  const workerQuality = envelopeQuality(name, workerEnv as Envelope<unknown>);
+  const pagesQuality = envelopeQuality(name, pagesEnv as Envelope<unknown>);
+  if (Math.abs(workerQuality - pagesQuality) >= 0.02) {
+    return workerQuality > pagesQuality ? workerEnv : pagesEnv;
+  }
+  const workerTime = Date.parse(workerEnv.generatedAt) || 0;
+  const pagesTime = Date.parse(pagesEnv.generatedAt) || 0;
+  return workerTime >= pagesTime ? workerEnv : pagesEnv;
+}
+
+function abortable<T>(promise: Promise<T>, signal?: AbortSignal): Promise<T> {
+  if (!signal) return promise;
+  if (signal.aborted) return Promise.reject(new DOMException('Aborted', 'AbortError'));
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => signal.addEventListener(
+      'abort',
+      () => reject(new DOMException('Aborted', 'AbortError')),
+      { once: true },
+    )),
+  ]);
+}
+
+async function loadData<T>(name: string, bypassCache: boolean): Promise<Envelope<T>> {
   const workerUrl = WORKER_FILES.has(name) ? workerDataUrl(name) : null;
   let workerEnv: Envelope<T> | null = null;
   if (workerUrl) {
@@ -185,14 +250,36 @@ export async function fetchData<T>(
   } catch (err) {
     if (!workerEnv) throw err;
   }
-
-  if (workerEnv && pagesEnv) {
-    const workerTime = Date.parse(workerEnv.generatedAt) || 0;
-    const pagesTime = Date.parse(pagesEnv.generatedAt) || 0;
-    return workerTime >= pagesTime ? workerEnv : pagesEnv;
-  }
-
+  if (workerEnv && pagesEnv) return arbitrate(name, workerEnv, pagesEnv);
   return workerEnv ?? (pagesEnv as Envelope<T>);
+}
+
+export async function fetchData<T>(
+  name: string,
+  options?: { bypassCache?: boolean; signal?: AbortSignal },
+): Promise<Envelope<T>> {
+  const bypassCache = options?.bypassCache ?? false;
+  if (bypassCache) dataCache.delete(name);
+  const cached = dataCache.get(name);
+  if (!bypassCache && cached && cached.expiresAt > Date.now()) {
+    return abortable(Promise.resolve(cached.value as Envelope<T>), options?.signal);
+  }
+  let pending = inFlight.get(name) as Promise<Envelope<T>> | undefined;
+  if (!pending || bypassCache) {
+    pending = loadData<T>(name, bypassCache).then((value) => {
+      dataCache.set(name, { expiresAt: Date.now() + DATA_CACHE_TTL_MS, value });
+      return value;
+    }).finally(() => {
+      if (inFlight.get(name) === pending) inFlight.delete(name);
+    });
+    inFlight.set(name, pending as Promise<Envelope<unknown>>);
+  }
+  return abortable(pending, options?.signal);
+}
+
+export function __resetDataCacheForTests(): void {
+  dataCache.clear();
+  inFlight.clear();
 }
 
 /** 明確讀取 Pages last-good；用於 Worker 搜尋失敗後，避免再讀到截短的 Worker 快照。 */

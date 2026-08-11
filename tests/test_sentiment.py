@@ -1,7 +1,7 @@
 """詞典法情緒判讀的行為測試（含否定、平手與彙總）。"""
 from pathlib import Path
 
-from opinion_pipeline.sentiment import aggregate, classify, load_sentiment_lexicon
+from opinion_pipeline.sentiment import aggregate, classify, classify_target, load_sentiment_lexicon
 
 LEXICON = load_sentiment_lexicon(Path("config/sentiment.yml"))
 
@@ -54,3 +54,16 @@ def test_aggregate_ratios_always_sum_to_one():
 
 def test_aggregate_handles_empty_input():
     assert aggregate([]) == {"positive": 0.0, "neutral": 1.0, "negative": 0.0}
+
+
+def test_targeted_sentiment_only_uses_context_around_named_target():
+    text = "市場大漲創新高，但分析師不看好台積電後市，認為需求下滑。"
+    result = classify_target(text, "台積電", ["TSMC"], LEXICON)
+    assert result["target"] == "台積電"
+    assert result["label"] == "negative"
+    assert result["evidence"]
+
+
+def test_targeted_sentiment_is_uncertain_without_target_or_evidence():
+    assert classify_target("市場大漲", "台積電", [], LEXICON)["label"] == "uncertain"
+    assert classify_target("台積電召開例行會議", "台積電", [], LEXICON)["label"] == "uncertain"

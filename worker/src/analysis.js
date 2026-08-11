@@ -420,7 +420,22 @@ export function buildEntities(items, lexicon = ENTITY_LEXICON) {
     })
     .filter((edge) => edge.weight >= MIN_EDGE_WEIGHT && nodeIds.has(edge.left) && nodeIds.has(edge.right))
     .sort((a, b) => b.weight - a.weight || (a.left < b.left ? -1 : 1))
-    .map((edge) => ({ source: nodeIds.get(edge.left), target: nodeIds.get(edge.right), weight: edge.weight }));
+    .map((edge) => {
+      const totalDocs = Math.max(1, items.length);
+      const pxy = edge.weight / totalDocs;
+      const px = mentions.get(edge.left) / totalDocs;
+      const py = mentions.get(edge.right) / totalDocs;
+      const npmi = edge.weight < totalDocs
+        ? Math.log(pxy / (px * py)) / Math.max(1e-9, -Math.log(pxy))
+        : 1;
+      return {
+        source: nodeIds.get(edge.left),
+        target: nodeIds.get(edge.right),
+        weight: edge.weight,
+        jaccard: Math.round((edge.weight / (mentions.get(edge.left) + mentions.get(edge.right) - edge.weight)) * 1000) / 1000,
+        npmi: Math.round(npmi * 1000) / 1000,
+      };
+    });
   return { nodes, edges };
 }
 

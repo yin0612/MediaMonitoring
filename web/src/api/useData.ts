@@ -28,13 +28,16 @@ export function useData<T>(name: string, refreshMs: number = DATA_REFRESH_MS): A
 
   useEffect(() => {
     let cancelled = false;
+    let controller = new AbortController();
 
     const load = (silent: boolean, bypassCache = false) => {
+      controller.abort();
+      controller = new AbortController();
       if (!silent) {
         setLoading(true);
         setError(null);
       }
-      fetchData<T>(name, { bypassCache })
+      fetchData<T>(name, { bypassCache, signal: controller.signal })
         .then((env) => {
           if (cancelled) return;
           hasData.current = true;
@@ -77,6 +80,7 @@ export function useData<T>(name: string, refreshMs: number = DATA_REFRESH_MS): A
 
     return () => {
       cancelled = true;
+      controller.abort();
       if (timer) clearInterval(timer);
       window.removeEventListener(DATA_REFRESH_EVENT, onRefresh);
       document.removeEventListener('visibilitychange', onVisibility);

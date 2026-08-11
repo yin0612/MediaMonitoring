@@ -79,6 +79,10 @@ export function MethodPage() {
                     <th>最後嘗試</th>
                     <th>最後成功</th>
                     <th className="num">項目數</th>
+                    <th>最新文章</th>
+                    <th>摘要率</th>
+                    <th>Fallback</th>
+                    <th>品質</th>
                     <th>錯誤碼</th>
                   </tr>
                 </thead>
@@ -91,6 +95,10 @@ export function MethodPage() {
                       <td className="small muted" style={{ whiteSpace: 'nowrap' }}>{s.lastAttemptAt ? fmtRelative(s.lastAttemptAt) : '—'}</td>
                       <td className="small muted" style={{ whiteSpace: 'nowrap' }}>{s.lastSuccessAt ? fmtRelative(s.lastSuccessAt) : '—'}</td>
                       <td className="num">{s.itemCount}</td>
+                      <td className="small muted" style={{ whiteSpace: 'nowrap' }}>{s.newestItemAt ? fmtRelative(s.newestItemAt) : '—'}</td>
+                      <td className="num">{s.excerptRate === undefined ? '—' : `${Math.round(s.excerptRate * 100)}%`}</td>
+                      <td>{s.fallbackUsed === undefined ? '—' : s.fallbackUsed ? '是' : '否'}</td>
+                      <td className="num">{s.qualityScore === undefined ? '—' : Math.round(s.qualityScore * 100)}</td>
                       <td className="small">
                         {s.errorCode ? <code>{s.errorCode}</code> : '—'}
                         {s.dropped && Object.keys(s.dropped).length > 0 && (

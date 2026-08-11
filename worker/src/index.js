@@ -10,6 +10,7 @@ import {
 } from './core.js';
 import { withSentiment } from './analysis.js';
 import { NEWS_SOURCES } from './sources.js';
+import { persistSnapshotArticles, queryHistoricalArticles } from './storage.js';
 
 const TRENDS_URL = 'https://trends.google.com/trending/rss?geo=TW&hl=zh-TW';
 // 正式站身分只在這裡定義一次；wrangler.toml 的 vars 才是部署時的權威值。
@@ -31,7 +32,7 @@ const MAX_ANALYSIS_ITEMS = 600;
 // 搜尋回傳的文章上限。統計不受此限制，一律以全部命中計算（見 handleSearch）。
 const MAX_SEARCH_ITEMS = 100;
 // 7 天完整 archive 不由 Worker 提供（CPU/KV 成本），由 Pages 靜態檔與 /api/search 負責。
-const DATA_FILES = new Set(['meta', 'keywords', 'sources', 'recent', 'entities', 'topics']);
+const DATA_FILES = new Set(['meta', 'keywords', 'sources', 'recent', 'entities', 'topics', 'events']);
 const googleNewsUrl = (query, range = '24h') => {
   const whenMap = { '1h': '1h', '6h': '6h', '12h': '12h', '24h': '1d', '7d': '7d', '30d': '30d' };
   const when = whenMap[range] || '1d';
@@ -86,12 +87,21 @@ const isAllowedOrigin = (request, env) => {
   return origin === allowed || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
 };
 
+const securityHeaders = {
+  'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
+  'Referrer-Policy': 'no-referrer',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+};
+
 const json = (request, env, body, status = 200, cacheSeconds = 0) =>
   new Response(JSON.stringify(body), {
     status,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': cacheSeconds ? `public, max-age=${cacheSeconds}` : 'no-store',
+      ...securityHeaders,
       ...corsHeaders(request, env),
     },
   });
@@ -208,7 +218,7 @@ function isTrustworthyPageSourceState(source, now) {
     source
     && typeof source.id === 'string'
     && source.id.trim()
-    && ['ok', 'stale', 'error'].includes(source.status)
+    && ['ok', 'empty', 'degraded', 'stale', 'error'].includes(source.status)
     && typeof source.stale === 'boolean'
     && Object.hasOwn(source, 'lastAttemptAt')
     && trustworthyAttempt(source.lastAttemptAt)
@@ -218,8 +228,8 @@ function isTrustworthyPageSourceState(source, now) {
     && Object.hasOwn(source, 'errorCode')
     && nullableErrorCode(source.errorCode)
     && (
-      (source.status === 'ok' && source.stale === false && source.errorCode === null)
-      || (source.status !== 'ok' && source.stale === true)
+      (['ok', 'empty', 'degraded'].includes(source.status) && source.stale === false && source.errorCode === null)
+      || (['stale', 'error'].includes(source.status) && source.stale === true)
     )
     && ['official-rss', 'google-news', 'site-listing'].includes(source.accessMode)
   );
@@ -258,6 +268,50 @@ async function handleSearch(request, env, url) {
     input = validateQuery(url.searchParams.get('q'), url.searchParams.get('range') || '24h');
   } catch (error) {
     return json(request, env, { error: error.message }, 400);
+  }
+
+  if (env.DB && ['7d', '30d'].includes(input.range)) {
+    try {
+      const indexed = await queryHistoricalArticles(env.DB, input.range);
+      const matched = filterAndDedupe(indexed, input.query, input.range);
+      const items = matched.slice(0, MAX_SEARCH_ITEMS).map((item) => (
+        item.sentiment ? item : withSentiment(item)
+      ));
+      const sourceCounts = {};
+      for (const item of matched) sourceCounts[item.source] = (sourceCounts[item.source] || 0) + 1;
+      const snapshot = await readSnapshot(env);
+      const snapshotSources = snapshot?.files?.sources?.data?.sources;
+      const sources = Array.isArray(snapshotSources)
+        ? snapshotSources
+        : NEWS_SOURCES.map((source) => ({
+          id: source.id,
+          displayName: source.displayName,
+          status: 'degraded',
+          itemCount: sourceCounts[source.id] || 0,
+          errorCode: 'SOURCE_HEALTH_UNAVAILABLE',
+        }));
+      const actualTimes = matched.map((item) => item.publishedAt).sort();
+      const now = Date.now();
+      return json(request, env, envelope({
+        query: input.query,
+        range: input.range,
+        status: Array.isArray(snapshotSources) ? 'ok' : 'partial',
+        stale: false,
+        coverage: {
+          requestedFrom: new Date(now - (input.range === '30d' ? 30 : 7) * DAY_MS).toISOString(),
+          requestedTo: new Date(now).toISOString(),
+          actualFrom: actualTimes[0] || null,
+          actualTo: actualTimes.at(-1) || null,
+        },
+        metrics: calculateMetrics(matched, input.range, now, NEWS_SOURCES.length),
+        timeline: timelineFor(matched, input.range, now),
+        sourceCounts,
+        sources,
+        items,
+      }));
+    } catch (error) {
+      console.error(JSON.stringify({ event: 'd1_search_failed', range: input.range, error: error?.message }));
+    }
   }
 
   const officialRuns = await Promise.all(
@@ -361,7 +415,15 @@ async function readSnapshot(env) {
   }
 }
 
-const snapshotEnvelope = (data, generatedAt) => ({ schemaVersion: SNAPSHOT_SCHEMA, generatedAt, data });
+const snapshotEnvelope = (data, generatedAt) => ({
+  schemaVersion: SNAPSHOT_SCHEMA,
+  generatedAt,
+  pipeline: 'fast-worker',
+  window: { actualFrom: null, actualTo: generatedAt },
+  quality: { status: data?.status || (data?.stale ? 'stale' : 'available') },
+  provenance: { method: 'public-metadata-only', reproducible: true },
+  data,
+});
 
 // Cron 對每個官方 RSS URL 只嘗試一次，把 subrequest 保持在 Worker 免費層 50 上限以下並預留 redirect 餘裕。
 // 完整白名單交給合併的 Pages archive（Actions 以未被限流的 IP 補齊其餘來源），
@@ -371,6 +433,43 @@ async function fetchSourceItems(source, attempts = 2) {
   const result = await fetchOfficialItems(source, attempts);
   if (result.ok) return { items: result.items, accessMode: 'official-rss', ok: true, errorCode: null, viaPages: false };
   return { items: [], accessMode: 'official-rss', ok: false, errorCode: result.errorCode || 'FETCH_ERROR', viaPages: false };
+}
+
+function assessSourceQuality(transportOk, items, accessMode, now) {
+  const timestamps = items.map((item) => Date.parse(item.publishedAt)).filter(Number.isFinite);
+  const newestMs = timestamps.length ? Math.max(...timestamps) : null;
+  const ageHours = newestMs == null ? null : Math.max(0, (now - newestMs) / (60 * 60 * 1000));
+  const excerptRate = items.length ? items.filter((item) => String(item.excerpt || '').trim()).length / items.length : 0;
+  const fallbackUsed = accessMode !== 'official-rss';
+  const qualityComponents = {
+    availability: transportOk ? 1 : 0,
+    freshness: Number((ageHours == null ? 0 : Math.max(0, 1 - ageHours / 24)).toFixed(3)),
+    excerpt: Number(excerptRate.toFixed(3)),
+    access: accessMode === 'official-rss' ? 1 : accessMode === 'site-listing' ? 0.75 : 0.6,
+  };
+  const qualityScore = Number((
+    qualityComponents.availability * 0.3
+    + qualityComponents.freshness * 0.3
+    + qualityComponents.excerpt * 0.25
+    + qualityComponents.access * 0.15
+  ).toFixed(3));
+  let status = 'ok';
+  if (!transportOk) status = items.length ? 'degraded' : 'error';
+  else if (!items.length) status = 'empty';
+  else if (fallbackUsed || excerptRate < 0.6 || ageHours > 6) status = 'degraded';
+  return {
+    status,
+    windowHours: 24,
+    newestItemAt: newestMs == null ? null : new Date(newestMs).toISOString(),
+    transportOk,
+    fallbackUsed,
+    officialItemCount: accessMode === 'official-rss' ? items.length : 0,
+    fallbackItemCount: fallbackUsed ? items.length : 0,
+    excerptRate: Number(excerptRate.toFixed(3)),
+    latencyMs: 0,
+    qualityScore,
+    qualityComponents,
+  };
 }
 
 /** 每 5 分鐘由 Cron 觸發：抓全部來源、與上一份快照合併成 7 天滾動庫、重算儀表板並寫入 KV。 */
@@ -387,9 +486,9 @@ async function buildSnapshot(env) {
   //  3. 上一份 KV 快照的 recent（Worker 自身近況）
   // 7 天完整 archive 不進 KV；搜尋的 7 天範圍仍由 /api/search + Pages 提供。
   const previousRecent = previous?.files?.recent?.data?.items ?? [];
-  const [pagesRecent, pagesKeywords, pagesEntities, pagesTopics, pageSourceStates] = await Promise.all([
+  const [pagesRecent, pagesKeywords, pagesEntities, pagesTopics, pagesEvents, pageSourceStates] = await Promise.all([
     pagesRecentItems(env),
-    ...['keywords', 'entities', 'topics'].map((name) => pagesAnalysisEnvelope(env, name)),
+    ...['keywords', 'entities', 'topics', 'events'].map((name) => pagesAnalysisEnvelope(env, name)),
     pagesSourceStates(env),
   ]);
   const pagesSourceMapComplete = NEWS_SOURCES.every((source) => pageSourceStates.has(source.id));
@@ -408,7 +507,7 @@ async function buildSnapshot(env) {
         source,
         items: pageItemsBySource.get(source.id) ?? [],
         accessMode: pageSourceState.accessMode,
-        ok: pageSourceState.status === 'ok' && pageSourceState.stale !== true,
+        ok: ['ok', 'empty', 'degraded'].includes(pageSourceState.status) && pageSourceState.stale !== true,
         errorCode: pageSourceState.errorCode,
         viaPages: true,
       };
@@ -441,14 +540,18 @@ async function buildSnapshot(env) {
   // 熱詞、主題、實體在真實 600–800 篇資料上已超過 Free Cron 10 ms CPU 預算。
   // 依計畫書的降級路徑交給 Actions/Python 計算；Worker 保留即時新聞流與逐篇輕量情緒。
   const sources = runs.map((run) => {
-    const itemCount = merged.filter((item) => item.source === run.source.id).length;
+    const sourceItems = merged.filter((item) => item.source === run.source.id);
+    const itemCount = sourceItems.length;
     const hasRecent = recent24Count(run.source.id) > 0;
     const pageSourceState = run.viaPages && !hasRecent ? pageSourceStates.get(run.source.id) : null;
+    const accessMode = pageSourceState?.accessMode ?? run.accessMode;
+    const qualityItems = run.items.length ? run.items : sourceItems;
+    const quality = assessSourceQuality(run.ok, qualityItems, accessMode, now);
     if (pagesSourceMapComplete && pageSourceState) {
       return {
         id: run.source.id,
         displayName: run.source.displayName,
-        status: pageSourceState.status,
+        ...quality,
         lastAttemptAt: pageSourceState.lastAttemptAt,
         lastSuccessAt: pageSourceState.lastSuccessAt,
         lastCrawlAt: pageSourceState.lastCrawlAt,
@@ -459,28 +562,36 @@ async function buildSnapshot(env) {
         dropped: pageSourceState.dropped ?? {},
       };
     }
-    const pageSourceHealthy = pageSourceState?.status === 'ok' && pageSourceState.stale !== true;
+    const pageSourceHealthy = ['ok', 'empty', 'degraded'].includes(pageSourceState?.status)
+      && pageSourceState.stale !== true;
     // ok＝Worker 即時抓到官方 RSS，或 Pages archive 有近況／明確回報來源健康；
     // stale＝官方 RSS 本次失敗但合併庫仍有近況；error＝完全沒有資料。
-    const sourceStatus = run.ok || (run.viaPages && (hasRecent || pageSourceHealthy)) ? 'ok' : hasRecent ? 'stale' : 'error';
+    const assessed = assessSourceQuality(
+      run.ok || (run.viaPages && (hasRecent || pageSourceHealthy)),
+      qualityItems,
+      accessMode,
+      now,
+    );
+    const sourceStatus = assessed.status;
     return {
       id: run.source.id,
       displayName: run.source.displayName,
-      status: sourceStatus,
+      ...assessed,
       lastAttemptAt: generatedAt,
       lastSuccessAt: pageSourceState
         ? pageSourceState.lastSuccessAt ?? null
-        : sourceStatus === 'ok' ? generatedAt : previousSources.get(run.source.id)?.lastSuccessAt ?? null,
+        : run.ok ? generatedAt : previousSources.get(run.source.id)?.lastSuccessAt ?? null,
       lastCrawlAt: null,
-      accessMode: pageSourceState?.accessMode ?? run.accessMode,
-      errorCode: sourceStatus === 'ok' ? null : pageSourceState?.errorCode ?? run.errorCode,
-      stale: sourceStatus !== 'ok',
+      accessMode,
+      errorCode: ['ok', 'empty', 'degraded'].includes(sourceStatus) ? null : pageSourceState?.errorCode ?? run.errorCode,
+      stale: ['stale', 'error'].includes(sourceStatus),
       itemCount,
       dropped: {},
     };
   });
   const healthySourceCount = sources.filter((source) => source.status === 'ok').length;
-  const status = healthySourceCount === sources.length ? 'ok' : healthySourceCount ? 'partial' : 'stale';
+  const serviceableSourceCount = sources.filter((source) => !['stale', 'error'].includes(source.status)).length;
+  const status = healthySourceCount === sources.length ? 'ok' : serviceableSourceCount ? 'partial' : 'stale';
 
   const files = {
     recent: snapshotEnvelope({ items: merged.slice(0, 120) }, generatedAt),
@@ -496,6 +607,10 @@ async function buildSnapshot(env) {
       pagesTopics
       || staleAnalysisEnvelope(previous?.files?.topics)
       || snapshotEnvelope({ stale: true, experimental: true, topics: [] }, generatedAt),
+    events:
+      pagesEvents
+      || staleAnalysisEnvelope(previous?.files?.events)
+      || snapshotEnvelope({ stale: true, experimental: true, method: 'title-3gram-jaccard-v1', events: [] }, generatedAt),
     sources: snapshotEnvelope({ sources }, generatedAt),
     meta: snapshotEnvelope(
       {
@@ -507,13 +622,16 @@ async function buildSnapshot(env) {
           || null,
         methodVersion: `news-heat-v4-${NEWS_SOURCES.length}-sources-worker`,
         scheduleDaysUntilPause: null,
-        coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 7 },
+        coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 30 },
         stateRestoreFailed: false,
       },
       generatedAt,
     ),
   };
   await env.SNAPSHOT.put(SNAPSHOT_KEY, JSON.stringify({ generatedAt, files }));
+  if (env.DB) {
+    await persistSnapshotArticles(env, merged, now);
+  }
   return files;
 }
 
@@ -530,16 +648,54 @@ function createRefreshId() {
   return crypto.randomUUID();
 }
 
-async function patchRefreshState(env, refreshId, partial) {
-  const key = `refresh:${refreshId}`;
+const REFRESH_STATE_TTL_SECONDS = 2 * 60 * 60;
+
+const refreshKey = (refreshId, part) => `refresh:${refreshId}:${part}`;
+
+async function writeRefreshPart(env, refreshId, part, value) {
+  await env.SNAPSHOT.put(refreshKey(refreshId, part), JSON.stringify(value), {
+    expirationTtl: REFRESH_STATE_TTL_SECONDS,
+  });
+}
+
+const HEALTH_MAX_SNAPSHOT_AGE_MS = 15 * 60 * 1000;
+
+async function handleHealth(request, env) {
+  const dependencies = {
+    snapshot: { configured: Boolean(env.SNAPSHOT), available: false, ageSeconds: null, sourceStatus: null },
+    githubDispatch: { configured: Boolean(env.GITHUB_TOKEN) },
+    turnstile: { configured: Boolean(env.TURNSTILE_SECRET_KEY) },
+  };
+  if (!env.SNAPSHOT) {
+    return json(request, env, envelope({ status: 'error', dependencies }), 503, 30);
+  }
+
+  const snapshot = await readSnapshot(env);
+  const generatedAt = snapshot?.files?.meta?.generatedAt || snapshot?.generatedAt || '';
+  const timestamp = Date.parse(generatedAt);
+  dependencies.snapshot.available = Boolean(snapshot && Number.isFinite(timestamp));
+  dependencies.snapshot.ageSeconds = Number.isFinite(timestamp)
+    ? Math.max(0, Math.round((Date.now() - timestamp) / 1000))
+    : null;
+  dependencies.snapshot.sourceStatus = snapshot?.files?.meta?.data?.status || null;
+  const stale = !dependencies.snapshot.available
+    || dependencies.snapshot.ageSeconds * 1000 > HEALTH_MAX_SNAPSHOT_AGE_MS;
+  if (stale) return json(request, env, envelope({ status: 'error', dependencies }), 503, 30);
+
+  const degraded = dependencies.snapshot.sourceStatus !== 'ok'
+    || !dependencies.githubDispatch.configured
+    || !dependencies.turnstile.configured;
+  return json(request, env, envelope({ status: degraded ? 'degraded' : 'ok', dependencies }), 200, 30);
+}
+
+async function readRefreshPart(env, refreshId, part) {
+  const raw = await env.SNAPSHOT.get(refreshKey(refreshId, part));
+  if (!raw) return null;
   try {
-    const raw = await env.SNAPSHOT.get(key);
-    const state = raw ? JSON.parse(raw) : null;
-    if (!state) return;
-    const newState = { ...state, ...partial };
-    await env.SNAPSHOT.put(key, JSON.stringify(newState), { expirationTtl: 3600 });
-  } catch (e) {
-    console.error('Failed to patch refresh state', e);
+    return JSON.parse(raw);
+  } catch (error) {
+    console.error(JSON.stringify({ event: 'refresh_state_parse_failed', refreshId, part, error: error?.message }));
+    return null;
   }
 }
 
@@ -547,12 +703,10 @@ async function runFastRefresh(env, refreshId) {
   try {
     const files = await buildSnapshot(env);
     const generatedAt = files?.meta?.generatedAt || new Date().toISOString();
-    await patchRefreshState(env, refreshId, {
-      fast: { status: 'completed', generatedAt, error: null },
-    });
+    await writeRefreshPart(env, refreshId, 'fast', { status: 'completed', generatedAt, error: null });
   } catch (error) {
-    await patchRefreshState(env, refreshId, {
-      fast: { status: 'failed', generatedAt: null, error: error?.message || 'FAST_REFRESH_FAILED' },
+    await writeRefreshPart(env, refreshId, 'fast', {
+      status: 'failed', generatedAt: null, error: error?.message || 'FAST_REFRESH_FAILED',
     });
   }
 }
@@ -561,14 +715,12 @@ async function runDeepRefresh(env, refreshId) {
   if (!env.GITHUB_TOKEN) return;
   const result = await triggerGitHubActions(env, false, refreshId);
   if (!result.ok) {
-    await patchRefreshState(env, refreshId, {
-      deep: { status: 'failed', generatedAt: null, error: result.reason },
+    await writeRefreshPart(env, refreshId, 'deep', {
+      status: 'failed', generatedAt: null, error: result.reason,
     });
     return;
   }
-  await patchRefreshState(env, refreshId, {
-    deep: { status: 'queued', generatedAt: null, error: null },
-  });
+  await writeRefreshPart(env, refreshId, 'deep', { status: 'queued', generatedAt: null, error: null });
 }
 
 /**
@@ -590,9 +742,45 @@ async function refreshCooldown(env, request) {
   return { key, retryAfterSeconds: Math.ceil((REFRESH_COOLDOWN_MS - elapsed) / 1000) };
 }
 
+async function verifyTurnstile(request, env) {
+  if (!env.TURNSTILE_SECRET_KEY) return { ok: true };
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return { ok: false, status: 403, error: 'TURNSTILE_REQUIRED' };
+  }
+  const token = typeof payload?.turnstileToken === 'string' ? payload.turnstileToken.trim() : '';
+  if (!token) return { ok: false, status: 403, error: 'TURNSTILE_REQUIRED' };
+
+  const form = new URLSearchParams({
+    secret: env.TURNSTILE_SECRET_KEY,
+    response: token,
+  });
+  const remoteIp = request.headers.get('CF-Connecting-IP') || '';
+  if (remoteIp) form.set('remoteip', remoteIp);
+  try {
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: form.toString(),
+    });
+    if (!response.ok) return { ok: false, status: 503, error: 'TURNSTILE_UNAVAILABLE' };
+    const result = await response.json();
+    return result?.success
+      ? { ok: true }
+      : { ok: false, status: 403, error: 'TURNSTILE_FAILED' };
+  } catch (error) {
+    console.error(JSON.stringify({ event: 'turnstile_verification_failed', error: error?.message }));
+    return { ok: false, status: 503, error: 'TURNSTILE_UNAVAILABLE' };
+  }
+}
+
 async function handleRefresh(request, env, ctx) {
   if (!isAllowedOrigin(request, env)) return json(request, env, { error: 'ORIGIN_NOT_ALLOWED' }, 403);
   if (!env.SNAPSHOT) return json(request, env, { error: 'SNAPSHOT_NOT_CONFIGURED' }, 503);
+  const turnstile = await verifyTurnstile(request, env);
+  if (!turnstile.ok) return json(request, env, { error: turnstile.error }, turnstile.status);
 
   const { key: cooldownKey, retryAfterSeconds } = await refreshCooldown(env, request);
   if (retryAfterSeconds > 0) {
@@ -618,14 +806,18 @@ async function handleRefresh(request, env, ctx) {
     },
   };
 
-  await env.SNAPSHOT.put(`refresh:${refreshId}`, JSON.stringify(state), { expirationTtl: 3600 });
+  await Promise.all([
+    writeRefreshPart(env, refreshId, 'meta', { refreshId, requestedAt }),
+    writeRefreshPart(env, refreshId, 'fast', state.fast),
+    writeRefreshPart(env, refreshId, 'deep', state.deep),
+  ]);
 
   const fastJob = runFastRefresh(env, refreshId);
   const deepJob = runDeepRefresh(env, refreshId);
 
   if (ctx?.waitUntil) {
-    ctx.waitUntil(fastJob.catch(() => {}));
-    ctx.waitUntil(deepJob.catch(() => {}));
+    ctx.waitUntil(fastJob.catch((error) => console.error(JSON.stringify({ event: 'fast_refresh_failed', refreshId, error: error?.message }))));
+    ctx.waitUntil(deepJob.catch((error) => console.error(JSON.stringify({ event: 'deep_refresh_failed', refreshId, error: error?.message }))));
   }
 
   return json(
@@ -646,10 +838,58 @@ async function handleRefreshStatus(request, env, url) {
   const refreshId = url.searchParams.get('id');
   if (!refreshId) return json(request, env, { error: 'REFRESH_ID_REQUIRED' }, 400);
 
-  const raw = await env.SNAPSHOT.get(`refresh:${refreshId}`);
-  if (!raw) return json(request, env, { error: 'REFRESH_NOT_FOUND' }, 404);
+  const [meta, fast, deep] = await Promise.all([
+    readRefreshPart(env, refreshId, 'meta'),
+    readRefreshPart(env, refreshId, 'fast'),
+    readRefreshPart(env, refreshId, 'deep'),
+  ]);
+  if (!meta) return json(request, env, { error: 'REFRESH_NOT_FOUND' }, 404);
+  if (!fast || !deep) return json(request, env, { error: 'REFRESH_STATE_INCOMPLETE' }, 503);
 
-  return json(request, env, JSON.parse(raw), 200);
+  return json(request, env, { ...meta, fast, deep }, 200);
+}
+
+async function secureTokenEqual(actual, expected) {
+  const encoder = new TextEncoder();
+  const [actualHash, expectedHash] = await Promise.all([
+    crypto.subtle.digest('SHA-256', encoder.encode(actual)),
+    crypto.subtle.digest('SHA-256', encoder.encode(expected)),
+  ]);
+  const left = new Uint8Array(actualHash);
+  const right = new Uint8Array(expectedHash);
+  let difference = 0;
+  for (let index = 0; index < left.length; index += 1) difference |= left[index] ^ right[index];
+  return difference === 0;
+}
+
+async function handleRefreshCallback(request, env) {
+  if (!env.SNAPSHOT) return json(request, env, { error: 'SNAPSHOT_NOT_CONFIGURED' }, 503);
+  if (!env.REFRESH_CALLBACK_TOKEN) return json(request, env, { error: 'CALLBACK_NOT_CONFIGURED' }, 503);
+  const authorization = request.headers.get('Authorization') || '';
+  const expected = `Bearer ${env.REFRESH_CALLBACK_TOKEN}`;
+  if (!(await secureTokenEqual(authorization, expected))) {
+    return json(request, env, { error: 'UNAUTHORIZED' }, 401);
+  }
+
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return json(request, env, { error: 'INVALID_JSON' }, 400);
+  }
+  const refreshId = typeof payload?.refreshId === 'string' ? payload.refreshId : '';
+  const status = payload?.status;
+  if (!/^[A-Za-z0-9-]{1,80}$/.test(refreshId) || !['completed', 'failed'].includes(status)) {
+    return json(request, env, { error: 'INVALID_CALLBACK' }, 400);
+  }
+  const meta = await readRefreshPart(env, refreshId, 'meta');
+  if (!meta) return json(request, env, { error: 'REFRESH_NOT_FOUND' }, 404);
+  const generatedAt = status === 'completed'
+    ? (Number.isFinite(Date.parse(payload?.generatedAt)) ? new Date(payload.generatedAt).toISOString() : new Date().toISOString())
+    : null;
+  const error = status === 'failed' ? String(payload?.error || 'DEEP_REFRESH_FAILED').slice(0, 160) : null;
+  await writeRefreshPart(env, refreshId, 'deep', { status, generatedAt, error });
+  return json(request, env, { status: 'accepted', refreshId }, 200);
 }
 
 const GITHUB_REPO = 'yin0612/MediaMonitoring';
@@ -691,13 +931,22 @@ async function triggerGitHubActions(env, automatedRefresh = false, refreshId = n
 
 export default {
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(buildSnapshot(env).catch(() => {}));
-    ctx.waitUntil(triggerGitHubActions(env, true));
+    const deepCron = event?.cron === '2,17,32,47 * * * *';
+    if (deepCron) {
+      ctx.waitUntil(triggerGitHubActions(env, true).then((result) => {
+        if (!result.ok) console.error(JSON.stringify({ event: 'scheduled_deep_dispatch_failed', reason: result.reason }));
+      }));
+      return;
+    }
+    ctx.waitUntil(buildSnapshot(env).catch((error) => {
+      console.error(JSON.stringify({ event: 'scheduled_fast_refresh_failed', error: error?.message }));
+    }));
   },
 
   async fetch(request, env, ctx) {
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders(request, env) });
     const url = new URL(request.url);
+    if (request.method === 'POST' && url.pathname === '/api/refresh/callback') return handleRefreshCallback(request, env);
     if (request.method === 'POST' && url.pathname === '/api/refresh') return handleRefresh(request, env, ctx);
     if (request.method === 'GET' && url.pathname === '/api/refresh/status') return handleRefreshStatus(request, env, url);
     if (!['GET', 'HEAD'].includes(request.method)) return json(request, env, { error: 'METHOD_NOT_ALLOWED' }, 405);
@@ -718,7 +967,7 @@ export default {
       if (cache && response.ok) ctx?.waitUntil(cache.put(request, response.clone()));
       return response;
     }
-    if (url.pathname === '/api/health') return json(request, env, envelope({ status: 'ok' }), 200, 60);
+    if (url.pathname === '/api/health') return handleHealth(request, env);
     return json(request, env, { error: 'NOT_FOUND' }, 404);
   },
 };

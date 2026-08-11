@@ -16,8 +16,9 @@ from pathlib import Path
 
 import requests
 import yaml
+from time import monotonic
 
-from .analysis import build_entities, build_keywords, load_entity_lexicon, load_watch_config
+from .analysis import build_entities, build_keywords, cluster_events, load_entity_lexicon, load_watch_config
 from .archive import dedupe_items, item_to_public, public_to_item
 from .connectors.google_news import fetch_google_news
 from .connectors.html_listing import crawl_due, fetch_listing_source
@@ -25,6 +26,7 @@ from .connectors.rss import _fetch_bytes, fetch_source
 from .sentiment import SentimentLexicon, aggregate, classify, load_sentiment_lexicon
 from .connectors.trends import fetch_realtime_web_trends, parse_trends_feed
 from .models import SourceResult
+from .quality import assess_source_quality
 from .sources import load_sources
 from .timeutil import FUTURE_TOLERANCE
 
@@ -43,7 +45,15 @@ TOPIC_DEFINITIONS = (
 
 
 def envelope(data: dict, generated_at: str) -> dict:
-    return {"schemaVersion": SCHEMA_VERSION, "generatedAt": generated_at, "data": data}
+    return {
+        "schemaVersion": SCHEMA_VERSION,
+        "generatedAt": generated_at,
+        "pipeline": "deep-github",
+        "window": {"actualFrom": None, "actualTo": generated_at},
+        "quality": {"status": data.get("status", "experimental")},
+        "provenance": {"method": "public-metadata-only", "reproducible": True},
+        "data": data,
+    }
 
 
 def write_json(path: Path, value: dict) -> None:
@@ -199,7 +209,11 @@ def write_archive_files(
     lexicon: SentimentLexicon,
 ) -> None:
     """同時保留完整 archive，並產生日分檔 manifest 供瀏覽器按範圍載入。"""
-    public_items = [item_to_public(entry, lexicon) for entry in items]
+    retention_days = 30
+    reference_time = datetime.fromisoformat(generated_at.replace("Z", "+00:00"))
+    cutoff = reference_time - timedelta(days=retention_days)
+    retained_items = [entry for entry in items if cutoff <= entry.published_at <= reference_time + FUTURE_TOLERANCE]
+    public_items = [item_to_public(entry, lexicon) for entry in retained_items]
     write_json(
         output_dir / "news-archive.json",
         envelope({"status": status, "stale": stale, "items": public_items}, generated_at),
@@ -217,6 +231,12 @@ def write_archive_files(
             envelope({"status": status, "stale": stale, "date": date, "items": values}, generated_at),
         )
         days.append({"date": date, "count": len(values), "file": name})
+    archive_dir = output_dir / "news-archive"
+    retained_files = {f"{date}.json" for date in by_day}
+    if archive_dir.exists():
+        for path in archive_dir.glob("????-??-??.json"):
+            if path.name not in retained_files:
+                path.unlink()
     write_json(
         output_dir / "news-archive-index.json",
         envelope(
@@ -224,6 +244,7 @@ def write_archive_files(
                 "status": status,
                 "stale": stale,
                 "totalItems": len(public_items),
+                "retentionDays": retention_days,
                 "days": days,
             },
             generated_at,
@@ -257,6 +278,7 @@ def restore_source_states(base_url: str) -> dict[str, dict]:
 
 def collect_source(source: dict, state: dict | None, now: datetime, timeout: int, max_items: int) -> dict:
     """單一來源的完整取得流程；回傳 items、狀態與實際使用的取得方式。"""
+    started_at = monotonic()
     has_rss = bool(source.get("rss_url") or source.get("rss_urls"))
     rss_result = fetch_source(source, timeout, max_items) if has_rss else None
     google_result: SourceResult | None = None
@@ -294,6 +316,7 @@ def collect_source(source: dict, state: dict | None, now: datetime, timeout: int
         "errorCode": error_code,
         "dropped": drops,
         "crawlAttempted": crawl_attempted,
+        "latencyMs": round((monotonic() - started_at) * 1000),
     }
 
 
@@ -353,7 +376,7 @@ def run(
 
     current_items = [entry for run_ in runs for entry in run_["items"]]
     restored_items = keep_allowed_sources(restore_items(restore_base_url), set(sources_by_id))
-    cutoff = now - timedelta(days=7)
+    cutoff = now - timedelta(days=30)
     future_limit = now + FUTURE_TOLERANCE
     items = [
         entry
@@ -387,6 +410,20 @@ def run(
         output_dir / "topics.json",
         envelope({"stale": stale, "experimental": True, "topics": topics}, generated_at),
     )
+    event_cutoff = now - timedelta(days=7)
+    events = cluster_events([entry for entry in items if entry.published_at >= event_cutoff])
+    write_json(
+        output_dir / "events.json",
+        envelope(
+            {
+                "stale": stale,
+                "experimental": True,
+                "method": "title-3gram-jaccard-v1",
+                "events": events[:100],
+            },
+            generated_at,
+        ),
+    )
 
     keywords = build_keywords(items, load_watch_config(watch_config_path), now, enabled_source_count=len(sources))
     write_json(output_dir / "keywords.json", envelope({"stale": stale, "keywords": keywords}, generated_at))
@@ -408,7 +445,13 @@ def run(
                     {
                         "id": run_["id"],
                         "displayName": run_["name"],
-                        "status": "ok" if run_["ok"] else "error",
+                        **assess_source_quality(
+                            run_["ok"],
+                            [item for item in items if item.source == run_["id"]],
+                            run_["accessMode"],
+                            now,
+                            latency_ms=run_["latencyMs"],
+                        ),
                         "lastAttemptAt": generated_at,
                         "lastSuccessAt": (
                             generated_at if run_["ok"] else restored_states.get(run_["id"], {}).get("lastSuccessAt")
@@ -475,7 +518,7 @@ def run(
                 # 所以數量必須由實際來源清單推導，不能寫死。
                 "methodVersion": f"news-heat-v4-{len(sources)}-sources",
                 "scheduleDaysUntilPause": None,
-                "coverage": {"keywordWindowHours": 24, "trendBucketMinutes": 60, "archiveDays": 7, "sourceCount": len(sources)},
+                "coverage": {"keywordWindowHours": 24, "trendBucketMinutes": 60, "archiveDays": 30, "sourceCount": len(sources)},
                 "stateRestoreFailed": not bool(current_items or restored_items) and bool(restore_base_url),
             },
             generated_at,

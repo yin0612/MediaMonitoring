@@ -85,6 +85,34 @@ def test_archive_is_written_as_daily_chunks_with_a_manifest(tmp_path):
     assert newest["data"]["items"][0]["sentiment"]["label"] == "positive"
 
 
+def test_archive_keeps_30_days_and_removes_only_expired_daily_chunks(tmp_path):
+    lexicon = load_sentiment_lexicon(Path("config/sentiment.yml"))
+    archive_dir = tmp_path / "news-archive"
+    archive_dir.mkdir()
+    (archive_dir / "2026-06-01.json").write_text("{}", encoding="utf-8")
+    (archive_dir / "README.txt").write_text("preserve", encoding="utf-8")
+    items = [
+        item("cna", "recent", "recent", 29 * 24),
+        item("ltn", "expired", "expired", 31 * 24),
+    ]
+
+    cli.write_archive_files(
+        tmp_path,
+        items,
+        "2026-07-22T12:00:00Z",
+        status="ok",
+        stale=False,
+        lexicon=lexicon,
+    )
+
+    manifest = __import__("json").loads((tmp_path / "news-archive-index.json").read_text(encoding="utf-8"))
+    assert manifest["data"]["retentionDays"] == 30
+    assert manifest["data"]["totalItems"] == 1
+    assert (archive_dir / "2026-06-23.json").exists()
+    assert not (archive_dir / "2026-06-01.json").exists()
+    assert (archive_dir / "README.txt").read_text(encoding="utf-8") == "preserve"
+
+
 def test_rss_time_parser_does_not_invent_the_current_time():
     assert rss._parse_time({}) is None
 

@@ -14,8 +14,20 @@ import { PageHeader } from '../components/PageHeader';
 import { DATA_REFRESH_EVENT } from '../api/refreshCoordinator';
 import { AnalysisLauncher } from '../components/AnalysisLauncher';
 import type { TopicInput } from '../lib/analysisPresets';
+import { analysisExportCsv, downloadText, type AnalysisExport } from '../lib/exportAnalysis';
 
 interface TopicResult extends TopicInput { response?: Envelope<SearchData>; error?: string }
+interface SavedAnalysis { name: string; topics: TopicInput[]; range: SearchRange }
+const SAVED_ANALYSES_KEY = 'media-monitoring.saved-analyses.v1';
+
+function loadSavedAnalyses(): SavedAnalysis[] {
+  try {
+    const value = JSON.parse(localStorage.getItem(SAVED_ANALYSES_KEY) || '[]');
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
 
 const INITIAL_TOPICS: TopicInput[] = [
   { name: '台積電', query: '台積電' },
@@ -43,6 +55,8 @@ export function AdvancedAnalysisPage() {
   const [topicFilter, setTopicFilter] = useState('all');
   const [sourceFilter, setSourceFilter] = useState('all');
   const [sentimentFilter, setSentimentFilter] = useState('all');
+  const [savedName, setSavedName] = useState('');
+  const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalysis[]>(loadSavedAnalyses);
   const tokens = useChartTokens();
 
   const runAnalysis = useCallback(async (background = false) => {
@@ -99,17 +113,66 @@ export function AdvancedAnalysisPage() {
     setSentimentFilter('all');
   }
 
+  function saveAnalysis() {
+    const name = savedName.trim();
+    if (!name) { setFormError('請先輸入分析名稱。'); return; }
+    const value = { name, topics, range };
+    const next = [...savedAnalyses.filter((item) => item.name !== name), value];
+    setSavedAnalyses(next);
+    localStorage.setItem(SAVED_ANALYSES_KEY, JSON.stringify(next));
+    setSavedName('');
+    setFormError(null);
+  }
+
   const successful = results.filter((result) => result.response);
-  const allArticles = successful.flatMap((result) =>
-    (result.response?.data.items ?? []).map((item) => ({ ...item, topicName: result.name, topicQuery: result.query })),
-  );
+  const articleMap = new Map<string, SearchArticle & { topicNames: string[] }>();
+  for (const result of successful) {
+    for (const article of result.response?.data.items ?? []) {
+      const key = article.url.replace(/[?#].*$/, '') || `${article.source}:${article.id}`;
+      const existing = articleMap.get(key);
+      if (existing) {
+        if (!existing.topicNames.includes(result.name)) existing.topicNames.push(result.name);
+      } else {
+        articleMap.set(key, { ...article, topicNames: [result.name] });
+      }
+    }
+  }
+  const allArticles = [...articleMap.values()];
   const sources = [...new Set(allArticles.map((item) => item.source))];
   const filteredArticles = allArticles.filter((item) => {
     const sentiment = sentimentLabelOf(item.sentiment);
-    return (topicFilter === 'all' || item.topicName === topicFilter)
+    return (topicFilter === 'all' || item.topicNames.includes(topicFilter))
       && (sourceFilter === 'all' || item.source === sourceFilter)
       && (sentimentFilter === 'all' || sentiment === sentimentFilter);
   });
+
+  const buildExport = (): AnalysisExport => {
+    const coverages = successful.map((item) => item.response?.data.coverage).filter(Boolean);
+    const generatedValues = successful.map((item) => item.response?.generatedAt || '').sort();
+    const actualToValues = coverages
+      .map((value) => value?.actualTo)
+      .filter((value): value is string => Boolean(value))
+      .sort();
+    const generatedAt = generatedValues[generatedValues.length - 1] || new Date().toISOString();
+    return {
+      generatedAt,
+      actualWindow: {
+        from: coverages.map((value) => value?.actualFrom).filter((value): value is string => Boolean(value)).sort()[0] ?? null,
+        to: actualToValues[actualToValues.length - 1] ?? null,
+      },
+      schemaVersion: successful[0]?.response?.schemaVersion ?? 'unknown',
+      methodVersion: 'search-analysis-v2',
+      filters: { range, topic: topicFilter, source: sourceFilter, sentiment: sentimentFilter },
+      articles: filteredArticles,
+    };
+  };
+
+  function exportResults(format: 'json' | 'csv') {
+    const value = buildExport();
+    const stamp = value.generatedAt.slice(0, 10);
+    if (format === 'json') downloadText(`media-analysis-${stamp}.json`, `${JSON.stringify(value, null, 2)}\n`, 'application/json');
+    else downloadText(`media-analysis-${stamp}.csv`, analysisExportCsv(value), 'text/csv;charset=utf-8');
+  }
 
   const volumeOption = useMemo<EChartsOption>(() => ({
     color: SERIES_COLORS,
@@ -188,6 +251,17 @@ export function AdvancedAnalysisPage() {
               {RANGES.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
             </select>
             <button className="btn search-submit" type="submit" disabled={loading}>{loading ? '分析中…' : '開始分析'}</button>
+            <input value={savedName} onChange={(event) => setSavedName(event.target.value)} placeholder="分析名稱" aria-label="分析名稱" />
+            <button className="btn" type="button" onClick={saveAnalysis}>儲存查詢</button>
+            {savedAnalyses.length > 0 && (
+              <select aria-label="載入已儲存分析" defaultValue="" onChange={(event) => {
+                const saved = savedAnalyses.find((item) => item.name === event.target.value);
+                if (saved) applyPreset(saved.topics, saved.range);
+              }}>
+                <option value="" disabled>載入已儲存分析</option>
+                {savedAnalyses.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}
+              </select>
+            )}
             {lastUpdatedAt && <span className="small muted">最後更新：{fmtDateTime(new Date(lastUpdatedAt).toISOString())}・每 30 秒刷新</span>}
           </div>
         </form>
@@ -242,15 +316,17 @@ export function AdvancedAnalysisPage() {
                 <option value="all">全部情緒</option><option value="positive">正面</option><option value="neutral">中立</option><option value="negative">負面</option>
               </select>
               <span className="small muted">{filteredArticles.length} 則</span>
+              <button className="btn" type="button" onClick={() => exportResults('csv')}>匯出 CSV</button>
+              <button className="btn" type="button" onClick={() => exportResults('json')}>匯出 JSON</button>
             </div>
             {filteredArticles.length === 0 ? <EmptyState title="沒有符合篩選條件的新聞" desc="請調整主題、來源或情緒篩選。" /> : (
               <div className="news-list">
-                {filteredArticles.map((item: SearchArticle & { topicName: string }, index) => {
+                {filteredArticles.map((item, index) => {
                   const sentiment = sentimentLabelOf(item.sentiment);
                   return (
-                    <article className="news-item" key={`${item.topicName}-${item.id}-${index}`}>
+                    <article className="news-item" key={`${item.id}-${index}`}>
                       <div className="news-item__meta">
-                        <Badge variant="muted">{item.topicName}</Badge><SourceTag id={item.source} />
+                        {item.topicNames.map((topicName) => <Badge variant="muted" key={topicName}>{topicName}</Badge>)}<SourceTag id={item.source} />
                         <span>{sentiment ? SENTIMENT_LABEL[sentiment] : '未判讀'}</span><span>{fmtDateTime(item.publishedAt)}</span>
                       </div>
                       <h3><a href={item.url} target="_blank" rel="noreferrer noopener">{item.title}</a></h3>

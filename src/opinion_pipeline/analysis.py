@@ -12,8 +12,10 @@ from __future__ import annotations
 
 import math
 import re
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from statistics import median
 
 import yaml
 
@@ -26,6 +28,70 @@ TREND_BUCKETS = 24
 PROMOTE_RATIO = 0.6
 MAX_PROMOTE_STEPS = 4
 _CJK_RUN_RE = re.compile(r"[㐀-鿿]+")
+
+
+def _normalized_title(value: str) -> str:
+    value = re.sub(r"[\s\W_]+", "", value.casefold(), flags=re.UNICODE)
+    return re.sub(r"(?:快訊|即時|更新)$", "", value)
+
+
+def _trigrams(value: str) -> set[str]:
+    normalized = _normalized_title(value)
+    if len(normalized) < 3:
+        return {normalized} if normalized else set()
+    return {normalized[index : index + 3] for index in range(len(normalized) - 2)}
+
+
+def cluster_events(items: list[NormalizedItem], *, threshold: float = 0.46) -> list[dict]:
+    """Greedy, traceable 48-hour title clustering using Chinese 3-gram Jaccard."""
+    clusters: list[dict] = []
+    for item in sorted(items, key=lambda value: value.published_at, reverse=True):
+        grams = _trigrams(item.title)
+        match = None
+        best = 0.0
+        for cluster in clusters:
+            if abs((cluster["latest"] - item.published_at).total_seconds()) > 48 * 3600:
+                continue
+            union = grams | cluster["grams"]
+            score = len(grams & cluster["grams"]) / len(union) if union else 0.0
+            if score >= threshold and score > best:
+                match, best = cluster, score
+        if match is None:
+            clusters.append({"latest": item.published_at, "grams": grams, "items": [item]})
+        else:
+            match["items"].append(item)
+            match["grams"] |= grams
+    result = []
+    for index, cluster in enumerate(clusters, 1):
+        members = cluster["items"]
+        result.append({
+            "id": f"event-{members[0].published_at:%Y%m%d}-{index}",
+            "representativeTitle": members[0].title,
+            "articleCount": len(members),
+            "sourceCount": len({item.source for item in members}),
+            "startedAt": min(item.published_at for item in members).isoformat().replace("+00:00", "Z"),
+            "updatedAt": max(item.published_at for item in members).isoformat().replace("+00:00", "Z"),
+            "sourceCounts": dict(sorted(Counter(item.source for item in members).items())),
+            "articles": [
+                {
+                    "title": item.title,
+                    "source": item.source,
+                    "url": item.url,
+                    "publishedAt": item.published_at.isoformat().replace("+00:00", "Z"),
+                }
+                for item in members[:8]
+            ],
+        })
+    return sorted(result, key=lambda value: (-value["articleCount"], value["id"]))
+
+
+def robust_burst_score(current: int, baseline: list[int], *, source_count: int) -> float | None:
+    """Median/MAD burst score; low-support samples intentionally produce no claim."""
+    if current < 5 or source_count < 3 or len(baseline) < 7:
+        return None
+    center = median(baseline)
+    mad = median(abs(value - center) for value in baseline)
+    return round((current - center) / max(1.0, 1.4826 * mad), 3)
 
 
 def load_watch_config(path: Path) -> dict:
@@ -347,8 +413,23 @@ def build_entities(items: list[NormalizedItem], lexicon: list[dict]) -> dict:
         {"id": node_ids[name], "name": name, "type": types.get(name, "ORG"), "mentions": mentions[name]}
         for name in kept
     ]
+    total_docs = max(1, len(items))
     edges = [
-        {"source": node_ids[left], "target": node_ids[right], "weight": weight}
+        {
+            "source": node_ids[left],
+            "target": node_ids[right],
+            "weight": weight,
+            "jaccard": round(weight / (mentions[left] + mentions[right] - weight), 3),
+            "npmi": (
+                round(
+                    math.log((weight / total_docs) / ((mentions[left] / total_docs) * (mentions[right] / total_docs)))
+                    / max(1e-9, -math.log(weight / total_docs)),
+                    3,
+                )
+                if weight < total_docs
+                else 1.0
+            ),
+        }
         for (left, right), weight in sorted(pair_docs.items(), key=lambda pair: (-pair[1], pair[0]))
         if weight >= MIN_EDGE_WEIGHT and left in node_ids and right in node_ids
     ]

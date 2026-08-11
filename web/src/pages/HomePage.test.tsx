@@ -22,6 +22,7 @@ const fixtures = {
   entities: { stale: false, experimental: true, nodes: [], edges: [] },
   recent: { items: [] },
   sources: { sources: [] },
+  events: { stale: false, experimental: true, method: 'title-3gram-jaccard-v1', events: [] },
 };
 
 function setFixtures(sourceError: Error | null = null) {
@@ -31,6 +32,7 @@ function setFixtures(sourceError: Error | null = null) {
   setDataState('entities', state(fixtures.entities));
   setDataState('recent', state(fixtures.recent));
   setDataState('sources', state(fixtures.sources, sourceError));
+  setDataState('events', state(fixtures.events));
 }
 
 describe('HomePage', () => {

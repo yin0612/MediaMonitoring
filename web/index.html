@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://media-monitoring-demo.media-monitoring-worker.workers.dev https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com"
+    />
     <title>輿情決策台｜台灣公開新聞分析</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
@@ -28,28 +33,6 @@
     <meta name="twitter:title" content="輿情決策台｜台灣公開新聞分析" />
     <meta name="twitter:description" content="37 個台灣公開新聞來源的搜尋與輿情分析工具。" />
     <meta name="twitter:image" content="https://yin0612.github.io/MediaMonitoring/og-image.svg" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "媒體輿情監測",
-        "url": "https://yin0612.github.io/MediaMonitoring/",
-        "inLanguage": "zh-Hant-TW",
-        "description": "整合台灣公開新聞來源的搜尋與輿情分析工具。"
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Dataset",
-        "name": "MediaMonitoring 台灣公開新聞資料",
-        "url": "https://yin0612.github.io/MediaMonitoring/",
-        "isAccessibleForFree": true,
-        "inLanguage": "zh-Hant-TW",
-        "temporalCoverage": "P7D",
-        "measurementTechnique": "公開新聞 RSS 正規化、關鍵字熱度與可追溯詞典分析"
-      }
-    </script>
   </head>
   <body>
     <div id="root"></div>
