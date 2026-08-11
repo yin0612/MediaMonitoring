@@ -23,7 +23,7 @@ describe('manual refresh API', () => {
     expect(fetchMock).toHaveBeenCalledWith('https://worker.example/api/refresh', {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ turnstileToken: 'turnstile-token' }),
+      body: JSON.stringify({ turnstileToken: 'turnstile-token', mode: 'fast' }),
     });
 
     vi.unstubAllEnvs();

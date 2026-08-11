@@ -1,0 +1,25 @@
+name = "media-monitoring-staging"
+main = "src/index.js"
+compatibility_date = "2026-07-22"
+workers_dev = true
+
+# Staging deliberately has its own origin and storage bindings.  It may read
+# the published Pages archive as a fixture, but it never writes to production
+# KV or D1.
+[vars]
+ALLOWED_ORIGIN = "http://localhost:4173"
+ARCHIVE_BASE_URL = "https://yin0612.github.io/MediaMonitoring"
+
+[[kv_namespaces]]
+binding = "SNAPSHOT"
+id = "23fe55b5eaaa4a6fac83258797fa46c7"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "media-monitoring-staging-archive"
+database_id = "8a6301b6-a939-43d7-a562-69722074a8c1"
+migrations_dir = "migrations"
+
+[observability]
+enabled = true
+head_sampling_rate = 1.0

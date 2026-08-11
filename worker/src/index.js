@@ -933,6 +933,10 @@ async function verifyTurnstile(request, env) {
   }
   const token = typeof payload?.turnstileToken === 'string' ? payload.turnstileToken.trim() : '';
   if (!token || token.length > 2_048) return { ok: false, status: 403, error: 'TURNSTILE_REQUIRED' };
+  const mode = payload?.mode === undefined ? 'fast' : payload?.mode;
+  if (mode !== 'fast' && mode !== 'deep') {
+    return { ok: false, status: 400, error: 'INVALID_REFRESH_MODE' };
+  }
 
   const form = new URLSearchParams({
     secret: env.TURNSTILE_SECRET_KEY,
@@ -950,7 +954,7 @@ async function verifyTurnstile(request, env) {
     const result = await response.json();
     const expectedHostname = new URL(env.ALLOWED_ORIGIN || DEFAULT_PAGES_ORIGIN).hostname;
     return result?.success && result.action === TURNSTILE_ACTION && result.hostname === expectedHostname
-      ? { ok: true }
+      ? { ok: true, mode }
       : { ok: false, status: 403, error: 'TURNSTILE_FAILED' };
   } catch (error) {
     console.error(JSON.stringify({ event: 'turnstile_verification_failed', error: error?.message }));
@@ -996,13 +1000,15 @@ async function handleRefresh(request, env, ctx) {
 
   const refreshId = createRefreshId();
   const requestedAt = new Date().toISOString();
-  const deepClaim = await claimDeepRefreshSlot(env);
+  const deepClaim = turnstile.mode === 'deep'
+    ? await claimDeepRefreshSlot(env)
+    : { claimed: false, reason: 'DEEP_NOT_REQUESTED' };
   const dispatchDeep = deepClaim.claimed;
   const deepUnavailable = [
     'GITHUB_TOKEN_NOT_CONFIGURED',
     'DEEP_REFRESH_LOCK_NOT_CONFIGURED',
     'DEEP_REFRESH_LOCK_FAILED',
-  ].includes(deepClaim.reason);
+  ].includes(deepClaim.reason) && turnstile.mode === 'deep';
 
   const state = {
     refreshId,
