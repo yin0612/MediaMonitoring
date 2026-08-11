@@ -81,7 +81,10 @@ export function isManualRefreshConfigured(): boolean {
   return Boolean((import.meta.env.VITE_API_BASE_URL || '').trim());
 }
 
-export async function requestManualRefresh(turnstileToken?: string): Promise<ManualRefreshResponse> {
+export async function requestManualRefresh(
+  turnstileToken?: string,
+  mode: 'fast' | 'deep' = 'fast',
+): Promise<ManualRefreshResponse> {
   const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
   if (!apiBase) throw new DataFetchError('refresh', '尚未設定 Cloudflare Worker 網址，無法手動更新');
 
@@ -90,7 +93,7 @@ export async function requestManualRefresh(turnstileToken?: string): Promise<Man
     response = await fetch(`${apiBase}/api/refresh`, {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ turnstileToken: turnstileToken || null }),
+      body: JSON.stringify({ turnstileToken: turnstileToken || null, mode }),
     });
   } catch {
     // 網路層失敗（Worker 未部署、DNS 解析不到、CORS 阻擋）。

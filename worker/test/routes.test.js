@@ -91,6 +91,42 @@ test('non-read methods are rejected', async () => {
   assert.equal(response.status, 405);
 });
 
+test('manual refresh defaults to the fast path without dispatching deep Actions', async () => {
+  const originalFetch = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    calls.push(url);
+    if (url.includes('turnstile')) return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
+    return new Response('<rss><channel></channel></rss>');
+  };
+  const env = {
+    SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret', DB: deepLockD1(),
+  };
+  const pending = [];
+  try {
+    const response = await worker.fetch(new Request('https://worker.example/api/refresh', {
+      method: 'POST',
+      headers: {
+        Origin: 'https://yin0612.github.io',
+        'CF-Connecting-IP': '203.0.113.60',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
+    }), env, { waitUntil: (promise) => pending.push(promise) });
+
+    assert.equal(response.status, 202);
+    const body = await response.json();
+    assert.equal(body.fast, 'running');
+    assert.equal(body.deep, 'skipped');
+    assert.equal(calls.some((url) => hasHost(url, 'api.github.com')), false);
+    await Promise.all(pending);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actions', async () => {
   const originalFetch = globalThis.fetch;
   const calls = [];
@@ -117,7 +153,7 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
           'CF-Connecting-IP': '203.0.113.10',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
+        body: JSON.stringify({ turnstileToken: 'verified-client-token', mode: 'deep' }),
       }),
       env,
       { waitUntil: (promise) => pending.push(promise) },
@@ -259,7 +295,7 @@ test('manual refresh still runs the fast path when GitHub dispatch is not config
       new Request('https://worker.example/api/refresh', {
         method: 'POST',
         headers: { Origin: 'https://yin0612.github.io', 'CF-Connecting-IP': '203.0.113.12', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
+        body: JSON.stringify({ turnstileToken: 'verified-client-token', mode: 'deep' }),
       }),
       env,
       { waitUntil: (promise) => pending.push(promise) },
@@ -312,7 +348,7 @@ test('manual refresh reports a missing D1 lock as unavailable, not rate-limited'
     const response = await worker.fetch(new Request('https://worker.example/api/refresh', {
       method: 'POST',
       headers: { Origin: 'https://yin0612.github.io', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
+      body: JSON.stringify({ turnstileToken: 'verified-client-token', mode: 'deep' }),
     }), env, { waitUntil: (promise) => pending.push(promise) });
     const body = await response.json();
 
