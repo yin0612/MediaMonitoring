@@ -4,6 +4,14 @@ import assert from 'node:assert/strict';
 import worker from '../src/index.js';
 import { NEWS_SOURCES } from '../src/sources.js';
 
+function hasHost(value, hostname) {
+  try {
+    return new URL(value).hostname === hostname;
+  } catch {
+    return false;
+  }
+}
+
 test('health endpoint returns schema v2 and localhost CORS', async () => {
   const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'configured', TURNSTILE_SECRET_KEY: 'configured' };
   const generatedAt = new Date().toISOString();
@@ -82,7 +90,7 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
     const url = String(input);
     calls.push({ url, init });
     if (url.includes('turnstile')) return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
-    if (url.includes('api.github.com')) return new Response(null, { status: 204 });
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
     return new Response(`<rss><channel><item><guid>manual-${calls.length}</guid>
       <title>Manual refresh item</title><link>https://news.example/story</link>
       <pubDate>${new Date().toUTCString()}</pubDate></item></channel></rss>`);
@@ -115,7 +123,7 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
     assert.ok(body.refreshId);
     assert.equal(body.fast, 'running');
     assert.equal(body.deep, 'queued');
-    const dispatch = calls.find(({ url }) => url.includes('api.github.com'));
+    const dispatch = calls.find(({ url }) => hasHost(url, 'api.github.com'));
     assert.ok(dispatch, 'expected a manual GitHub Actions dispatch');
     assert.equal(
       dispatch.url,
@@ -147,7 +155,7 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
   globalThis.fetch = async (input) => {
     const url = String(input);
     if (url.includes('turnstile')) return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
-    if (url.includes('api.github.com')) return new Response(null, { status: 204 });
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
     return new Response('<rss><channel></channel></rss>');
   };
 
@@ -303,7 +311,7 @@ test('manual refresh requires a valid Turnstile token when protection is configu
       body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
     }), env, { waitUntil: (promise) => pending.push(promise) });
     assert.equal(accepted.status, 202);
-    assert.ok(calls.includes('https://challenges.cloudflare.com/turnstile/v0/siteverify'));
+    assert.ok(calls.some((url) => hasHost(url, 'challenges.cloudflare.com')));
     await Promise.all(pending);
   } finally {
     globalThis.fetch = originalFetch;
@@ -435,7 +443,7 @@ test('24h search merges Google News results with the low-frequency Pages snapsho
   globalThis.fetch = async (input) => {
     const url = String(input);
     requested.push(url);
-    if (url.includes('news.google.com/rss/search')) {
+    if (hasHost(url, 'news.google.com') && new URL(url).pathname === '/rss/search') {
       return new Response(`<rss><channel><item><guid>g1</guid><title>台積電三立快訊</title>
         <link>https://news.google.com/rss/articles/g1</link>
         <pubDate>${recentPubDate}</pubDate>
@@ -525,7 +533,7 @@ test('30d search falls back to the full archive with explicit incomplete coverag
         },
       });
     }
-    if (url.includes('news.google.com')) return new Response('<rss><channel></channel></rss>');
+    if (hasHost(url, 'news.google.com')) return new Response('<rss><channel></channel></rss>');
     return new Response(`<rss><channel><item><guid>${encodeURIComponent(url)}</guid><title>台積電即時新聞</title>
       <link>https://example.com/current/${encodeURIComponent(url)}</link><pubDate>${currentPubDate}</pubDate></item></channel></rss>`);
   };
@@ -593,7 +601,7 @@ test('Cloudflare fast and deep cron triggers have separate responsibilities', as
   globalThis.fetch = async (input) => {
     const url = String(input);
     calls.push(url);
-    if (url.includes('api.github.com')) return new Response(null, { status: 204 });
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
     if (url.endsWith('/data/recent.json')) return Response.json({ data: { items: [] } });
     if (url.endsWith('/data/sources.json')) return new Response('', { status: 503 });
     if (['keywords', 'entities', 'topics'].some((name) => url.endsWith(`/data/${name}.json`))) {
@@ -607,7 +615,7 @@ test('Cloudflare fast and deep cron triggers have separate responsibilities', as
     await worker.scheduled({ cron: '*/5 * * * *' }, env, { waitUntil: (promise) => fastPending.push(promise) });
     await Promise.all(fastPending);
     assert.ok(await env.SNAPSHOT.get('snapshot'));
-    assert.equal(calls.some((url) => url.includes('api.github.com')), false);
+    assert.equal(calls.some((url) => hasHost(url, 'api.github.com')), false);
 
     calls.length = 0;
     const deepPending = [];
@@ -1220,7 +1228,7 @@ test('scheduled subrequest budget uses one attempt per official URL and keeps re
   globalThis.fetch = async (input) => {
     const url = String(input);
     calls.push(url);
-    if (url.includes('api.github.com')) return new Response(null, { status: 204 });
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
     return new Response('', { status: 503 });
   };
   const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
@@ -1268,7 +1276,7 @@ test('scheduled build writes a snapshot that /api/data serves per file', async (
         data: { stale: false, experimental: true, topics: [] },
       });
     }
-    if (url.includes('news.google.com/rss/search')) {
+    if (hasHost(url, 'news.google.com') && new URL(url).pathname === '/rss/search') {
       const domain = new URL(url).searchParams.get('q').match(/site:(\S+)/)[1];
       return new Response(`<rss><channel><item><guid>g-${domain}</guid>
         <title>台積電擴廠與經濟部會談 - 中央社</title>
@@ -1384,9 +1392,9 @@ test('scheduled dispatches GitHub Actions when a token is configured', async () 
   globalThis.fetch = async (input, init) => {
     const url = String(input);
     calls.push({ url, init });
-    if (url.includes('news.google.com/rss/search') || url.includes('api.github.com')) {
-      return new Response(url.includes('api.github.com') ? '' : '<rss><channel></channel></rss>', {
-        status: url.includes('api.github.com') ? 204 : 200,
+    if (hasHost(url, 'news.google.com') || hasHost(url, 'api.github.com')) {
+      return new Response(hasHost(url, 'api.github.com') ? '' : '<rss><channel></channel></rss>', {
+        status: hasHost(url, 'api.github.com') ? 204 : 200,
       });
     }
     return new Response('<rss><channel></channel></rss>');
@@ -1397,7 +1405,7 @@ test('scheduled dispatches GitHub Actions when a token is configured', async () 
     await worker.scheduled({ cron: '2,17,32,47 * * * *' }, env, { waitUntil: (p) => pending.push(p) });
     await Promise.all(pending);
 
-    const dispatch = calls.find((c) => c.url.includes('api.github.com'));
+    const dispatch = calls.find((c) => hasHost(c.url, 'api.github.com'));
     assert.ok(dispatch, 'expected a call to the GitHub Actions dispatch endpoint');
     assert.equal(
       dispatch.url,
@@ -1424,7 +1432,7 @@ test('scheduled skips the GitHub dispatch call when no token is configured', asy
     await worker.scheduled({}, env, { waitUntil: (p) => pending.push(p) });
     await Promise.all(pending);
 
-    assert.ok(!calls.some((url) => url.includes('api.github.com')));
+    assert.ok(!calls.some((url) => hasHost(url, 'api.github.com')));
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -1472,7 +1480,7 @@ test('search metrics count every match while the payload stays capped', async ()
   globalThis.fetch = async (input) => {
     const url = String(input);
     if (url.endsWith('/data/recent.json')) return Response.json({ data: { items: archived } });
-    if (url.includes('news.google.com')) return new Response('<rss><channel></channel></rss>');
+    if (hasHost(url, 'news.google.com')) return new Response('<rss><channel></channel></rss>');
     return new Response(`<rss><channel><item><guid>x</guid><title>無關</title>
       <link>https://news.example/other</link><pubDate>${pubDate}</pubDate></item></channel></rss>`);
   };
