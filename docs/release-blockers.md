@@ -5,7 +5,7 @@ an external action and are intentionally not replaced with guessed data.
 
 ## Cloudflare R2 entitlement
 
-The active `shueisha0612` Cloudflare account currently returns API error 10042
+The active Cloudflare account currently returns API error 10042
 from `wrangler r2 bucket list` and asks for R2 to be enabled in the Cloudflare
 Dashboard. The production Worker therefore keeps the R2 binding optional and
 does not claim immutable R2 archival is active. Enabling R2 can change billing
