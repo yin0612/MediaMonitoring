@@ -6,6 +6,9 @@ workers_dev = true
 # Staging deliberately has its own origin and storage bindings.  It may read
 # the published Pages archive as a fixture, but it never writes to production
 # KV or D1.
+[triggers]
+crons = ["*/5 * * * *"]
+
 [vars]
 ALLOWED_ORIGIN = "http://localhost:4173"
 ARCHIVE_BASE_URL = "https://yin0612.github.io/MediaMonitoring"

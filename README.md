@@ -158,6 +158,16 @@ npm run build
 
 不必直接手改 JSONL：可依 [本機人工標註工具](tools/annotation-app/README.md) 用瀏覽器逐筆檢視、儲存並下載 JSONL。工具不會上傳資料，且 `annotation-machine-draft.jsonl` 只會顯示為建議，不能自動變成人工標註。
 
+完成人工標註後，以相同的 `sampleId` 對照機器草稿，不會改寫 `annotations` 黃金標籤：
+
+```powershell
+python scripts/evaluate_annotations.py `
+  --input benchmarks/annotation-candidates-reviewed.jsonl `
+  --machine-draft benchmarks/annotation-machine-draft.jsonl
+```
+
+輸出的 `machineMacroF1` 是機器草稿與人工標註的比較結果；只有 100 筆雙人標註都完成後才會輸出 Cohen's kappa。未達預先設定的 held-out 品質門檻前，事件、情緒與目標式立場都必須維持「實驗性」描述。
+
 重新產生候選集：
 
 ```powershell

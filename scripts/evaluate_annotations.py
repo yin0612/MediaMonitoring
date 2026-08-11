@@ -15,6 +15,37 @@ VALID_LABELS = {
 }
 
 
+def attach_machine_suggestions(rows: list[dict], drafts: list[dict]) -> list[dict]:
+    """Return evaluation rows with matched machine outputs and untouched human labels."""
+    drafts_by_id: dict[str, dict] = {}
+    for draft in drafts:
+        sample_id = _value(draft.get("sampleId"))
+        suggestion = draft.get("machineSuggested")
+        if not sample_id or not isinstance(suggestion, dict):
+            raise ValueError("machine draft rows require sampleId and machineSuggested")
+        if sample_id in drafts_by_id:
+            raise ValueError(f"duplicate machine draft sampleId: {sample_id}")
+        drafts_by_id[sample_id] = suggestion
+
+    attached: list[dict] = []
+    seen_ids: set[str] = set()
+    for row in rows:
+        sample_id = _value(row.get("sampleId"))
+        if not sample_id:
+            raise ValueError("human annotation rows require sampleId")
+        if sample_id in seen_ids:
+            raise ValueError(f"duplicate human annotation sampleId: {sample_id}")
+        seen_ids.add(sample_id)
+        if sample_id not in drafts_by_id:
+            raise ValueError(f"missing machine draft for sampleId: {sample_id}")
+        attached.append({**row, "machineSuggested": dict(drafts_by_id[sample_id])})
+
+    unexpected = sorted(set(drafts_by_id) - seen_ids)
+    if unexpected:
+        raise ValueError(f"machine draft has unexpected sampleId: {unexpected[0]}")
+    return attached
+
+
 def _value(value: Any) -> str | None:
     if isinstance(value, str) and value.strip():
         return value.strip()
@@ -97,8 +128,12 @@ def _load_jsonl(path: Path) -> list[dict]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", type=Path, default=Path("benchmarks/annotation-machine-draft.jsonl"))
+    parser.add_argument("--machine-draft", type=Path)
     args = parser.parse_args()
-    report = evaluate_rows(_load_jsonl(args.input))
+    rows = _load_jsonl(args.input)
+    if args.machine_draft:
+        rows = attach_machine_suggestions(rows, _load_jsonl(args.machine_draft))
+    report = evaluate_rows(rows)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0 if report["status"] == "ok" else 2
 
