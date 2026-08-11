@@ -138,6 +138,81 @@ def classify_target(
     }
 
 
+def build_target_stances(
+    items: list,
+    entity_lexicon: list[dict],
+    lexicon: SentimentLexicon,
+    *,
+    min_mentions: int = 2,
+    max_targets: int = 12,
+) -> list[dict]:
+    """Aggregate conservative target-level tone evidence for a topic.
+
+    This is deliberately separate from document-level sentiment: a target is
+    counted only when its name/alias occurs in the same item, and an item with
+    no nearby lexicon evidence remains ``uncertain`` rather than inheriting the
+    article's overall label.  The output is evidence coverage, not public
+    opinion or a model confidence claim.
+    """
+    rows: list[dict] = []
+    for entity in entity_lexicon:
+        target = str(entity.get("name") or "").strip()
+        if not target:
+            continue
+        aliases = [str(alias) for alias in entity.get("aliases") or [] if str(alias).strip()]
+        verdicts: list[tuple[object, dict]] = []
+        for item in items:
+            text = getattr(item, "search_text", None) or f"{getattr(item, 'title', '')} {getattr(item, 'excerpt', '')}"
+            folded = text.casefold()
+            if not any(name.casefold() in folded for name in [target, *aliases]):
+                continue
+            verdicts.append((item, classify_target(text, target, aliases, lexicon)))
+        if len(verdicts) < min_mentions:
+            continue
+
+        decisive = [verdict for _, verdict in verdicts if verdict["label"] in {"positive", "neutral", "negative"}]
+        labels = [verdict["label"] for verdict in decisive]
+        distribution = aggregate(labels)
+        if not decisive:
+            label = "uncertain"
+            score = 0.0
+        else:
+            max_ratio = max(distribution.values())
+            leaders = [value for value in ("positive", "neutral", "negative") if distribution[value] == max_ratio]
+            label = leaders[0] if len(leaders) == 1 else "neutral"
+            score = round(sum(verdict["score"] for verdict in decisive) / len(decisive), 3)
+        evidence = []
+        for item, verdict in verdicts:
+            if not verdict["evidence"]:
+                continue
+            evidence.append(
+                {
+                    "title": getattr(item, "title", ""),
+                    "source": getattr(item, "source", ""),
+                    "url": getattr(item, "url", ""),
+                    "label": verdict["label"],
+                    "terms": [entry["term"] for entry in verdict["evidence"][:3]],
+                }
+            )
+            if len(evidence) >= 3:
+                break
+        rows.append(
+            {
+                "target": target,
+                "type": str(entity.get("type") or "ORG"),
+                "mentionCount": len(verdicts),
+                "sourceCount": len({getattr(item, "source", "") for item, _ in verdicts}),
+                "label": label,
+                "score": score,
+                "distribution": distribution,
+                "evidenceRate": round(len(decisive) / len(verdicts), 3),
+                "evidence": evidence,
+            }
+        )
+    rows.sort(key=lambda row: (-row["mentionCount"], -row["sourceCount"], row["target"]))
+    return rows[:max_targets]
+
+
 def aggregate(labels: list[str]) -> dict[str, float]:
     """把逐篇標籤彙總成主題層的三分比例（總和為 1）。"""
     if not labels:

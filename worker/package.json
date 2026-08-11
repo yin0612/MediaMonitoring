@@ -10,7 +10,7 @@
     "predeploy": "node scripts/gen-config.mjs",
     "deploy": "wrangler deploy",
     "db:migrate:remote": "wrangler d1 migrations apply media-monitoring-archive --remote",
-    "db:seed:build": "node scripts/build-seed-sql.mjs ../web/public/data/news-archive.json seed.generated.sql",
+    "db:seed:build": "node scripts/build-seed-sql.mjs ../web/public/data/news-archive seed.generated.sql",
     "db:seed:remote": "npm run db:seed:build && wrangler d1 execute media-monitoring-archive --remote --file=seed.generated.sql"
   },
   "devDependencies": {

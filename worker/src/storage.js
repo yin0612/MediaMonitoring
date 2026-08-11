@@ -70,10 +70,13 @@ export async function queryHistoricalArticles(db, range, now = Date.now(), rawQu
 }
 
 export async function queryHistoricalCoverage(db, range, now = Date.now()) {
-  if (!db || !(range in RANGE_MS)) return { actualFrom: null, actualTo: null, articleCount: 0 };
+  if (!db || !(range in RANGE_MS)) return { actualFrom: null, actualTo: null, articleCount: 0, coveredDays: 0 };
   const cutoff = now - RANGE_MS[range];
   const row = await db.prepare(`
-    SELECT MIN(published_at) AS actual_from, MAX(published_at) AS actual_to, COUNT(*) AS article_count
+    SELECT MIN(published_at) AS actual_from,
+      MAX(published_at) AS actual_to,
+      COUNT(*) AS article_count,
+      COUNT(DISTINCT strftime('%Y-%m-%d', published_at / 1000, 'unixepoch')) AS covered_days
     FROM articles
     WHERE published_at >= ?1 AND published_at <= ?2
   `).bind(cutoff, now + 5 * 60 * 1000).first();
@@ -83,6 +86,7 @@ export async function queryHistoricalCoverage(db, range, now = Date.now()) {
     actualTo: row?.actual_to != null && Number.isFinite(Number(row.actual_to))
       ? new Date(Number(row.actual_to)).toISOString() : null,
     articleCount: Number(row?.article_count || 0),
+    coveredDays: Number(row?.covered_days || 0),
   };
 }
 

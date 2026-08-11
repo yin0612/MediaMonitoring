@@ -24,7 +24,7 @@ export interface Envelope<T> {
 
 /**
  * 來源代碼。
- * 使用者指定的 29 家台灣新聞媒體。
+ * 使用者指定的 37 家台灣新聞媒體；歷史文件中的 29/35 不代表現況。
  */
 export type SourceId =
   | 'tvbs'
@@ -94,9 +94,19 @@ export interface Meta {
     keywordWindowHours: number;
     /** 趨勢 bucket 長度（分鐘）。 */
     trendBucketMinutes: number;
+    /** Cloudflare fast cron interval; optional for legacy snapshots. */
+    fastScheduleMinutes?: number;
+    /** GitHub deep cron interval; optional for legacy snapshots. */
+    deepScheduleMinutes?: number;
     /** 快照保留天數。 */
     archiveDays: number;
+    /** Maximum number of recent items exposed by this pipeline. */
+    recentCap?: number;
     sourceCount: number;
+    /** 真實 archive 是否已覆蓋宣告的完整保留窗。 */
+    complete?: boolean;
+    actualFrom?: string | null;
+    actualTo?: string | null;
   };
   /** 若無法還原上一版快照為 true，代表歷史資料可能不完整。 */
   stateRestoreFailed: boolean;
@@ -228,6 +238,12 @@ export interface TopicEvent {
   label: string;
   size: number;
   terms: string[];
+  sourceCounts?: Partial<Record<SourceId, number>>;
+  /** Herfindahl concentration of article counts by source (0..1). */
+  sourceConcentration?: number;
+  sourceTimeline?: Partial<Record<SourceId, TopicTimelinePoint[]>>;
+  /** Counts of the event's topic terms in each source's titles. */
+  sourceTermCounts?: Record<string, Partial<Record<SourceId, number>>>;
   articles: TopicArticle[];
 }
 
@@ -238,6 +254,27 @@ export interface SentimentEvidence {
   url: string;
   /** 命中的情緒詞（即「為什麼判為正／負向」的理由）。 */
   terms: string[];
+}
+
+export interface TargetStanceEvidence {
+  title: string;
+  source: SourceId;
+  url: string;
+  label: 'positive' | 'neutral' | 'negative' | 'uncertain';
+  terms: string[];
+}
+
+/** Conservative target-level tone evidence; not public opinion or media stance. */
+export interface TargetStance {
+  target: string;
+  type: EntityType;
+  mentionCount: number;
+  sourceCount: number;
+  label: 'positive' | 'neutral' | 'negative' | 'uncertain';
+  score: number;
+  distribution: { positive: number; neutral: number; negative: number };
+  evidenceRate: number;
+  evidence: TargetStanceEvidence[];
 }
 
 export interface Topic {
@@ -263,6 +300,8 @@ export interface Topic {
   timeline?: TopicTimelinePoint[];
   /** 依日期與主要命中詞拆出的近期次事件。 */
   events?: TopicEvent[];
+  /** 目標式語氣證據；只在啟用實體詞典的深度快照提供。 */
+  targetStances?: TargetStance[];
   /** 代表文章。 */
   articles: TopicArticle[];
 }
@@ -392,6 +431,9 @@ export interface EventCluster {
   startedAt: string;
   updatedAt: string;
   sourceCounts: Partial<Record<SourceId, number>>;
+  sourceConcentration?: number;
+  sourceTimeline?: Partial<Record<SourceId, TopicTimelinePoint[]>>;
+  sourceTermCounts?: Record<string, Partial<Record<SourceId, number>>>;
   articles: Array<{ title: string; source: SourceId; url: string; publishedAt: string }>;
 }
 

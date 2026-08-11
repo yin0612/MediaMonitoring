@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
@@ -19,11 +20,11 @@ import yaml
 from time import monotonic
 
 from .analysis import build_entities, build_keywords, cluster_events, load_entity_lexicon, load_watch_config
-from .archive import dedupe_items, item_to_public, public_to_item
+from .archive import coverage_window, dedupe_items, item_to_public, public_to_item
 from .connectors.google_news import fetch_google_news
 from .connectors.html_listing import crawl_due, fetch_listing_source
 from .connectors.rss import _fetch_bytes, fetch_source
-from .sentiment import SentimentLexicon, aggregate, classify, load_sentiment_lexicon
+from .sentiment import SentimentLexicon, aggregate, build_target_stances, classify, load_sentiment_lexicon
 from .connectors.trends import fetch_realtime_web_trends, parse_trends_feed
 from .models import SourceResult
 from .quality import assess_source_quality
@@ -33,6 +34,9 @@ from .timeutil import FUTURE_TOLERANCE
 
 SCHEMA_VERSION = "2.1.0"
 TRENDS_URL = "https://trends.google.com/trending/rss?geo=TW&hl=zh-TW"
+FAST_SCHEDULE_MINUTES = 5
+DEEP_SCHEDULE_MINUTES = 15
+RECENT_ITEMS_CAP = 800
 
 TOPIC_DEFINITIONS = (
     ("finance", "財經與產業", ("台積電", "半導體", "股市", "經濟", "產業")),
@@ -119,6 +123,28 @@ def _topic_breakdown(topic_id: str, terms: tuple[str, ...], matched: list) -> tu
         )[:3]
         preferred = [item for item in event_items if not _is_ticker_noise(item)] or event_items
         preferred = sorted(preferred, key=lambda item: item.published_at, reverse=True)
+        source_counts = Counter(item.source for item in event_items)
+        source_timeline: dict[str, list[dict]] = {}
+        for source in sorted(source_counts):
+            by_source_day = Counter(
+                item.published_at.astimezone(timezone.utc).date().isoformat()
+                for item in event_items
+                if item.source == source
+            )
+            source_timeline[source] = [
+                {"date": source_date, "mentions": by_source_day[source_date]}
+                for source_date in sorted(by_source_day)
+            ]
+        source_concentration = round(
+            sum((count / len(event_items)) ** 2 for count in source_counts.values()),
+            3,
+        )
+        source_term_counts = {
+            term: dict(sorted(
+                Counter(item.source for item in event_items if term.casefold() in item.title.casefold()).items()
+            ))
+            for term in event_terms
+        }
         events.append(
             {
                 "id": f"{topic_id}-{date}-{terms.index(anchor) + 1}",
@@ -126,6 +152,10 @@ def _topic_breakdown(topic_id: str, terms: tuple[str, ...], matched: list) -> tu
                 "label": anchor,
                 "size": len(event_items),
                 "terms": event_terms,
+                "sourceCounts": dict(sorted(source_counts.items())),
+                "sourceConcentration": source_concentration,
+                "sourceTimeline": source_timeline,
+                "sourceTermCounts": source_term_counts,
                 "articles": [
                     {
                         "title": item.title,
@@ -141,7 +171,11 @@ def _topic_breakdown(topic_id: str, terms: tuple[str, ...], matched: list) -> tu
     return ranked_terms, timeline, events[:8]
 
 
-def build_topics(items: list, lexicon: SentimentLexicon | None = None) -> list[dict]:
+def build_topics(
+    items: list,
+    lexicon: SentimentLexicon | None = None,
+    entity_lexicon: list[dict] | None = None,
+) -> list[dict]:
     """Build transparent keyword groups from real archive metadata only."""
     lexicon = lexicon or SentimentLexicon()
     topics = []
@@ -174,28 +208,29 @@ def build_topics(items: list, lexicon: SentimentLexicon | None = None) -> list[d
                     }
                 )
 
-        topics.append(
-            {
-                "id": topic_id,
-                "label": label,
-                "terms": ranked_terms,
-                "size": len(matched),
-                "sentiment": aggregate([verdict["label"] for _, verdict in judged]),
-                "evidence": evidence,
-                "timeline": timeline,
-                "events": events,
-                "summarySentences": summaries,
-                "articles": [
-                    {
-                        "title": item.title,
-                        "source": item.source,
-                        "url": item.url,
-                        "publishedAt": item.published_at.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
-                    }
-                    for item in preferred[:5]
-                ],
-            }
-        )
+        topic = {
+            "id": topic_id,
+            "label": label,
+            "terms": ranked_terms,
+            "size": len(matched),
+            "sentiment": aggregate([verdict["label"] for _, verdict in judged]),
+            "evidence": evidence,
+            "timeline": timeline,
+            "events": events,
+            "summarySentences": summaries,
+            "articles": [
+                {
+                    "title": item.title,
+                    "source": item.source,
+                    "url": item.url,
+                    "publishedAt": item.published_at.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+                }
+                for item in preferred[:5]
+            ],
+        }
+        if entity_lexicon is not None:
+            topic["targetStances"] = build_target_stances(matched, entity_lexicon, lexicon)
+        topics.append(topic)
     return topics
 
 
@@ -246,6 +281,7 @@ def write_archive_files(
                 "totalItems": len(public_items),
                 "retentionDays": retention_days,
                 "days": days,
+                **coverage_window(retained_items, reference_time, days=retention_days),
             },
             generated_at,
         ),
@@ -255,10 +291,40 @@ def write_archive_files(
 def restore_items(base_url: str) -> list:
     if not base_url:
         return []
-    try:
-        response = requests.get(f"{base_url.rstrip('/')}/data/news-archive.json", timeout=10)
+    base = base_url.rstrip("/")
+
+    def fetch_values(url: str) -> list[dict]:
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
-        values = response.json().get("data", {}).get("items", [])
+        payload = response.json()
+        values = payload.get("data", {}).get("items", []) if isinstance(payload, dict) else []
+        return values if isinstance(values, list) else []
+
+    # Prefer the manifest's daily chunks so a large archive is not silently
+    # reduced to the legacy compatibility file on every scheduled rebuild.
+    try:
+        index_response = requests.get(f"{base}/data/news-archive-index.json", timeout=10)
+        index_response.raise_for_status()
+        index_payload = index_response.json()
+        days = index_payload.get("data", {}).get("days", []) if isinstance(index_payload, dict) else []
+        values: list[dict] = []
+        for day in days if isinstance(days, list) else []:
+            file_name = day.get("file") if isinstance(day, dict) else None
+            if not isinstance(file_name, str) or not re.fullmatch(r"news-archive/\d{4}-\d{2}-\d{2}", file_name):
+                continue
+            try:
+                values.extend(fetch_values(f"{base}/data/{file_name}.json"))
+            except (requests.RequestException, ValueError, TypeError):
+                continue
+        restored = [entry for value in values if (entry := public_to_item(value)) is not None]
+        if restored:
+            return restored
+    except (requests.RequestException, ValueError, TypeError):
+        pass
+
+    # Keep compatibility with older deployments that publish only this file.
+    try:
+        values = fetch_values(f"{base}/data/news-archive.json")
         return [entry for value in values if (entry := public_to_item(value)) is not None]
     except (requests.RequestException, ValueError, TypeError):
         return []
@@ -413,6 +479,7 @@ def run(
         for entry in dedupe_items(current_items + restored_items)
         if cutoff <= entry.published_at <= future_limit
     ]
+    archive_coverage = coverage_window(items, now, days=30)
     ok_count = sum(1 for run_ in runs if run_["ok"])
     archive_status = "ok" if ok_count == len(runs) else ("partial" if ok_count else "stale")
     stale = not current_items and bool(restored_items)
@@ -430,12 +497,13 @@ def run(
     )
     # recent.json 供前端「近期內容」與 Worker cron 補齊非 RSS 來源；取近 24 小時、上限 800 筆。
     day_cut = now - timedelta(hours=24)
-    recent_items = [entry for entry in items if entry.published_at >= day_cut][:800]
+    recent_items = [entry for entry in items if entry.published_at >= day_cut][:RECENT_ITEMS_CAP]
     write_json(
         output_dir / "recent.json",
         envelope({"items": [item_to_public(entry, sentiment_lexicon) for entry in recent_items]}, generated_at),
     )
-    topics = build_topics(items, sentiment_lexicon)
+    entity_lexicon = load_entity_lexicon(entities_config_path)
+    topics = build_topics(items, sentiment_lexicon, entity_lexicon)
     write_json(
         output_dir / "topics.json",
         envelope({"stale": stale, "experimental": True, "topics": topics}, generated_at),
@@ -526,7 +594,16 @@ def run(
                 # 所以數量必須由實際來源清單推導，不能寫死。
                 "methodVersion": f"news-heat-v4-{len(sources)}-sources",
                 "scheduleDaysUntilPause": None,
-                "coverage": {"keywordWindowHours": 24, "trendBucketMinutes": 60, "archiveDays": 30, "sourceCount": len(sources)},
+                "coverage": {
+                    "keywordWindowHours": 24,
+                    "trendBucketMinutes": 60,
+                    "fastScheduleMinutes": FAST_SCHEDULE_MINUTES,
+                    "deepScheduleMinutes": DEEP_SCHEDULE_MINUTES,
+                    "archiveDays": 30,
+                    "recentCap": RECENT_ITEMS_CAP,
+                    "sourceCount": len(sources),
+                    **archive_coverage,
+                },
                 "stateRestoreFailed": not bool(current_items or restored_items) and bool(restore_base_url),
             },
             generated_at,

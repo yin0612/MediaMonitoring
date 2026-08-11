@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from opinion_pipeline.archive import dedupe_items, filter_items, item_to_public, public_to_item
+from opinion_pipeline.archive import coverage_window, dedupe_items, filter_items, item_to_public, public_to_item
 from opinion_pipeline import cli
 from opinion_pipeline.connectors.trends import parse_trends_feed
 from opinion_pipeline.connectors import rss
@@ -41,6 +41,28 @@ def test_filter_items_matches_title_or_excerpt_and_enforces_range():
     result = filter_items([recent, old, unrelated], "台積電", "24h", NOW)
 
     assert [entry.source_item_id for entry in result] == ["1"]
+
+
+def test_coverage_window_reports_actual_dates_and_requires_full_retention():
+    values = [item("cna", "old", "old", 29 * 24), item("ltn", "new", "new", 1)]
+
+    result = coverage_window(values, NOW, days=30)
+
+    assert result["actualFrom"] == (NOW - timedelta(days=29)).isoformat().replace("+00:00", "Z")
+    assert result["actualTo"] == (NOW - timedelta(hours=1)).isoformat().replace("+00:00", "Z")
+    assert result["complete"] is True
+
+
+def test_coverage_window_marks_short_archive_incomplete():
+    result = coverage_window([item("cna", "new", "new", 3 * 24)], NOW, days=30)
+
+    assert result["complete"] is False
+
+
+def test_pipeline_meta_publishes_schedule_and_recent_caps():
+    assert cli.FAST_SCHEDULE_MINUTES == 5
+    assert cli.DEEP_SCHEDULE_MINUTES == 15
+    assert cli.RECENT_ITEMS_CAP == 800
 
 
 def test_public_item_never_contains_full_content_field():
@@ -231,6 +253,77 @@ def test_restore_items_returns_empty_list_when_snapshot_is_unavailable(monkeypat
     monkeypatch.setattr(cli.requests, "get", lambda *_args, **_kwargs: (_ for _ in ()).throw(cli.requests.ConnectionError()))
 
     assert cli.restore_items("https://pages.example") == []
+
+
+def test_restore_items_loads_manifest_daily_chunks_before_compat_snapshot(monkeypatch):
+    values = {
+        "https://pages.example/data/news-archive-index.json": {
+            "data": {
+                "days": [
+                    {"file": "news-archive/2026-07-22"},
+                    {"file": "news-archive/2026-07-21"},
+                ]
+            }
+        },
+        "https://pages.example/data/news-archive/2026-07-22.json": {
+            "data": {"items": [{"id": "new", "source": "cna", "title": "new", "url": "https://example.com/new", "publishedAt": "2026-07-22T08:00:00Z"}]}
+        },
+        "https://pages.example/data/news-archive/2026-07-21.json": {
+            "data": {"items": [{"id": "old", "source": "ltn", "title": "old", "url": "https://example.com/old", "publishedAt": "2026-07-21T08:00:00Z"}]}
+        },
+    }
+
+    class Response:
+        def __init__(self, payload):
+            self.payload = payload
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return self.payload
+
+    calls = []
+
+    def fake_get(url, **_kwargs):
+        calls.append(url)
+        if url not in values:
+            raise AssertionError(f"unexpected restore URL: {url}")
+        return Response(values[url])
+
+    monkeypatch.setattr(cli.requests, "get", fake_get)
+
+    restored = cli.restore_items("https://pages.example")
+
+    assert {entry.source_item_id for entry in restored} == {"new", "old"}
+    assert calls == [
+        "https://pages.example/data/news-archive-index.json",
+        "https://pages.example/data/news-archive/2026-07-22.json",
+        "https://pages.example/data/news-archive/2026-07-21.json",
+    ]
+
+
+def test_restore_items_falls_back_to_compat_snapshot_when_manifest_is_unavailable(monkeypatch):
+    compat_url = "https://pages.example/data/news-archive.json"
+
+    class Response:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {"data": {"items": [{"id": "compat", "source": "cna", "title": "compat", "url": "https://example.com/compat", "publishedAt": "2026-07-22T08:00:00Z"}]}}
+
+    def fake_get(url, **_kwargs):
+        if url.endswith("news-archive-index.json"):
+            raise cli.requests.ConnectionError()
+        assert url == compat_url
+        return Response()
+
+    monkeypatch.setattr(cli.requests, "get", fake_get)
+
+    restored = cli.restore_items("https://pages.example")
+
+    assert [entry.source_item_id for entry in restored] == ["compat"]
 
 
 def test_restored_items_are_restricted_to_current_source_allowlist():

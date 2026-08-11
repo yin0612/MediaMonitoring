@@ -57,7 +57,7 @@ export function MethodPage() {
         {m && (
           <div className="small muted" style={{ marginTop: 14, display: 'flex', gap: 18, flexWrap: 'wrap' }}>
             <span>方法版本：<strong>{m.methodVersion}</strong></span>
-            <span>統計視窗：關鍵字 {m.coverage.keywordWindowHours} 小時 · 趨勢每 {m.coverage.trendBucketMinutes} 分鐘一點 · 快照保留 {m.coverage.archiveDays} 天</span>
+            <span>統計視窗：關鍵字 {m.coverage.keywordWindowHours} 小時 · 趨勢每 {m.coverage.trendBucketMinutes} 分鐘一點 · {m.coverage.complete === false ? '實際資料窗未滿 30 日' : `快照保留 ${m.coverage.archiveDays} 天`}</span>
           </div>
         )}
       </Card>
@@ -120,7 +120,7 @@ export function MethodPage() {
       <div style={{ marginTop: 16 }}>
         <div id="formula" className="method-anchor" />
         <Card title="熱度計算方法">
-          <p className="small" style={{ marginTop: 0 }}>每次快照（約每 15 分鐘，best effort）由近 24 小時新聞重算，固定落在 0–100：</p>
+          <p className="small" style={{ marginTop: 0 }}>每次快照（約每 {m?.coverage.deepScheduleMinutes ?? 15} 分鐘，best effort）由近 24 小時新聞重算，固定落在 0–100：</p>
           <div
             style={{
               background: 'var(--page)',

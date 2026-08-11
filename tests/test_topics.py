@@ -92,3 +92,36 @@ def test_topics_include_daily_timeline_and_time_window_event_subclusters():
     assert finance["events"][0]["date"] == "2026-07-22"
     assert finance["events"][0]["size"] == 2
     assert finance["events"][0]["terms"][0] == "台積電"
+
+
+def test_topic_event_exposes_source_timeline_and_concentration_without_stance_labels():
+    items = [
+        article("cna", "台積電半導體投資創新高", "", "https://example.com/event-1"),
+        article("ltn", "台積電法說會看好半導體", "", "https://example.com/event-2"),
+    ]
+    finance = cli.build_topics(items)[0]
+    event = finance["events"][0]
+    assert event["sourceCounts"] == {"cna": 1, "ltn": 1}
+    assert event["sourceConcentration"] == 0.5
+    assert event["sourceTimeline"] == {
+        "cna": [{"date": "2026-07-22", "mentions": 1}],
+        "ltn": [{"date": "2026-07-22", "mentions": 1}],
+    }
+    assert event["sourceTermCounts"]["台積電"] == {"cna": 1, "ltn": 1}
+
+
+def test_topics_include_conservative_target_stance_evidence_when_entity_lexicon_is_enabled():
+    items = [
+        article("cna", "台積電獲利創新高", "台積電表現亮眼。", "https://example.com/target-1"),
+        article("ltn", "分析師不看好台積電", "市場擔心台積電需求。", "https://example.com/target-2"),
+    ]
+    topics = cli.build_topics(
+        items,
+        cli.SentimentLexicon(positive={"創新高": 1, "看好": 1}),
+        [{"name": "台積電", "aliases": [], "type": "ORG"}],
+    )
+    stance = topics[0]["targetStances"][0]
+    assert stance["target"] == "台積電"
+    assert stance["mentionCount"] == 2
+    assert stance["label"] == "neutral"
+    assert stance["evidence"]

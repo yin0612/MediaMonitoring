@@ -25,6 +25,9 @@ const DAY_MS = 86_400_000;
 const FUTURE_TOLERANCE_MS = 5 * 60 * 1000;
 const REFRESH_COOLDOWN_MS = 5 * 60 * 1000;
 const DEEP_REFRESH_COOLDOWN_MS = 15 * 60 * 1000;
+const FAST_SCHEDULE_MINUTES = 5;
+const DEEP_SCHEDULE_MINUTES = 15;
+const RECENT_ITEMS_CAP = 120;
 const REFRESH_BODY_MAX_BYTES = 4_096;
 const TURNSTILE_ACTION = 'manual_refresh';
 const SOURCE_HEALTH_MAX_AGE_MS = 30 * 60 * 1000;
@@ -70,7 +73,38 @@ async function fetchOfficialItems(source, attempts = 2) {
   };
 }
 
-const envelope = (data) => ({ schemaVersion: '2.0.0', generatedAt: new Date().toISOString(), data });
+const envelopeTimestamp = (value) => {
+  const timestamp = Date.parse(String(value || ''));
+  return Number.isFinite(timestamp) ? new Date(timestamp).toISOString() : null;
+};
+
+const envelopeWindow = (data, generatedAt) => {
+  const coverage = data?.coverage;
+  const coveredFrom = envelopeTimestamp(coverage?.actualFrom);
+  const coveredTo = envelopeTimestamp(coverage?.actualTo);
+  if (coveredFrom || coveredTo) return { actualFrom: coveredFrom, actualTo: coveredTo || generatedAt };
+
+  const timestamps = (Array.isArray(data?.items) ? data.items : [])
+    .map((item) => Date.parse(String(item?.publishedAt || '')))
+    .filter(Number.isFinite);
+  return {
+    actualFrom: timestamps.length ? new Date(Math.min(...timestamps)).toISOString() : null,
+    actualTo: timestamps.length ? new Date(Math.max(...timestamps)).toISOString() : generatedAt,
+  };
+};
+
+const envelope = (data) => {
+  const generatedAt = new Date().toISOString();
+  return {
+    schemaVersion: '2.0.0',
+    generatedAt,
+    pipeline: 'worker-live',
+    window: envelopeWindow(data, generatedAt),
+    quality: { status: data?.status || (data?.stale ? 'stale' : 'available') },
+    provenance: { method: 'worker-public-metadata', reproducible: true },
+    data,
+  };
+};
 
 const corsHeaders = (request, env) => {
   const origin = request.headers.get('Origin') || '';
@@ -281,8 +315,12 @@ async function handleSearch(request, env, url) {
     return json(request, env, { error: error.message }, 400);
   }
 
-  let historicalIndexFailed = false;
-  if (env.DB && ['7d', '30d'].includes(input.range)) {
+  const historicalRange = ['7d', '30d'].includes(input.range);
+  // Historical ranges are contractually D1-backed. A Pages archive is only a
+  // degraded recovery path when the index is unavailable, never a complete
+  // substitute that can silently claim full 7/30-day coverage.
+  let historicalIndexFailed = historicalRange && !env.DB;
+  if (env.DB && historicalRange) {
     try {
       const now = Date.now();
       const [indexed, historicalCoverage] = await Promise.all([
@@ -311,6 +349,7 @@ async function handleSearch(request, env, url) {
       const actualFromMs = Date.parse(historicalCoverage.actualFrom || '');
       const actualToMs = Date.parse(historicalCoverage.actualTo || '');
       const coverageComplete = historicalCoverage.articleCount > 0
+        && historicalCoverage.coveredDays >= requestedDays
         && actualFromMs <= requestedFromMs + DAY_MS
         && actualToMs >= now - DAY_MS;
       return json(request, env, envelope({
@@ -325,6 +364,7 @@ async function handleSearch(request, env, url) {
           actualTo: historicalCoverage.actualTo,
           complete: coverageComplete,
           articleCount: historicalCoverage.articleCount,
+          coveredDays: historicalCoverage.coveredDays,
         },
         metrics: calculateMetrics(matched, input.range, now, NEWS_SOURCES.length),
         timeline: timelineFor(matched, input.range, now),
@@ -388,23 +428,28 @@ async function handleSearch(request, env, url) {
   const enabledCount = NEWS_SOURCES.length;
   const failures = runs.filter((run) => ['error', 'degraded'].includes(run.status)).length;
   const stale = liveItems.length === 0 && archived.items.length > 0;
-  const historicalRange = ['7d', '30d'].includes(input.range);
   const requestedDays = input.range === '30d' ? 30 : 7;
   const responseNow = Date.now();
   const requestedFromMs = responseNow - requestedDays * DAY_MS;
   const coverageTimestamps = [...archived.items, ...liveItems]
     .map((item) => Date.parse(item.publishedAt))
     .filter(Number.isFinite);
+  const coveredDays = new Set(
+    coverageTimestamps.map((timestamp) => new Date(timestamp).toISOString().slice(0, 10)),
+  ).size;
   const actualFromMs = coverageTimestamps.length ? Math.min(...coverageTimestamps) : Number.NaN;
   const actualToMs = coverageTimestamps.length ? Math.max(...coverageTimestamps) : Number.NaN;
   const coverageComplete = historicalRange
     && Number.isFinite(actualFromMs)
+    && coveredDays >= requestedDays
     && actualFromMs <= requestedFromMs + DAY_MS
     && actualToMs >= responseNow - DAY_MS;
   const degradedHistory = historicalRange && (
     historicalIndexFailed || !coverageComplete || archived.status !== 'ok' || archived.stale
   );
-  const status = stale ? 'stale' : (failures || degradedHistory) ? 'partial' : 'ok';
+  const status = historicalIndexFailed
+    ? 'partial'
+    : stale ? 'stale' : (failures || degradedHistory) ? 'partial' : 'ok';
   const sourceCounts = Object.fromEntries(
     [...new Set(matched.map((item) => item.source))].map((source) => [source, matched.filter((item) => item.source === source).length]),
   );
@@ -426,6 +471,7 @@ async function handleSearch(request, env, url) {
         actualTo: Number.isFinite(actualToMs) ? new Date(actualToMs).toISOString() : null,
         complete: coverageComplete && !historicalIndexFailed,
         articleCount: archived.items.length,
+        coveredDays,
       },
     } : {}),
   };
@@ -536,9 +582,9 @@ async function buildSnapshot(env) {
   //  3. 上一份 KV 快照的 recent（Worker 自身近況）
   // 7 天完整 archive 不進 KV；搜尋的 7 天範圍仍由 /api/search + Pages 提供。
   const previousRecent = previous?.files?.recent?.data?.items ?? [];
-  const [pagesRecent, pagesKeywords, pagesEntities, pagesTopics, pagesEvents, pageSourceStates] = await Promise.all([
+  const [pagesRecent, pagesKeywords, pagesEntities, pagesTopics, pagesEvents, pagesMeta, pageSourceStates] = await Promise.all([
     pagesRecentItems(env),
-    ...['keywords', 'entities', 'topics', 'events'].map((name) => pagesAnalysisEnvelope(env, name)),
+    ...['keywords', 'entities', 'topics', 'events', 'meta'].map((name) => pagesAnalysisEnvelope(env, name)),
     pagesSourceStates(env),
   ]);
   const pagesSourceMapComplete = NEWS_SOURCES.every((source) => pageSourceStates.has(source.id));
@@ -642,9 +688,16 @@ async function buildSnapshot(env) {
   const healthySourceCount = sources.filter((source) => source.status === 'ok').length;
   const serviceableSourceCount = sources.filter((source) => !['stale', 'error'].includes(source.status)).length;
   const status = healthySourceCount === sources.length ? 'ok' : serviceableSourceCount ? 'partial' : 'stale';
+  const pagesCoverage = pagesMeta?.data?.coverage;
+  const previousCoverage = previous?.files?.meta?.data?.coverage;
+  const archiveCoverage = {
+    complete: pagesCoverage?.complete === true || previousCoverage?.complete === true,
+    actualFrom: pagesCoverage?.actualFrom || previousCoverage?.actualFrom || null,
+    actualTo: pagesCoverage?.actualTo || previousCoverage?.actualTo || null,
+  };
 
   const files = {
-    recent: snapshotEnvelope({ items: merged.slice(0, 120) }, generatedAt),
+    recent: snapshotEnvelope({ items: merged.slice(0, RECENT_ITEMS_CAP) }, generatedAt),
     keywords:
       pagesKeywords
       || staleAnalysisEnvelope(previous?.files?.keywords)
@@ -672,7 +725,15 @@ async function buildSnapshot(env) {
           || null,
         methodVersion: `news-heat-v4-${NEWS_SOURCES.length}-sources-worker`,
         scheduleDaysUntilPause: null,
-        coverage: { keywordWindowHours: 24, trendBucketMinutes: 60, archiveDays: 30 },
+        coverage: {
+          keywordWindowHours: 24,
+          trendBucketMinutes: 60,
+          fastScheduleMinutes: FAST_SCHEDULE_MINUTES,
+          deepScheduleMinutes: DEEP_SCHEDULE_MINUTES,
+          archiveDays: 30,
+          recentCap: RECENT_ITEMS_CAP,
+          ...archiveCoverage,
+        },
         stateRestoreFailed: false,
       },
       generatedAt,
@@ -721,7 +782,17 @@ async function handleHealth(request, env) {
     turnstile: { configured: Boolean(env.TURNSTILE_SECRET_KEY) },
   };
   if (!env.SNAPSHOT) {
-    return json(request, env, envelope({ status: 'error', dependencies }), 503, 30);
+    return json(request, env, envelope({
+      status: 'error',
+      dependencies,
+      checks: {
+        kv: 'missing',
+        sourceHealthy: 0,
+        sourceTotal: 0,
+        lastDeepAgeSeconds: null,
+        lastDispatch: dependencies.githubDispatch.configured ? 'configured' : 'not_configured',
+      },
+    }), 503, 30);
   }
 
   const snapshot = await readSnapshot(env);
@@ -732,14 +803,27 @@ async function handleHealth(request, env) {
     ? Math.max(0, Math.round((Date.now() - timestamp) / 1000))
     : null;
   dependencies.snapshot.sourceStatus = snapshot?.files?.meta?.data?.status || null;
+  const sourceRows = snapshot?.files?.sources?.data?.sources;
+  const sourceList = Array.isArray(sourceRows) ? sourceRows : [];
+  const lastDeepAt = snapshot?.files?.meta?.data?.lastDeepAt;
+  const lastDeepTimestamp = Date.parse(String(lastDeepAt || ''));
+  const checks = {
+    kv: dependencies.snapshot.available ? 'ok' : 'invalid_snapshot',
+    sourceHealthy: sourceList.filter((source) => source?.status === 'ok').length,
+    sourceTotal: sourceList.length,
+    lastDeepAgeSeconds: Number.isFinite(lastDeepTimestamp)
+      ? Math.max(0, Math.round((Date.now() - lastDeepTimestamp) / 1000))
+      : null,
+    lastDispatch: dependencies.githubDispatch.configured ? 'configured' : 'not_configured',
+  };
   const stale = !dependencies.snapshot.available
     || dependencies.snapshot.ageSeconds * 1000 > HEALTH_MAX_SNAPSHOT_AGE_MS;
-  if (stale) return json(request, env, envelope({ status: 'error', dependencies }), 503, 30);
+  if (stale) return json(request, env, envelope({ status: 'error', dependencies, checks }), 503, 30);
 
   const degraded = dependencies.snapshot.sourceStatus !== 'ok'
     || !dependencies.githubDispatch.configured
     || !dependencies.turnstile.configured;
-  return json(request, env, envelope({ status: degraded ? 'degraded' : 'ok', dependencies }), 200, 30);
+  return json(request, env, envelope({ status: degraded ? 'degraded' : 'ok', dependencies, checks }), 200, 30);
 }
 
 async function readRefreshPart(env, refreshId, part) {
@@ -787,6 +871,31 @@ async function runDeepRefresh(env, refreshId) {
 async function refreshCooldown(env, request) {
   const ip = request.headers.get('CF-Connecting-IP') || '';
   if (!ip) return { key: null, retryAfterSeconds: 0 };
+
+  // KV has no compare-and-set operation. When D1 is available, claim the
+  // per-IP slot with the same atomic lock primitive used by deep refreshes.
+  // The raw client address is hashed so it is never persisted in D1.
+  if (env.DB) {
+    const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
+    const hash = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join('');
+    const name = `manual-ip:${hash.slice(0, 32)}`;
+    const now = Date.now();
+    try {
+      const result = await env.DB.prepare(`
+        INSERT INTO refresh_locks (name, claimed_at) VALUES (?1, ?2)
+        ON CONFLICT(name) DO UPDATE SET claimed_at = excluded.claimed_at
+        WHERE refresh_locks.claimed_at <= ?3
+      `).bind(name, now, now - REFRESH_COOLDOWN_MS).run();
+      if (Number(result?.meta?.changes || 0) > 0) {
+        return { key: null, retryAfterSeconds: 0 };
+      }
+      return { key: null, retryAfterSeconds: Math.ceil(REFRESH_COOLDOWN_MS / 1000) };
+    } catch (error) {
+      console.error(JSON.stringify({ event: 'refresh_cooldown_lock_failed', error: error?.message }));
+      return { key: null, retryAfterSeconds: 0, error: 'REFRESH_RATE_LIMIT_UNAVAILABLE' };
+    }
+  }
+
   const key = `refresh-cooldown:${ip}`;
   const raw = await env.SNAPSHOT.get(key);
   const startedAt = raw ? Number.parseInt(raw, 10) : Number.NaN;
@@ -867,7 +976,8 @@ async function handleRefresh(request, env, ctx) {
   const turnstile = await verifyTurnstile(request, env);
   if (!turnstile.ok) return json(request, env, { error: turnstile.error }, turnstile.status);
 
-  const { key: cooldownKey, retryAfterSeconds } = await refreshCooldown(env, request);
+  const { key: cooldownKey, retryAfterSeconds, error: cooldownError } = await refreshCooldown(env, request);
+  if (cooldownError) return json(request, env, { error: cooldownError }, 503);
   if (retryAfterSeconds > 0) {
     return json(request, env, { error: 'REFRESH_COOLDOWN', retryAfterSeconds }, 429);
   }
@@ -1025,9 +1135,15 @@ export default {
   async scheduled(event, env, ctx) {
     const deepCron = event?.cron === '2,17,32,47 * * * *';
     if (deepCron) {
-      ctx.waitUntil(triggerGitHubActions(env, true).then((result) => {
+      ctx.waitUntil((async () => {
+        const claim = await claimDeepRefreshSlot(env);
+        if (!claim.claimed) {
+          console.warn(JSON.stringify({ event: 'scheduled_deep_dispatch_skipped', reason: claim.reason }));
+          return;
+        }
+        const result = await triggerGitHubActions(env, true);
         if (!result.ok) console.error(JSON.stringify({ event: 'scheduled_deep_dispatch_failed', reason: result.reason }));
-      }));
+      })());
       return;
     }
     ctx.waitUntil(buildSnapshot(env).catch((error) => {

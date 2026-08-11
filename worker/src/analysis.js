@@ -333,12 +333,47 @@ function topicBreakdown(id, terms, matched) {
     const preferred = (clean.length ? clean : eventItems)
       .slice()
       .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+    const sourceCounts = {};
+    const sourceTimeline = {};
+    for (const item of eventItems) {
+      sourceCounts[item.source] = (sourceCounts[item.source] || 0) + 1;
+      const sourceDate = new Date(item.publishedAt).toISOString().slice(0, 10);
+      if (!sourceTimeline[item.source]) sourceTimeline[item.source] = {};
+      sourceTimeline[item.source][sourceDate] = (sourceTimeline[item.source][sourceDate] || 0) + 1;
+    }
+    const normalizedTimeline = Object.fromEntries(
+      Object.keys(sourceTimeline).sort().map((source) => [
+        source,
+        Object.keys(sourceTimeline[source]).sort().map((sourceDate) => ({
+          date: sourceDate,
+          mentions: sourceTimeline[source][sourceDate],
+        })),
+      ]),
+    );
+    const sourceConcentration = Math.round(
+      Object.values(sourceCounts).reduce((sum, count) => sum + (count / eventItems.length) ** 2, 0) * 1000,
+    ) / 1000;
+    const sourceTermCounts = Object.fromEntries(eventTerms.map((term) => [
+      term,
+      Object.fromEntries(
+        Object.entries(eventItems.reduce((counts, item) => {
+          if (casefold(item.title).includes(casefold(term))) {
+            counts[item.source] = (counts[item.source] || 0) + 1;
+          }
+          return counts;
+        }, {})).sort(([a], [b]) => (a < b ? -1 : 1)),
+      ),
+    ]));
     return {
       id: `${id}-${date}-${terms.indexOf(anchor) + 1}`,
       date,
       label: anchor,
       size: eventItems.length,
       terms: eventTerms,
+      sourceCounts: Object.fromEntries(Object.entries(sourceCounts).sort(([a], [b]) => (a < b ? -1 : 1))),
+      sourceConcentration,
+      sourceTimeline: normalizedTimeline,
+      sourceTermCounts,
       articles: preferred.slice(0, 3).map((item) => ({
         title: item.title,
         source: item.source,

@@ -1,7 +1,7 @@
 """詞典法情緒判讀的行為測試（含否定、平手與彙總）。"""
 from pathlib import Path
 
-from opinion_pipeline.sentiment import aggregate, classify, classify_target, load_sentiment_lexicon
+from opinion_pipeline.sentiment import aggregate, build_target_stances, classify, classify_target, load_sentiment_lexicon
 
 LEXICON = load_sentiment_lexicon(Path("config/sentiment.yml"))
 
@@ -67,3 +67,20 @@ def test_targeted_sentiment_only_uses_context_around_named_target():
 def test_targeted_sentiment_is_uncertain_without_target_or_evidence():
     assert classify_target("市場大漲", "台積電", [], LEXICON)["label"] == "uncertain"
     assert classify_target("台積電召開例行會議", "台積電", [], LEXICON)["label"] == "uncertain"
+
+
+def test_build_target_stances_aggregates_traceable_target_evidence():
+    items = [
+        type("Item", (), {"source": "cna", "title": "台積電獲利創新高", "excerpt": "台積電表現亮眼", "search_text": "台積電獲利創新高 台積電表現亮眼", "url": "https://example.com/1"})(),
+        type("Item", (), {"source": "ltn", "title": "分析師不看好台積電", "excerpt": "市場擔心台積電", "search_text": "分析師不看好台積電 市場擔心台積電", "url": "https://example.com/2"})(),
+    ]
+    stances = build_target_stances(
+        items,
+        [{"name": "台積電", "aliases": ["TSMC"], "type": "ORG"}],
+        LEXICON,
+    )
+    assert stances[0]["target"] == "台積電"
+    assert stances[0]["mentionCount"] == 2
+    assert stances[0]["sourceCount"] == 2
+    assert stances[0]["label"] == "neutral"
+    assert len(stances[0]["evidence"]) == 2

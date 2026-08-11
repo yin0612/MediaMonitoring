@@ -79,6 +79,55 @@ function EvidenceBlock({ topic }: { topic: Topic }) {
   );
 }
 
+function TargetStanceBlock({ topic }: { topic: Topic }) {
+  const rows = topic.targetStances ?? [];
+  if (rows.length === 0) return null;
+  const labels = {
+    positive: { text: '偏正向', color: 'var(--sent-positive)' },
+    neutral: { text: '中立', color: 'var(--sent-neutral)' },
+    negative: { text: '偏負向', color: 'var(--sent-negative)' },
+    uncertain: { text: '不確定', color: 'var(--text-muted)' },
+  } as const;
+  return (
+    <section className="evidence" aria-label={`${topic.label}目標式語氣`}>
+      <div className="card__hint evidence__caption">
+        目標式文本語氣（詞典 baseline，非民意或媒體立場）：只在目標附近有命中依據時判讀；樣本與證據不足會保留為不確定。
+      </div>
+      <div className="evidence__cols">
+        {rows.map((row) => {
+          const label = labels[row.label];
+          return (
+            <section key={row.target} className="evidence__group">
+              <h4 className="evidence__title">
+                <span className="dot" style={{ background: label.color }} />
+                {row.target}
+                <span className="small muted">{label.text} · {row.mentionCount} 篇／{row.sourceCount} 家 · 證據 {Math.round(row.evidenceRate * 100)}%</span>
+              </h4>
+              {row.evidence.length > 0 && (
+                <ul className="evidence__list">
+                  {row.evidence.map((evidence, index) => (
+                    <li key={`${row.target}-${index}`} className="evidence__item">
+                      <a href={evidence.url} target="_blank" rel="noreferrer noopener" className="evidence__link">
+                        {evidence.title}
+                      </a>
+                      <div className="evidence__terms">
+                        <SourceTag id={evidence.source} />
+                        {evidence.terms.map((term) => (
+                          <span key={term} className="evidence__term" style={{ borderColor: label.color }}>{term}</span>
+                        ))}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function TopicActivity({ topic }: { topic: Topic }) {
   const timeline = topic.timeline ?? [];
   const max = Math.max(1, ...timeline.map((point) => point.mentions));
@@ -117,6 +166,17 @@ function EventClusters({ topic }: { topic: Topic }) {
               <strong>{event.label}</strong>
               <span className="small muted">{event.date} · {event.size} 篇</span>
             </div>
+            {event.sourceCounts && (
+              <div className="small muted">
+                來源：{Object.entries(event.sourceCounts).map(([source, count]) => `${sourceShort(source as Topic['articles'][number]['source'])} ${count}`).join('、')}
+                {event.sourceConcentration !== undefined && ` · 來源集中度 ${event.sourceConcentration.toFixed(3)}`}
+              </div>
+            )}
+            {event.sourceTermCounts && (
+              <div className="small muted">
+                標題詞分布：{Object.entries(event.sourceTermCounts).map(([term, counts]) => `${term}（${Object.entries(counts).map(([source, count]) => `${sourceShort(source as Topic['articles'][number]['source'])} ${count}`).join('、')}）`).join('；')}
+              </div>
+            )}
             <div className="topic-event__terms">
               {event.terms.map((term) => <span className="chip" key={term}>{term}</span>)}
             </div>
@@ -152,6 +212,7 @@ function TopicCard({ topic }: { topic: Topic }) {
       </div>
 
       <EvidenceBlock topic={topic} />
+      <TargetStanceBlock topic={topic} />
       <TopicActivity topic={topic} />
       <EventClusters topic={topic} />
 

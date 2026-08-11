@@ -142,4 +142,11 @@ test('topics expose daily timelines and time-window event subclusters', () => {
   assert.equal(finance.terms[0], '台積電');
   assert.equal(finance.events[0].date, '2026-07-22');
   assert.equal(finance.events[0].size, 2);
+  assert.deepEqual(finance.events[0].sourceCounts, { cna: 1, ltn: 1 });
+  assert.equal(finance.events[0].sourceConcentration, 0.5);
+  assert.deepEqual(finance.events[0].sourceTimeline, {
+    cna: [{ date: '2026-07-22', mentions: 1 }],
+    ltn: [{ date: '2026-07-22', mentions: 1 }],
+  });
+  assert.deepEqual(finance.events[0].sourceTermCounts['台積電'], { cna: 1, ltn: 1 });
 });

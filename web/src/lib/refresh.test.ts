@@ -15,7 +15,7 @@ describe('live refresh schedule', () => {
 });
 
 describe('Trends news fallback', () => {
-  it('reuses live 29-source search articles without changing their links', () => {
+  it('reuses live source search articles without changing their links', () => {
     expect(searchArticlesToTrendNews([{
       id: 'cna-1', source: 'cna', title: '熱門人物最新消息', excerpt: '',
       publishedAt: '2026-07-22T12:00:00Z', url: 'https://www.cna.com.tw/news/1', sentiment: null,

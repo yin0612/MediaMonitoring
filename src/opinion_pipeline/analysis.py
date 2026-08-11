@@ -64,6 +64,18 @@ def cluster_events(items: list[NormalizedItem], *, threshold: float = 0.46) -> l
     result = []
     for index, cluster in enumerate(clusters, 1):
         members = cluster["items"]
+        source_counts = Counter(item.source for item in members)
+        source_timeline: dict[str, list[dict]] = {}
+        for source in sorted(source_counts):
+            by_day = Counter(
+                item.published_at.astimezone(timezone.utc).date().isoformat()
+                for item in members
+                if item.source == source
+            )
+            source_timeline[source] = [
+                {"date": date, "mentions": by_day[date]}
+                for date in sorted(by_day)
+            ]
         result.append({
             "id": f"event-{members[0].published_at:%Y%m%d}-{index}",
             "representativeTitle": members[0].title,
@@ -71,7 +83,12 @@ def cluster_events(items: list[NormalizedItem], *, threshold: float = 0.46) -> l
             "sourceCount": len({item.source for item in members}),
             "startedAt": min(item.published_at for item in members).isoformat().replace("+00:00", "Z"),
             "updatedAt": max(item.published_at for item in members).isoformat().replace("+00:00", "Z"),
-            "sourceCounts": dict(sorted(Counter(item.source for item in members).items())),
+            "sourceCounts": dict(sorted(source_counts.items())),
+            "sourceConcentration": round(
+                sum((count / len(members)) ** 2 for count in source_counts.values()),
+                3,
+            ),
+            "sourceTimeline": source_timeline,
             "articles": [
                 {
                     "title": item.title,

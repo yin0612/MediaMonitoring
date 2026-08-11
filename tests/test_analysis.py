@@ -211,6 +211,11 @@ def test_event_clustering_groups_similar_cross_source_titles_within_48_hours():
     events = cluster_events(items, threshold=0.6)
     assert events[0]["articleCount"] == 2
     assert events[0]["sourceCount"] == 2
+    assert events[0]["sourceConcentration"] == 0.5
+    assert events[0]["sourceTimeline"] == {
+        "cna": [{"date": "2026-07-22", "mentions": 1}],
+        "ltn": [{"date": "2026-07-22", "mentions": 1}],
+    }
     assert events[0]["articles"][0]["url"].startswith("https://example.com/")
 
 

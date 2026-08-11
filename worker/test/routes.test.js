@@ -17,7 +17,10 @@ test('health endpoint returns schema v2 and localhost CORS', async () => {
   const generatedAt = new Date().toISOString();
   await env.SNAPSHOT.put('snapshot', JSON.stringify({
     generatedAt,
-    files: { meta: { generatedAt, data: { status: 'ok', lastFastAt: generatedAt } } },
+    files: {
+      meta: { generatedAt, data: { status: 'ok', lastFastAt: generatedAt, lastDeepAt: generatedAt } },
+      sources: { data: { sources: [{ status: 'ok' }, { status: 'degraded' }] } },
+    },
   }));
   const request = new Request('https://worker.example/api/health', {
     headers: { Origin: 'http://localhost:5173' },
@@ -36,6 +39,11 @@ test('health endpoint returns schema v2 and localhost CORS', async () => {
   assert.equal(body.data.dependencies.snapshot.available, true);
   assert.equal(body.data.dependencies.githubDispatch.configured, true);
   assert.equal(body.data.dependencies.turnstile.configured, true);
+  assert.equal(body.data.checks.kv, 'ok');
+  assert.equal(body.data.checks.sourceHealthy, 1);
+  assert.equal(body.data.checks.sourceTotal, 2);
+  assert.equal(body.data.checks.lastDispatch, 'configured');
+  assert.equal(body.data.checks.lastDeepAgeSeconds, 0);
 });
 
 test('health endpoint returns 503 when snapshot storage is missing or stale', async () => {
@@ -191,6 +199,45 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
     });
     assert.equal(otherClient.status, 202);
     assert.equal((await otherClient.json()).deep, 'skipped');
+  } finally {
+    await Promise.all(pending);
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('manual refresh cooldown is atomic for concurrent requests from one IP', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.includes('turnstile')) {
+      return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
+    }
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
+    return new Response('<rss><channel></channel></rss>');
+  };
+
+  const env = {
+    SNAPSHOT: memoryKv(),
+    GITHUB_TOKEN: 'test-token',
+    TURNSTILE_SECRET_KEY: 'turnstile-secret',
+    DB: atomicRefreshLockD1(),
+  };
+  const makeRequest = () => new Request('https://worker.example/api/refresh', {
+    method: 'POST',
+    headers: {
+      Origin: 'https://yin0612.github.io',
+      'CF-Connecting-IP': '203.0.113.42',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
+  });
+  const pending = [];
+  try {
+    const responses = await Promise.all([
+      worker.fetch(makeRequest(), env, { waitUntil: (promise) => pending.push(promise) }),
+      worker.fetch(makeRequest(), env, { waitUntil: (promise) => pending.push(promise) }),
+    ]);
+    assert.deepEqual(responses.map((response) => response.status).sort((left, right) => left - right), [202, 429]);
   } finally {
     await Promise.all(pending);
     globalThis.fetch = originalFetch;
@@ -508,6 +555,10 @@ test('30d search reads historical articles from D1 without live RSS fanout', asy
     assert.equal(body.data.coverage.actualTo, new Date(publishedAt).toISOString());
     assert.equal(body.data.coverage.complete, false);
     assert.equal(body.data.status, 'partial');
+    assert.equal(body.pipeline, 'worker-live');
+    assert.equal(body.window.actualFrom, new Date(publishedAt).toISOString());
+    assert.equal(body.window.actualTo, new Date(publishedAt).toISOString());
+    assert.equal(body.provenance.reproducible, true);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -549,8 +600,45 @@ test('30d search falls back to the full archive with explicit incomplete coverag
     assert.equal(body.data.status, 'partial');
     assert.equal(body.data.coverage.complete, false);
     assert.equal(body.data.coverage.actualFrom, oldPublishedAt);
+    assert.ok(body.data.coverage.coveredDays >= 1);
     assert.ok(requested.some((url) => url.endsWith('/data/news-archive.json')));
     assert.ok(!requested.some((url) => url.endsWith('/data/recent.json')));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('30d archive fallback stays partial when the D1 index is not configured', async () => {
+  const originalFetch = globalThis.fetch;
+  const oldPublishedAt = new Date(Date.now() - 29 * 24 * 60 * 60 * 1000).toISOString();
+  const currentPublishedAt = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.endsWith('/data/news-archive.json')) {
+      return Response.json({
+        schemaVersion: '2.1.0',
+        generatedAt: new Date().toISOString(),
+        data: {
+          status: 'ok', stale: false, items: [
+            { id: 'archive-old', source: 'cna', title: 'query old', excerpt: '', publishedAt: oldPublishedAt, url: 'https://example.com/old' },
+            { id: 'archive-current', source: 'cna', title: 'query current', excerpt: '', publishedAt: currentPublishedAt, url: 'https://example.com/current' },
+          ],
+        },
+      });
+    }
+    if (hasHost(url, 'news.google.com')) return new Response('<rss><channel></channel></rss>');
+    return new Response('<rss><channel></channel></rss>');
+  };
+  try {
+    const response = await worker.fetch(new Request('https://worker.example/api/search?q=query&range=30d'), {
+      ARCHIVE_BASE_URL: 'https://pages.example',
+    });
+    const body = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(body.data.status, 'partial');
+    assert.equal(body.data.coverage.complete, false);
+    assert.equal(body.data.coverage.actualFrom, oldPublishedAt);
+    assert.equal(body.data.coverage.coveredDays, 2);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -569,13 +657,22 @@ async function runScheduled(env) {
 }
 
 function deepLockD1() {
-  let claimed = false;
+  return atomicRefreshLockD1();
+}
+
+function atomicRefreshLockD1() {
+  const claimed = new Set();
   return {
-    prepare: () => ({ bind: () => ({ run: async () => {
-      const changes = claimed ? 0 : 1;
-      claimed = true;
-      return { meta: { changes } };
-    } }) }),
+    prepare: (sql) => ({
+      bind: (...args) => ({
+        run: async () => {
+          const name = sql.includes("'manual-deep'") ? 'manual-deep' : String(args[0]);
+          if (claimed.has(name)) return { meta: { changes: 0 } };
+          claimed.add(name);
+          return { meta: { changes: 1 } };
+        },
+      }),
+    }),
   };
 }
 
@@ -589,6 +686,7 @@ function queryOnlyD1(rows) {
           actual_from: published.length ? Math.min(...published) : null,
           actual_to: published.length ? Math.max(...published) : null,
           article_count: published.length,
+          covered_days: new Set(published.map((value) => new Date(value).toISOString().slice(0, 10))).size,
         }),
       }),
     }),
@@ -609,7 +707,7 @@ test('Cloudflare fast and deep cron triggers have separate responsibilities', as
     }
     return new Response('<rss><channel></channel></rss>');
   };
-  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret' };
+  const env = { SNAPSHOT: memoryKv(), DB: atomicRefreshLockD1(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret' };
   try {
     const fastPending = [];
     await worker.scheduled({ cron: '*/5 * * * *' }, env, { waitUntil: (promise) => fastPending.push(promise) });
@@ -622,6 +720,28 @@ test('Cloudflare fast and deep cron triggers have separate responsibilities', as
     await worker.scheduled({ cron: '2,17,32,47 * * * *' }, env, { waitUntil: (promise) => deepPending.push(promise) });
     await Promise.all(deepPending);
     assert.deepEqual(calls, ['https://api.github.com/repos/yin0612/MediaMonitoring/dispatches']);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('scheduled deep dispatch is claimed once by the shared D1 lock', async () => {
+  const originalFetch = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    calls.push(url);
+    if (hasHost(url, 'api.github.com')) return new Response(null, { status: 204 });
+    return new Response('<rss><channel></channel></rss>');
+  };
+  const env = { GITHUB_TOKEN: 'test-token', DB: atomicRefreshLockD1() };
+  try {
+    const firstPending = [];
+    await worker.scheduled({ cron: '2,17,32,47 * * * *' }, env, { waitUntil: (promise) => firstPending.push(promise) });
+    const secondPending = [];
+    await worker.scheduled({ cron: '2,17,32,47 * * * *' }, env, { waitUntil: (promise) => secondPending.push(promise) });
+    await Promise.all([...firstPending, ...secondPending]);
+    assert.equal(calls.filter((url) => hasHost(url, 'api.github.com')).length, 1);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -1233,7 +1353,7 @@ test('scheduled subrequest budget uses one attempt per official URL and keeps re
   };
   const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
   const officialUrls = NEWS_SOURCES.flatMap((source) => source.rssUrls || (source.rssUrl ? [source.rssUrl] : []));
-  const pagesReadCount = 6;
+  const pagesReadCount = 7;
   const dispatchCount = 0;
   const safeThreshold = 40;
   try {
@@ -1298,6 +1418,11 @@ test('scheduled build writes a snapshot that /api/data serves per file', async (
     const meta = await (await worker.fetch(new Request('https://worker.example/api/data?name=meta'), env)).json();
     assert.equal(meta.schemaVersion, '2.1.0');
     assert.ok(['ok', 'partial'].includes(meta.data.status));
+    assert.deepEqual({
+      fastScheduleMinutes: meta.data.coverage.fastScheduleMinutes,
+      deepScheduleMinutes: meta.data.coverage.deepScheduleMinutes,
+      recentCap: meta.data.coverage.recentCap,
+    }, { fastScheduleMinutes: 5, deepScheduleMinutes: 15, recentCap: 120 });
 
     const sources = await (await worker.fetch(new Request('https://worker.example/api/data?name=sources'), env)).json();
     assert.equal(sources.data.sources.length, 37);
@@ -1399,7 +1524,7 @@ test('scheduled dispatches GitHub Actions when a token is configured', async () 
     }
     return new Response('<rss><channel></channel></rss>');
   };
-  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
+  const env = { SNAPSHOT: memoryKv(), DB: atomicRefreshLockD1(), GITHUB_TOKEN: 'test-token' };
   try {
     const pending = [];
     await worker.scheduled({ cron: '2,17,32,47 * * * *' }, env, { waitUntil: (p) => pending.push(p) });

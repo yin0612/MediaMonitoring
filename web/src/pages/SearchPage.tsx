@@ -8,8 +8,13 @@ import { GRID, catAxis, tooltip, valAxis } from '../lib/charts';
 import { fmtDateTime, fmtNum, fmtTime } from '../lib/format';
 import { useChartTokens } from '../lib/theme';
 import { nextRefreshSeconds, REFRESH_INTERVALS, searchArticlesToTrendNews } from '../lib/refresh';
-import type { Envelope, SearchData, SearchRange, TrendItem, TrendsData } from '../types/contracts';
+import type { Envelope, Meta, SearchData, SearchRange, TrendItem, TrendsData } from '../types/contracts';
 import { DATA_REFRESH_EVENT } from '../api/refreshCoordinator';
+import { useData } from '../api/useData';
+import { isArchive30dReady } from '../lib/coverage';
+import { SOURCE_META } from '../lib/sources';
+
+const SOURCE_COUNT = Object.keys(SOURCE_META).length;
 
 const RANGES: { value: SearchRange; label: string }[] = [
   { value: '1h', label: '1 小時' },
@@ -37,6 +42,8 @@ export function SearchPage() {
   const [lastUpdatedAt, setLastUpdatedAt] = useState<number | null>(null);
   const [countdown, setCountdown] = useState(30);
   const tokens = useChartTokens();
+  const meta = useData<Meta>('meta');
+  const archive30dReady = isArchive30dReady(meta.data);
 
   const loadTrends = useCallback(async () => {
     try {
@@ -62,6 +69,10 @@ export function SearchPage() {
 
   const runSearch = useCallback(async (term: string, trend: TrendItem | null = null, background = false, targetRange?: SearchRange) => {
     const activeRange = targetRange ?? range;
+    if (activeRange === '30d' && !archive30dReady) {
+      setSearchError('30 日資料尚未完整建置，暫時無法搜尋。');
+      return null;
+    }
     const normalized = term.trim();
     if (normalized.length < 2 || normalized.length > 50) {
       setSearchError('請輸入 2 至 50 個字元的關鍵字。');
@@ -85,7 +96,7 @@ export function SearchPage() {
       if (background) setRefreshing(false);
       else setSearching(false);
     }
-  }, [range]);
+  }, [archive30dReady, range]);
 
   useEffect(() => {
     if (initialQueryParam && initialQueryParam.trim().length >= 2) {
@@ -215,6 +226,10 @@ export function SearchPage() {
             value={range}
             onChange={(event) => {
               const nextRange = event.target.value as SearchRange;
+              if (nextRange === '30d' && !archive30dReady) {
+                setSearchError('30 日資料尚未完整建置，暫時無法選取。');
+                return;
+              }
               setRange(nextRange);
               if (query.trim().length >= 2) {
                 void runSearch(query, selectedTrend, false, nextRange);
@@ -222,7 +237,11 @@ export function SearchPage() {
             }}
             aria-label="搜尋時間範圍"
           >
-            {RANGES.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            {RANGES.map((item) => (
+              <option key={item.value} value={item.value} disabled={item.value === '30d' && !archive30dReady}>
+                {item.value === '30d' && !archive30dReady ? '30 日（資料建置中）' : item.label}
+              </option>
+            ))}
           </select>
           <button className="btn search-submit" type="submit" disabled={searching}>
             {searching ? '搜尋中…' : '搜尋新聞'}
@@ -291,11 +310,11 @@ export function SearchPage() {
             </div>
             {trends && <a href={trends.data.sourceUrl} target="_blank" rel="noreferrer noopener">開啟 Google Trends RSS</a>}
           </div>
-          <Card title="Google Trends 相關新聞" hint={trendNewsFallback ? 'Trends 未附新聞，已重用 35 家媒體即時搜尋結果；不重複計入熱度' : '由 Google Trends RSS 提供；不納入下方 35 家媒體熱度統計'}>
+          <Card title="Google Trends 相關新聞" hint={trendNewsFallback ? `Trends 未附新聞，已重用 ${SOURCE_COUNT} 家媒體即時搜尋結果；不重複計入熱度` : `由 Google Trends RSS 提供；不納入下方 ${SOURCE_COUNT} 家媒體熱度統計`}>
             {trendNewsLoading ? (
               <LoadingState label="正在即時搜尋相關新聞…" />
             ) : selectedTrend.news.length === 0 ? (
-              <EmptyState title="Google Trends 未附相關新聞" desc="仍可查看下方 35 家媒體的關鍵字搜尋結果。" />
+              <EmptyState title="Google Trends 未附相關新聞" desc={`仍可查看下方 ${SOURCE_COUNT} 家媒體的關鍵字搜尋結果。`} />
             ) : (
               <div className="trend-news-list">
                 {selectedTrend.news.map((news) => (

@@ -34,6 +34,9 @@ export function HomePage() {
     sources: sources.data ?? EMPTY_SOURCES,
   };
   const snapshot = buildHomeSnapshot(homeInput);
+  const archiveSummary = snapshot.meta?.coverage?.complete === false
+    ? '實際資料窗尚未滿 30 日'
+    : `${snapshot.meta?.coverage.archiveDays ?? 7} 日封存`;
   const decisionBrief = buildDecisionBrief(
     homeInput,
     meta.envelope?.generatedAt ?? meta.data?.lastFastAt,
@@ -87,7 +90,7 @@ export function HomePage() {
               {(eventData.events.length ? eventData.events.slice(0, 4) : snapshot.topTopics).map((topic) => (
                 <Link className="home-topic-row" to="/topics" key={topic.id}>
                   {'representativeTitle' in topic
-                    ? <span><strong>{topic.representativeTitle}</strong><small>{topic.articleCount} 篇報導 · {topic.sourceCount} 個來源</small></span>
+                    ? <span><strong>{topic.representativeTitle}</strong><small>{topic.articleCount} 篇報導 · {topic.sourceCount} 個來源{topic.sourceConcentration !== undefined ? ` · 集中度 ${topic.sourceConcentration.toFixed(3)}` : ''}</small></span>
                     : <span><strong>{topic.label}</strong><small>{topic.size} 篇 · {topic.terms.slice(0, 3).join('、')}</small></span>}
                 </Link>
               ))}
@@ -129,7 +132,7 @@ export function HomePage() {
       <Card title="資料涵蓋與方法" hint="先了解資料，再解讀數字">
         <div className="home-method">
           <div>
-            <strong>{snapshot.meta?.coverage.sourceCount ?? snapshot.sourceCount} 個公開新聞來源 · {snapshot.meta?.coverage.archiveDays ?? 7} 天封存</strong>
+            <strong>{snapshot.meta?.coverage.sourceCount ?? snapshot.sourceCount} 個公開新聞來源 · {archiveSummary}</strong>
             <p>首頁摘要與分析頁都會標示資料時間、來源異常及實驗性限制。情緒是可追溯的詞典 baseline，不是模型準確度保證。</p>
           </div>
           <div className="home-method__actions">
