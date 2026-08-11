@@ -152,6 +152,16 @@ npm run build
 # 另於 web 目錄執行：npm run test -- ../web/test/route-smoke.test.tsx
 ```
 
+## 人工評測集
+
+`benchmarks/annotation-candidates.jsonl` 是由目前 archive 可重現產生的 1,000 筆分層候選集（train 700、dev 150、test 150），其中 100 筆保留雙人標註。檔案只提供待標註的文章與空白欄位；在人工完成 `eventCluster`、`topics`、`entities`、`textTone`、`target` 與 `targetStance` 前，不宣稱 Cohen's kappa 或 held-out macro-F1。
+
+重新產生候選集：
+
+```powershell
+python scripts/build_benchmark.py --size 1000
+```
+
 R2 歷史物件儲存是可選功能；需先在 Cloudflare 帳號啟用 R2 entitlement，再建立 `media-monitoring-archive` bucket 並取消 `worker/wrangler.toml` 的 binding 註解。未啟用時，D1 與 Pages archive 仍可提供搜尋，但不會假裝有 R2 備份。
 
 官方 RSS 來源、驗證結果與使用限制整理於
