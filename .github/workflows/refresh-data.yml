@@ -4,37 +4,59 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
     inputs:
       refresh_id:
         required: false
         type: string
-
   repository_dispatch:
     types:
       - scheduled-refresh
-
   # Cloudflare Worker 是主要排程；GitHub 僅保留每小時一次的 last-resort fallback。
   schedule:
     - cron: "37 * * * *"
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: media-monitoring-pages
   cancel-in-progress: false
 
 jobs:
-  refresh:
+  guard:
+    name: Check whether a deep refresh is needed
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      should_run: ${{ steps.decide.outputs.should_run }}
+    steps:
+      - name: Skip a fresh hourly fallback
+        id: decide
+        env:
+          META_URL: https://yin0612.github.io/MediaMonitoring/data/meta.json
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "schedule" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          last_deep="$(curl --fail --silent --show-error "$META_URL?v=$GITHUB_RUN_ID" | jq -r '.data.lastDeepAt // empty' || true)"
+          last_epoch="$(date -d "$last_deep" +%s 2>/dev/null || echo 0)"
+          now_epoch="$(date +%s)"
+          age_seconds=$((now_epoch - last_epoch))
+          if [ "$last_epoch" -gt 0 ] && [ "$age_seconds" -ge 0 ] && [ "$age_seconds" -lt 1500 ]; then
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "最近深度資料仍在 25 分鐘內，本次每小時備援不重複部署。"
+          else
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          fi
 
+  refresh:
+    name: Build Pages artifact
+    needs: guard
+    if: ${{ needs.guard.outputs.should_run == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -99,29 +121,49 @@ jobs:
         with:
           path: web/dist
 
+  deploy:
+    name: Deploy Pages
+    needs: refresh
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
 
-      - name: Report manual refresh result to Worker
-        if: ${{ always() && github.event_name == 'workflow_dispatch' && inputs.refresh_id != '' }}
+  callback:
+    name: Report manual refresh result
+    needs: [refresh, deploy]
+    if: ${{ always() && github.event_name == 'workflow_dispatch' && inputs.refresh_id != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Report terminal state to Worker
         continue-on-error: true
         env:
           REFRESH_ID: ${{ inputs.refresh_id }}
           WORKER_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
           WORKER_CALLBACK_TOKEN: ${{ secrets.WORKER_CALLBACK_TOKEN }}
-          JOB_STATUS: ${{ job.status }}
+          REFRESH_RESULT: ${{ needs.refresh.result }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
         run: |
           if [ -z "$WORKER_BASE_URL" ] || [ -z "$WORKER_CALLBACK_TOKEN" ]; then
             echo "::warning::缺少 Worker callback 設定，無法回報 refresh 終態。"
             exit 0
           fi
-          if [ "$JOB_STATUS" = "success" ]; then
+          if [ "$REFRESH_RESULT" = "success" ] && [ "$DEPLOY_RESULT" = "success" ]; then
             callback_status="completed"
             callback_error=""
           else
             callback_status="failed"
-            callback_error="GitHub Actions job status: $JOB_STATUS"
+            callback_error="refresh=$REFRESH_RESULT deploy=$DEPLOY_RESULT"
           fi
           generated_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           payload="$(jq -n \

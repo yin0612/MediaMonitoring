@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, timezone
 
 from opinion_pipeline.models import NormalizedItem
 from opinion_pipeline.quality import assess_source_quality
+from opinion_pipeline.cli import source_status_record
 
 
 NOW = datetime(2026, 8, 11, 12, 0, tzinfo=timezone.utc)
@@ -27,3 +28,17 @@ def test_quality_exposes_recomputable_freshness_excerpt_and_fallback_parts():
     assert value["fallbackItemCount"] == 2
     assert value["officialItemCount"] == 0
     assert set(value["qualityComponents"]) == {"availability", "freshness", "excerpt", "access"}
+
+
+def test_source_record_excludes_retained_articles_outside_its_24_hour_window():
+    run = {
+        "id": "cna", "name": "中央社", "ok": True, "accessMode": "official-rss",
+        "latencyMs": 50, "crawlAttempted": True, "errorCode": None, "dropped": {},
+    }
+    value = source_status_record(
+        run, [article(2), article(30, "")], NOW, "2026-08-11T12:00:00Z"
+    )
+    assert value["windowHours"] == 24
+    assert value["itemCount"] == 1
+    assert value["officialItemCount"] == 1
+    assert value["excerptRate"] == 1.0

@@ -1,6 +1,6 @@
 import type { ArticleSentiment, SearchArticle } from '../types/contracts';
 
-export interface TermStat { term: string; count: number; change: number }
+export interface TermStat { term: string; count: number; change: number; burstScore: number | null }
 
 const STOPWORDS = new Set(['新聞', '表示', '指出', '今天', '目前', '相關', '最新', '台灣', '報導', '消息']);
 
@@ -56,25 +56,55 @@ function words(text: string): string[] {
   return [...base, ...compounds];
 }
 
+const median = (values: number[]): number => {
+  const sorted = [...values].sort((a, b) => a - b);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
+};
+
+function robustBurstScore(current: number, baseline: number[], sourceCount: number): number | null {
+  if (current < 5 || sourceCount < 3 || baseline.length < 7) return null;
+  const center = median(baseline);
+  const mad = median(baseline.map((value) => Math.abs(value - center)));
+  return Math.round(((current - center) / Math.max(1, 1.4826 * mad)) * 1_000) / 1_000;
+}
+
 export function extractTermStats(items: SearchArticle[], midpoint: number, excluded: string[] = []): { top: TermStat[]; rising: TermStat[] } {
   const excludedSet = new Set(excluded.map((term) => term.toLocaleLowerCase('zh-TW')));
-  const counts = new Map<string, { recent: number; previous: number }>();
+  const timestamps = items.map((item) => Date.parse(item.publishedAt)).filter(Number.isFinite);
+  const windowStart = timestamps.length ? Math.min(...timestamps) : midpoint;
+  const windowEnd = timestamps.length ? Math.max(...timestamps) : midpoint;
+  const bucketMs = Math.max(1, (windowEnd - windowStart) / 8);
+  const counts = new Map<string, { buckets: number[]; currentSources: Set<string> }>();
   for (const item of items) {
-    const period = Date.parse(item.publishedAt) >= midpoint ? 'recent' : 'previous';
+    const timestamp = Date.parse(item.publishedAt);
+    const bucket = windowEnd === windowStart
+      ? 7
+      : Math.max(0, Math.min(7, Math.floor((timestamp - windowStart) / bucketMs)));
     for (const term of new Set(words(`${item.title} ${item.excerpt}`))) {
       if (excludedSet.has(term.toLocaleLowerCase('zh-TW'))) continue;
-      const value = counts.get(term) ?? { recent: 0, previous: 0 };
-      value[period] += 1;
+      const value = counts.get(term) ?? { buckets: new Array(8).fill(0), currentSources: new Set<string>() };
+      value.buckets[bucket] += 1;
+      if (bucket === 7) value.currentSources.add(item.source);
       counts.set(term, value);
     }
   }
-  const values = [...counts.entries()].map(([term, value]) => ({
-    term,
-    count: value.recent + value.previous,
-    change: value.recent - value.previous,
-  }));
+  const values = [...counts.entries()].map(([term, value]) => {
+    const baseline = value.buckets.slice(0, 7);
+    const current = value.buckets[7];
+    const center = median(baseline);
+    return {
+      term,
+      count: value.buckets.reduce((sum, count) => sum + count, 0),
+      change: current - center,
+      burstScore: robustBurstScore(current, baseline, value.currentSources.size),
+    };
+  });
   return {
     top: [...values].sort((a, b) => b.count - a.count || b.change - a.change).slice(0, 10),
-    rising: values.filter((item) => item.change > 0).sort((a, b) => b.change - a.change || b.count - a.count).slice(0, 10),
+    rising: values
+      .filter((item) => item.burstScore !== null && item.burstScore > 0)
+      .sort((a, b) => (b.burstScore ?? 0) - (a.burstScore ?? 0) || b.count - a.count)
+      .slice(0, 10),
   };
 }

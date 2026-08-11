@@ -80,15 +80,30 @@ def test_refresh_skips_the_test_suite_that_ci_already_runs() -> None:
 def test_refresh_uses_official_pages_artifacts_without_force_pushing_a_branch() -> None:
     body = REFRESH_WORKFLOW.read_text(encoding="utf-8")
     workflow = load_workflow(REFRESH_WORKFLOW)
-    permissions = workflow["permissions"]
+    refresh_job = workflow["jobs"]["refresh"]
+    deploy_job = workflow["jobs"]["deploy"]
 
-    assert permissions["contents"] == "read"
-    assert permissions["pages"] == "write"
-    assert permissions["id-token"] == "write"
+    assert workflow["permissions"] == {"contents": "read"}
+    assert refresh_job["permissions"] == {"contents": "read"}
+    assert "environment" not in refresh_job
+    assert deploy_job["permissions"]["contents"] == "read"
+    assert deploy_job["permissions"]["pages"] == "write"
+    assert deploy_job["permissions"]["id-token"] == "write"
+    assert deploy_job["environment"]["name"] == "github-pages"
     assert "actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9" in body
     assert "actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128" in body
     assert "gh-pages" not in body
     assert "--force" not in body
+
+
+def test_hourly_fallback_skips_when_last_deep_is_younger_than_25_minutes() -> None:
+    workflow = load_workflow(REFRESH_WORKFLOW)
+    guard = workflow["jobs"]["guard"]
+    commands = " ".join(step.get("run", "") for step in guard["steps"])
+    assert "lastDeepAt" in commands
+    assert "1500" in commands
+    assert workflow["jobs"]["refresh"]["needs"] == "guard"
+    assert "should_run" in workflow["jobs"]["refresh"]["if"]
 
 
 def test_actions_are_pinned_and_manual_refresh_reports_its_terminal_state() -> None:

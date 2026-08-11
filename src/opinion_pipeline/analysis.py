@@ -274,6 +274,12 @@ def build_keywords(
         for item in matched:
             index = min(TREND_BUCKETS - 1, int((item.published_at - window_start) / bucket_ms))
             buckets[index] += 1
+        current_sources = {
+            item.source for item in matched if item.published_at >= now - bucket_ms
+        }
+        burst_score = robust_burst_score(
+            buckets[-1], buckets[-8:-1], source_count=len(current_sources)
+        )
         recent6 = sum(buckets[-6:])
         previous6 = sum(buckets[-12:-6])
         if total:
@@ -289,6 +295,7 @@ def build_keywords(
                 "share": share,
                 "buckets": buckets,
                 "acceleration": acceleration,
+                "burstScore": burst_score,
             }
         )
 
@@ -316,6 +323,7 @@ def build_keywords(
             "kind": definition["kind"],
             "heat": heat,
             "mentions24h": total,
+            "burstScore": entry["burstScore"],
             "components": {
                 "volume": _js_round(volume, 3),
                 "acceleration": _js_round(acceleration, 3),
@@ -419,9 +427,9 @@ def build_entities(items: list[NormalizedItem], lexicon: list[dict]) -> dict:
             "source": node_ids[left],
             "target": node_ids[right],
             "weight": weight,
-            "jaccard": round(weight / (mentions[left] + mentions[right] - weight), 3),
+            "jaccard": _js_round(weight / (mentions[left] + mentions[right] - weight), 3),
             "npmi": (
-                round(
+                _js_round(
                     math.log((weight / total_docs) / ((mentions[left] / total_docs) * (mentions[right] / total_docs)))
                     / max(1e-9, -math.log(weight / total_docs)),
                     3,

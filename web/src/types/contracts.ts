@@ -179,6 +179,8 @@ export interface Keyword {
   heat: number;
   /** 最近 24 小時命中新聞數。 */
   mentions24h: number;
+  /** 最近一個小時相對前七個小時的 median/MAD 升溫分數；低支持時為 null。 */
+  burstScore?: number | null;
   /** 熱度公式分解。 */
   components: HeatComponents;
   /** 各來源提及占比（0–1，加總約為 1）。 */
@@ -369,6 +371,8 @@ export interface SearchData {
     requestedTo: string;
     actualFrom: string | null;
     actualTo: string | null;
+    complete?: boolean;
+    articleCount?: number;
   };
 }
 

@@ -104,6 +104,7 @@ function ManualRefreshButton() {
 
       let fastDone = false;
       let deepDone = false;
+      const deepDeferred = request.deep === 'skipped';
 
       await pollRefreshStatus(request.refreshId, {
         onStatus: (status) => {
@@ -130,7 +131,9 @@ function ManualRefreshButton() {
         },
       });
 
-      if (fastDone && deepDone) {
+      if (fastDone && deepDeferred) {
+        setMessage('新聞已更新；深度分析將依排程同步');
+      } else if (fastDone && deepDone) {
         setMessage('全部資料已更新');
       } else if (fastDone) {
         setMessage('新聞已更新，部分分析資料仍在同步');

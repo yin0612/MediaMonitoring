@@ -99,4 +99,52 @@ describe('data arbitration and request coordination', () => {
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
   });
+
+  it('starts Pages immediately and falls back when the Worker exceeds its deadline', async () => {
+    vi.useFakeTimers();
+    __resetDataCacheForTests();
+    vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes('worker.example')) {
+        return new Promise<Response>((_, reject) => {
+          init?.signal?.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError')));
+        });
+      }
+      return Promise.resolve(Response.json({
+        schemaVersion: '2.1.0', generatedAt: '2026-08-11T12:00:00Z', data: { marker: 'pages' },
+      }));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const pending = fetchData<{ marker: string }>('keywords', { bypassCache: true });
+    await Promise.resolve();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    await vi.advanceTimersByTimeAsync(2_500);
+    await expect(pending).resolves.toMatchObject({ data: { marker: 'pages' } });
+
+    vi.useRealTimers();
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  it('keeps duplicate recent content and provenance from the newer envelope', async () => {
+    __resetDataCacheForTests();
+    vi.stubEnv('VITE_API_BASE_URL', 'https://worker.example');
+    const recent = (generatedAt: string, marker: string, excerpt: string) => ({
+      schemaVersion: '2.1.0', generatedAt, pipeline: { id: marker },
+      data: { marker, items: [{ id: marker, source: 'cna', title: '同一則新聞', excerpt, publishedAt: generatedAt, url: 'https://example.com/story' }] },
+    });
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => Response.json(
+      String(input).includes('worker.example')
+        ? recent('2026-08-11T12:00:00Z', 'worker', 'new')
+        : recent('2026-08-11T11:00:00Z', 'pages', 'old'),
+    )));
+
+    const result = await fetchData<{ marker: string; items: Array<{ excerpt: string }> }>('recent', { bypassCache: true });
+    expect(result.data.marker).toBe('worker');
+    expect(result.data.items[0].excerpt).toBe('new');
+    expect(result.pipeline).toEqual({ id: 'worker' });
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
 });

@@ -42,7 +42,7 @@ export async function pollRefreshStatus(
     latest = await fetchStatus(refreshId);
     options.onStatus?.(latest);
     const fastTerminal = latest.fast.status === 'completed' || latest.fast.status === 'failed';
-    const deepTerminal = ['completed', 'failed', 'unavailable'].includes(latest.deep.status);
+    const deepTerminal = ['completed', 'failed', 'unavailable', 'skipped'].includes(latest.deep.status);
     if (fastTerminal && deepTerminal) return latest;
     if (attempt + 1 < attempts) await sleep(REFRESH_POLL_INTERVAL_MS);
   }

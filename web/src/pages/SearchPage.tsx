@@ -323,6 +323,9 @@ export function SearchPage() {
                   {' '}至 {result.data.coverage.actualTo ? fmtDateTime(result.data.coverage.actualTo) : '尚無資料'}
                 </p>
               )}
+              {result.data.coverage?.complete === false && (
+                <Banner variant="warning">目前歷史索引尚未覆蓋完整的所選期間；統計只代表上方標示的實際資料窗。</Banner>
+              )}
             </div>
             <Badge variant={result.data.stale ? 'warning' : result.data.status === 'partial' ? 'serious' : 'good'} dot>
               {result.data.stale ? '最後快照' : result.data.status === 'partial' ? '部分來源異常' : '即時來源'}

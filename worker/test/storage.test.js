@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { archivePreviousUtcDay, pruneHistoricalArticles, upsertArticles } from '../src/storage.js';
+import { archivePreviousUtcDay, pruneHistoricalArticles, queryHistoricalArticles, upsertArticles } from '../src/storage.js';
 
 const article = (id, publishedAt) => ({
   id,
@@ -31,6 +31,22 @@ test('upsertArticles writes canonical article rows through D1 batch', async () =
     'a1', 'cna', 'headline a1', 'summary', 1786363200000, 'https://example.com/a1',
     JSON.stringify({ label: 'neutral', score: 0, matched: [] }),
   ]);
+});
+
+test('queryHistoricalArticles applies the boolean query in D1 without a silent row cap', async () => {
+  let statement;
+  let bindings;
+  const db = {
+    prepare(sql) {
+      statement = sql;
+      return { bind: (...args) => ({ all: async () => { bindings = args; return { results: [] }; } }) };
+    },
+  };
+  await queryHistoricalArticles(db, '30d', Date.parse('2026-08-11T00:00:00Z'), '台積電 NOT 股價');
+  assert.match(statement, /LIKE \?3/);
+  assert.match(statement, /NOT LIKE \?4/);
+  assert.doesNotMatch(statement, /LIMIT\s+10000/i);
+  assert.deepEqual(bindings.slice(2), ['%台積電%', '%股價%']);
 });
 
 test('pruneHistoricalArticles removes only records older than 90 days', async () => {

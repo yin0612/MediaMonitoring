@@ -10,7 +10,7 @@ import {
 } from './core.js';
 import { withSentiment } from './analysis.js';
 import { NEWS_SOURCES } from './sources.js';
-import { persistSnapshotArticles, queryHistoricalArticles } from './storage.js';
+import { persistSnapshotArticles, queryHistoricalArticles, queryHistoricalCoverage } from './storage.js';
 
 const TRENDS_URL = 'https://trends.google.com/trending/rss?geo=TW&hl=zh-TW';
 // 正式站身分只在這裡定義一次；wrangler.toml 的 vars 才是部署時的權威值。
@@ -24,6 +24,9 @@ const SNAPSHOT_KEY = 'snapshot';
 const DAY_MS = 86_400_000;
 const FUTURE_TOLERANCE_MS = 5 * 60 * 1000;
 const REFRESH_COOLDOWN_MS = 5 * 60 * 1000;
+const DEEP_REFRESH_COOLDOWN_MS = 15 * 60 * 1000;
+const REFRESH_BODY_MAX_BYTES = 4_096;
+const TURNSTILE_ACTION = 'manual_refresh';
 const SOURCE_HEALTH_MAX_AGE_MS = 30 * 60 * 1000;
 const DEEP_SNAPSHOT_MAX_AGE_MS = SOURCE_HEALTH_MAX_AGE_MS;
 // Worker 僅保留最近 600 篇做即時合併與逐篇情緒；CPU 較重的
@@ -272,7 +275,11 @@ async function handleSearch(request, env, url) {
 
   if (env.DB && ['7d', '30d'].includes(input.range)) {
     try {
-      const indexed = await queryHistoricalArticles(env.DB, input.range);
+      const now = Date.now();
+      const [indexed, historicalCoverage] = await Promise.all([
+        queryHistoricalArticles(env.DB, input.range, now, input.query),
+        queryHistoricalCoverage(env.DB, input.range, now),
+      ]);
       const matched = filterAndDedupe(indexed, input.query, input.range);
       const items = matched.slice(0, MAX_SEARCH_ITEMS).map((item) => (
         item.sentiment ? item : withSentiment(item)
@@ -290,18 +297,25 @@ async function handleSearch(request, env, url) {
           itemCount: sourceCounts[source.id] || 0,
           errorCode: 'SOURCE_HEALTH_UNAVAILABLE',
         }));
-      const actualTimes = matched.map((item) => item.publishedAt).sort();
-      const now = Date.now();
+      const requestedDays = input.range === '30d' ? 30 : 7;
+      const requestedFromMs = now - requestedDays * DAY_MS;
+      const actualFromMs = Date.parse(historicalCoverage.actualFrom || '');
+      const actualToMs = Date.parse(historicalCoverage.actualTo || '');
+      const coverageComplete = historicalCoverage.articleCount > 0
+        && actualFromMs <= requestedFromMs + DAY_MS
+        && actualToMs >= now - DAY_MS;
       return json(request, env, envelope({
         query: input.query,
         range: input.range,
-        status: Array.isArray(snapshotSources) ? 'ok' : 'partial',
+        status: coverageComplete && Array.isArray(snapshotSources) ? 'ok' : 'partial',
         stale: false,
         coverage: {
-          requestedFrom: new Date(now - (input.range === '30d' ? 30 : 7) * DAY_MS).toISOString(),
+          requestedFrom: new Date(requestedFromMs).toISOString(),
           requestedTo: new Date(now).toISOString(),
-          actualFrom: actualTimes[0] || null,
-          actualTo: actualTimes.at(-1) || null,
+          actualFrom: historicalCoverage.actualFrom,
+          actualTo: historicalCoverage.actualTo,
+          complete: coverageComplete,
+          articleCount: historicalCoverage.articleCount,
         },
         metrics: calculateMetrics(matched, input.range, now, NEWS_SOURCES.length),
         timeline: timelineFor(matched, input.range, now),
@@ -630,7 +644,11 @@ async function buildSnapshot(env) {
   };
   await env.SNAPSHOT.put(SNAPSHOT_KEY, JSON.stringify({ generatedAt, files }));
   if (env.DB) {
-    await persistSnapshotArticles(env, merged, now);
+    try {
+      await persistSnapshotArticles(env, merged, now);
+    } catch (error) {
+      console.error(JSON.stringify({ event: 'snapshot_persistence_failed', error: error?.message }));
+    }
   }
   return files;
 }
@@ -743,7 +761,14 @@ async function refreshCooldown(env, request) {
 }
 
 async function verifyTurnstile(request, env) {
-  if (!env.TURNSTILE_SECRET_KEY) return { ok: true };
+  if (!env.TURNSTILE_SECRET_KEY) return { ok: false, status: 503, error: 'TURNSTILE_NOT_CONFIGURED' };
+  const contentLength = Number.parseInt(request.headers.get('Content-Length') || '0', 10);
+  if (Number.isFinite(contentLength) && contentLength > REFRESH_BODY_MAX_BYTES) {
+    return { ok: false, status: 413, error: 'REQUEST_TOO_LARGE' };
+  }
+  if (!request.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+    return { ok: false, status: 415, error: 'JSON_REQUIRED' };
+  }
   let payload;
   try {
     payload = await request.json();
@@ -751,7 +776,7 @@ async function verifyTurnstile(request, env) {
     return { ok: false, status: 403, error: 'TURNSTILE_REQUIRED' };
   }
   const token = typeof payload?.turnstileToken === 'string' ? payload.turnstileToken.trim() : '';
-  if (!token) return { ok: false, status: 403, error: 'TURNSTILE_REQUIRED' };
+  if (!token || token.length > 2_048) return { ok: false, status: 403, error: 'TURNSTILE_REQUIRED' };
 
   const form = new URLSearchParams({
     secret: env.TURNSTILE_SECRET_KEY,
@@ -767,13 +792,26 @@ async function verifyTurnstile(request, env) {
     });
     if (!response.ok) return { ok: false, status: 503, error: 'TURNSTILE_UNAVAILABLE' };
     const result = await response.json();
-    return result?.success
+    const expectedHostname = new URL(env.ALLOWED_ORIGIN || DEFAULT_PAGES_ORIGIN).hostname;
+    return result?.success && result.action === TURNSTILE_ACTION && result.hostname === expectedHostname
       ? { ok: true }
       : { ok: false, status: 403, error: 'TURNSTILE_FAILED' };
   } catch (error) {
     console.error(JSON.stringify({ event: 'turnstile_verification_failed', error: error?.message }));
     return { ok: false, status: 503, error: 'TURNSTILE_UNAVAILABLE' };
   }
+}
+
+async function claimDeepRefreshSlot(env) {
+  if (!env.GITHUB_TOKEN) return false;
+  const key = 'refresh-deep-cooldown';
+  const now = Date.now();
+  const previous = Number.parseInt(await env.SNAPSHOT.get(key) || '', 10);
+  if (Number.isFinite(previous) && now - previous >= 0 && now - previous < DEEP_REFRESH_COOLDOWN_MS) {
+    return false;
+  }
+  await env.SNAPSHOT.put(key, String(now), { expirationTtl: Math.ceil(DEEP_REFRESH_COOLDOWN_MS / 1000) });
+  return true;
 }
 
 async function handleRefresh(request, env, ctx) {
@@ -794,15 +832,16 @@ async function handleRefresh(request, env, ctx) {
 
   const refreshId = createRefreshId();
   const requestedAt = new Date().toISOString();
+  const dispatchDeep = await claimDeepRefreshSlot(env);
 
   const state = {
     refreshId,
     requestedAt,
     fast: { status: 'running', generatedAt: null, error: null },
     deep: {
-      status: env.GITHUB_TOKEN ? 'queued' : 'unavailable',
+      status: dispatchDeep ? 'queued' : (env.GITHUB_TOKEN ? 'skipped' : 'unavailable'),
       generatedAt: null,
-      error: env.GITHUB_TOKEN ? null : 'GITHUB_TOKEN_NOT_CONFIGURED',
+      error: dispatchDeep ? null : (env.GITHUB_TOKEN ? 'DEEP_REFRESH_RATE_LIMITED' : 'GITHUB_TOKEN_NOT_CONFIGURED'),
     },
   };
 
@@ -813,7 +852,7 @@ async function handleRefresh(request, env, ctx) {
   ]);
 
   const fastJob = runFastRefresh(env, refreshId);
-  const deepJob = runDeepRefresh(env, refreshId);
+  const deepJob = dispatchDeep ? runDeepRefresh(env, refreshId) : Promise.resolve();
 
   if (ctx?.waitUntil) {
     ctx.waitUntil(fastJob.catch((error) => console.error(JSON.stringify({ event: 'fast_refresh_failed', refreshId, error: error?.message }))));

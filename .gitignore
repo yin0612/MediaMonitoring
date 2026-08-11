@@ -16,6 +16,7 @@ build/
 .pytest_cache/
 .coverage
 *.log
+*.generated.sql
 
 # OS & IDE
 .DS_Store

@@ -272,6 +272,9 @@ export function AdvancedAnalysisPage() {
       {!loading && results.some((result) => result.error) && (
         <Banner variant="warning">部分主題無法取得：{results.filter((item) => item.error).map((item) => item.name).join('、')}。其他結果仍可使用。</Banner>
       )}
+      {!loading && successful.some((result) => result.response?.data.coverage?.complete === false) && (
+        <Banner variant="warning">歷史索引尚未覆蓋完整的所選期間；圖表與匯出只代表回應中標示的實際資料窗。</Banner>
+      )}
       {!loading && successful.length > 0 && (
         <div className="analysis-results">
           <div className="grid cols-4">

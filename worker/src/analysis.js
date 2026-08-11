@@ -3,6 +3,19 @@
 import { AUTO_TERMS, ENTITY_LEXICON, SENTIMENT_LEXICON, WATCH_TERMS } from './generated-config.js';
 
 export const HEAT_WEIGHTS = { volume: 0.5, acceleration: 0.33, diversity: 0.17 };
+
+const median = (values) => {
+  const sorted = [...values].sort((a, b) => a - b);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
+};
+
+const robustBurstScore = (current, baseline, sourceCount) => {
+  if (current < 5 || sourceCount < 3 || baseline.length < 7) return null;
+  const center = median(baseline);
+  const mad = median(baseline.map((value) => Math.abs(value - center)));
+  return Math.round(((current - center) / Math.max(1, 1.4826 * mad)) * 1000) / 1000;
+};
 const KEYWORD_WINDOW_MS = 24 * 60 * 60 * 1000;
 const TREND_BUCKETS = 24;
 // 碎片升級參數，與 src/opinion_pipeline/analysis.py 保持一致
@@ -183,6 +196,10 @@ export function buildKeywords(items, now = Date.now(), enabledSourceCount, watch
       const index = Math.min(TREND_BUCKETS - 1, Math.floor((Date.parse(item.publishedAt) - windowStart) / bucketMs));
       buckets[index] += 1;
     }
+    const currentSources = new Set(
+      matched.filter((item) => Date.parse(item.publishedAt) >= now - bucketMs).map((item) => item.source),
+    );
+    const burstScore = robustBurstScore(buckets.at(-1), buckets.slice(-8, -1), currentSources.size);
     const recent6 = buckets.slice(-6).reduce((a, b) => a + b, 0);
     const previous6 = buckets.slice(-12, -6).reduce((a, b) => a + b, 0);
     let acceleration = 0;
@@ -190,7 +207,7 @@ export function buildKeywords(items, now = Date.now(), enabledSourceCount, watch
       const raw = clamp01(0.5 + (recent6 - previous6) / (2 * Math.max(1, recent6, previous6)));
       acceleration = 0.5 + (raw - 0.5) * Math.min(1, total / 10);
     }
-    return { definition, matched: total, share, buckets, acceleration };
+    return { definition, matched: total, share, buckets, acceleration, burstScore };
   });
 
   const maxMentions = Math.max(0, ...computed.map((entry) => entry.matched));
@@ -212,6 +229,7 @@ export function buildKeywords(items, now = Date.now(), enabledSourceCount, watch
       kind: definition.kind,
       heat,
       mentions24h: total,
+      burstScore: entry.burstScore,
       components: {
         volume: Math.round(volume * 1000) / 1000,
         acceleration: Math.round(entry.acceleration * 1000) / 1000,

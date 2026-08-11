@@ -354,6 +354,37 @@ def collect_sources(
         )
 
 
+def source_status_record(
+    run_: dict,
+    items: list,
+    now: datetime,
+    generated_at: str,
+    restored_state: dict | None = None,
+) -> dict:
+    """Build one source record from the declared 24-hour quality window."""
+    window_start = now - timedelta(hours=24)
+    window_items = [
+        item for item in items
+        if item.source == run_["id"] and item.published_at >= window_start
+    ]
+    restored_state = restored_state or {}
+    return {
+        "id": run_["id"],
+        "displayName": run_["name"],
+        **assess_source_quality(
+            run_["ok"], window_items, run_["accessMode"], now, latency_ms=run_["latencyMs"]
+        ),
+        "lastAttemptAt": generated_at,
+        "lastSuccessAt": generated_at if run_["ok"] else restored_state.get("lastSuccessAt"),
+        "lastCrawlAt": generated_at if run_["crawlAttempted"] else restored_state.get("lastCrawlAt"),
+        "errorCode": run_["errorCode"],
+        "stale": not run_["ok"],
+        "itemCount": len(window_items),
+        "accessMode": run_["accessMode"],
+        "dropped": run_["dropped"],
+    }
+
+
 def run(
     config_path: Path,
     output_dir: Path,
@@ -442,31 +473,9 @@ def run(
         envelope(
             {
                 "sources": [
-                    {
-                        "id": run_["id"],
-                        "displayName": run_["name"],
-                        **assess_source_quality(
-                            run_["ok"],
-                            [item for item in items if item.source == run_["id"]],
-                            run_["accessMode"],
-                            now,
-                            latency_ms=run_["latencyMs"],
-                        ),
-                        "lastAttemptAt": generated_at,
-                        "lastSuccessAt": (
-                            generated_at if run_["ok"] else restored_states.get(run_["id"], {}).get("lastSuccessAt")
-                        ),
-                        "lastCrawlAt": (
-                            generated_at
-                            if run_["crawlAttempted"]
-                            else restored_states.get(run_["id"], {}).get("lastCrawlAt")
-                        ),
-                        "errorCode": run_["errorCode"],
-                        "stale": not run_["ok"],
-                        "itemCount": sum(1 for item in items if item.source == run_["id"]),
-                        "accessMode": run_["accessMode"],
-                        "dropped": run_["dropped"],
-                    }
+                    source_status_record(
+                        run_, items, now, generated_at, restored_states.get(run_["id"])
+                    )
                     for run_ in runs
                 ]
             },

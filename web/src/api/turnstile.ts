@@ -2,6 +2,7 @@ interface TurnstileOptions {
   sitekey: string;
   size: 'invisible';
   execution: 'execute';
+  action: 'manual_refresh';
   callback: (token: string) => void;
   'error-callback': () => void;
   'expired-callback': () => void;
@@ -79,6 +80,7 @@ export async function requestTurnstileToken(): Promise<string | undefined> {
       sitekey: siteKey,
       size: 'invisible',
       execution: 'execute',
+      action: 'manual_refresh',
       callback: (token) => finish(() => resolve(token)),
       'error-callback': () => finish(() => reject(new Error('Turnstile 驗證失敗，請再試一次'))),
       'expired-callback': () => finish(() => reject(new Error('Turnstile 驗證已過期，請再試一次'))),

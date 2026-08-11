@@ -16,16 +16,47 @@ const parseSentiment = (value) => {
   }
 };
 
-export async function queryHistoricalArticles(db, range, now = Date.now()) {
+const queryGroups = (rawQuery) => String(rawQuery || '').split(/\s+OR\s+/i).map((group) => {
+  const positives = [];
+  const negatives = [];
+  let negateNext = false;
+  for (const match of group.matchAll(/"([^"]+)"|(\S+)/g)) {
+    let token = (match[1] || match[2] || '').trim();
+    if (!token || /^AND$/i.test(token)) continue;
+    if (/^NOT$/i.test(token)) { negateNext = true; continue; }
+    let negative = negateNext;
+    negateNext = false;
+    if (token.startsWith('-')) { negative = true; token = token.slice(1); }
+    if (token) (negative ? negatives : positives).push(token);
+  }
+  return { positives, negatives };
+});
+
+const likeValue = (term) => `%${term.replaceAll('\\', '\\\\').replaceAll('%', '\\%').replaceAll('_', '\\_')}%`;
+
+export async function queryHistoricalArticles(db, range, now = Date.now(), rawQuery = '') {
   if (!db || !(range in RANGE_MS)) return [];
   const cutoff = now - RANGE_MS[range];
+  const bindings = [cutoff, now + 5 * 60 * 1000];
+  const groups = queryGroups(rawQuery);
+  const queryPredicate = rawQuery ? groups.map(({ positives, negatives }) => {
+    const clauses = [];
+    for (const term of positives) {
+      bindings.push(likeValue(term));
+      clauses.push(`(title || ' ' || excerpt) LIKE ?${bindings.length} ESCAPE '\\' COLLATE NOCASE`);
+    }
+    for (const term of negatives) {
+      bindings.push(likeValue(term));
+      clauses.push(`(title || ' ' || excerpt) NOT LIKE ?${bindings.length} ESCAPE '\\' COLLATE NOCASE`);
+    }
+    return `(${clauses.join(' AND ') || '1=1'})`;
+  }).join(' OR ') : '1=1';
   const result = await db.prepare(`
     SELECT id, source_id, title, excerpt, published_at, canonical_url, sentiment_json
     FROM articles
-    WHERE published_at >= ?1 AND published_at <= ?2
+    WHERE published_at >= ?1 AND published_at <= ?2 AND (${queryPredicate})
     ORDER BY published_at DESC
-    LIMIT 10000
-  `).bind(cutoff, now + 5 * 60 * 1000).all();
+  `).bind(...bindings).all();
   const rows = Array.isArray(result?.results) ? result.results : [];
   return rows.map((row) => ({
     id: String(row.id),
@@ -36,6 +67,21 @@ export async function queryHistoricalArticles(db, range, now = Date.now()) {
     url: String(row.canonical_url),
     sentiment: parseSentiment(row.sentiment_json),
   }));
+}
+
+export async function queryHistoricalCoverage(db, range, now = Date.now()) {
+  if (!db || !(range in RANGE_MS)) return { actualFrom: null, actualTo: null, articleCount: 0 };
+  const cutoff = now - RANGE_MS[range];
+  const row = await db.prepare(`
+    SELECT MIN(published_at) AS actual_from, MAX(published_at) AS actual_to, COUNT(*) AS article_count
+    FROM articles
+    WHERE published_at >= ?1 AND published_at <= ?2
+  `).bind(cutoff, now + 5 * 60 * 1000).first();
+  return {
+    actualFrom: Number.isFinite(Number(row?.actual_from)) ? new Date(Number(row.actual_from)).toISOString() : null,
+    actualTo: Number.isFinite(Number(row?.actual_to)) ? new Date(Number(row.actual_to)).toISOString() : null,
+    articleCount: Number(row?.article_count || 0),
+  };
 }
 
 const asJson = (value) => (value == null ? null : JSON.stringify(value));

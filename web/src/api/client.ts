@@ -47,7 +47,7 @@ export interface ManualRefreshResponse {
   refreshId: string;
   requestedAt: string;
   fast: 'running' | 'completed' | 'failed';
-  deep: 'queued' | 'running' | 'completed' | 'failed' | 'unavailable';
+  deep: 'queued' | 'running' | 'completed' | 'failed' | 'unavailable' | 'skipped';
 }
 
 export interface RefreshStatus {
@@ -59,7 +59,7 @@ export interface RefreshStatus {
     error: string | null;
   };
   deep: {
-    status: 'queued' | 'running' | 'completed' | 'failed' | 'unavailable';
+    status: 'queued' | 'running' | 'completed' | 'failed' | 'unavailable' | 'skipped';
     generatedAt: string | null;
     error: string | null;
   };
@@ -166,6 +166,7 @@ async function fetchEnvelope<T>(name: string, url: string, cache: RequestCache, 
  * Worker 尚未產生快照或連線失敗時，改讀 GitHub Pages 靜態檔（last-good）。
  */
 const DATA_CACHE_TTL_MS = 45_000;
+const WORKER_DEADLINE_MS = 2_000;
 const dataCache = new Map<string, { expiresAt: number; value: Envelope<unknown> }>();
 const inFlight = new Map<string, Promise<Envelope<unknown>>>();
 
@@ -193,19 +194,22 @@ function mergeRecent<T>(workerEnv: Envelope<T>, pagesEnv: Envelope<T>): Envelope
   const workerData = workerEnv.data as Record<string, unknown>;
   const pagesData = pagesEnv.data as Record<string, unknown>;
   if (!Array.isArray(workerData.items) || !Array.isArray(pagesData.items)) return workerEnv;
+  const workerTime = Date.parse(workerEnv.generatedAt) || 0;
+  const pagesTime = Date.parse(pagesEnv.generatedAt) || 0;
+  const preferredEnv = workerTime >= pagesTime ? workerEnv : pagesEnv;
+  const fallbackEnv = preferredEnv === workerEnv ? pagesEnv : workerEnv;
+  const preferredData = preferredEnv.data as Record<string, unknown>;
+  const fallbackData = fallbackEnv.data as Record<string, unknown>;
   const merged = new Map<string, Record<string, unknown>>();
-  for (const item of [...pagesData.items, ...workerData.items] as Array<Record<string, unknown>>) {
+  for (const item of [...fallbackData.items as unknown[], ...preferredData.items as unknown[]] as Array<Record<string, unknown>>) {
     const url = String(item.url || '').replace(/[?#].*$/, '').replace(/\/$/, '').toLowerCase();
     const key = url || `${String(item.source)}:${String(item.title).replace(/\s/g, '').toLowerCase()}`;
-    if (!merged.has(key)) merged.set(key, item);
+    merged.set(key, item);
   }
   const items = [...merged.values()]
     .sort((a, b) => Date.parse(String(b.publishedAt)) - Date.parse(String(a.publishedAt)))
     .slice(0, 800);
-  const generatedAt = Date.parse(workerEnv.generatedAt) >= Date.parse(pagesEnv.generatedAt)
-    ? workerEnv.generatedAt
-    : pagesEnv.generatedAt;
-  return { ...workerEnv, generatedAt, data: { ...pagesData, ...workerData, items } as T };
+  return { ...preferredEnv, data: { ...fallbackData, ...preferredData, items } as T };
 }
 
 function arbitrate<T>(name: string, workerEnv: Envelope<T>, pagesEnv: Envelope<T>): Envelope<T> {
@@ -235,20 +239,24 @@ function abortable<T>(promise: Promise<T>, signal?: AbortSignal): Promise<T> {
 
 async function loadData<T>(name: string, bypassCache: boolean): Promise<Envelope<T>> {
   const workerUrl = WORKER_FILES.has(name) ? workerDataUrl(name) : null;
-  let workerEnv: Envelope<T> | null = null;
-  if (workerUrl) {
-    try {
-      workerEnv = await fetchEnvelope<T>(name, workerUrl, 'no-store');
-    } catch (err) {
-      if (err instanceof SchemaVersionError) throw err;
-    }
-  }
-
-  let pagesEnv: Envelope<T> | null = null;
-  try {
-    pagesEnv = await fetchEnvelope<T>(name, pagesUrl(name, bypassCache), 'no-cache');
-  } catch (err) {
-    if (!workerEnv) throw err;
+  const workerController = new AbortController();
+  const workerTimer = workerUrl
+    ? window.setTimeout(() => workerController.abort(), WORKER_DEADLINE_MS)
+    : null;
+  const workerRequest = workerUrl
+    ? fetchEnvelope<T>(name, workerUrl, 'no-store', workerController.signal)
+        .finally(() => { if (workerTimer !== null) window.clearTimeout(workerTimer); })
+    : Promise.resolve<Envelope<T> | null>(null);
+  const pagesRequest = fetchEnvelope<T>(name, pagesUrl(name, bypassCache), 'no-cache');
+  const [workerResult, pagesResult] = await Promise.allSettled([workerRequest, pagesRequest]);
+  const workerEnv = workerResult.status === 'fulfilled' ? workerResult.value : null;
+  const pagesEnv = pagesResult.status === 'fulfilled' ? pagesResult.value : null;
+  if (!workerEnv && !pagesEnv) {
+    const schemaError = [workerResult, pagesResult]
+      .find((result) => result.status === 'rejected' && result.reason instanceof SchemaVersionError);
+    if (schemaError?.status === 'rejected') throw schemaError.reason;
+    if (pagesResult.status === 'rejected') throw pagesResult.reason;
+    if (workerResult.status === 'rejected') throw workerResult.reason;
   }
   if (workerEnv && pagesEnv) return arbitrate(name, workerEnv, pagesEnv);
   return workerEnv ?? (pagesEnv as Envelope<T>);

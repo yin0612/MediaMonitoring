@@ -81,13 +81,14 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
   globalThis.fetch = async (input, init) => {
     const url = String(input);
     calls.push({ url, init });
+    if (url.includes('turnstile')) return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
     if (url.includes('api.github.com')) return new Response(null, { status: 204 });
     return new Response(`<rss><channel><item><guid>manual-${calls.length}</guid>
       <title>Manual refresh item</title><link>https://news.example/story</link>
       <pubDate>${new Date().toUTCString()}</pubDate></item></channel></rss>`);
   };
 
-  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
+  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret' };
   const pending = [];
   try {
     const response = await worker.fetch(
@@ -96,7 +97,9 @@ test('manual refresh schedules a Cloudflare snapshot and dispatches GitHub Actio
         headers: {
           Origin: 'https://yin0612.github.io',
           'CF-Connecting-IP': '203.0.113.10',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
       }),
       env,
       { waitUntil: (promise) => pending.push(promise) },
@@ -141,14 +144,16 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (input) => {
     const url = String(input);
+    if (url.includes('turnstile')) return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
     if (url.includes('api.github.com')) return new Response(null, { status: 204 });
     return new Response('<rss><channel></channel></rss>');
   };
 
-  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
+  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret' };
   const request = (origin, ip) => new Request('https://worker.example/api/refresh', {
     method: 'POST',
-    headers: { Origin: origin, 'CF-Connecting-IP': ip },
+    headers: { Origin: origin, 'CF-Connecting-IP': ip, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
   });
   const pending = [];
   try {
@@ -173,6 +178,7 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
       waitUntil: (promise) => pending.push(promise),
     });
     assert.equal(otherClient.status, 202);
+    assert.equal((await otherClient.json()).deep, 'skipped');
   } finally {
     await Promise.all(pending);
     globalThis.fetch = originalFetch;
@@ -184,14 +190,17 @@ test('manual refresh enforces origin and a per-IP cooldown', async () => {
 // 但把 deep 明確標成 unavailable，不能整個拒絕、也不能假裝深度分析成功。
 test('manual refresh still runs the fast path when GitHub dispatch is not configured', async () => {
   const originalFetch = globalThis.fetch;
-  globalThis.fetch = async () => new Response('<rss><channel></channel></rss>');
-  const env = { SNAPSHOT: memoryKv() };
+  globalThis.fetch = async (input) => String(input).includes('turnstile')
+    ? Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' })
+    : new Response('<rss><channel></channel></rss>');
+  const env = { SNAPSHOT: memoryKv(), TURNSTILE_SECRET_KEY: 'turnstile-secret' };
   const pending = [];
   try {
     const response = await worker.fetch(
       new Request('https://worker.example/api/refresh', {
         method: 'POST',
-        headers: { Origin: 'https://yin0612.github.io', 'CF-Connecting-IP': '203.0.113.12' },
+        headers: { Origin: 'https://yin0612.github.io', 'CF-Connecting-IP': '203.0.113.12', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ turnstileToken: 'verified-client-token' }),
       }),
       env,
       { waitUntil: (promise) => pending.push(promise) },
@@ -236,7 +245,7 @@ test('manual refresh requires a valid Turnstile token when protection is configu
   const calls = [];
   globalThis.fetch = async (input) => {
     calls.push(String(input));
-    return Response.json({ success: true });
+    return Response.json({ success: true, action: 'manual_refresh', hostname: 'yin0612.github.io' });
   };
   const env = {
     SNAPSHOT: memoryKv(),
@@ -246,7 +255,8 @@ test('manual refresh requires a valid Turnstile token when protection is configu
   try {
     const missing = await worker.fetch(new Request('https://worker.example/api/refresh', {
       method: 'POST',
-      headers: { Origin: 'https://yin0612.github.io', 'CF-Connecting-IP': '203.0.113.31' },
+      headers: { Origin: 'https://yin0612.github.io', 'CF-Connecting-IP': '203.0.113.31', 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
     }), env, { waitUntil: () => {} });
     assert.equal(missing.status, 403);
     assert.deepEqual(await missing.json(), { error: 'TURNSTILE_REQUIRED' });
@@ -296,6 +306,41 @@ test('manual refresh rejects a failed Turnstile verification', async () => {
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+test('manual refresh fails closed when Turnstile is missing or returns the wrong action', async () => {
+  const request = () => new Request('https://worker.example/api/refresh', {
+    method: 'POST',
+    headers: { Origin: 'https://yin0612.github.io', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ turnstileToken: 'client-token' }),
+  });
+  const missing = await worker.fetch(request(), { SNAPSHOT: memoryKv() }, { waitUntil: () => {} });
+  assert.equal(missing.status, 503);
+  assert.deepEqual(await missing.json(), { error: 'TURNSTILE_NOT_CONFIGURED' });
+
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => Response.json({
+    success: true, action: 'different_action', hostname: 'yin0612.github.io',
+  });
+  try {
+    const wrongAction = await worker.fetch(request(), {
+      SNAPSHOT: memoryKv(), TURNSTILE_SECRET_KEY: 'turnstile-secret',
+    }, { waitUntil: () => {} });
+    assert.equal(wrongAction.status, 403);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('manual refresh rejects oversized request bodies before verification', async () => {
+  const response = await worker.fetch(new Request('https://worker.example/api/refresh', {
+    method: 'POST',
+    headers: {
+      Origin: 'https://yin0612.github.io', 'Content-Type': 'application/json', 'Content-Length': '5000',
+    },
+    body: JSON.stringify({ turnstileToken: 'x' }),
+  }), { SNAPSHOT: memoryKv(), TURNSTILE_SECRET_KEY: 'turnstile-secret' }, { waitUntil: () => {} });
+  assert.equal(response.status, 413);
 });
 
 test('refresh callback completes deep analysis without overwriting fast state', async () => {
@@ -405,6 +450,8 @@ test('30d search reads historical articles from D1 without live RSS fanout', asy
     assert.equal(body.data.items[0].id, 'd1-old-article');
     assert.equal(body.data.coverage.actualFrom, new Date(publishedAt).toISOString());
     assert.equal(body.data.coverage.actualTo, new Date(publishedAt).toISOString());
+    assert.equal(body.data.coverage.complete, false);
+    assert.equal(body.data.status, 'partial');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -423,9 +470,17 @@ async function runScheduled(env) {
 }
 
 function queryOnlyD1(rows) {
+  const published = rows.map((row) => Number(row.published_at)).filter(Number.isFinite);
   return {
-    prepare: () => ({
-      bind: () => ({ all: async () => ({ success: true, results: rows }) }),
+    prepare: (sql) => ({
+      bind: () => ({
+        all: async () => ({ success: true, results: rows }),
+        first: async () => ({
+          actual_from: published.length ? Math.min(...published) : null,
+          actual_to: published.length ? Math.max(...published) : null,
+          article_count: published.length,
+        }),
+      }),
     }),
   };
 }
@@ -444,7 +499,7 @@ test('Cloudflare fast and deep cron triggers have separate responsibilities', as
     }
     return new Response('<rss><channel></channel></rss>');
   };
-  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
+  const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET_KEY: 'turnstile-secret' };
   try {
     const fastPending = [];
     await worker.scheduled({ cron: '*/5 * * * *' }, env, { waitUntil: (promise) => fastPending.push(promise) });
@@ -457,6 +512,32 @@ test('Cloudflare fast and deep cron triggers have separate responsibilities', as
     await worker.scheduled({ cron: '2,17,32,47 * * * *' }, env, { waitUntil: (promise) => deepPending.push(promise) });
     await Promise.all(deepPending);
     assert.deepEqual(calls, ['https://api.github.com/repos/yin0612/MediaMonitoring/dispatches']);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('a D1 persistence failure does not invalidate an already published KV snapshot', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.endsWith('/data/recent.json')) return Response.json({ data: { items: [] } });
+    if (url.endsWith('/data/sources.json')) return new Response('', { status: 503 });
+    if (['keywords', 'entities', 'topics', 'events'].some((name) => url.endsWith(`/data/${name}.json`))) {
+      return new Response('', { status: 503 });
+    }
+    return new Response('<rss><channel></channel></rss>');
+  };
+  const env = {
+    SNAPSHOT: memoryKv(),
+    DB: {
+      prepare: () => ({ bind: () => ({}) }),
+      batch: async () => { throw new Error('D1 unavailable'); },
+    },
+  };
+  try {
+    await runScheduled(env);
+    assert.ok(await env.SNAPSHOT.get('snapshot'));
   } finally {
     globalThis.fetch = originalFetch;
   }
