@@ -30,8 +30,9 @@ third party.
 3. Review title and excerpt, select the required labels, and save the current
    row. Suggestions are visible but are not labels until saved by a reviewer.
 4. For each of the 100 double-annotation rows, have two people export their
-   independently completed copies, then use the tool's consensus mode to record
-   the adjudicated canonical labels.
+   independently completed copies. `scripts/merge_annotation_exports.py`
+   safely copies their nested labels into a common file, after which consensus
+   mode records the adjudicated canonical labels.
 5. Download the completed candidate JSONL and run the repository evaluator.
 
 ## Boundaries

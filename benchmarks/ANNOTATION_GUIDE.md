@@ -12,6 +12,10 @@
 
 人工標註完成前，產品中的事件、情緒、實體與敘事分析一律維持「實驗性」。
 
+## 本機標註介面
+
+請依 [`tools/annotation-app/README.md`](../tools/annotation-app/README.md) 開啟本機瀏覽器工具。資料僅在本機瀏覽器工作階段與下載的 JSONL 中保存，不會上傳。機器建議只供標註者檢視，必須逐筆人工覆核、儲存後才會寫入 `annotations`。
+
 ## Machine draft (not human ground truth)
 
 Regenerate the independent provisional suggestions with:

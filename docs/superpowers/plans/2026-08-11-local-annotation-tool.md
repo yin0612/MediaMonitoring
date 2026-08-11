@@ -70,3 +70,19 @@ form behavior, while `index.html` provides the static local interface.
   display a machine suggestion without mutating labels, save one reviewer
   action, and verify downloaded JSONL remains parseable.**
 - [ ] **Step 4: Commit the design, implementation, tests, and documentation.**
+
+### Task 4: Safe double-review merge
+
+**Files:**
+- Create: `scripts/merge_annotation_exports.py`
+- Create: `tests/test_merge_annotation_exports.py`
+- Modify: `tools/annotation-app/README.md`
+
+- [ ] **Step 1: Write a failing test** proving that a merge copies only nested
+  reviewer labels into `doubleAnnotation=true` rows and rejects a changed
+  `sampleId` set.
+- [ ] **Step 2: Run the targeted pytest** and confirm import fails before the
+  merge script exists.
+- [ ] **Step 3: Implement a strict CLI** accepting base, annotator 1,
+  annotator 2, and output JSONL paths.
+- [ ] **Step 4: Re-run the targeted pytest** and document the Windows command.
