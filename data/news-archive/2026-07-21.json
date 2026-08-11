@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-07-26T06:19:33.494501Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-07-21",
+    "items": [
+      {
+        "id": "a610c7851792f93f7dc6",
+        "source": "reporter",
+        "title": "「高深」莫測，三度發布紅色警戒又解除：花蓮萬里溪堰塞湖穩定溢流，互動地圖看災防過程",
+        "excerpt": "《報導者》自萬里溪堰塞湖形成消息公布後，持續關注並採訪參與專家與官員，以圖解方式，說明這一個月來的監測、變化與影響，並思考政府的防災決策與社會溝通，還有哪些可以進步的空間？",
+        "publishedAt": "2026-07-21T16:00:00Z",
+        "url": "https://www.twreporter.org/a/hualien-wanli-creek-barrier-lake",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "進步",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "49b9f8ce76cb23d26423",
+        "source": "reporter",
+        "title": "保護令有時間差、求助後風險更高，又一起親密關係暴力悲劇後，台灣如何補上安全網缺口？",
+        "excerpt": "《家庭暴力防治法》在1998年制定，但28年後，親密關係暴力致死案件仍持續發生。本集節目將回頭看看保護令制度，了解親密關係暴力不同的樣態，以及制度與社會文化，如何影響受害者求助的意願？",
+        "publishedAt": "2026-07-21T16:00:00Z",
+        "url": "https://www.twreporter.org/a/podcast-2026-07-22",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "風險",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "fd55b39979e19c67a9f8",
+        "source": "businessweekly",
+        "title": "致癌毒油懶人包》501產品可重新上架！最新下架名單、退款一次看－商周頭條｜商周",
+        "excerpt": "中聯大豆沙拉油驗出一級致癌物苯駢芘超標，7批確認不合格銷毀、19批檢驗合格已重新上架。行政院7月23日通過食安法修正草案，明定24小時內通報、隱匿罰鍰上限拉高至3000萬元。本文更新至7月23日，整理",
+        "publishedAt": "2026-07-21T07:58:20Z",
+        "url": "https://www.businessweekly.com.tw/focus/blog/3021862",
+        "sentiment": {
+          "label": "negative",
+          "score": -0.333,
+          "matched": [
+            {
+              "term": "致癌",
+              "polarity": "negative",
+              "weight": 2
+            },
+            {
+              "term": "通過",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

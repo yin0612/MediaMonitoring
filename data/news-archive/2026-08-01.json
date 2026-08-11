@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-08T14:21:14.291658Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-01",
+    "items": [
+      {
+        "id": "848f7a6575b8a1fba64e",
+        "source": "reporter",
+        "title": "詹育杰／凝視反轉或權力包裝？「東方」女性藝術家如何解殖歐洲博物館影像",
+        "excerpt": "最近半年3家歐洲博物館選擇「東方」女性藝術家作品，重新凝視「東方」女性身體，凸顯博物館從「展示殖民歷史」，走向「承認機構本身即屬殖民歷史部分」的重要轉變。這是「解殖」還是更精緻的權力操作？",
+        "publishedAt": "2026-08-01T16:00:00Z",
+        "url": "https://www.twreporter.org/a/photo-museums-decolonizing-orientalist-photography",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

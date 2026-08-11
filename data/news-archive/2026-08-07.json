@@ -1,0 +1,550 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-11T05:15:58.718973Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-07",
+    "items": [
+      {
+        "id": "f870579e51fecdc10069",
+        "source": "thenewslens",
+        "title": "中國AI超英趕美的祕密武器：「低人權優勢」正從工廠走進資料中心",
+        "excerpt": "中國運用「舉國大公司」模式發展AI，結合國家支持與「低人權優勢」，在資源、基礎設施上取得便利，形成制度性競爭，挑戰全球AI版圖。",
+        "publishedAt": "2026-08-07T23:59:00Z",
+        "url": "https://www.thenewslens.com/article/269490",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "支持",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "3ba317d8027a7eeec195",
+        "source": "thenewslens",
+        "title": "【諮商同意之後】綠燈開給廠商、衝突留給部落：原住民自治的漫漫長路",
+        "excerpt": "以碧候部落為例，現行諮商同意制度因設計僵化屢生爭議。新修草案雖盼擴大部落自主，但原住民族作為權利主體以落實真正自治，仍是未竟之功。",
+        "publishedAt": "2026-08-07T23:58:00Z",
+        "url": "https://www.thenewslens.com/feature/pyahaw-free-prior-consent/269444",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "衝突",
+              "polarity": "negative",
+              "weight": 2
+            },
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "2c83d05ab45a3d4e29ed",
+        "source": "thenewslens",
+        "title": "76歲照顧者：我活著只是為了比家母晚死，期待安樂死法案能早日實施",
+        "excerpt": "本文從長照悲歌與個人經驗，批判現行安寧緩和醫療條例不足，強烈呼籲推動安樂死合法化，以保障末期病人的善終權與生命尊嚴，並解決照顧者的沉重負擔。",
+        "publishedAt": "2026-08-07T23:57:00Z",
+        "url": "https://www.thenewslens.com/article/269532",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "2a3753513422887d1171",
+        "source": "thenewslens",
+        "title": "讀周先陌詩集《赤子》：獲得撥開烏雲的勇氣，令自己的背「在陽光裡顯映」",
+        "excerpt": "周先陌詩集《赤子》以赤誠筆觸，坦然書寫創傷、情慾與日常。透過〈血色〉、〈裸裎〉、〈過敏〉三輯，呈現一段自我揭露與淬鍊的歷程，最終回歸純粹。",
+        "publishedAt": "2026-08-07T23:56:00Z",
+        "url": "https://www.thenewslens.com/article/269515",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "ed53cc575d1c59f7683c",
+        "source": "anue",
+        "title": "營收速報 - 2026年8月8日台股大型公司7月營收一覽（新增98家）",
+        "excerpt": "7月台股營收公布，2026年8月針對大型公司前一日公布98家營收。截至目前7月營收公布共計112家，其中營收年增大於+25％有45家，年增小於-20％有8家。| Anue鉅亨- 台股營收",
+        "publishedAt": "2026-08-07T23:55:09Z",
+        "url": "https://news.cnyes.com/news/id/6566325",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "2fdc4d32506d7d5454bc",
+        "source": "anue",
+        "title": "漢堡王睽違6年重奪美國漢堡二哥 溫蒂漢堡早餐攻勢失靈 連6季銷售衰退",
+        "excerpt": "漢堡王睽違 6 年重新超越溫蒂漢堡，成為美國第二大漢堡連鎖品牌，背後是兩家公司近兩年業績明顯分化，漢堡王持續成長、溫蒂漢堡則陷入同店銷售連 6 季下滑。",
+        "publishedAt": "2026-08-07T23:10:02Z",
+        "url": "https://news.cnyes.com/news/id/6566303",
+        "sentiment": {
+          "label": "negative",
+          "score": -0.5,
+          "matched": [
+            {
+              "term": "衰退",
+              "polarity": "negative",
+              "weight": 2
+            },
+            {
+              "term": "下滑",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "成長",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "82a4800ad812105a85ba",
+        "source": "technews",
+        "title": "避免二選一僵局，美軍考慮增加低當量核武攻擊選項",
+        "excerpt": "美國五角大廈近日啟動了針對美國核武戰略與使用指引（Employment Guidance）的最新審查。兩名美軍 […]",
+        "publishedAt": "2026-08-07T23:00:25Z",
+        "url": "https://technews.tw/2026/08/08/the-pentagon-is-considering-increase-lower-yield-nuclear-options/",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "增加",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "46faf9e06074e8ef0962",
+        "source": "anue",
+        "title": "〈紐約匯市〉美非農就業人口意外減少 美元周線連二黑",
+        "excerpt": "美元對主要貨幣周五 (7 日) 走軟，美國 7 月非農就業人口意外減少，引發市場對美國經濟韌性的擔憂，也削弱了聯準會 (Fed) 升息的理由，進而拖累美元。 紐約尾盤，追蹤美元兌六種主要貨幣走勢的 ICE 美元指數 (DXY) 下跌 0.44%，約報 99.50，本周共下跌 0.",
+        "publishedAt": "2026-08-07T22:57:37Z",
+        "url": "https://news.cnyes.com/news/id/6564477",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "下跌",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "減少",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "03624db7cc2ab7c63c49",
+        "source": "anue",
+        "title": "〈貴金屬盤後〉美7月非農爆冷 金價本周大漲逾7%創1月來最佳單周",
+        "excerpt": "現貨金價周五 (7 日) 大漲，登上七周高點，主因是美國當天公布的 7 月非農就業人口意外減少，抑制了聯準會 (Fed) 立即升息的可能性，並幫助金價一周漲幅擴大到 7% 以上，交出七個月來最佳單周表現。 黃金現貨跳漲 2.3%，報每盎司 4336.02 美元，盤中稍早觸及 6…",
+        "publishedAt": "2026-08-07T22:32:42Z",
+        "url": "https://news.cnyes.com/news/id/6564475",
+        "sentiment": {
+          "label": "positive",
+          "score": 0.333,
+          "matched": [
+            {
+              "term": "大漲",
+              "polarity": "positive",
+              "weight": 2
+            },
+            {
+              "term": "減少",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "c5b203fd465ccfffc249",
+        "source": "anue",
+        "title": "美Fed獨立性再受挑戰 川普再提房貸爭議 重啟撤換庫克程序",
+        "excerpt": "川普政府以房貸申報爭議為由，重啟撤換聯準會理事庫克程序，並要求其三週內說明，引發 Fed 獨立性再度受關注。",
+        "publishedAt": "2026-08-07T22:30:05Z",
+        "url": "https://news.cnyes.com/news/id/6566284",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "e0e69093240939a803f3",
+        "source": "anue",
+        "title": "〈美股盤後〉非農爆冷Fed、升息機率降！標普登新高 單周大漲3.6%今年來次佳",
+        "excerpt": "美國 7 月非農就業人口意外減少，降低聯準會 (Fed)9 月升息的必要性，美股周五 (7 日) 上漲，標普 500 指數創新高，並以單周上漲 3.6% 寫下 4 月以來最佳表現，也是今年來第二大單周漲幅。 標普本周稍早才首度登上 7700 點，本周累計上漲 3.6%。那斯達克在",
+        "publishedAt": "2026-08-07T22:23:36Z",
+        "url": "https://news.cnyes.com/news/id/6563571",
+        "sentiment": {
+          "label": "positive",
+          "score": 0.667,
+          "matched": [
+            {
+              "term": "大漲",
+              "polarity": "positive",
+              "weight": 2
+            },
+            {
+              "term": "新高",
+              "polarity": "positive",
+              "weight": 2
+            },
+            {
+              "term": "上漲",
+              "polarity": "positive",
+              "weight": 1
+            },
+            {
+              "term": "減少",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "125f8470d5f8ff29ea52",
+        "source": "anue",
+        "title": "〈能源盤後〉荷姆茲海峽重啟仍添變數 原油漲逾1% 但周線仍跌逾8%",
+        "excerpt": "伊朗戰事與荷姆茲海峽通航談判再添變數，布蘭特原油周五 (7 日) 上漲逾 1 美元，但全周仍可能下跌逾 8%。伊朗與阿曼的通航安排、通行費及美國制裁成為市場焦點。",
+        "publishedAt": "2026-08-07T21:30:05Z",
+        "url": "https://news.cnyes.com/news/id/6566271",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": [
+            {
+              "term": "上漲",
+              "polarity": "positive",
+              "weight": 1
+            },
+            {
+              "term": "下跌",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "e445c7d2d3e1f857fcf0",
+        "source": "anue",
+        "title": "美債殖利率終於有救？財政部暗示可能減發長債",
+        "excerpt": "美國財政部本周調整債務發行措辭，引發市場猜測，政府可能縮減 20 年期與 30 年期公債標售規模，以壓低長期殖利率，打破市場多年來認定美債發行只會愈來愈多的看法。",
+        "publishedAt": "2026-08-07T18:00:05Z",
+        "url": "https://news.cnyes.com/news/id/6566221",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "3053da25b03b899a1483",
+        "source": "anue",
+        "title": "賴清德：0-18歲每月5千津貼明年上路 籲「此時不生更待何時」",
+        "excerpt": "賴清德今 (7) 日出席「總統府暨國家安全會議員工家庭日」，在致詞時除了感謝每位父親照顧家庭，也針對國人育兒政策，提及 0 至 18 歲成長津貼已編入明 (2027) 年度總預算，明年將正式上路，屆時符合者每月可領取 5,000 元。",
+        "publishedAt": "2026-08-07T17:39:21Z",
+        "url": "https://news.cnyes.com/news/id/6565933",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "感謝",
+              "polarity": "positive",
+              "weight": 1
+            },
+            {
+              "term": "成長",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "59ba43e577376cf6f6c4",
+        "source": "anue",
+        "title": "SK海力士擴產嚇跌美光 但新產能遠水救不了近火",
+        "excerpt": "美光 (MU-US) 周五早盤下跌 3.6% 至 849.80 美元，市場一度擔憂南韓競爭對手 SK 海力士 (SK Hynix) 大舉擴產，恐加速記憶體供需反轉。不過，《巴隆周刊》(Barron’s) 認為，晶圓廠從興建到投產需時多年，SK",
+        "publishedAt": "2026-08-07T16:30:03Z",
+        "url": "https://news.cnyes.com/news/id/6566158",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "下跌",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "2be8b58a5799a52cc05a",
+        "source": "technews",
+        "title": "幹細胞技術突破，給予帕金森氏症療法新希望",
+        "excerpt": "帕金森氏症患者常因腦部製造多巴胺（dopamine）的神經細胞逐漸死亡，而出現手抖、動作遲緩、肌肉僵硬等症狀， […]",
+        "publishedAt": "2026-08-07T16:00:41Z",
+        "url": "https://technews.tw/2026/08/08/human-embryonic-stem-cell-derived-dopaminergic-cells-for-parkinsons-disease-a-phase-12-open-label-trial/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": [
+            {
+              "term": "死亡",
+              "polarity": "negative",
+              "weight": 2
+            },
+            {
+              "term": "突破",
+              "polarity": "positive",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "6d1dde70e9d65f888487",
+        "source": "technews",
+        "title": "打破「藍色彈珠」迷思，NASA 最新 3D 模型揭露地球「坑疤」真面目",
+        "excerpt": "NASA 近日公布了一項全新的 3D「大地水準面」（Geoid）模型。與太空中常見那顆平滑完美的「藍色彈珠」不 […]",
+        "publishedAt": "2026-08-07T16:00:25Z",
+        "url": "https://technews.tw/2026/08/08/nasa-3d-earth-gravity-model/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "fa85c08c9a20e632488c",
+        "source": "anue",
+        "title": "不再是崩盤代名詞！價值股大勝成長股 專家：AI擴散助長多頭行情",
+        "excerpt": "歷史上，幾乎每當價值股發光發熱，通常意味著大盤正陷入崩跌，但這一次情況不同：在這波多頭行情即將邁入第四年、主要股指持續在歷史高檔震盪的情況下，羅素 1000 價值股指數 (RLV) 卻大幅跑贏羅素 1000 成長股指數(RLG)。 根據 Nationwide 彙整的數據，過去一年",
+        "publishedAt": "2026-08-07T16:00:08Z",
+        "url": "https://news.cnyes.com/news/id/6563575",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "成長",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "2cd769a6ef685230a506",
+        "source": "technews",
+        "title": "魯賓天文台 LSST 相機首發，32 億畫素震撼捕捉 COSMOS 天區 50 萬星系",
+        "excerpt": "薇拉‧魯賓天文台（Vera C. Rubin Observatory）正式發布時域與深空巡天相機（Legacy […]",
+        "publishedAt": "2026-08-07T16:00:07Z",
+        "url": "https://technews.tw/2026/08/08/nsf-doe-rubin-observatory-opens-deep-window-on-famous-cosmic-field/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "996aee1d58b3064ead7f",
+        "source": "cna",
+        "title": "兆基屋管前董事長李建成涉侵占背信 北檢聲押禁見",
+        "excerpt": "（中央社記者林長順台北7日電）包租代管龍頭兆基屋管前董事長、趙姬公司董事長李建成涉侵占、背信，北檢今天指揮調查局搜索兆基等處，並約談李建成、寄居蟹公司負責人林佑任，檢察官訊後聲押禁見李建成。",
+        "publishedAt": "2026-08-07T13:57:26Z",
+        "url": "https://www.cna.com.tw/news/asoc/202608070342.aspx",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "834fa1f7ddaebbe65206",
+        "source": "cna",
+        "title": "中國假借颱風名義稱對台灣海峽交管 海巡署：嚴厲譴責",
+        "excerpt": "（中央社記者劉建邦台北7日電）針對廣東海事局假借颱風名義稱將對航經台灣海峽南口北上船舶實施交通管制，海巡署今天駁斥中國無權在台灣海峽實施交通管制，並嚴厲譴責。",
+        "publishedAt": "2026-08-07T13:52:24Z",
+        "url": "https://www.cna.com.tw/news/asoc/202608070341.aspx",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "譴責",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "00dc7fd4adc94619841b",
+        "source": "technews",
+        "title": "久元7月營收3.74 億元",
+        "excerpt": "久元（6261）今（7）日公布 7 月營收，達 3.74 億元，較 6 月成長 -4.1%，較去年同期成長 - […]",
+        "publishedAt": "2026-08-07T12:10:03Z",
+        "url": "https://finance.technews.tw/2026/08/07/ytec-6261-202607-financial-report/",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "成長",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "7057096bd267ab519c69",
+        "source": "technews",
+        "title": "中美晶第二季營收創同期新高，受惠多事業同步成長上半年賺逾半個股本",
+        "excerpt": "矽晶材料大廠中美晶公布2026年最新營運成果，受惠於半導體、車用元件與再生能源等多元事業的協同成長，中美晶展現 […]",
+        "publishedAt": "2026-08-07T12:00:34Z",
+        "url": "https://finance.technews.tw/2026/08/07/sass-second-quarter-revenue-hit-a-record-high-for-the-same-period/",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "新高",
+              "polarity": "positive",
+              "weight": 2
+            },
+            {
+              "term": "成長",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "42c41e75b865d6692588",
+        "source": "thenewslens",
+        "title": "岡本隆司《反派的中國史》：萬曆皇帝如何從極端壓抑，走向毀滅明朝的奢華豪賭？",
+        "excerpt": "日本東洋史名家，翻轉中國史傳統的傑作！唐太宗、安祿山、馮道、柴榮、王安石、萬曆皇帝……他們究竟是被正史定名的暴君、逆臣與罪人，還是在帝國秩序下，被推上歷史審判席的失敗者？",
+        "publishedAt": "2026-08-07T12:00:00Z",
+        "url": "https://www.thenewslens.com/article/269422",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "1b5805c32ff7c1334c79",
+        "source": "thenewslens",
+        "title": "岡本隆司《江南史觀下的中國》：為何中國每一次劃時代變革，起點都在南方？",
+        "excerpt": "岡本隆司跳脫「大一統中國」的單一敘事，將中國視為由不同區域、文化與歷史脈絡交織而成的複合區域。他以長江流域為主軸，重新梳理中國歷史中的南北關係、政治秩序、經濟流動與文化變遷。",
+        "publishedAt": "2026-08-07T12:00:00Z",
+        "url": "https://www.thenewslens.com/article/269419",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "e59dd0671d101426e9cf",
+        "source": "technews",
+        "title": "能源管理邁入新時代！鄭平：台達電推微電網整體解方",
+        "excerpt": "AI 資料中心快速發展，除了帶動算力需求，也讓能源管理成為下一波產業競爭焦點。台達電今（7）日舉辦 55 周年 […]",
+        "publishedAt": "2026-08-07T11:29:40Z",
+        "url": "https://technews.tw/2026/08/07/energy-management-new-era-zheng-ping-delta-comprehensive-microgrid-solutions/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "d0866fb4067f419985ba",
+        "source": "tvbs",
+        "title": "汽車關稅調降",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T11:24:50Z",
+        "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1JbUJkODNEbVBScW5PZ29tWS1lVDBZTkpNV21QdEw2NFFzM08zb3p5STlmaVRsSFZreVhQaWhhby1PRFZ6VnlYN0RUbHdWZUhBdC13?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "4a06e0d7ef67be95a72b",
+        "source": "technews",
+        "title": "環球晶7月營收49.78 億元",
+        "excerpt": "環球晶（6488）今（7）日公布 7 月營收，達 49.78 億元，較 6 月成長 -11.5%，較去年同期成 […]",
+        "publishedAt": "2026-08-07T10:50:06Z",
+        "url": "https://finance.technews.tw/2026/08/07/gwc-6488-202607-financial-report/",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "成長",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "f4894c624156b14023d8",
+        "source": "moneydj",
+        "title": "LTGR-Long Table Growth Corp.-基本資料-美股",
+        "excerpt": "",
+        "publishedAt": "2026-08-07T06:08:07Z",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1sdVJCbnF4SFVwR3l5MVhPdEpMczcyaGp3aEVPRlRRREF5bzV0eW83X1k0ZmtjWlRQOUZuakxJMU9NSVdlSElkMkRlNGlpVTc5WkxMSmZiVEZ0UHc?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-11T05:15:58.718973Z",
+  "data": {
+    "geo": "TW",
+    "status": "ok",
+    "stale": false,
+    "source": "google-trends-realtime-and-rss",
+    "sourceUrl": "https://trends.google.com/trending/rss?geo=TW&hl=zh-TW",
+    "items": [
+      {
+        "title": "哥倫比亞",
+        "approximateTraffic": "10,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "許德箴",
+        "approximateTraffic": "20,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "楊錦元",
+        "approximateTraffic": "5,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "航空",
+        "approximateTraffic": "10,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "秦焰",
+        "approximateTraffic": "10,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "魏哲家",
+        "approximateTraffic": "5,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "林聰吉",
+        "approximateTraffic": "5,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "全民健康保險",
+        "approximateTraffic": "10,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "金在中",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "孫淑媚",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "股灾",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "敬老之日",
+        "approximateTraffic": "5,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "演員",
+        "approximateTraffic": "5,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "阿翰女友璇璇",
+        "approximateTraffic": "5,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "李政軒",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "將軍",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-11T04:50:00Z",
+        "isRealtime": false,
+        "news": []
+      },
+      {
+        "title": "dodgers vs royals",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-11T04:50:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "Ohtani scores go-ahead run in 7th, Dodgers rally to beat Royals 6-5 in Tarik Skubal's home debut",
+            "source": "Yahoo News New Zealand",
+            "url": "https://nz.news.yahoo.com/ohtani-scores-ahead-run-7th-045811592.html"
+          },
+          {
+            "title": "Royals bullpen melts down again in loss to Dodgers",
+            "source": "Royals Review",
+            "url": "https://www.royalsreview.com/kansas-city-royals-scores-standings/103701/royals-bullpen-melts-down-again-in-loss-to-dodgers"
+          },
+          {
+            "title": "Dodgers grind out a win over the Royals in a one-run game",
+            "source": "True Blue LA",
+            "url": "https://www.truebluela.com/dodgers-scores-standings/121737/tarik-skubal-grinds-out-start-one-run-win"
+          }
+        ]
+      },
+      {
+        "title": "釜山",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-11T04:40:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "猛暑の中「停電地獄」に…釜山を騒がせた「意外な犯人」（中央日報日本語版）",
+            "source": "Yahoo!ニュース",
+            "url": "https://news.yahoo.co.jp/articles/b9c6973f0c10c36647e2055203c36a8d48802cb6"
+          },
+          {
+            "title": "２０２８年の国連海洋会議、釜山で開催",
+            "source": "KOREA.net",
+            "url": "https://japanese.korea.net/NewsFocus/Society/view?articleId=297608"
+          },
+          {
+            "title": "2028年国連海洋会議開催地に釜山選定 - CHOSUNBIZ",
+            "source": "Chosunbiz",
+            "url": "https://biz.chosun.com/jp/jp-society/2026/08/10/2CW6B6ZRJZAORHUNSRWLPBLM4U/"
+          }
+        ]
+      },
+      {
+        "title": "統一獅",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-11T04:40:00Z",
+        "isRealtime": false,
+        "news": []
+      },
+      {
+        "title": "無人機",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-11T04:20:00Z",
+        "isRealtime": false,
+        "news": []
+      },
+      {
+        "title": "邱沁宜",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-11T04:20:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "曾砍在阿呆谷！邱沁宜認了「多麼痛的領悟」 走過低谷揭人生最大收穫",
+            "source": "自由娛樂",
+            "url": "https://ent.ltn.com.tw/news/breakingnews/5535309"
+          },
+          {
+            "title": "如果有天拿掉所有頭銜 邱沁宜：你還知道自己是誰？",
+            "source": "自由娛樂",
+            "url": "https://ent.ltn.com.tw/news/breakingnews/5534353"
+          },
+          {
+            "title": "曾砍在阿呆谷！邱沁宜認了「多麼痛的領悟」 走過低谷揭人生最大收穫 | 自由電子報",
+            "source": "LINE TODAY",
+            "url": "https://today.line.me/tw/v3/article/OpBjq7V"
+          }
+        ]
+      },
+      {
+        "title": "陳偉漢",
+        "approximateTraffic": "500+",
+        "publishedAt": "2026-08-11T04:10:00Z",
+        "isRealtime": false,
+        "news": []
+      },
+      {
+        "title": "徐春鶯",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-11T04:10:00Z",
+        "isRealtime": false,
+        "news": []
+      },
+      {
+        "title": "黑白集",
+        "approximateTraffic": "500+",
+        "publishedAt": "2026-08-11T04:00:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "聯合報黑白集／「大罷免」的既視感",
+            "source": "UDN",
+            "url": "https://udn.com/news/story/7338/9683238"
+          },
+          {
+            "title": "【即時短評】食安風暴與無人機產業爭議夾擊 恐成台中選戰變數",
+            "source": "UDN",
+            "url": "https://udn.com/news/story/124652/9669014"
+          },
+          {
+            "title": "台中市政府法制局長李善植8/3說明食安議題",
+            "source": "新華報導",
+            "url": "https://ccss3172.blogspot.com/2026/08/83.html"
+          }
+        ]
+      },
+      {
+        "title": "陳永興",
+        "approximateTraffic": "500+",
+        "publishedAt": "2026-08-11T03:40:00Z",
+        "isRealtime": false,
+        "news": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  網站為 HashRouter 單頁應用，實際可索引的 URL 為首頁；
+  其餘頁面以 #/ 片段切換，交由前端路由處理。
+  部署後請在 Google Search Console 提交本 sitemap。
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://yin0612.github.io/MediaMonitoring/</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

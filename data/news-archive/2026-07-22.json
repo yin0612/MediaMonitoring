@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-07-26T06:19:33.494501Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-07-22",
+    "items": [
+      {
+        "id": "6c1ae3b2a43d0c94bba3",
+        "source": "reporter",
+        "title": "保護令空窗77天，預知死亡紀事──北市信義區親密暴力命案，凶手劉柏葳一審無期徒刑",
+        "excerpt": "記者全程旁聽審判過程，透過警方密錄器影像、現場目擊者與友人證詞，證實劉男至少案發前一月就吐露殺人想法與計畫，並在保護令遲未核發的空窗期間多次騷擾被害人。這一場憾事，直指親密關係暴力防治政策的漏洞百出。",
+        "publishedAt": "2026-07-22T16:00:00Z",
+        "url": "https://www.twreporter.org/a/intimate-partner-violence-liu-po-wei-case",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "死亡",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "b7210cbbc623b76aae38",
+        "source": "reporter",
+        "title": "死亡權是最後的自由？法國《協助死亡法案》，一場自由、平等與博愛纏鬥半世紀的生命論戰",
+        "excerpt": "國家是否應保障人民選擇如何走向生命終點的權利？法國日前三讀通過《協助死亡法案》，支持者主張這是保障人們「最後的自由」，反對者則批評這是以尊重自由為名，忽視國家保障醫療平等、安寧照護與長照資源的責任。",
+        "publishedAt": "2026-07-22T16:00:00Z",
+        "url": "https://www.twreporter.org/a/hello-world-2026-07-23",
+        "sentiment": {
+          "label": "negative",
+          "score": -0.333,
+          "matched": [
+            {
+              "term": "死亡",
+              "polarity": "negative",
+              "weight": 2
+            },
+            {
+              "term": "反對",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "批評",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "支持",
+              "polarity": "positive",
+              "weight": 1
+            },
+            {
+              "term": "通過",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "585e822b4ee4b44253ba",
+        "source": "businessweekly",
+        "title": "聯發科股價外資喊到6千！股東必須關注Google自製晶片TPU這局 - 商周新財富備忘錄",
+        "excerpt": "",
+        "publishedAt": "2026-07-22T16:00:00Z",
+        "url": "https://www.businessweekly.com.tw/wealth-memo/article/4002836",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "b63715c9236483a58e0c",
+        "source": "businessweekly",
+        "title": "馬斯克為何兩度點名三星、台積電、美光？從特斯拉法說看AI缺口與戰局 - 商周新財富備忘錄",
+        "excerpt": "",
+        "publishedAt": "2026-07-22T16:00:00Z",
+        "url": "https://www.businessweekly.com.tw/wealth-memo/article/4002837",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "bb31a6491d31939af8f4",
+        "source": "cna",
+        "title": "新北大巨蛋| 新聞專題",
+        "excerpt": "",
+        "publishedAt": "2026-07-22T13:05:31Z",
+        "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1yT052V2dhODF2M29jWlpSeGNsUHFuYmhEVlZib055VXczYUlOQi1sMTNJMklraVp3bjl2M2RlbDctTzZlcTJXX0lRa0xUNmFEd1RXVmotSXVaSEVJ?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "90ec08a80b0444c588d3",
+        "source": "businessweekly",
+        "title": "2026大稻埕煙火7/25登場！時間、觀賞地點、蜘蛛人無人機秀、交通管制全攻略",
+        "excerpt": "2026大稻埕夏日節於7月25日至8月15日在大稻埕碼頭登場，3場煙火分別在7月25日、8月5日、8月15日晚間8時施放，其中週六2場結合蜘蛛人無人機展演，總長20分鐘，另有4場音樂展演與迪化街主題裝",
+        "publishedAt": "2026-07-22T10:09:29Z",
+        "url": "https://www.businessweekly.com.tw/style/blog/3022032",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

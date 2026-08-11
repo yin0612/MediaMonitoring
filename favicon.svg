@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-labelledby="title">
+  <title id="title">媒體輿情監測</title>
+  <rect width="48" height="48" rx="13" fill="#17324d"/>
+  <path d="M11 13.5A4.5 4.5 0 0 1 15.5 9h13A4.5 4.5 0 0 1 33 13.5v21a4.5 4.5 0 0 1-4.5 4.5h-13a4.5 4.5 0 0 1-4.5-4.5z" fill="#f7fbff"/>
+  <path d="M16 16h12M16 21h9M16 26h7" stroke="#2a78d6" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M31 27.5a5.5 5.5 0 0 1 0-7.8M35 31.5a11 11 0 0 1 0-15.8M39 35.5a16.5 16.5 0 0 1 0-23.8" fill="none" stroke="#53d5b6" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="31" cy="23.6" r="2.5" fill="#53d5b6"/>
+</svg>

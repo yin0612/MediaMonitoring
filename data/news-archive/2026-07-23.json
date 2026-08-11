@@ -1,0 +1,305 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-07-26T06:19:33.494501Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-07-23",
+    "items": [
+      {
+        "id": "02bacef6f4f4392e8076",
+        "source": "thenewslens",
+        "title": "政府砸270億補貼買房，「青安3.0」為何讓年收200萬中產與底層勞工雙雙喊苦？",
+        "excerpt": "本文批判青安3.0政策，指其以稅金補貼無助於高房價，反助長炒房、擴大貧富差距。文章主張，根本解方應是稅改與興建社宅，而非飲鴆止渴的補貼。",
+        "publishedAt": "2026-07-23T23:59:00Z",
+        "url": "https://www.thenewslens.com/article/269288",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "1a0ce94f3820c18ce158",
+        "source": "nownews",
+        "title": "第8頁 - HAHABABY 關鍵字",
+        "excerpt": "",
+        "publishedAt": "2026-07-23T23:21:08Z",
+        "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1Xb2JINVdMUlkzVDk4QlN1dE9qa3FLRUVaUE1fajBTdlNFb2laOWhRcC1qZWZBbTdtRmZwczNweU44UW1VQzlPclp4RWkzb0JkWmVPZExiZzg?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "d7209cfa54a62c3b2b49",
+        "source": "cti",
+        "title": "高雄市長選戰最新民調出爐！粉專揭穿「賴瑞隆真正危機」",
+        "excerpt": "2026年高雄市長選戰，國民黨由立委柯志恩出戰，民進黨則派出立委賴瑞隆參戰，最新民調顯示，賴瑞隆以39.6%的支持度領先柯志恩的31.6%。臉書粉專「政客爽」指出，越來越多高雄人發現，以民進黨的招牌，不代表賴瑞隆這個「商品」一定要買，賴瑞隆的危機是，民進黨在高雄這麼強竟然還選成這",
+        "publishedAt": "2026-07-23T15:07:15Z",
+        "url": "https://ctinews.com/news/items/q6xV3Bw3n7",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": [
+            {
+              "term": "危機",
+              "polarity": "negative",
+              "weight": 2
+            },
+            {
+              "term": "支持",
+              "polarity": "positive",
+              "weight": 1
+            },
+            {
+              "term": "領先",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "8d299340a7d04e9bed72",
+        "source": "cti",
+        "title": "賴清德：請司法單位嚴格查緝「地方非法之徒」介入綠能產業",
+        "excerpt": "總統賴清德今（23）日下午主持「國家氣候變遷對策委員會第8次委員會議」，做出3項裁示，並請行政院副院長鄭麗君督導司法單位嚴格查緝地方非法之徒介入綠能產業的發展。",
+        "publishedAt": "2026-07-23T14:31:11Z",
+        "url": "https://ctinews.com/news/items/14a1p9gOWk",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "82a91559a1ace840d549",
+        "source": "cti",
+        "title": "725上凱道反毒油！徐弘庭：不只是食安問題、更是下一代未來",
+        "excerpt": "致癌油風暴持續延燒，在野黨不滿民進黨政府的作為，將於25日走上凱道抗議。台北市議員徐弘庭今天表示，沒人希望因一瓶油、一頓飯，而必須走上街頭，但當問題產品流入市場，已非單一企業的問題，而是整個制度出了問題，這不只是食安問題，更是下一代的未來。",
+        "publishedAt": "2026-07-23T14:13:06Z",
+        "url": "https://ctinews.com/news/items/byWjjQY8WY",
+        "sentiment": {
+          "label": "positive",
+          "score": 0.333,
+          "matched": [
+            {
+              "term": "致癌",
+              "polarity": "positive",
+              "weight": 2
+            },
+            {
+              "term": "抗議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "6bb682594bca7bc2bc37",
+        "source": "cti",
+        "title": "揪蘇貞昌父女毒油風暴至今沒講一句話 李四川邀725一同上凱道",
+        "excerpt": "致癌毒油風暴不斷擴大，國民黨新北市長參選人李四川今天點名民進黨對手蘇巧慧與其父蘇貞昌，批評他們對此事件保持沉默，並邀請兩人7月25日一同上凱道為新北市民的食安發聲。",
+        "publishedAt": "2026-07-23T14:05:19Z",
+        "url": "https://ctinews.com/news/items/KwnK0BXBWY",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "致癌",
+              "polarity": "negative",
+              "weight": 2
+            },
+            {
+              "term": "批評",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "aa83642392de3b7fe8e7",
+        "source": "cna",
+        "title": "颱風紅霞| 新聞專題",
+        "excerpt": "",
+        "publishedAt": "2026-07-23T14:03:00Z",
+        "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE51UXhPazJjX2tMSndMTlpGTm1OMmFaMVVla203MjdXYkFtbnZHeHppd0h0NXJGNWpWX2xkQUN5SnR4WmZHS1B1MEYzcjd1bnh3QVVmTm9KbHVuTWhj?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "d41b0297e318b6bd61e5",
+        "source": "cti",
+        "title": "725一箭雙鵰？蔣萬安開嗆「見縫插針、挑撥離間」：完全沒想2028",
+        "excerpt": "致癌毒油食安風暴，藍營號召725上凱道，前政委張景森臉書發文指台北市長蔣萬安「一箭雙鵰」塑造自身為藍營唯一共主，蔣萬安今（23）日上媒體專訪表示，完全沒有在想2028的事。",
+        "publishedAt": "2026-07-23T13:53:12Z",
+        "url": "https://ctinews.com/news/items/Q8n8bemNao",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "致癌",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "c3ee83ec5789666356ae",
+        "source": "cti",
+        "title": "725不站出來就是承認台灣人「爛命一條」 蔣萬安嗆卓榮泰：我是要你下台！",
+        "excerpt": "致癌油食安風暴延燒，台北市長蔣萬安號召民眾725上凱道，引發關注。蔣萬安今天（23日）表示，若不站出來，就只是承認台灣人民「爛命一條」，他更再度要求行政院長卓榮泰下台，「今天我是要你下台，不是要喝你一口茶！」",
+        "publishedAt": "2026-07-23T13:22:19Z",
+        "url": "https://ctinews.com/news/items/ogxw1G0yWG",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "致癌",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "873efb31ed161f4a1525",
+        "source": "cti",
+        "title": "衛福部指8年只驗1次 鄭照新轟「以偏概全」：連廠商送驗共18次",
+        "excerpt": "致癌油風暴延燒，衛福部長石崇良今天表示，台中市政府過去8年曾有1次在2024年配合食藥署檢驗中聯，相較其他縣市明顯偏低。對此，台中市副市長鄭照新表示，這是「以偏概全」，並指自民國111年至今，依法強制業者檢驗17次，加上中央與地方聯合抽驗1次共18次。",
+        "publishedAt": "2026-07-23T12:37:23Z",
+        "url": "https://ctinews.com/news/items/ogxw1GpgWG",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "致癌",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "a68896279f6b81072a88",
+        "source": "cti",
+        "title": "要基層認購2000箱鳳梨釋迦？蔣萬安：與市府首長自發性購",
+        "excerpt": "台北市長蔣萬安日前宣布認購2000箱鳳梨釋迦，但民進黨台北市議員洪健益今天（23日）指出，這2000箱是要由市府同仁認購，已本末倒置。蔣萬安晚間接受中天等媒體聯訪時表示，這次團購是他與市府各局處首長自發性採購，台東的民代不分黨派都非常支持。",
+        "publishedAt": "2026-07-23T12:22:31Z",
+        "url": "https://ctinews.com/news/items/q6xV3B8zn7",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "支持",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "f210c4728c80928d12f5",
+        "source": "cna",
+        "title": "國道五號| 關鍵字新聞",
+        "excerpt": "",
+        "publishedAt": "2026-07-23T08:07:05Z",
+        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFB5ZWRyUE9lcG51MzJ3SzYyZDUwMjZrR1RLdGMzT3I5QXlkRUsyY0lVNWZFZXB1cnZPTWxLc0tfaWlsYk4zeXJodQ?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "0b244b31331d912058e4",
+        "source": "cna",
+        "title": "苦茶油| 關鍵字新聞",
+        "excerpt": "",
+        "publishedAt": "2026-07-23T07:18:13Z",
+        "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE1BVkhsVUgzM21rdXpKWldqMjhfTXM0VnNIWHRqT3BPdnQ2UkdTdVlNQlhsdEhJTTlZYTRVMndGY2RoSzVvT2kxag?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "68954451e65fb70fab1d",
+        "source": "businessweekly",
+        "title": "一場打壓對手的官司，竟成空巴登頂關鍵！拆解航太雙雄世紀爭霸勝負轉折點",
+        "excerpt": "半個世紀前，空中巴士只是美製客機壟斷下的追趕者。如今，它已在產能、獲利與訂單上全面壓制波音。當波音深陷品質風波與巨額虧損，這場雙雄爭霸正迎來大洗牌。",
+        "publishedAt": "2026-07-23T05:19:53Z",
+        "url": "https://www.businessweekly.com.tw/business/blog/3022040",
+        "sentiment": {
+          "label": "negative",
+          "score": -0.333,
+          "matched": [
+            {
+              "term": "虧損",
+              "polarity": "negative",
+              "weight": 2
+            },
+            {
+              "term": "獲利",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "91e4fe5efc17a9f37874",
+        "source": "businessweekly",
+        "title": "北車商場易主倒數！微風撤櫃後剩空城？專家更擔心2問題",
+        "excerpt": "台北車站商場於24日進行經營權交接，新光將正式接替微風入主。台鐵宣布商場24日僅營業至下午3時，25日恢復全面正常營業。專家指出新光接手後需先解決金流與發票無縫對接的營運考量。",
+        "publishedAt": "2026-07-23T03:40:43Z",
+        "url": "https://www.businessweekly.com.tw/business/blog/3022038",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "6e4c43d16f1c51fdbf5b",
+        "source": "businessweekly",
+        "title": "曾押寶墨西哥，緯創為何急轉赴美設廠？林憲銘首揭美國設廠秘辛",
+        "excerpt": "緯創美國德州廠21日開幕，黃仁勳親自站台。董事長林憲銘透露，當地建築法規已數十年沒為電子廠更新過。林憲銘首度說明緯創東進3大原因，分別是台灣土地與電力不足、真正的市場在美國，以及地緣政治關係。面對未來",
+        "publishedAt": "2026-07-23T02:55:52Z",
+        "url": "https://www.businessweekly.com.tw/business/blog/3022037",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "7846fe2f9642c2e08907",
+        "source": "cna",
+        "title": "台中超巨蛋| 新聞專題",
+        "excerpt": "",
+        "publishedAt": "2026-07-23T00:45:43Z",
+        "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9ZV09tbTU5MHV4SlpiVjQ1cVB3MGdjWmlGN0luWXJaVEREWmlQdUVwYWdmTER2dVV2RlloNGFHeW90cmJMRzRlcnhyTWR4MlBaMnZ4bkZPMTlHZnRO?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

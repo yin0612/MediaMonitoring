@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-11T05:15:58.718973Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "totalItems": 11517,
+    "days": [
+      {
+        "date": "2026-08-11",
+        "count": 1604,
+        "file": "news-archive/2026-08-11"
+      },
+      {
+        "date": "2026-08-10",
+        "count": 5687,
+        "file": "news-archive/2026-08-10"
+      },
+      {
+        "date": "2026-08-09",
+        "count": 3144,
+        "file": "news-archive/2026-08-09"
+      },
+      {
+        "date": "2026-08-08",
+        "count": 1046,
+        "file": "news-archive/2026-08-08"
+      },
+      {
+        "date": "2026-08-07",
+        "count": 29,
+        "file": "news-archive/2026-08-07"
+      },
+      {
+        "date": "2026-08-06",
+        "count": 3,
+        "file": "news-archive/2026-08-06"
+      },
+      {
+        "date": "2026-08-05",
+        "count": 2,
+        "file": "news-archive/2026-08-05"
+      },
+      {
+        "date": "2026-08-04",
+        "count": 2,
+        "file": "news-archive/2026-08-04"
+      }
+    ]
+  }
+}

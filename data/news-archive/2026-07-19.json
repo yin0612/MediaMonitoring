@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-07-26T06:19:33.494501Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-07-19",
+    "items": [
+      {
+        "id": "c03d911ccad785315f15",
+        "source": "reporter",
+        "title": "中國仲介主導的生命交易：揭開從中國到東南亞的非法跨境器官移植版圖",
+        "excerpt": "縱然中國政策與社會結構轉變，《報導者》調查發現，跨境移植並未消失，而是隨著中國仲介和醫師的移轉，讓商業版圖延伸至東南亞地區，非法的器官移植和買賣則在法規更不健全的國家裡重新上演。",
+        "publishedAt": "2026-07-19T16:00:00Z",
+        "url": "https://www.twreporter.org/a/illegal-cross-border-organ-transplantation",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "6e62c1561147fa277c10",
+        "source": "reporter",
+        "title": "寮國現場直擊：兩岸仲介、中國醫師，改造私人醫院成跨境器官移植基地",
+        "excerpt": "歷時數月赴寮國調查，我們兩度深入當地接觸遊走兩岸的仲介、中國醫師和非法移植團隊，並追查一間小型的醫美醫院，是如何在6年間迅速轉變為服務亞洲病患的新興器官移植基地。",
+        "publishedAt": "2026-07-19T16:00:00Z",
+        "url": "https://www.twreporter.org/a/illegal-cross-border-organ-transplantation-laos",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "bc8a9a3092ab937ded8a",
+        "source": "reporter",
+        "title": "門診來了灰色大象──是否接手境外移植病患？醫師的兩難掙扎",
+        "excerpt": "醫師無法拒絕患者申請病歷，也難以阻止患者赴境外接受移植。真正棘手的問題，是患者術後返台，醫師究竟該不該收治？若選擇協助眼前的病人，但放在更大的脈絡下，是否等於協助了來源不明的器官買賣、陷入人權爭議的境外器官移植產業？",
+        "publishedAt": "2026-07-19T16:00:00Z",
+        "url": "https://www.twreporter.org/a/illegal-cross-border-organ-transplantation-medical-ethical-dilemma",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "63eee701810c1dd5b9c4",
+        "source": "reporter",
+        "title": "《報導者》如何完成境外器官移植調查報導：採訪方法與倫理說明",
+        "excerpt": "器官移植產業因與人口販運犯罪高度關聯，記者幾番公開身分欲展開採訪都遭拒。考量此報導公共性，且無法以公開採訪取得關鍵事實的情況下，我們決定隱藏記者身分，以病患家屬身分接觸仲介，並循線進入寮國現場⋯⋯",
+        "publishedAt": "2026-07-19T16:00:00Z",
+        "url": "https://www.twreporter.org/a/illegal-cross-border-organ-transplantation-investigative-methodology-ethical-considerations",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "c1bd33f032b2943ec9a1",
+        "source": "reporter",
+        "title": "唯紅線「戰」放：多家香港書店遭書展DQ、國安指控煽動，海關加強抽查書籍",
+        "excerpt": "「《國安法》底下，大家都在很黑暗的海洋，而書店這些小空間是燈塔、是小島。當你在很黑的海上漂，你會看到有些燈光，你可以靠過去，感受些溫暖再離開。但這些小島一個一個被消滅⋯⋯你知道我的意思嗎？」",
+        "publishedAt": "2026-07-19T16:00:00Z",
+        "url": "https://www.twreporter.org/a/hk-tightens-grip-on-independent-bookstores-amid-wave-of-sedition-arrests",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "1b4624a44f1692bf4d19",
+        "source": "reporter",
+        "title": "低迷的器捐率、擴大的移植缺口，台灣制度與社會觀念待翻轉",
+        "excerpt": "台灣器官移植技術成熟，移植存活率更居國際前段班，但器官捐贈率卻始終偏低，每百萬人口僅約4.87位器捐者，全球排名敬陪末座，近3年捐贈人數更陡坡式下滑。與此同時，數千名等待移植的病人陷入焦急卻漫長的等待⋯⋯",
+        "publishedAt": "2026-07-19T16:00:00Z",
+        "url": "https://www.twreporter.org/a/low-organ-donation-rates",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "下滑",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "ab22e89ae6cc0f945918",
+        "source": "reporter",
+        "title": "器官掮客詐騙實錄：《報導者》與「地下移植公司」的3週對話",
+        "excerpt": "《報導者》記者在洗腎病友社群，碰上器官移植仲介來敲門。在連續3週的對話中，對方保證可在中國進行腎臟移植，要價新台幣近300萬元，卻必須以虛擬貨幣支付⋯⋯",
+        "publishedAt": "2026-07-19T16:00:00Z",
+        "url": "https://www.twreporter.org/a/illegal-cross-border-organ-transplantation-scam",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "詐騙",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

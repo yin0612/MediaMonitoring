@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-07-26T06:19:33.494501Z",
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-07-20",
+    "items": [
+      {
+        "id": "e2023792e8e09c36d038",
+        "source": "cna",
+        "title": "金鼎獎| 新聞專題",
+        "excerpt": "",
+        "publishedAt": "2026-07-20T05:16:52Z",
+        "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE95ekhobjhyNjdPMktLZFZHc3ZGWUVOMHJ0eDF3ZmNmN0I1VkR1SUV3WVMzSDI3b2hyQ2J6NGVtNFdIWWF3SE5FNWhhVWFVZ19TbG1RdVY0aXVNbXBT?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}
