@@ -641,7 +641,14 @@ async function buildSnapshot(env) {
     const hasRecent = recent24Count(run.source.id) > 0;
     const pageSourceState = run.viaPages && !hasRecent ? pageSourceStates.get(run.source.id) : null;
     const accessMode = pageSourceState?.accessMode ?? run.accessMode;
-    const qualityItems = run.items.length ? run.items : sourceItems;
+    // Score the source's own 24-hour payload before global URL dedupe. A
+    // canonical URL can legitimately appear in two publishers' feeds; using
+    // the deduped dashboard list would erase one publisher's quality evidence.
+    const currentRunItems = run.items.filter((item) => {
+      const timestamp = Date.parse(item.publishedAt);
+      return Number.isFinite(timestamp) && timestamp >= cutoff && timestamp <= future;
+    });
+    const qualityItems = currentRunItems.length ? currentRunItems : sourceItems;
     const quality = assessSourceQuality(run.ok, qualityItems, accessMode, now);
     if (pagesSourceMapComplete && pageSourceState) {
       return {

@@ -890,6 +890,42 @@ test('Pages-first scheduled snapshot skips official RSS for complete fresh sourc
   }
 });
 
+test('scheduled source quality never scores Pages items outside the 24-hour window', async () => {
+  const originalFetch = globalThis.fetch;
+  const oldItem = {
+    id: 'era-pages-old-1',
+    source: 'era',
+    title: 'Old Pages item must not enter current quality window',
+    excerpt: 'old',
+    publishedAt: freshTimestamp(-26 * 60 * 60 * 1000),
+    url: 'https://www.eracom.com.tw/story/pages-old-1',
+  };
+  const pageStates = completePageSourceStates();
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.endsWith('/data/recent.json')) return Response.json({ data: { items: [oldItem] } });
+    if (url.endsWith('/data/sources.json')) {
+      return Response.json({ schemaVersion: '2.1.0', generatedAt: freshTimestamp(), data: { sources: pageStates } });
+    }
+    if (['keywords', 'entities', 'topics', 'events', 'meta'].some((name) => url.endsWith(`/data/${name}.json`))) {
+      return new Response('', { status: 503 });
+    }
+    throw new Error(`unexpected RSS fetch: ${url}`);
+  };
+
+  try {
+    const env = { SNAPSHOT: memoryKv(), ARCHIVE_BASE_URL: 'https://pages.example' };
+    await runScheduled(env);
+    const body = await (await worker.fetch(new Request('https://worker.example/api/data?name=sources'), env)).json();
+    const era = body.data.sources.find((source) => source.id === 'era');
+    assert.equal(era.itemCount, 0);
+    assert.equal(era.newestItemAt, null);
+    assert.equal(era.windowHours, 24);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('Pages-first scheduled snapshot falls back to official RSS for an incomplete source map', async () => {
   const originalFetch = globalThis.fetch;
   const officialUrls = NEWS_SOURCES.flatMap(
