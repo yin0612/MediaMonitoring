@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediaMonitoring 人工標註工具</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <p class="eyebrow">LOCAL ONLY · NO UPLOAD</p>
+        <h1>人工標註工具</h1>
+        <p>在這台電腦的瀏覽器中檢視新聞 metadata、填寫標註，並下載更新後的 JSONL。</p>
+      </header>
+
+      <section class="panel import-panel" aria-labelledby="import-title">
+        <h2 id="import-title">1. 載入本機檔案</h2>
+        <div class="file-grid">
+          <label class="file-field">
+            <span>待標註資料（必要）</span>
+            <input id="candidate-file" type="file" accept=".jsonl,application/json" />
+            <small>選擇 <code>annotation-candidates.jsonl</code></small>
+          </label>
+          <label class="file-field">
+            <span>機器建議（選填）</span>
+            <input id="machine-draft-file" type="file" accept=".jsonl,application/json" />
+            <small>選擇 <code>annotation-machine-draft.jsonl</code></small>
+          </label>
+        </div>
+        <p class="notice">Machine suggestions are references only. AI 建議不會自動寫入人工欄位，必須由標註者逐筆採用或修改後再儲存。</p>
+        <p id="import-status" class="status" aria-live="polite">尚未載入資料。</p>
+      </section>
+
+      <section id="workspace" class="workspace" hidden>
+        <aside class="panel sidebar" aria-label="標註進度與操作">
+          <h2>2. 標註模式</h2>
+          <label>
+            <span>寫入位置</span>
+            <select id="annotation-mode">
+              <option value="consensus">共識／正式標註</option>
+              <option value="annotator1">標註者 1（僅雙人標註列）</option>
+              <option value="annotator2">標註者 2（僅雙人標註列）</option>
+            </select>
+          </label>
+          <p id="mode-note" class="hint"></p>
+
+          <dl class="summary">
+            <div><dt>目前列</dt><dd id="row-position">—</dd></div>
+            <div><dt>正式完成</dt><dd id="completion-count">—</dd></div>
+            <div><dt>雙人完成</dt><dd id="double-count">—</dd></div>
+          </dl>
+
+          <div class="button-stack">
+            <button id="previous-row" type="button">上一筆</button>
+            <button id="next-row" type="button">下一筆</button>
+            <button id="download-jsonl" type="button">下載更新後 JSONL</button>
+          </div>
+          <p id="save-status" class="status" aria-live="polite"></p>
+        </aside>
+
+        <section class="content">
+          <article class="panel article-card" aria-labelledby="article-title">
+            <div class="article-meta">
+              <span id="article-split" class="badge"></span>
+              <span id="article-double" class="badge badge--accent"></span>
+              <span id="article-source"></span>
+              <time id="article-time"></time>
+            </div>
+            <h2 id="article-title"></h2>
+            <p id="article-excerpt" class="excerpt"></p>
+            <a id="article-link" target="_blank" rel="noreferrer noopener">開啟原始新聞連結</a>
+          </article>
+
+          <section id="machine-suggestion" class="panel machine-suggestion" hidden aria-labelledby="machine-title">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">OPTIONAL REFERENCE</p>
+                <h2 id="machine-title">機器建議</h2>
+              </div>
+              <button id="copy-machine-suggestion" type="button">帶入表單供人工覆核</button>
+            </div>
+            <p>此按鈕只把內容放入目前表單，尚未儲存；請檢查後按下「儲存本筆標註」。</p>
+            <pre id="machine-suggestion-content"></pre>
+          </section>
+
+          <form id="annotation-form" class="panel annotation-form">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">3. HUMAN REVIEW</p>
+                <h2>標註欄位</h2>
+              </div>
+              <button id="save-row" type="submit">儲存本筆標註</button>
+            </div>
+
+            <div class="field-grid">
+              <label>
+                <span>事件群組 ID *</span>
+                <input id="event-cluster" required placeholder="例如 event-fed-cook" />
+                <small>同一具體事件用相同 ID；僅大類相同不可合併。</small>
+              </label>
+              <label>
+                <span>文本語氣 *</span>
+                <select id="text-tone" required>
+                  <option value="">請選擇</option>
+                  <option value="positive">positive</option>
+                  <option value="neutral">neutral</option>
+                  <option value="negative">negative</option>
+                  <option value="uncertain">uncertain</option>
+                </select>
+                <small>描述文本語氣，不代表民意。</small>
+              </label>
+              <label>
+                <span>明確針對的對象 *</span>
+                <input id="target" required placeholder="沒有明確對象請填 uncertain" />
+              </label>
+              <label>
+                <span>對該對象的立場 *</span>
+                <select id="target-stance" required>
+                  <option value="">請選擇</option>
+                  <option value="positive">positive</option>
+                  <option value="neutral">neutral</option>
+                  <option value="negative">negative</option>
+                  <option value="uncertain">uncertain</option>
+                </select>
+              </label>
+            </div>
+
+            <fieldset>
+              <legend>主題 *（可複選）</legend>
+              <div class="choices" id="topic-choices">
+                <label><input type="checkbox" value="finance" /> finance／財經</label>
+                <label><input type="checkbox" value="politics" /> politics／政治</label>
+                <label><input type="checkbox" value="society" /> society／社會</label>
+                <label><input type="checkbox" value="weather" /> weather／天氣</label>
+                <label><input type="checkbox" value="international" /> international／國際</label>
+                <label><input type="checkbox" value="entertainment" /> entertainment／娛樂</label>
+                <label><input type="checkbox" value="other" /> other／其他</label>
+              </div>
+            </fieldset>
+
+            <label>
+              <span>實體（可留空，以逗號分隔）</span>
+              <input id="entities" placeholder="例如 川普, 聯準會" />
+              <small>只列出可明確辨識的 PERSON／ORG canonical 名稱，不猜測同名。</small>
+            </label>
+          </form>
+        </section>
+      </section>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

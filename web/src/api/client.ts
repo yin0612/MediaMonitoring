@@ -93,7 +93,7 @@ export async function requestManualRefresh(
     response = await fetch(`${apiBase}/api/refresh`, {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ turnstileToken: turnstileToken || null, mode }),
+    body: JSON.stringify({ turnstileToken: turnstileToken || null, mode }),
     });
   } catch {
     // 網路層失敗（Worker 未部署、DNS 解析不到、CORS 阻擋）。

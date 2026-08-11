@@ -156,6 +156,8 @@ npm run build
 
 `benchmarks/annotation-candidates.jsonl` 是由目前 archive 可重現產生的 1,000 筆分層候選集（train 700、dev 150、test 150），其中 100 筆保留雙人標註。檔案只提供待標註的文章與空白欄位；在人工完成 `eventCluster`、`topics`、`entities`、`textTone`、`target` 與 `targetStance` 前，不宣稱 Cohen's kappa 或 held-out macro-F1。
 
+不必直接手改 JSONL：可依 [本機人工標註工具](tools/annotation-app/README.md) 用瀏覽器逐筆檢視、儲存並下載 JSONL。工具不會上傳資料，且 `annotation-machine-draft.jsonl` 只會顯示為建議，不能自動變成人工標註。
+
 重新產生候選集：
 
 ```powershell
