@@ -119,3 +119,9 @@ def test_actions_are_pinned_and_manual_refresh_reports_its_terminal_state() -> N
     assert "WORKER_CALLBACK_TOKEN" in refresh_body
     assert "/api/refresh/callback" in refresh_body
     assert "refresh_id" in refresh_body
+
+
+def test_pages_artifact_records_the_source_commit():
+    body = REFRESH_WORKFLOW.read_text(encoding="utf-8")
+    assert "source-main-sha.txt" in body
+    assert "GITHUB_SHA" in body
