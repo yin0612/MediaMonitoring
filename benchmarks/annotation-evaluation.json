@@ -1,0 +1,35 @@
+{
+  "status": "ok",
+  "totalRows": 1000,
+  "humanLabelRows": 1000,
+  "heldOutHumanLabelRows": 150,
+  "missingHumanLabels": 0,
+  "requiredDoubleAnnotationRows": 100,
+  "doubleAnnotatedRows": 100,
+  "metrics": {
+    "eventCluster": {
+      "doubleAnnotatedRows": 100,
+      "cohenKappa": 0.621524,
+      "machineEvaluatedRows": 150,
+      "machineMacroF1": 0.056452
+    },
+    "textTone": {
+      "doubleAnnotatedRows": 100,
+      "cohenKappa": 0.795531,
+      "machineEvaluatedRows": 150,
+      "machineMacroF1": 0.329778
+    },
+    "target": {
+      "doubleAnnotatedRows": 100,
+      "cohenKappa": 0.502429,
+      "machineEvaluatedRows": 150,
+      "machineMacroF1": 0.05213
+    },
+    "targetStance": {
+      "doubleAnnotatedRows": 100,
+      "cohenKappa": 0.463912,
+      "machineEvaluatedRows": 150,
+      "machineMacroF1": 0.112565
+    }
+  }
+}

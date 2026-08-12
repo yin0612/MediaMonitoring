@@ -48,3 +48,11 @@ rows are complete, and computes macro-F1 on the held-out `test` split for
 machine suggestions against consensus human labels. It exits with
 code `2` and reports `insufficient_labels` until at least one row has completed
 human labels; it never writes or changes the official annotations.
+
+To reproduce the completed double-review evaluation with the machine draft:
+
+```powershell
+python scripts/evaluate_annotations.py `
+  --input benchmarks/annotation-double-reviewed.jsonl `
+  --machine-draft benchmarks/annotation-machine-draft.jsonl
+```

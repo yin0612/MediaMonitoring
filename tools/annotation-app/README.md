@@ -46,6 +46,19 @@ python scripts\merge_annotation_exports.py `
 
 第二位標註者不需要是 GitHub 協作者，也不需要登入任何帳號。
 
+### 本次匯入結果
+
+本次第一位標註者的原始人工標籤來自
+`benchmarks/annotation-candidates-reviewed.jsonl`；它原本使用正式欄位保存，
+因此已安全正規化為 `benchmarks/annotator1-reviewed.jsonl`。第二位標註者提供的
+檔案是 `benchmarks/annotator2-reviewed.jsonl`。兩份檔案合併後產生
+`benchmarks/annotation-double-reviewed.jsonl`，只新增 `annotator1`／`annotator2`
+巢狀欄位，不改寫原本的人工標籤。
+
+本次結果保存於 `benchmarks/annotation-evaluation.json`。四個分類欄位的 100 筆
+雙人標註皆完整，Cohen's kappa 為：eventCluster `0.621524`、textTone
+`0.795531`、target `0.502429`、targetStance `0.463912`。
+
 ## 評估
 
 把最後下載完成的共識檔放回 `benchmarks` 後執行：
