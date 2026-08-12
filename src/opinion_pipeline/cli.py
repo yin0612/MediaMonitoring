@@ -21,6 +21,7 @@ from time import monotonic
 
 from .analysis import build_entities, build_keywords, cluster_events, load_entity_lexicon, load_watch_config
 from .archive import coverage_window, dedupe_items, item_to_public, public_to_item
+from .archive_backfill import load_archive_backfill
 from .connectors.google_news import fetch_google_news
 from .connectors.html_listing import crawl_due, fetch_listing_source
 from .connectors.rss import _fetch_bytes, fetch_source
@@ -101,6 +102,24 @@ def write_json(path: Path, value: dict) -> None:
 def keep_allowed_sources(items: list, source_ids: set[str]) -> list:
     """Avoid restoring publishers that are no longer in the configured allowlist."""
     return [item for item in items if item.source in source_ids]
+
+
+def merge_retained_items(
+    current_items: list,
+    restored_items: list,
+    backfill_items: list,
+    now: datetime,
+    source_ids: set[str],
+) -> list:
+    """Merge live, restored, and public historical items within the 30-day window."""
+    cutoff = now - timedelta(days=30)
+    future_limit = now + FUTURE_TOLERANCE
+    allowed_backfill = keep_allowed_sources(backfill_items, source_ids)
+    return [
+        entry
+        for entry in dedupe_items(current_items + restored_items + allowed_backfill)
+        if cutoff <= entry.published_at <= future_limit
+    ]
 
 
 def prepare_trends_items(items: list[dict]) -> list[dict]:
@@ -498,6 +517,7 @@ def run(
     watch_config_path: Path = Path("config/watch_terms.yml"),
     entities_config_path: Path = Path("config/entities.yml"),
     sentiment_config_path: Path = Path("config/sentiment.yml"),
+    archive_backfill_path: Path = Path("config/archive_backfill.jsonl"),
 ) -> int:
     now = datetime.now(timezone.utc)
     generated_at = now.isoformat().replace("+00:00", "Z")
@@ -513,17 +533,12 @@ def run(
 
     current_items = [entry for run_ in runs for entry in run_["items"]]
     restored_items = keep_allowed_sources(restore_items(restore_base_url), set(sources_by_id))
-    cutoff = now - timedelta(days=30)
-    future_limit = now + FUTURE_TOLERANCE
-    items = [
-        entry
-        for entry in dedupe_items(current_items + restored_items)
-        if cutoff <= entry.published_at <= future_limit
-    ]
+    backfill_items, backfill_meta = load_archive_backfill(archive_backfill_path)
+    items = merge_retained_items(current_items, restored_items, backfill_items, now, set(sources_by_id))
     archive_coverage = coverage_window(items, now, days=30)
     ok_count = sum(1 for run_ in runs if run_["ok"])
     archive_status = "ok" if ok_count == len(runs) else ("partial" if ok_count else "stale")
-    stale = not current_items and bool(restored_items)
+    stale = not current_items and bool(restored_items or backfill_items)
 
     sentiment_lexicon = (
         load_sentiment_lexicon(sentiment_config_path) if sentiment_config_path.exists() else SentimentLexicon()
@@ -643,9 +658,12 @@ def run(
                     "archiveDays": 30,
                     "recentCap": RECENT_ITEMS_CAP,
                     "sourceCount": len(sources),
+                    "backfillItems": len(backfill_items),
+                    "backfillRetrievedAt": backfill_meta.get("retrievedAt"),
+                    "backfillMethod": backfill_meta.get("method"),
                     **archive_coverage,
                 },
-                "stateRestoreFailed": not bool(current_items or restored_items) and bool(restore_base_url),
+                "stateRestoreFailed": not bool(current_items or restored_items or backfill_items) and bool(restore_base_url),
             },
             generated_at,
         ),
@@ -660,6 +678,7 @@ def main() -> int:
     parser.add_argument("--restore-base-url", default="")
     parser.add_argument("--watch-config", default="config/watch_terms.yml")
     parser.add_argument("--entities-config", default="config/entities.yml")
+    parser.add_argument("--archive-backfill", default="config/archive_backfill.jsonl")
     args = parser.parse_args()
     return run(
         Path(args.config),
@@ -667,6 +686,8 @@ def main() -> int:
         args.restore_base_url,
         Path(args.watch_config),
         Path(args.entities_config),
+        Path("config/sentiment.yml"),
+        Path(args.archive_backfill),
     )
 
 
