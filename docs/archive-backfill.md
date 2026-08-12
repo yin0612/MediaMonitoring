@@ -11,7 +11,7 @@ pipeline 每次執行都會載入這個檔案，再和即時資料、Pages 上�
 ```powershell
 $env:PYTHONPATH = 'src'
 python scripts/build_archive_backfill.py `
-  --from-date 2026-07-15 `
+  --from-date 2026-07-13 `
   --to-date 2026-07-28 `
   --source-id cna `
   --source-id ltn `
