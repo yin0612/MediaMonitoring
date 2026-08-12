@@ -199,6 +199,35 @@ async function archiveItems(env, range = '24h') {
   }
 }
 
+function coverageFromItems(items, now, requestedDays) {
+  const timestamps = items
+    .map((item) => Date.parse(String(item?.publishedAt || '')))
+    .filter(Number.isFinite)
+    .filter((timestamp) => timestamp <= now + FUTURE_TOLERANCE_MS);
+  const requestedFromMs = now - requestedDays * DAY_MS;
+  const coveredDays = new Set(
+    timestamps
+      .filter((timestamp) => timestamp >= requestedFromMs)
+      .map((timestamp) => new Date(timestamp).toISOString().slice(0, 10)),
+  ).size;
+  return {
+    actualFrom: timestamps.length ? new Date(Math.min(...timestamps)).toISOString() : null,
+    actualTo: timestamps.length ? new Date(Math.max(...timestamps)).toISOString() : null,
+    articleCount: items.length,
+    coveredDays,
+  };
+}
+
+function coverageIsComplete(coverage, requestedDays, now) {
+  const requestedFromMs = now - requestedDays * DAY_MS;
+  const actualFromMs = Date.parse(coverage?.actualFrom || '');
+  const actualToMs = Date.parse(coverage?.actualTo || '');
+  return coverage?.articleCount > 0
+    && coverage.coveredDays >= requestedDays
+    && actualFromMs <= requestedFromMs + DAY_MS
+    && actualToMs >= now - DAY_MS;
+}
+
 /** 取 Pages recent.json（Actions 產出的近 24 小時清單）補齊 Worker 未即時抓取的 14 家來源。 */
 async function pagesRecentItems(env) {
   const base = archiveBase(env);
@@ -327,7 +356,22 @@ async function handleSearch(request, env, url) {
         queryHistoricalArticles(env.DB, input.range, now, input.query),
         queryHistoricalCoverage(env.DB, input.range, now),
       ]);
-      const matched = filterAndDedupe(indexed, input.query, input.range);
+      const requestedDays = input.range === '30d' ? 30 : 7;
+      let historicalItems = indexed;
+      let effectiveCoverage = historicalCoverage;
+      let pagesArchiveHealthy = true;
+      // D1 is authoritative when complete. If it only contains a partial
+      // retention window, merge the verified Pages archive for this account;
+      // this keeps a successful but incomplete D1 query from hiding history.
+      if (env.ARCHIVE_BASE_URL && !coverageIsComplete(historicalCoverage, requestedDays, now)) {
+        const pagesArchive = await archiveItems(env, input.range);
+        pagesArchiveHealthy = pagesArchive.status === 'ok' && pagesArchive.stale === false;
+        if (pagesArchive.items.length) {
+          historicalItems = [...indexed, ...pagesArchive.items];
+          effectiveCoverage = coverageFromItems(historicalItems, now, requestedDays);
+        }
+      }
+      const matched = filterAndDedupe(historicalItems, input.query, input.range);
       const items = matched.slice(0, MAX_SEARCH_ITEMS).map((item) => (
         item.sentiment ? item : withSentiment(item)
       ));
@@ -344,27 +388,22 @@ async function handleSearch(request, env, url) {
           itemCount: sourceCounts[source.id] || 0,
           errorCode: 'SOURCE_HEALTH_UNAVAILABLE',
         }));
-      const requestedDays = input.range === '30d' ? 30 : 7;
       const requestedFromMs = now - requestedDays * DAY_MS;
-      const actualFromMs = Date.parse(historicalCoverage.actualFrom || '');
-      const actualToMs = Date.parse(historicalCoverage.actualTo || '');
-      const coverageComplete = historicalCoverage.articleCount > 0
-        && historicalCoverage.coveredDays >= requestedDays
-        && actualFromMs <= requestedFromMs + DAY_MS
-        && actualToMs >= now - DAY_MS;
+      const coverageComplete = pagesArchiveHealthy
+        && coverageIsComplete(effectiveCoverage, requestedDays, now);
       return json(request, env, envelope({
         query: input.query,
         range: input.range,
         status: coverageComplete && Array.isArray(snapshotSources) ? 'ok' : 'partial',
-        stale: false,
+        stale: !pagesArchiveHealthy,
         coverage: {
           requestedFrom: new Date(requestedFromMs).toISOString(),
           requestedTo: new Date(now).toISOString(),
-          actualFrom: historicalCoverage.actualFrom,
-          actualTo: historicalCoverage.actualTo,
+          actualFrom: effectiveCoverage.actualFrom,
+          actualTo: effectiveCoverage.actualTo,
           complete: coverageComplete,
-          articleCount: historicalCoverage.articleCount,
-          coveredDays: historicalCoverage.coveredDays,
+          articleCount: effectiveCoverage.articleCount,
+          coveredDays: effectiveCoverage.coveredDays,
         },
         metrics: calculateMetrics(matched, input.range, now, NEWS_SOURCES.length),
         timeline: timelineFor(matched, input.range, now),

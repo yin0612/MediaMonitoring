@@ -600,6 +600,56 @@ test('30d search reads historical articles from D1 without live RSS fanout', asy
   }
 });
 
+test('30d search supplements an incomplete D1 window from the complete Pages archive', async () => {
+  const originalFetch = globalThis.fetch;
+  const now = Date.now();
+  const currentPublishedAt = new Date(now - 60 * 60 * 1000).toISOString();
+  const oldPublishedAt = new Date(now - 29 * 24 * 60 * 60 * 1000).toISOString();
+  const pagesItems = Array.from({ length: 30 }, (_, index) => ({
+    id: `pages-${index}`,
+    source: 'cna',
+    title: `台積電 archive ${index}`,
+    excerpt: '',
+    publishedAt: new Date(now - index * 24 * 60 * 60 * 1000).toISOString(),
+    url: `https://example.com/pages-${index}`,
+    sentiment: null,
+  }));
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    if (url.endsWith('/data/news-archive.json')) {
+      return Response.json({
+        schemaVersion: '2.1.0',
+        generatedAt: new Date(now).toISOString(),
+        data: { status: 'ok', stale: false, items: pagesItems },
+      });
+    }
+    throw new Error(`unexpected network request: ${url}`);
+  };
+  const env = {
+    ARCHIVE_BASE_URL: 'https://pages.example',
+    DB: queryOnlyD1([{
+      id: 'd1-current', source_id: 'cna', title: '台積電 d1', excerpt: '',
+      published_at: Date.parse(currentPublishedAt), canonical_url: 'https://example.com/d1', sentiment_json: null,
+    }]),
+  };
+  try {
+    const response = await worker.fetch(
+      new Request('https://worker.example/api/search?q=台積電&range=30d'),
+      env,
+    );
+    const body = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(body.data.status, 'partial');
+    assert.equal(body.data.coverage.complete, true);
+    assert.equal(body.data.coverage.coveredDays, 30);
+    assert.ok(body.data.items.some((item) => item.id === 'd1-current'));
+    assert.ok(body.data.items.some((item) => item.id === 'pages-29'));
+    assert.equal(body.data.coverage.actualFrom, oldPublishedAt);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('30d search falls back to the full archive with explicit incomplete coverage when D1 fails', async () => {
   const originalFetch = globalThis.fetch;
   const requested = [];
