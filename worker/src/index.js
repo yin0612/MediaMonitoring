@@ -184,7 +184,46 @@ async function archiveItems(env, range = '24h') {
       file: name,
     };
   };
+  const loadDailyArchive = async () => {
+    const indexResponse = await fetch(`${base}/data/news-archive-index.json`);
+    if (!indexResponse.ok) throw new Error(`HTTP_${indexResponse.status}`);
+    const index = await indexResponse.json();
+    const days = Array.isArray(index?.data?.days) ? index.data.days : [];
+    const requestedDays = range === '30d' ? 30 : 7;
+    const cutoff = Date.now() - requestedDays * DAY_MS;
+    const selected = days.filter((day) => {
+      const timestamp = Date.parse(`${String(day?.date || '')}T23:59:59Z`);
+      return Number.isFinite(timestamp) && timestamp >= cutoff - DAY_MS;
+    });
+    if (!selected.length) throw new Error('EMPTY_ARCHIVE_INDEX');
+    const chunks = await Promise.all(selected.map(async (day) => {
+      const file = String(day?.file || '').replace(/^\/+/, '');
+      const response = await fetch(`${base}/data/${file}.json`);
+      if (!response.ok) throw new Error(`HTTP_${response.status}`);
+      const body = await response.json();
+      return {
+        items: Array.isArray(body?.data?.items) ? body.data.items : [],
+        status: body?.data?.status,
+        stale: body?.data?.stale,
+        generatedAt: body?.generatedAt,
+      };
+    }));
+    return {
+      items: chunks.flatMap((chunk) => chunk.items),
+      generatedAt: typeof index?.generatedAt === 'string' ? index.generatedAt : null,
+      status: chunks.every((chunk) => chunk.status === 'ok') ? 'ok' : 'partial',
+      stale: chunks.some((chunk) => chunk.stale !== false),
+      file: 'news-archive-daily',
+    };
+  };
   try {
+    if (preferred === 'news-archive') {
+      try {
+        return await loadDailyArchive();
+      } catch {
+        return await load(preferred);
+      }
+    }
     return await load(preferred);
   } catch {
     if (preferred === 'news-archive') {

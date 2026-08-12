@@ -650,6 +650,62 @@ test('30d search supplements an incomplete D1 window from the complete Pages arc
   }
 });
 
+test('30d Pages fallback reads daily chunks instead of the oversized compatibility archive', async () => {
+  const originalFetch = globalThis.fetch;
+  const now = Date.now();
+  const days = Array.from({ length: 30 }, (_, index) => {
+    const publishedAt = new Date(now - index * 24 * 60 * 60 * 1000).toISOString();
+    return {
+      date: publishedAt.slice(0, 10),
+      file: `news-archive/${publishedAt.slice(0, 10)}`,
+      item: {
+        id: `daily-${index}`, source: 'cna', title: `台積電 daily ${index}`, excerpt: '',
+        publishedAt, url: `https://example.com/daily-${index}`, sentiment: null,
+      },
+    };
+  });
+  const requested = [];
+  globalThis.fetch = async (input) => {
+    const url = String(input);
+    requested.push(url);
+    if (url.endsWith('/data/news-archive-index.json')) {
+      return Response.json({
+        schemaVersion: '2.1.0', generatedAt: new Date(now).toISOString(),
+        data: { status: 'ok', stale: false, days: days.map(({ date, file }) => ({ date, file })) },
+      });
+    }
+    const day = days.find(({ file }) => url.endsWith(`/data/${file}.json`));
+    if (day) {
+      return Response.json({
+        schemaVersion: '2.1.0', generatedAt: new Date(now).toISOString(),
+        data: { status: 'ok', stale: false, items: [day.item] },
+      });
+    }
+    throw new Error(`unexpected network request: ${url}`);
+  };
+  const env = {
+    ARCHIVE_BASE_URL: 'https://pages.example',
+    DB: queryOnlyD1([{
+      id: 'd1-current', source_id: 'cna', title: '台積電 d1', excerpt: '',
+      published_at: now, canonical_url: 'https://example.com/d1', sentiment_json: null,
+    }]),
+  };
+  try {
+    const response = await worker.fetch(
+      new Request('https://worker.example/api/search?q=台積電&range=30d'),
+      env,
+    );
+    const body = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(body.data.coverage.complete, true);
+    assert.equal(body.data.coverage.coveredDays, 30);
+    assert.ok(requested.some((url) => url.endsWith('/data/news-archive-index.json')));
+    assert.ok(!requested.some((url) => url.endsWith('/data/news-archive.json')));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('30d search falls back to the full archive with explicit incomplete coverage when D1 fails', async () => {
   const originalFetch = globalThis.fetch;
   const requested = [];
