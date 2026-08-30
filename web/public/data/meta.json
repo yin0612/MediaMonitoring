@@ -1,16 +1,39 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-09T07:32:55.617361Z",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-07-31T08:53:10Z",
+    "actualTo": "2026-08-30T05:50:16Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
   "data": {
     "status": "ok",
-    "lastFastAt": "2026-08-09T07:32:55.617361Z",
-    "lastDeepAt": "2026-08-09T07:32:55.617361Z",
+    "lastFastAt": "2026-08-30T05:52:16.059879Z",
+    "lastDeepAt": "2026-08-30T05:52:16.059879Z",
     "methodVersion": "news-heat-v4-37-sources",
     "scheduleDaysUntilPause": null,
     "coverage": {
       "keywordWindowHours": 24,
       "trendBucketMinutes": 60,
-      "archiveDays": 7
+      "fastScheduleMinutes": 5,
+      "deepScheduleMinutes": 15,
+      "archiveDays": 30,
+      "recentCap": 800,
+      "sourceCount": 37,
+      "backfillItems": 622,
+      "backfillRetrievedAt": "2026-08-12T10:49:36.558914Z",
+      "backfillMethod": "google-news-rss-historical-query",
+      "actualFrom": "2026-07-31T08:53:10Z",
+      "actualTo": "2026-08-30T05:50:16Z",
+      "coveredDays": 17,
+      "complete": false
     },
     "stateRestoreFailed": false
   }

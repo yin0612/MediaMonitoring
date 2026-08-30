@@ -1,0 +1,469 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-28T04:49:43Z",
+    "actualTo": "2026-08-28T23:59:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-28",
+    "items": [
+      {
+        "id": "2cc3abccc284bbf3bbbf",
+        "source": "thenewslens",
+        "title": "CIA局長密訪莫斯科，普亭真的會對北約動手嗎？看懂波羅的海「門檻測試」",
+        "excerpt": "俄國對波羅的海的威脅是心理戰，旨在迫使西方接受其烏克蘭停火條件。因常規戰力耗損，莫斯科真正手段並非全面入侵，而是低於戰爭門檻的灰色地帶衝突。",
+        "publishedAt": "2026-08-28T23:59:00Z",
+        "url": "https://www.thenewslens.com/article/269879",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "衝突",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "5e2b1fd5be6bd87cf3c7",
+        "source": "thenewslens",
+        "title": "姊妹情誼變質？從中國「全女電梯」實驗，看當代社群媒體的性別對立與攻防",
+        "excerpt": "本文藉「全女電梯」事件，剖析「全女空間」論述。作者主張，議題核心應為對權力結構的批判，而非對女性本質的辯論。文章回溯其政治脈絡，並警示當代論述將議題窄化、滑向性別本質主義的風險。",
+        "publishedAt": "2026-08-28T23:58:00Z",
+        "url": "https://www.thenewslens.com/article/269798",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "風險",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "7c06e972fd08f0f2e7f4",
+        "source": "thenewslens",
+        "title": "從救世主到滅絕者：面對「AI三難困境」，美中角力下的全球治理算盤",
+        "excerpt": "Sebastian Mallaby 剖析 AI 引發之人類定位危機與文明挑戰，並提出「AI 三難困境」——於創新、國安與公眾焦慮間平衡，警示現有治理框架不足應對。",
+        "publishedAt": "2026-08-28T23:57:00Z",
+        "url": "https://www.thenewslens.com/article/269789",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "危機",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "c2d5b59e716f0d2c5112",
+        "source": "thenewslens",
+        "title": "合理使用能否凌駕授權契約？從Google Gemini著作權訴訟看AI訓練的違約界線",
+        "excerpt": "將合法授權著作挪用於 AI 訓練，已逾越原契約目的。此舉能否主張「合理使用」以規避侵權與違約責任，成為科技發展與私法自治間的關鍵爭點，挑戰既有授權機制。",
+        "publishedAt": "2026-08-28T23:56:00Z",
+        "url": "https://www.thenewslens.com/article/269866",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "f0b0b58a2f7b09eec208",
+        "source": "thenewslens",
+        "title": "從免費入園走向使用者付費，「國家公園基金」怎麼收、如何花成考驗",
+        "excerpt": "《國家公園法》修法擬增訂基金，為徵收生態保護區保育費建立法源。收入專款專用於園區保育，落實使用者付費，惟費率、對象與監督機制等細節仍待議。",
+        "publishedAt": "2026-08-28T23:55:00Z",
+        "url": "https://www.thenewslens.com/article/269876",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "3f54e2c25755fd193c70",
+        "source": "technews",
+        "title": "Meta 前團隊新創 Perceptron 推出視覺 AI 模型 Isaac 0.5，讓機器人學會「看懂與思考」",
+        "excerpt": "由 Meta 前科學家創辦的 AI 新創公司 Perceptron，正全力將視覺人工智慧（Visual AI） […]",
+        "publishedAt": "2026-08-28T23:30:12Z",
+        "url": "https://technews.tw/2026/08/29/perceptron-ai-isaac-0-5/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "64b4895f9ba3aac33945",
+        "source": "technews",
+        "title": "課本可能寫錯了？最新衛星數據挑戰傳統「雙隆起」潮汐模型",
+        "excerpt": "一項最新研究利用大規模觀測資料，挑戰了長期沿用的潮汐教科書模型。研究團隊指出，地球海洋未必會在月球引力的作用下 […]",
+        "publishedAt": "2026-08-28T16:00:35Z",
+        "url": "https://technews.tw/2026/08/29/satellite-challenges-double-bulge/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "720d1b0df0f1e6f9f524",
+        "source": "technews",
+        "title": "肝臟其實也有生理時鐘！精準服藥時間或使代謝疾病療法更有效",
+        "excerpt": "美國德州大學聖安東尼奧健康科學中心（UT Health San Antonio）發現，肝臟並非持續運作的代謝器 […]",
+        "publishedAt": "2026-08-28T16:00:28Z",
+        "url": "https://technews.tw/2026/08/29/your-liver-runs-on-a-clock-and-it-could-change-how-we-treat-metabolic-disease/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "dec266ba6f95c1760d4b",
+        "source": "cna",
+        "title": "起訴書揭露光澤診所系統性偷拍多年 幹部可隨時看影像",
+        "excerpt": "（中央社記者曹亞沿新北28日電）根據台灣新北地方檢察署起訴書，光澤診所集團會在部分分店展店時就規劃設偽裝型監視器，再由配合廠商安裝，且集團高層及資訊幹部等可透過手機、電腦隨時觀覽影像。",
+        "publishedAt": "2026-08-28T15:15:47Z",
+        "url": "https://www.cna.com.tw/news/asoc/202608280337.aspx",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "起訴",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "2ced1445afc5b78391f2",
+        "source": "cna",
+        "title": "新竹棒球場案林智堅不起訴 營造、監造4人緩起訴",
+        "excerpt": "（中央社記者郭宣彣新竹市28日電）台灣新竹地方檢察署今天說，新竹市立棒球場工程案，查出營造、監造公司4人涉在施工日誌及監造紀錄登載不實，均予緩起訴；前新竹市長林智堅等遭告發涉圖利等則予不起訴。",
+        "publishedAt": "2026-08-28T14:59:42Z",
+        "url": "https://www.cna.com.tw/news/asoc/202608280335.aspx",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "起訴",
+              "polarity": "positive",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "085d632179da940ed736",
+        "source": "cti",
+        "title": "中選會沒收鞭刑公投 詹江村轟：民進黨到底是有多害怕？",
+        "excerpt": "中選會今（28）日審議立法院三讀通過的「重啟核電」、「鞭刑入法」、「交通罰鍰專款專用」3項公投案，結果主委游盈隆宣布，委員會決議「鞭刑公投」不符合《公投法》不成案。國民黨桃園市議員詹江村發文痛批。",
+        "publishedAt": "2026-08-28T14:54:51Z",
+        "url": "https://ctinews.com/news/items/pRnYmdR6nY",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "通過",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "97d9f63be452264cecab",
+        "source": "cti",
+        "title": "盧韓傅連線護國！通過藍版無人機條例 盧秀燕籲中央「副署、清廉」",
+        "excerpt": "立法院三讀通過《強化國防自主暨無人載具產業發展條例》，為國民黨團提案版本，定6年內編列2400億元，全力扶植國內無人載具產業。台中市長盧秀燕今（28）日喊話行政院盡速副署。",
+        "publishedAt": "2026-08-28T14:46:47Z",
+        "url": "https://ctinews.com/news/items/Z3WgjEpGnK",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "通過",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "b46686d846f135dd475d",
+        "source": "cti",
+        "title": "新竹棒球場案傳偵查終結！林智堅不起訴 掩埋廢棄物「疏忽遺落」",
+        "excerpt": "新竹市長高虹安日前宣布新竹市立棒球場改善工程已進入最後驗收階段，且有提出民刑事訴訟究責。媒體披露，前新竹市長林智堅被控涉嫌偽造文書罪，新竹地檢署已處分不起訴。",
+        "publishedAt": "2026-08-28T14:08:33Z",
+        "url": "https://ctinews.com/news/items/qXWQmD1jWR",
+        "sentiment": {
+          "label": "positive",
+          "score": 0.5,
+          "matched": [
+            {
+              "term": "起訴",
+              "polarity": "positive",
+              "weight": 2
+            },
+            {
+              "term": "改善",
+              "polarity": "positive",
+              "weight": 1
+            },
+            {
+              "term": "涉嫌",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "6b0413426cdbc2f93d12",
+        "source": "cna",
+        "title": "新北泰山南亞塑膠廠鐵捲門故障 1人觸電送醫不治",
+        "excerpt": "（中央社記者曹亞沿新北28日電）新北泰山區南亞塑膠工業股份有限公司廠區內1名外包廠商人員今天下班時，由於鐵捲門故障，排除過程中不慎觸電，當場失去呼吸心跳，送醫不治，事故詳細原因待進一步釐清。",
+        "publishedAt": "2026-08-28T13:39:18Z",
+        "url": "https://www.cna.com.tw/news/asoc/202608280325.aspx",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "53f5db6d391080e97fbb",
+        "source": "cti",
+        "title": "陳其邁酸蔣萬安「問A答B」 台北市政府反擊：現在有文字獄？",
+        "excerpt": "台北市長蔣萬安今（28）日在議會被民進黨議員質詢時，以高雄九如橋爭議舉例，高雄市長陳其邁對此批「問A答B、牽拖別人」，台北市政府再回應質疑，現在有文字獄？不能提民進黨執政縣市？",
+        "publishedAt": "2026-08-28T13:38:35Z",
+        "url": "https://ctinews.com/news/items/pRnYmd6MnY",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "質疑",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "f78dc732a59997c12d9c",
+        "source": "coolloud",
+        "title": "肯亞 AI 熱潮：以外包工人與環境為代價",
+        "excerpt": "2026/08/28 12:00:00苦勞報導陳韋綸苦勞網特約編輯素有「矽谷草原」（Silicon Savannah）之稱的肯亞首都奈洛比，已成為非洲科技創新與數位產業的重要據點。隨著近年全球人工智慧（AI）產業迅速發展，肯亞也企圖成為非洲 AI 產業的領頭羊，投入數位基礎建設、…",
+        "publishedAt": "2026-08-28T12:45:55Z",
+        "url": "https://www.coolloud.org.tw/node/99513",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "1eff10e1cdb6e446ff45",
+        "source": "cti",
+        "title": "應曉薇女兒代母出征！應佳妤PO首支競選影片 喊話：配票難代替信任",
+        "excerpt": "2026九合一大選倒數3個月，台北市議員應曉薇女兒應佳妤，在京華城案審理時出名，今年「代母出征」，預計下週正式登記參選台北中正萬華區市議員，她的臉書今（28）日發布競選影片。",
+        "publishedAt": "2026-08-28T12:38:31Z",
+        "url": "https://ctinews.com/news/items/89xpj65LWe",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "b42d8612dc598f371b0d",
+        "source": "cti",
+        "title": "新北市長選舉網路民調出爐！李四川支持度54.1%領先蘇巧慧45.5%",
+        "excerpt": "新北市長選舉為2026選戰焦點，國民黨參選人李四川對決民進黨參選人蘇巧慧勢均力敵，《壹蘋新聞網》進行網路民調，14萬人投票結果顯示，李四川支持度54.1%，蘇巧慧支持度45.5%。",
+        "publishedAt": "2026-08-28T12:02:21Z",
+        "url": "https://ctinews.com/news/items/qXWQmDLOWR",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "支持",
+              "polarity": "positive",
+              "weight": 1
+            },
+            {
+              "term": "領先",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "582c70b1c24d1e55d007",
+        "source": "cna",
+        "title": "反貪腐公約國家報告國際審查 肯定台灣41項最佳實務",
+        "excerpt": "（中央社記者劉世怡台北28日電）聯合國反貪腐公約第三次國家報告國際審查今天落幕，5名國際專家肯定台灣41點最佳實務作法，並提78點挑戰建議，認為台灣已建立成熟且具創新性的廉政治理體系。",
+        "publishedAt": "2026-08-28T11:38:10Z",
+        "url": "https://www.cna.com.tw/news/asoc/202608280296.aspx",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "肯定",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "b042b9b64564bca8d647",
+        "source": "cti",
+        "title": "中選會沒收鞭刑公投 國民黨團轟「朕不准的，你不能投？」",
+        "excerpt": "中選會今（28）日審議立法院三讀通過的「重啟核電」、「鞭刑入法」、「交通罰鍰專款專用」3項公投案，結果主委游盈隆宣布，委員會決議「鞭刑公投」不符合《公投法》不成案。國民黨團對此發新聞稿質疑。",
+        "publishedAt": "2026-08-28T11:13:40Z",
+        "url": "https://ctinews.com/news/items/Z3WgjE3lnK",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": [
+            {
+              "term": "質疑",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "通過",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "acaf1012949afe862660",
+        "source": "tfc",
+        "title": "EZ WAY爭議，如何演變成「海關失守」陰謀論？",
+        "excerpt": "「EZ WAY」APP因個資與產權爭議，最終被延伸為「癱瘓海關、毒品入侵」的陰謀論。專家澄清，系統只是實名委任工具，停擺僅影響行政效率，海關仍會透過分流、X光與緝毒犬層層把關；邊境真正的考驗，其實是暴增的包裹量與走私大宗化。然而，當一項行政工具的爭議，遇上滑坡謬誤與大眾恐懼，究竟…",
+        "publishedAt": "2026-08-28T08:28:50Z",
+        "url": "https://tfc-taiwan.org.tw/ez-way-controversy-customs-conspiracy/",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "停擺",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "21330df579d51e13b175",
+        "source": "nownews",
+        "title": "第1頁 - 尼泊爾洪災 | 焦點",
+        "excerpt": "",
+        "publishedAt": "2026-08-28T06:18:53Z",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBOM1hsdUVoNFlLT1hORkFNTjhFclliVnB1bzBpWDJKZ2xrZXhXc21QRW9HVEJseGNLYm1KSFM3U1lIMk5DQXphWkM3ZTJKQUVaQXFsN0NPLWVTc1d0Y2RrUm05OHFyLWJMYUVfX2VGUmg?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "25a4a3224c211ee59b8c",
+        "source": "coolloud",
+        "title": "【2026年7月捐款徵信】",
+        "excerpt": "2026/08/05 12:00:00苦勞報導苦勞工作站 收入 45,950 單筆捐款 1,200 定時定額捐款 44,750 其他收入 支出 62,758 人事費 薪資 45,658 勞保費 6,838 健保費 4,691 退休金提撥 3,584 事務費 文具影印耗材費 水電費…",
+        "publishedAt": "2026-08-28T04:51:50Z",
+        "url": "https://www.coolloud.org.tw/node/99512",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "c86a6d696c30170a556f",
+        "source": "coolloud",
+        "title": "【2026年6月捐款徵信】",
+        "excerpt": "2026/07/06 12:00:00苦勞報導苦勞工作站 收入 47,983 單筆捐款 3,060 定時定額捐款 43,750 其他收入 1,173 支出 252,894 人事費 薪資 45,658 勞保費 13,676 健保費 4,691 退休金提撥 3,584*2 事務費 文…",
+        "publishedAt": "2026-08-28T04:51:17Z",
+        "url": "https://www.coolloud.org.tw/node/99511",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "1cc458286d6820b1db36",
+        "source": "coolloud",
+        "title": "【2026年5月捐款徵信】",
+        "excerpt": "2026/06/05 12:00:00苦勞報導苦勞工作站 收入 47,450 單筆捐款 2,100 定時定額捐款 45,350 其他收入 支出 52,393 人事費 薪資 45,658 勞保費 健保費 4,691 退休金提撥 事務費 文具影印耗材費 水電費 租賦費 旅運費 行政手…",
+        "publishedAt": "2026-08-28T04:50:44Z",
+        "url": "https://www.coolloud.org.tw/node/99510",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "8c1846299cacb3933f41",
+        "source": "coolloud",
+        "title": "【2026年4月捐款徵信】",
+        "excerpt": "2026/05/05 12:00:00苦勞報導苦勞工作站 收入 48,950 單筆捐款 2,100 定時定額捐款 46,850 其他收入 支出 129,159 人事費 薪資 45,658 勞保費 6,838 健保費 4,691 退休金提撥 3,584 事務費 文具影印耗材費 水電…",
+        "publishedAt": "2026-08-28T04:49:43Z",
+        "url": "https://www.coolloud.org.tw/node/99509",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

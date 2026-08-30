@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-20T12:58:13Z",
+    "actualTo": "2026-08-20T12:58:13Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-20",
+    "items": [
+      {
+        "id": "cc73e251d56ccd833856",
+        "source": "coolloud",
+        "title": "《尼古喵喵》下架：董氏基金會的極端保護主義",
+        "excerpt": "2026/08/20 12:00:00苦勞評論王顥中苦勞網記者8 月 20 日，董氏基金會以接獲家長檢舉為由，指控日本動畫《尼古喵喵》（ヤニねこ）頻繁呈現吸菸畫面、清楚露出真實菸品品牌，甚至「示範」如何將打火機放進菸盒，要求主管機關依法查處、儘速下架。 國健署隨後表示，相關內容「…",
+        "publishedAt": "2026-08-20T12:58:13Z",
+        "url": "https://www.coolloud.org.tw/node/99503",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

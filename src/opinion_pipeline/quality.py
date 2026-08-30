@@ -30,9 +30,7 @@ def assess_source_quality(
     fallback = access_mode != "official-rss"
     if not transport_ok:
         status = "error"
-    elif not items:
-        status = "empty"
-    elif fallback or excerpt_rate < 0.6 or (age_hours is not None and age_hours > 6):
+    elif age_hours is not None and age_hours > 24:
         status = "degraded"
     else:
         status = "ok"

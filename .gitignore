@@ -7,6 +7,9 @@ __pycache__/
 # Environment & local tools
 .env
 .env.local
+.venv/
+.venv311/
+*.zip
 bin_tools/
 .uv_python/
 

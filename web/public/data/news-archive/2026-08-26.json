@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-26T03:01:04Z",
+    "actualTo": "2026-08-26T16:00:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-26",
+    "items": [
+      {
+        "id": "39d8ed69f36ecad9e617",
+        "source": "reporter",
+        "title": "陳垣崇案、翁啟惠案後法規大幅鬆綁，技轉利益衝突誰來守門？",
+        "excerpt": "政府近年不斷鼓勵學研機構將研究成果申請專利、技轉，並成立衍生新創公司，但法規鬆綁、促進研究成果產業化的同時，不少學校的利益揭露、迴避與審查，卻仍停留在形式上的書面揭露與存查。",
+        "publishedAt": "2026-08-26T16:00:00Z",
+        "url": "https://www.twreporter.org/a/managing-conflicts-of-interest-in-academic-tech-transfer",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "衝突",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "836b0f333979a053d4de",
+        "source": "reporter",
+        "title": "不明針劑揭開的外泌體亂象：地下施打、療效話術與新興生醫監管難題",
+        "excerpt": "從細胞治療詐騙案、北醫台大技轉侵權案，都揭開了在台灣尚未核可治療用的「外泌體」製劑已成最浮濫、也最難以把關的醫療工具。食藥署推出臨床試驗指引、搶發首張藥證，究竟能導正市場，還是讓尚未成熟的技術取得合法化捷徑？",
+        "publishedAt": "2026-08-26T16:00:00Z",
+        "url": "https://www.twreporter.org/a/unidentified-injections-expose-exosome-chaos",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "詐騙",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "d64c15c92e1bf1b8791d",
+        "source": "reporter",
+        "title": "國家級生醫計畫如何捲入細胞治療詐騙案？北醫台大狀告自家教授侵占研究成果冰山之下",
+        "excerpt": "去年底北醫與台大控告自家教授涉嫌將胎盤幹細胞計畫內容外洩，由業者朱寶麒在美國申請臨床試驗，影響潛在新藥獲利122億元。記者訪查發現，此案除涉及研究侵權爭議外、朱寶麒亦捲入未核可的幹細胞和外泌體詐騙案⋯⋯",
+        "publishedAt": "2026-08-26T16:00:00Z",
+        "url": "https://www.twreporter.org/a/tmu-ntu-national-biomedical-projects-involved-in-infringement-lawsuit",
+        "sentiment": {
+          "label": "negative",
+          "score": -0.6,
+          "matched": [
+            {
+              "term": "詐騙",
+              "polarity": "negative",
+              "weight": 2
+            },
+            {
+              "term": "涉嫌",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "獲利",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "9826fdb94ef3d73cad4b",
+        "source": "coolloud",
+        "title": "《大起義》：為什麼是 1936？",
+        "excerpt": "2026/08/26 12:00:00苦勞評論王顥中苦勞網記者談論巴勒斯坦，主流敘事往往從 1948 年以色列建國與「大劫難」（Nakba）為起點。然而，導演安娜瑪麗・雅西爾（Annemarie Jacir）執導的《大起義》（Palestine 36），將焦點拉回 1936–19…",
+        "publishedAt": "2026-08-26T09:50:40Z",
+        "url": "https://www.coolloud.org.tw/node/99507",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "1d6b9fafff46871555ff",
+        "source": "tfc",
+        "title": "從輝達AI帝國到5美元鍵盤，台灣憑什麼通吃全球？知識工作者如何建立不可取代性？",
+        "excerpt": "AI帶動輝達營收暴增，台灣科技供應鏈成關鍵。黃欽勇認為與其批評產業傾斜，不如創新模式賺科技業的錢，DIGITIMES更以AI打造高價情報服務。 〈從輝達AI帝國到5美元鍵盤，台灣憑什麼通吃全球？知識工作者如何建立不可取代性？〉這篇文章最早發佈於《台灣事實查核中心》。",
+        "publishedAt": "2026-08-26T03:01:04Z",
+        "url": "https://tfc-taiwan.org.tw/digitimes-ai-tsmc-nvidia/",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "批評",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

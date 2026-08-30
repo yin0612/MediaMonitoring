@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-14T05:57:21Z",
+    "actualTo": "2026-08-14T16:00:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-14",
+    "items": [
+      {
+        "id": "e122bd3e3bc30fd483a6",
+        "source": "tfc",
+        "title": "【喵喵小考題】20260815-20260816",
+        "excerpt": "點選下圖按鈕開始遊戲 👉遊戲傳送門：https://view.genially.com/6a7ab6e9d55... 〈【喵喵小考題】20260815-20260816〉這篇文章最早發佈於《台灣事實查核中心》。",
+        "publishedAt": "2026-08-14T16:00:00Z",
+        "url": "https://tfc-taiwan.org.tw/game_20260815_20260816/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "cb5befe2f14fdc0acb38",
+        "source": "tfc",
+        "title": "破解釣魚信招數 詐團利用政府網站轉寄功能 假冒「.gov.tw」網域",
+        "excerpt": "最近傳出有網友收到宣稱「統一發票中獎」的通知，並附上一個來路不明的網址。奇怪的是，這封信的寄件者是「財政部賦稅署入口網」，而且電郵地址更以「.gov.tw」結尾。查核中心拆解詐騙手法，揭穿這封「官方郵件」背後的偽裝。 〈破解釣魚信招數 詐團利用政府網站轉寄功能 假冒「.gov.t…",
+        "publishedAt": "2026-08-14T05:57:21Z",
+        "url": "https://tfc-taiwan.org.tw/phishing-email-scams-gov-tw-domain-spoofing/",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "詐騙",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

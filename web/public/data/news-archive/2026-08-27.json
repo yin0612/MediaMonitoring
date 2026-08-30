@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-27T09:53:50Z",
+    "actualTo": "2026-08-27T16:00:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-27",
+    "items": [
+      {
+        "id": "10fb5c64a6350d736a21",
+        "source": "reporter",
+        "title": "爸爸殺了媽媽，但孩子還是擔心他被槍決：《我的爸爸是死刑犯》中，那些死刑存廢辯論時不會出現的對話",
+        "excerpt": "《我的爸爸是死刑犯》導演李家驊說，即便受訪者與台灣大多數人一樣認為殺人就要償命，但他們在情感上，仍難以完全接受至親被執行槍決。這集，導演將分享那些無法放入影片，卻影響自己很深的對話和場景。",
+        "publishedAt": "2026-08-27T16:00:00Z",
+        "url": "https://www.twreporter.org/a/podcast-2026-08-28",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "cc19e187f1fe90d5e187",
+        "source": "mnews",
+        "title": "山洪",
+        "excerpt": "",
+        "publishedAt": "2026-08-27T14:28:29Z",
+        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9ENDVkRVFscXY0Q1dYbmkxR2JWRVFfb0tHbFZRRE8ySVJuaUE2NjhwN1A0ZXRaM0tYNm5RQzdVc3NBWjc0MWFjanNGdXZ1NG94UVJMOU9B?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "4fb33acac858f69eb7e8",
+        "source": "coolloud",
+        "title": "草間彌生：我從沒想過女性主義",
+        "excerpt": "2026/08/27 12:00:00苦勞評論王顥中苦勞網記者草間彌生在 8 月 14 日於東京一間醫院辭世，享壽 97 歲。各地訃聞開始回顧她不同時期的知名作品：水玉、南瓜、無限鏡屋，從日本出走紐約，在男性主導的戰後藝術世界爭取位置，晚年成為全球最知名、商業市場也最成功的女性藝…",
+        "publishedAt": "2026-08-27T09:53:50Z",
+        "url": "https://www.coolloud.org.tw/node/99508",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "成功",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-22T16:00:00Z",
+    "actualTo": "2026-08-22T16:00:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-22",
+    "items": [
+      {
+        "id": "070feffb9d131e702524",
+        "source": "reporter",
+        "title": "望入緬甸青年革命最深處：叢林醫護撐起的反抗前線，與瀕臨極限的逆風戰爭",
+        "excerpt": "隨著中國加強支援軍政府、緬甸反抗陣營陷入派系分裂，彈藥與海外援助也逼近極限，這場一度被認為即將推翻軍政府的青年革命，如今正走到攸關存亡的轉折點。「有些人認為，我們的國家至少還要再經歷一整個世代的地獄。」",
+        "publishedAt": "2026-08-22T16:00:00Z",
+        "url": "https://www.twreporter.org/a/photo-myanmar-spring-revolution-jungle-medics-civil-war",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

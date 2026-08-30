@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-07-31T08:53:10Z",
+    "actualTo": "2026-07-31T08:53:10Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-07-31",
+    "items": [
+      {
+        "id": "93ce988bb30c7afee368",
+        "source": "coolloud",
+        "title": "從「中東巴黎」到戰火前線：在地視角下的黎巴嫩與真主黨",
+        "excerpt": "2026/08/11 12:00:00公共論壇劉璧嘉黎巴嫩常被稱為「中東巴黎」：開放、自由、消費繁華，有強韌的公民社會與不眠的夜生活。然而，這些看似讚美的詞彙，也可能限制我們對黎巴嫩的理解。當以色列大規模攻擊黎巴嫩時，許多人仍以為那只是邊境衝突、只是針對真主黨、只是針對一個與「中…",
+        "publishedAt": "2026-07-31T08:53:10Z",
+        "url": "https://www.coolloud.org.tw/node/99497",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "衝突",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
