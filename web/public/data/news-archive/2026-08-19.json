@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-19T08:27:10Z",
+    "actualTo": "2026-08-19T16:00:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-19",
+    "items": [
+      {
+        "id": "cb80f7d2ffde90968be2",
+        "source": "reporter",
+        "title": "劍橋史上最年輕黑人教授阿爾戴之死：論文風暴、新聞殺人爭議，和英國DEI戰爭裡的伊卡洛斯",
+        "excerpt": "「就算我們對眼前發生的荒謬狀況感到生氣，把所有不滿傾瀉到阿爾戴這一個人的身上也絕對不公平⋯⋯無論如何，每一個新聞事件之後都是一個活生生的人，這本該是我們在每一則報導前，首先應該讓大家理解的前提。」",
+        "publishedAt": "2026-08-19T16:00:00Z",
+        "url": "https://www.twreporter.org/a/hello-world-2026-08-20",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "92378848fd1b8fd09374",
+        "source": "coolloud",
+        "title": "巴勒斯坦家庭遭圍困逾一週 以色列如何利用墾殖者暴力推動西岸迫遷？",
+        "excerpt": "2026/08/19 12:00:00苦勞報導陳韋綸苦勞網特約編輯當全球目光因戰爭聚焦加薩，以色列在被佔領約旦河西岸的墾殖者暴力也持續升級。8 月 9 日起，一群以色列墾殖者包圍納布盧斯（Nablus）南方庫斯拉鎮（Qusra）的三戶巴勒斯坦家庭，切斷道路、水電與物資補給。受困者…",
+        "publishedAt": "2026-08-19T09:18:22Z",
+        "url": "https://www.coolloud.org.tw/node/99502",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "升級",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "5114143bccaa6847d7e1",
+        "source": "tfc",
+        "title": "AI時代，該教什麼？「人才方舟計畫」解鎖四大能力",
+        "excerpt": "AI時代，學校該教什麼？教育部長用「AI人才方舟計劃」，提出四大能力。 〈AI時代，該教什麼？「人才方舟計畫」解鎖四大能力〉這篇文章最早發佈於《台灣事實查核中心》。",
+        "publishedAt": "2026-08-19T08:27:10Z",
+        "url": "https://tfc-taiwan.org.tw/ai-education-government/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

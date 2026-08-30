@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-23T08:00:37Z",
+    "actualTo": "2026-08-23T16:00:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-23",
+    "items": [
+      {
+        "id": "7d7e02dad0d6650ef6ac",
+        "source": "reporter",
+        "title": "打開政治檔案裡的祕密人生故事：療癒被監控的創傷，找回被遺忘的家人",
+        "excerpt": "國家檔案局保管的政治檔案，97%已數位化上網開放大眾申請應用，光是今年，不到7月就有約600案申請。來者有尋找真相的受害者與研究者、承辦「祭祀公業」案件的律師、進行田調的藝文創作者，還有主張自己入獄是受政治迫害的黑道大哥⋯⋯",
+        "publishedAt": "2026-08-23T16:00:00Z",
+        "url": "https://www.twreporter.org/a/how-political-archives-bring-forgotten-stories-to-life",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "cc78274e348d10db0644",
+        "source": "coolloud",
+        "title": "冰角新聞 EP89｜巴勒斯坦家庭遭圍困：以色列如何和暴民合作",
+        "excerpt": "2026/08/23 12:00:00公共論壇冰角新聞 ​🔥 以色列墾殖者，為什麼可以把巴勒斯坦人逼出自己的家？ ​ 最近，約旦河西岸庫斯拉的三戶巴勒斯坦家庭，被以色列墾殖者包圍超過一週。有人不敢出門，有人的水電遭切斷，連從美國趕回家的屋主掛出巨大美國國旗，也沒能阻止墾殖者闖入土…",
+        "publishedAt": "2026-08-23T08:00:37Z",
+        "url": "https://www.coolloud.org.tw/node/99505",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "合作",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

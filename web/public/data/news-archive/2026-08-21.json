@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-21T16:00:00Z",
+    "actualTo": "2026-08-21T16:00:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-21",
+    "items": [
+      {
+        "id": "a01b2c8a2503dfc296a3",
+        "source": "reporter",
+        "title": "追星一甲子，無怨也無悔──訪第一代追星族葉金杏",
+        "excerpt": "「雖不清楚電影是怎麼拍的，但想到它帶給人的歡笑與淚水，才想要對電影這個老朋友付出心意。」自幼著迷電影，在葉金杏漫長的追星史中，有與影人情比姊妹的情誼，對電影、影人之愛，成為她漂泊人生的溫暖支柱。",
+        "publishedAt": "2026-08-21T16:00:00Z",
+        "url": "https://www.twreporter.org/a/saturday-features-film-yeh-chin-shing",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-25T16:00:00Z",
+    "actualTo": "2026-08-25T16:00:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-25",
+    "items": [
+      {
+        "id": "fcb40f5157a1918c1e9c",
+        "source": "reporter",
+        "title": "原來綠色青色都是Green！台灣師資在澳洲教華語，不只是與簡體主流對決，更以「文化包容」突圍市場",
+        "excerpt": "本集節目將直擊澳洲華語教育的第一線，從華裔移民歷史到政策發展，探討台灣的華語教學如何在資源有限的現實下，透過僑民社群與包容多元的教學策略，在澳洲突圍而出。",
+        "publishedAt": "2026-08-25T16:00:00Z",
+        "url": "https://www.twreporter.org/a/podcast-2026-08-26",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

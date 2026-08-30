@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-24T00:09:49Z",
+    "actualTo": "2026-08-24T16:00:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-24",
+    "items": [
+      {
+        "id": "5ab835ddec7710062afe",
+        "source": "reporter",
+        "title": "從山神、鹿群到雲豹：陳芯宜走了20年，抵達《雲在兩千米》",
+        "excerpt": "陳芯宜在VR作品裡呈現的一層又一層的世界，成了她探索夢境與現實、過去與現在、生與死之間模糊界線的最佳載體，並在《雲在兩千米》中更加發揚光大。從威尼斯到台北，許多觀眾毫無心理準備地被觸動而流淚，特別是看到那隻明明知道真實並不存在的台灣雲豹，觸動了心底某段傷逝之情⋯⋯",
+        "publishedAt": "2026-08-24T16:00:00Z",
+        "url": "https://www.twreporter.org/a/interview-the-clouds-are-two-thousand-meters-up-singing-chen",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "fc072bef775554e62e0c",
+        "source": "coolloud",
+        "title": "平反陳幸妤之後：媒體只是換個女人獵巫？",
+        "excerpt": "2026/08/24 12:00:00苦勞評論王顥中苦勞網記者陳幸妤最近又成為新聞人物了。 8 月 12 日，她在前夫趙建銘的骨科診所 Google 頁面留下一星負評，公開兩人已經離婚，也指控趙建銘長年對家庭不聞不問、與診所護理師關係曖昧。此後，她對媒體有問必答，從財產、子女教育…",
+        "publishedAt": "2026-08-24T09:15:53Z",
+        "url": "https://www.coolloud.org.tw/node/99506",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "aefbba05b19e0a3494ad",
+        "source": "tfc",
+        "title": "【2026/8/17-2026/8/23】闢謠TOP10",
+        "excerpt": "過去一週，台灣社群傳言樣態多元，包含AI生成影片、地方食安傳言，到冒用知名品牌的詐騙與長年流傳的健康謠言等。其中，有AI生成內容講述地方特產有「10大地雷」，利用原本就容易引發焦慮的食安議題，再創社群話題。 〈【2026/8/17-2026/8/23】闢謠TOP10〉這篇文章最早…",
+        "publishedAt": "2026-08-24T08:15:26Z",
+        "url": "https://tfc-taiwan.org.tw/top10_20260817_20260823/",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "詐騙",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "564fa14ea20faf1b3db8",
+        "source": "tfc",
+        "title": "【徵才】教育部門 – 教育專員／助理教育專員（約聘）",
+        "excerpt": "台灣事實查核中心誠徵教育專員／助理教育專員。 〈【徵才】教育部門 – 教育專員／助理教育專員（約聘）〉這篇文章最早發佈於《台灣事實查核中心》。",
+        "publishedAt": "2026-08-24T04:48:23Z",
+        "url": "https://tfc-taiwan.org.tw/job-offer-tfc-coordinator-education/",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      },
+      {
+        "id": "d2b337cf52d8b3986c14",
+        "source": "tfc",
+        "title": "【徵才】教育部門 – 影音編輯工讀生",
+        "excerpt": "台灣事實查核中心教育部門誠徵影音編輯工讀生，歡迎全台大專院校傳播相關科系，或未來想從事相關產業工作的人！ 〈【徵才】教育部門 – 影音編輯工讀生〉這篇文章最早發佈於《台灣事實查核中心》。",
+        "publishedAt": "2026-08-24T04:37:48Z",
+        "url": "https://tfc-taiwan.org.tw/job-offer-video-editor-part-time/",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "歡迎",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "b5f2fd1b595fb6f7e9ec",
+        "source": "moneydj",
+        "title": "Tema健康護理AI主動型ETF-ETF持股狀況",
+        "excerpt": "",
+        "publishedAt": "2026-08-24T00:09:49Z",
+        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5sR2Vha182R3J2QmlnczMtSXVsaUFVOWRmVWFsVUYxUjJzRm8tSG8yNXM2a3h6MG9BVkxLb2V5YjFDbzRuQVNicVhfYVotejNiN0RkTjgyMzlfUUR0d3d1b2xnQ3l1RzE5U2plV1RhRDA4YmpsREJZ?oc=5",
+        "sentiment": {
+          "label": "neutral",
+          "score": 0.0,
+          "matched": []
+        }
+      }
+    ]
+  }
+}

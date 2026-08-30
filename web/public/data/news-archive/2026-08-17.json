@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-17T08:59:17Z",
+    "actualTo": "2026-08-17T09:54:35Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-17",
+    "items": [
+      {
+        "id": "c10cd2365a3662453f8e",
+        "source": "tfc",
+        "title": "【2026/8/10-2026/8/16】闢謠TOP10",
+        "excerpt": "回顧上週熱門傳言，主要集中在健康陰謀論、挪用舊聞的政治傳言，以及不斷翻新的投資與釣魚詐騙。 〈【2026/8/10-2026/8/16】闢謠TOP10〉這篇文章最早發佈於《台灣事實查核中心》。",
+        "publishedAt": "2026-08-17T09:54:35Z",
+        "url": "https://tfc-taiwan.org.tw/top10_20260810_20260816/",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "詐騙",
+              "polarity": "negative",
+              "weight": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "294d4a6119c94213d263",
+        "source": "coolloud",
+        "title": "以反父權之名重新規訓女人： 從女巫店爭議重訪「女權—性權」之爭",
+        "excerpt": "2026/08/17 12:00:00苦勞評論王顥中苦勞網記者女巫店最近在 Threads 上「爆紅」了。其以性器官與性暗示命名的菜單，被幾名以女性主義立場發言的脆友稱為「全台最噁餐酒館」，批評這些菜名「低俗當有趣，和女性主義 0 關聯」，甚至將之比擬為性騷擾、暴露狂與男性凝視。…",
+        "publishedAt": "2026-08-17T08:59:17Z",
+        "url": "https://www.coolloud.org.tw/node/99501",
+        "sentiment": {
+          "label": "negative",
+          "score": -1.0,
+          "matched": [
+            {
+              "term": "批評",
+              "polarity": "negative",
+              "weight": 1
+            },
+            {
+              "term": "爭議",
+              "polarity": "negative",
+              "weight": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

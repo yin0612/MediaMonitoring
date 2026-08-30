@@ -1,6 +1,18 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-09T07:32:55.617361Z",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": null,
+    "actualTo": "2026-08-30T05:52:16.059879Z"
+  },
+  "quality": {
+    "status": "experimental"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
   "data": {
     "stale": false,
     "experimental": true,
@@ -9,221 +21,233 @@
         "id": "org-1",
         "name": "國民黨",
         "type": "ORG",
-        "mentions": 39
+        "mentions": 59
       },
       {
         "id": "org-2",
         "name": "民進黨",
         "type": "ORG",
-        "mentions": 38
+        "mentions": 45
       },
       {
         "id": "person-3",
         "name": "蔣萬安",
         "type": "PERSON",
-        "mentions": 34
+        "mentions": 44
       },
       {
         "id": "org-4",
-        "name": "中央氣象署",
+        "name": "民眾黨",
         "type": "ORG",
-        "mentions": 32
+        "mentions": 26
       },
       {
         "id": "person-5",
         "name": "沈伯洋",
         "type": "PERSON",
-        "mentions": 14
+        "mentions": 26
       },
       {
-        "id": "org-6",
-        "name": "行政院",
-        "type": "ORG",
-        "mentions": 14
+        "id": "person-6",
+        "name": "川普",
+        "type": "PERSON",
+        "mentions": 20
       },
       {
         "id": "org-7",
-        "name": "台積電",
+        "name": "立法院",
         "type": "ORG",
-        "mentions": 10
+        "mentions": 18
       },
       {
-        "id": "person-8",
+        "id": "org-8",
+        "name": "總統府",
+        "type": "ORG",
+        "mentions": 16
+      },
+      {
+        "id": "person-9",
+        "name": "鄭麗文",
+        "type": "PERSON",
+        "mentions": 15
+      },
+      {
+        "id": "person-10",
         "name": "柯文哲",
+        "type": "PERSON",
+        "mentions": 14
+      },
+      {
+        "id": "person-11",
+        "name": "黃國昌",
+        "type": "PERSON",
+        "mentions": 14
+      },
+      {
+        "id": "org-12",
+        "name": "中央氣象署",
+        "type": "ORG",
+        "mentions": 12
+      },
+      {
+        "id": "org-13",
+        "name": "國防部",
+        "type": "ORG",
+        "mentions": 11
+      },
+      {
+        "id": "person-14",
+        "name": "盧秀燕",
         "type": "PERSON",
         "mentions": 10
       },
       {
-        "id": "org-9",
+        "id": "org-15",
+        "name": "輝達",
+        "type": "ORG",
+        "mentions": 10
+      },
+      {
+        "id": "org-16",
         "name": "外交部",
         "type": "ORG",
         "mentions": 9
       },
       {
-        "id": "person-10",
-        "name": "川普",
+        "id": "person-17",
+        "name": "賴瑞隆",
         "type": "PERSON",
         "mentions": 9
       },
       {
-        "id": "org-11",
-        "name": "內政部",
-        "type": "ORG",
-        "mentions": 8
-      },
-      {
-        "id": "org-12",
-        "name": "民眾黨",
-        "type": "ORG",
-        "mentions": 8
-      },
-      {
-        "id": "org-13",
-        "name": "衛福部",
-        "type": "ORG",
-        "mentions": 8
-      },
-      {
-        "id": "person-14",
-        "name": "賴清德",
-        "type": "PERSON",
-        "mentions": 8
-      },
-      {
-        "id": "person-15",
-        "name": "賴瑞隆",
-        "type": "PERSON",
-        "mentions": 8
-      },
-      {
-        "id": "person-16",
-        "name": "鄭麗文",
-        "type": "PERSON",
-        "mentions": 8
-      },
-      {
-        "id": "org-17",
-        "name": "立法院",
+        "id": "org-18",
+        "name": "中油",
         "type": "ORG",
         "mentions": 7
       },
       {
-        "id": "person-18",
+        "id": "org-19",
+        "name": "中選會",
+        "type": "ORG",
+        "mentions": 7
+      },
+      {
+        "id": "person-20",
         "name": "侯友宜",
         "type": "PERSON",
-        "mentions": 6
+        "mentions": 7
       },
       {
-        "id": "org-19",
-        "name": "鴻海",
+        "id": "org-21",
+        "name": "台積電",
         "type": "ORG",
-        "mentions": 6
+        "mentions": 7
       },
       {
-        "id": "org-20",
-        "name": "特斯拉",
+        "id": "org-22",
+        "name": "高雄市政府",
         "type": "ORG",
         "mentions": 5
       },
       {
-        "id": "org-21",
-        "name": "亞馬遜",
-        "type": "ORG",
-        "mentions": 4
-      },
-      {
-        "id": "org-22",
-        "name": "台中市政府",
-        "type": "ORG",
-        "mentions": 4
-      },
-      {
         "id": "org-23",
-        "name": "台北市政府",
+        "name": "OpenAI",
         "type": "ORG",
         "mentions": 4
       },
       {
         "id": "org-24",
-        "name": "台鐵",
+        "name": "交通部",
         "type": "ORG",
         "mentions": 4
       },
       {
-        "id": "person-25",
-        "name": "徐巧芯",
-        "type": "PERSON",
+        "id": "org-25",
+        "name": "台北市政府",
+        "type": "ORG",
         "mentions": 4
       },
       {
         "id": "person-26",
-        "name": "盧秀燕",
+        "name": "王毅",
         "type": "PERSON",
         "mentions": 4
       },
       {
         "id": "org-27",
-        "name": "Google",
+        "name": "蘋果",
         "type": "ORG",
-        "mentions": 3
+        "mentions": 4
       },
       {
         "id": "org-28",
-        "name": "Meta",
+        "name": "行政院",
         "type": "ORG",
-        "mentions": 3
+        "mentions": 4
       },
       {
-        "id": "org-29",
-        "name": "OpenAI",
-        "type": "ORG",
-        "mentions": 3
+        "id": "person-29",
+        "name": "賴清德",
+        "type": "PERSON",
+        "mentions": 4
       },
       {
         "id": "org-30",
-        "name": "中油",
+        "name": "台鐵",
         "type": "ORG",
         "mentions": 3
       },
       {
         "id": "org-31",
-        "name": "交通部",
+        "name": "富邦金",
         "type": "ORG",
         "mentions": 3
       },
       {
-        "id": "org-32",
-        "name": "國防部",
-        "type": "ORG",
+        "id": "person-32",
+        "name": "澤倫斯基",
+        "type": "PERSON",
         "mentions": 3
       },
       {
         "id": "org-33",
-        "name": "海巡署",
+        "name": "特斯拉",
         "type": "ORG",
         "mentions": 3
       },
       {
         "id": "org-34",
-        "name": "緯創",
+        "name": "財政部",
         "type": "ORG",
         "mentions": 3
       },
       {
-        "id": "person-35",
-        "name": "黃國昌",
-        "type": "PERSON",
+        "id": "org-35",
+        "name": "陸委會",
+        "type": "ORG",
         "mentions": 3
       },
       {
         "id": "person-36",
-        "name": "澤倫斯基",
+        "name": "馬斯克",
         "type": "PERSON",
-        "mentions": 2
+        "mentions": 3
       },
       {
         "id": "person-37",
-        "name": "韓國瑜",
+        "name": "黃仁勳",
+        "type": "PERSON",
+        "mentions": 3
+      },
+      {
+        "id": "org-38",
+        "name": "Google",
+        "type": "ORG",
+        "mentions": 2
+      },
+      {
+        "id": "person-39",
+        "name": "馬英九",
         "type": "PERSON",
         "mentions": 2
       }
@@ -232,142 +256,317 @@
       {
         "source": "org-1",
         "target": "org-2",
-        "weight": 19
-      },
-      {
-        "source": "org-4",
-        "target": "person-3",
-        "weight": 10
-      },
-      {
-        "source": "org-1",
-        "target": "person-16",
-        "weight": 7
-      },
-      {
-        "source": "org-2",
-        "target": "person-5",
-        "weight": 6
-      },
-      {
-        "source": "org-2",
-        "target": "person-15",
-        "weight": 5
-      },
-      {
-        "source": "org-1",
-        "target": "org-12",
-        "weight": 4
-      },
-      {
-        "source": "org-1",
-        "target": "org-17",
-        "weight": 4
-      },
-      {
-        "source": "org-2",
-        "target": "person-3",
-        "weight": 4
-      },
-      {
-        "source": "org-1",
-        "target": "org-6",
-        "weight": 3
-      },
-      {
-        "source": "person-8",
-        "target": "org-12",
-        "weight": 3
-      },
-      {
-        "source": "org-12",
-        "target": "person-26",
-        "weight": 3
-      },
-      {
-        "source": "org-12",
-        "target": "person-35",
-        "weight": 3
-      },
-      {
-        "source": "org-2",
-        "target": "org-17",
-        "weight": 3
-      },
-      {
-        "source": "org-2",
-        "target": "org-13",
-        "weight": 3
-      },
-      {
-        "source": "org-2",
-        "target": "person-16",
-        "weight": 3
+        "weight": 21,
+        "jaccard": 0.253,
+        "npmi": 0.579
       },
       {
         "source": "person-5",
         "target": "person-3",
-        "weight": 3
+        "weight": 17,
+        "jaccard": 0.321,
+        "npmi": 0.692
       },
       {
-        "source": "person-18",
-        "target": "person-16",
-        "weight": 2
+        "source": "org-1",
+        "target": "org-4",
+        "weight": 15,
+        "jaccard": 0.214,
+        "npmi": 0.583
+      },
+      {
+        "source": "org-2",
+        "target": "person-3",
+        "weight": 14,
+        "jaccard": 0.187,
+        "npmi": 0.505
+      },
+      {
+        "source": "org-2",
+        "target": "person-5",
+        "weight": 13,
+        "jaccard": 0.224,
+        "npmi": 0.592
+      },
+      {
+        "source": "org-1",
+        "target": "org-7",
+        "weight": 10,
+        "jaccard": 0.149,
+        "npmi": 0.528
+      },
+      {
+        "source": "org-4",
+        "target": "person-11",
+        "weight": 10,
+        "jaccard": 0.333,
+        "npmi": 0.742
+      },
+      {
+        "source": "org-1",
+        "target": "org-8",
+        "weight": 8,
+        "jaccard": 0.119,
+        "npmi": 0.485
+      },
+      {
+        "source": "org-1",
+        "target": "person-14",
+        "weight": 7,
+        "jaccard": 0.113,
+        "npmi": 0.536
+      },
+      {
+        "source": "org-1",
+        "target": "person-9",
+        "weight": 7,
+        "jaccard": 0.104,
+        "npmi": 0.46
+      },
+      {
+        "source": "org-1",
+        "target": "person-10",
+        "weight": 6,
+        "jaccard": 0.09,
+        "npmi": 0.432
+      },
+      {
+        "source": "org-1",
+        "target": "person-11",
+        "weight": 6,
+        "jaccard": 0.09,
+        "npmi": 0.432
+      },
+      {
+        "source": "org-2",
+        "target": "person-17",
+        "weight": 6,
+        "jaccard": 0.125,
+        "npmi": 0.561
+      },
+      {
+        "source": "person-10",
+        "target": "org-4",
+        "weight": 5,
+        "jaccard": 0.143,
+        "npmi": 0.53
+      },
+      {
+        "source": "org-4",
+        "target": "person-14",
+        "weight": 5,
+        "jaccard": 0.161,
+        "npmi": 0.589
+      },
+      {
+        "source": "org-2",
+        "target": "org-7",
+        "weight": 5,
+        "jaccard": 0.086,
+        "npmi": 0.39
+      },
+      {
+        "source": "org-8",
+        "target": "person-9",
+        "weight": 5,
+        "jaccard": 0.192,
+        "npmi": 0.603
+      },
+      {
+        "source": "person-3",
+        "target": "person-17",
+        "weight": 5,
+        "jaccard": 0.104,
+        "npmi": 0.515
+      },
+      {
+        "source": "org-19",
+        "target": "org-1",
+        "weight": 4,
+        "jaccard": 0.065,
+        "npmi": 0.451
+      },
+      {
+        "source": "org-19",
+        "target": "org-7",
+        "weight": 4,
+        "jaccard": 0.19,
+        "npmi": 0.651
+      },
+      {
+        "source": "person-14",
+        "target": "org-7",
+        "weight": 4,
+        "jaccard": 0.167,
+        "npmi": 0.591
+      },
+      {
+        "source": "person-14",
+        "target": "person-11",
+        "weight": 4,
+        "jaccard": 0.2,
+        "npmi": 0.634
       },
       {
         "source": "org-7",
-        "target": "org-19",
-        "weight": 2
+        "target": "org-8",
+        "weight": 4,
+        "jaccard": 0.133,
+        "npmi": 0.512
+      },
+      {
+        "source": "org-23",
+        "target": "person-36",
+        "weight": 3,
+        "jaccard": 0.75,
+        "npmi": 0.954
+      },
+      {
+        "source": "org-25",
+        "target": "person-3",
+        "weight": 3,
+        "jaccard": 0.067,
+        "npmi": 0.521
       },
       {
         "source": "org-1",
-        "target": "person-25",
-        "weight": 2
+        "target": "person-17",
+        "weight": 3,
+        "jaccard": 0.046,
+        "npmi": 0.343
       },
       {
-        "source": "org-1",
-        "target": "person-5",
-        "weight": 2
+        "source": "org-4",
+        "target": "org-7",
+        "weight": 3,
+        "jaccard": 0.073,
+        "npmi": 0.364
       },
       {
-        "source": "org-1",
-        "target": "person-26",
-        "weight": 2
+        "source": "org-4",
+        "target": "person-9",
+        "weight": 3,
+        "jaccard": 0.079,
+        "npmi": 0.393
       },
       {
-        "source": "org-1",
-        "target": "org-13",
-        "weight": 2
+        "source": "org-2",
+        "target": "person-14",
+        "weight": 3,
+        "jaccard": 0.058,
+        "npmi": 0.37
       },
       {
-        "source": "org-1",
-        "target": "person-15",
-        "weight": 2
+        "source": "org-7",
+        "target": "person-9",
+        "weight": 3,
+        "jaccard": 0.1,
+        "npmi": 0.452
       },
       {
-        "source": "org-1",
-        "target": "person-35",
-        "weight": 2
+        "source": "org-7",
+        "target": "person-11",
+        "weight": 3,
+        "jaccard": 0.103,
+        "npmi": 0.463
       },
       {
-        "source": "person-8",
+        "source": "org-19",
         "target": "org-2",
-        "weight": 2
+        "weight": 2,
+        "jaccard": 0.04,
+        "npmi": 0.34
       },
       {
-        "source": "org-12",
+        "source": "person-20",
+        "target": "org-1",
+        "weight": 2,
+        "jaccard": 0.031,
+        "npmi": 0.299
+      },
+      {
+        "source": "person-20",
         "target": "org-2",
-        "weight": 2
+        "weight": 2,
+        "jaccard": 0.04,
+        "npmi": 0.34
       },
       {
-        "source": "org-12",
-        "target": "org-6",
-        "weight": 2
+        "source": "org-1",
+        "target": "person-3",
+        "weight": 2,
+        "jaccard": 0.02,
+        "npmi": 0.021
       },
       {
-        "source": "org-17",
-        "target": "org-6",
-        "weight": 2
+        "source": "org-1",
+        "target": "org-28",
+        "weight": 2,
+        "jaccard": 0.033,
+        "npmi": 0.384
+      },
+      {
+        "source": "org-16",
+        "target": "org-34",
+        "weight": 2,
+        "jaccard": 0.2,
+        "npmi": 0.711
+      },
+      {
+        "source": "person-10",
+        "target": "org-2",
+        "weight": 2,
+        "jaccard": 0.035,
+        "npmi": 0.235
+      },
+      {
+        "source": "person-10",
+        "target": "person-39",
+        "weight": 2,
+        "jaccard": 0.143,
+        "npmi": 0.706
+      },
+      {
+        "source": "person-10",
+        "target": "person-11",
+        "weight": 2,
+        "jaccard": 0.077,
+        "npmi": 0.412
+      },
+      {
+        "source": "org-4",
+        "target": "org-2",
+        "weight": 2,
+        "jaccard": 0.029,
+        "npmi": 0.141
+      },
+      {
+        "source": "org-2",
+        "target": "org-28",
+        "weight": 2,
+        "jaccard": 0.043,
+        "npmi": 0.424
+      },
+      {
+        "source": "person-14",
+        "target": "org-8",
+        "weight": 2,
+        "jaccard": 0.083,
+        "npmi": 0.442
+      },
+      {
+        "source": "org-7",
+        "target": "org-28",
+        "weight": 2,
+        "jaccard": 0.1,
+        "npmi": 0.563
+      },
+      {
+        "source": "org-15",
+        "target": "person-37",
+        "weight": 2,
+        "jaccard": 0.182,
+        "npmi": 0.695
       }
     ]
   }

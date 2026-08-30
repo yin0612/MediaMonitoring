@@ -1,0 +1,4187 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": null,
+    "actualTo": "2026-08-30T05:52:16.059879Z"
+  },
+  "quality": {
+    "status": "experimental"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "stale": false,
+    "experimental": true,
+    "method": "title-3gram-jaccard-v1",
+    "events": [
+      {
+        "id": "event-20260830-260",
+        "representativeTitle": "冰島是否重啟入歐談判 公投結果預計30日揭曉",
+        "articleCount": 5,
+        "sourceCount": 5,
+        "startedAt": "2026-08-29T23:29:00Z",
+        "updatedAt": "2026-08-30T03:15:00Z",
+        "sourceCounts": {
+          "ctee": 1,
+          "mnews": 1,
+          "newtalk": 1,
+          "rti": 1,
+          "tvbs": 1
+        },
+        "sourceConcentration": 0.2,
+        "sourceTimeline": {
+          "ctee": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "mnews": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "newtalk": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "tvbs": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "冰島是否重啟入歐談判 公投結果預計30日揭曉",
+            "source": "mnews",
+            "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9uZVdBLU1qVnp5cEhHVURpa3Vsdkp0VDk1cUVEVW5TV21sM25IcnpVLThIVmhhb3BzYlQtQ3hRTmhqNjZHNEFJQjZBMFJiZ1JGdWRBbHVwdVrSAV5BVV95cUxQLVhJNkhZOWdBUkVaV3htclNyc05Td010cDJ1b2hKSVE4TENXc0dTRENIcXk5aUhmM1g1eXBxUDhSUXNFMkdiM012akkwMFdyLXFCbWljYW41aEZIWXJn?oc=5",
+            "publishedAt": "2026-08-30T03:15:00Z"
+          },
+          {
+            "title": "冰島是否重啟入歐談判公投結果預計30日揭曉- 國際",
+            "source": "ctee",
+            "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1FM3JpaWwzYzZKTUljb05BYk5lemxwUS05WHlSSjd4QzN2clV5Tk81cGdGa2xWb3lsUWpJbV9mNUc0MEJEOHloOHkxQldMemJDMTBPNDNKSXByQQ?oc=5",
+            "publishedAt": "2026-08-30T02:05:00Z"
+          },
+          {
+            "title": "冰島是否重啟入歐談判 公投結果預計30日揭曉",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056562",
+            "publishedAt": "2026-08-29T23:54:06Z"
+          },
+          {
+            "title": "[國際] 冰島是否重啟入歐談判 公投結果預計30日揭曉",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229092",
+            "publishedAt": "2026-08-29T23:30:09Z"
+          },
+          {
+            "title": "冰島是否重啟入歐談判 公投結果預計30日揭曉",
+            "source": "tvbs",
+            "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5sTjVmVzBQazRwbVhLaVJQTDdBY1lmVkQyNERaT2RtWXpZUXdMaVZkVEx0cGZHTWVkenBLU0FvRzZqaV9UZFU3MXJmNVNOLVE?oc=5",
+            "publishedAt": "2026-08-29T23:29:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-644",
+        "representativeTitle": "尼泊爾洪災釀682死 外長警告氣候變遷威脅加劇",
+        "articleCount": 4,
+        "sourceCount": 4,
+        "startedAt": "2026-08-29T17:16:01Z",
+        "updatedAt": "2026-08-29T22:57:16Z",
+        "sourceCounts": {
+          "cts": 1,
+          "newtalk": 1,
+          "rti": 1,
+          "tvbs": 1
+        },
+        "sourceConcentration": 0.25,
+        "sourceTimeline": {
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "newtalk": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "tvbs": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "尼泊爾洪災釀682死 外長警告氣候變遷威脅加劇",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056557",
+            "publishedAt": "2026-08-29T22:57:16Z"
+          },
+          {
+            "title": "[國際] 尼泊爾洪災釀682死 外長警告氣候變遷威脅加劇",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229085",
+            "publishedAt": "2026-08-29T22:07:33Z"
+          },
+          {
+            "title": "尼泊爾洪災釀682死 外長警告氣候變遷威脅加劇",
+            "source": "tvbs",
+            "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE4wV3Nqbmx3UXk0T1RkZHl1d0F0aE1JLWNMTUY1VGtyMmUtQ3V5bWJvY1Z1NlNFSVhlb0VhNDlkNzJ0XzFfTGJWRmZ2X0cwUnc?oc=5",
+            "publishedAt": "2026-08-29T19:49:00Z"
+          },
+          {
+            "title": "尼泊爾洪災釀682死外長警告氣候變遷威脅加劇- 國際",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9FWFk4cFhYVTkzS1dRc0h2TERheXhNRWFLNjVyaXB4bkh1SW1sT3h5dF94SXhOcWF2TmxmejdHZmZSUGhYWlQwT014SjJlMktjNGNmTWRvMzFzZGJyQ1NlZHJKRjN3YVczMjZxT3ZqMHpzb0dzYWVUZg?oc=5",
+            "publishedAt": "2026-08-29T17:16:01Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-50",
+        "representativeTitle": "美元最新與熱門精選文章",
+        "articleCount": 4,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T13:16:32Z",
+        "updatedAt": "2026-08-30T05:18:22Z",
+        "sourceCounts": {
+          "businesstoday": 4
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "businesstoday": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            },
+            {
+              "date": "2026-08-30",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "美元最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE4zY0RDOGhkNnItYkVyQ2xySGVwTWVlYXVzaDhIRWR1cWstYmdTZFd6ck5qbXVfWUdBSGtXakpYOWpFREpNWUZMY18weFA3ZWp6QWcweEs2dktmUVNrdHhVWUF1dlJxb3dZLS15QQ?oc=5",
+            "publishedAt": "2026-08-30T05:18:22Z"
+          },
+          {
+            "title": "群聯最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE00MC1paWhRME1hcURVQTVFS1ZCTVFFMUc0aWdoNGpZMmxYaFhfUXJaOGZhMzlqVjV2UGlIdENSMU1SejNkM3dJVUhyaHNVOTIxUlBMa1VEQTZIbGxtV1NLYV9wZ1JlOGhxTlZxTA?oc=5",
+            "publishedAt": "2026-08-30T02:21:06Z"
+          },
+          {
+            "title": "輝達最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1aSElQc29IMFZ2WjIwQURpQzlBVXlUeEtwZFlwRHprbFB4YWZDM2tGLUlOZHNrbkxWZGcxRnNjaTBlTFRmdWROZlhXMUtoR3B1MWFoZlE5eWdUTHZBY2J2Y0c3OGN3V0hER3pMZA?oc=5",
+            "publishedAt": "2026-08-29T14:45:59Z"
+          },
+          {
+            "title": "題材最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1IYURvaVhxUVI1UWNRT1gtRWpwQVgtdmk1eUcwcmxaWFRPT0pfZFFJUy04d0I5SFpDMTFfeHU5aXdjSFBiSVJMSXlpdmk3OHNWcXg1dTJwWUtiZkRZLWxqLVgxTDh5TUE4b1FXWA?oc=5",
+            "publishedAt": "2026-08-29T13:16:32Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1202",
+        "representativeTitle": "【新聞一點靈】9月新制！ 運動30小時換鮮食 國旅補助最高3千7 搶中秋烤肉商機！ 推巨無霸泰國蝦比手掌還大",
+        "articleCount": 3,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:39:48Z",
+        "updatedAt": "2026-08-29T08:00:00Z",
+        "sourceCounts": {
+          "era": 2,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.556,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "【新聞一點靈】9月新制！ 運動30小時換鮮食 國旅補助最高3千7 搶中秋烤肉商機！ 推巨無霸泰國蝦比手掌還大",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Life/2026-08-29/2451272.html",
+            "publishedAt": "2026-08-29T08:00:00Z"
+          },
+          {
+            "title": "【新聞一點靈】9月新制！ 運動30小時換鮮食 國旅補助最高3千7 搶中秋烤肉商機！ 推巨無霸泰國蝦比手掌還大 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBNeUdSdW1uYk9tM2VZcnFqQzRuSzhGSnFVa21uUE96TWxxNkQ0QzhHUDNsbVZOcUVyUFVJX2Q4TFJhVXFUdUJjbDVsaU1vWklTXzJvaHBuSUhvQV8zR2NLdV9YWFJHWkhWVTMwWGltNTdEOHB3bmc?oc=5",
+            "publishedAt": "2026-08-29T07:45:00Z"
+          },
+          {
+            "title": "9月新制！ 運動30小時換鮮食 國旅補助最高3千7 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE94d3F6eEczM3R5MGZBaHFKZklXd2NKRHBTTlNQbEN6LTIxTFJuVHpQS1BIZ2NLNlN2YkdmZlZ6QTRaR3BsZjVWU242YUtEbDlTaFUzYmp0bTlLWHFEYzFnRTRQdjZGVk91RkxNcUd5MXNBcy1aVmc?oc=5",
+            "publishedAt": "2026-08-29T06:39:48Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1301",
+        "representativeTitle": "廣告最新與熱門精選文章",
+        "articleCount": 3,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T06:38:44Z",
+        "updatedAt": "2026-08-29T06:46:09Z",
+        "sourceCounts": {
+          "businesstoday": 3
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "businesstoday": [
+            {
+              "date": "2026-08-29",
+              "mentions": 3
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "廣告最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9NVl9zb3ZvMmZfbGVzeXJfQ1Y5RHF2QXk4RHV5TW4wQVBxUzZqSDgzUFhEMlNvLVlXWVdCVFBBX0RhYlNoaHRESm5kTFd0SURJWUlnenVpSGY3Y2FGd3lualpHQklkZk45VHhPMQ?oc=5",
+            "publishedAt": "2026-08-29T06:46:09Z"
+          },
+          {
+            "title": "仁寶最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1nOTRqb1NNY3RDb0dxelFJd3NLSjhaS3RRYjk2ZVNHSkFSY29CRF9YcXFOSGQ1czIyZks3QllfOEhHSzYzQUU3MzJBRzJ4UmlwMFpoQTA3WnlpS3FRRllXemJ6XzhabDlfSk9EQg?oc=5",
+            "publishedAt": "2026-08-29T06:46:09Z"
+          },
+          {
+            "title": "謝金河最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBlaXlOYzhnUjNkQkZGRjk2Q3hlYjd1cEp0b2tBeEhWaU90ODRZMHZFOFZSSG1RSGhsbXNyRGJ1SVc0TWJTeUo0c25QNzhSa1BlaXBla1luQUtpWndVZmxFanBXRE9fV19qUDhWV1hoQm5ZYk44eHJFMg?oc=5",
+            "publishedAt": "2026-08-29T06:38:44Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-668",
+        "representativeTitle": "[國際] 尼泊爾與中國洪災增至682死 近3000人失蹤待搜救",
+        "articleCount": 3,
+        "sourceCount": 3,
+        "startedAt": "2026-08-29T13:55:34Z",
+        "updatedAt": "2026-08-29T21:53:01Z",
+        "sourceCounts": {
+          "cts": 1,
+          "ebc": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.333,
+        "sourceTimeline": {
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ebc": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[國際] 尼泊爾與中國洪災增至682死 近3000人失蹤待搜救",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229083",
+            "publishedAt": "2026-08-29T21:53:01Z"
+          },
+          {
+            "title": "尼泊爾與中國洪災增至682死 近3000人失蹤待搜救",
+            "source": "ebc",
+            "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5ucGRqd3hSaFJ6MThXNjNzMEgwWi1NcURqQk85QVFKVnhSQjhDdXk3S241QnVRQ0RkY2xwMWV2dkhZeVRrbnpMQXNSaE9FZ3VUT0VZ?oc=5",
+            "publishedAt": "2026-08-29T15:01:00Z"
+          },
+          {
+            "title": "尼泊爾與中國洪災增至682死近3000人失蹤待搜救- 國際",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5nWEY5TzBVYUtpVDdwZFFvMEhKajlKa2RSM0pEWk5KUE1PU2JDZjVPdDRmWlFabUFfd3BoREdscGo3RlNkazJKb2twY1UwcElfR0hoTlhIZlVWLUtPcEJFZnRUdnJDZDhyaXpXbVB2V2o4U2JuZGNyTA?oc=5",
+            "publishedAt": "2026-08-29T13:55:34Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-689",
+        "representativeTitle": "趙彭博上周第8洞戰績- 產業特刊- 工商時報",
+        "articleCount": 3,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T20:10:00Z",
+        "updatedAt": "2026-08-29T20:10:00Z",
+        "sourceCounts": {
+          "chinatimes": 3
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "chinatimes": [
+            {
+              "date": "2026-08-29",
+              "mentions": 3
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "趙彭博上周第8洞戰績- 產業特刊- 工商時報",
+            "source": "chinatimes",
+            "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9fX2Z4UEduSnlGMEEzVUsyRE1ORWtQb2NYUk9SMnFHc3pYYmJzN2ExcUE2Ymo3bGFEeWl5LS1vVkFsZy1wVDdXTk16eFcxNzZ2eDJYYTBmZGRDZTlvQUtybWc4WnhsV0FDVnU0?oc=5",
+            "publishedAt": "2026-08-29T20:10:00Z"
+          },
+          {
+            "title": "李俊緯上周第8洞戰績- 產業特刊- 工商時報",
+            "source": "chinatimes",
+            "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE12aXA3X0pZaWh4Y2R0UDZMQ2gyU3VDN3U1SW1acFZpbXJpNUNRYmNOUy1wdDhobTgyNXo0UEItWjg1N3BTYWRqR18takxvd3NXVHczdDEzQllkeXhONjJSSTJwTlI1OG5HeVkw?oc=5",
+            "publishedAt": "2026-08-29T20:10:00Z"
+          },
+          {
+            "title": "張貽程上周第8洞戰績- 產業特刊- 工商時報",
+            "source": "chinatimes",
+            "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9OMmtyc3VFWUpQQUo0MVdNQVJiaUd3cTNFWmI5eTZHV2JCVFRjMnp5ems0UUx5aVk2VWQ2WDExc0ZmYkZ6UXZVMHBVZ3lZT09rWEgxVjkxOUVyeU9BcmJZMmhrbUwzUGZjODBZ?oc=5",
+            "publishedAt": "2026-08-29T20:10:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-759",
+        "representativeTitle": "外交部116年預算 10億推史瓦帝尼「台灣產業園區」",
+        "articleCount": 3,
+        "sourceCount": 3,
+        "startedAt": "2026-08-29T11:45:54Z",
+        "updatedAt": "2026-08-29T16:38:00Z",
+        "sourceCounts": {
+          "cna": 1,
+          "ettoday": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.333,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ettoday": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "外交部116年預算 10億推史瓦帝尼「台灣產業園區」",
+            "source": "ettoday",
+            "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBab1NuSndfaEhoQVYyd0lTa2FiY3VuMk1xdlpLdVYxbG5CN1dObVJfR3cxVUhvdWpiZ0tqbF9TZ1hMVlBEVk9HLTRVSG9IOFRpZDZ2aTFuS3NHWFNuT0HSAUtBVV95cUxQRTFTd0hnX21mZm80ZTRaRUJGdG1xUjdfcWk0LUJHNzNUQXRBemo5Ty1mUTNCVGU3dmpfWGJfNDlRZXVySkk3b3hwVlE?oc=5",
+            "publishedAt": "2026-08-29T16:38:00Z"
+          },
+          {
+            "title": "[政治] 外交部116年預算 10億推史瓦帝尼台灣產業園區",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229069",
+            "publishedAt": "2026-08-29T12:04:28Z"
+          },
+          {
+            "title": "外交部116年預算 10億推動史瓦帝尼台灣產業園區",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aipl/202608290186.aspx",
+            "publishedAt": "2026-08-29T11:45:54Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-898",
+        "representativeTitle": "[政治] 尼泊爾洪災 外交部：已向尼國表達願助救災和重建",
+        "articleCount": 3,
+        "sourceCount": 3,
+        "startedAt": "2026-08-29T12:32:08Z",
+        "updatedAt": "2026-08-29T12:44:44Z",
+        "sourceCounts": {
+          "cna": 1,
+          "cts": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.333,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[政治] 尼泊爾洪災 外交部：已向尼國表達願助救災和重建",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229073",
+            "publishedAt": "2026-08-29T12:44:44Z"
+          },
+          {
+            "title": "尼泊爾洪災外交部：已向尼國表達願助救災和重建- 政治",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE8tQlpaQXhhNVl2Yy1XUGcwbzY3ODkyLW9sNFNhX2JhZzh2MjlWZnA5LVh3Q3VrYi1weERXck9LQkxyamJkNzBrMTBva3VOYXNhSTdjT0Z3Qi10aUdCdi1UekVLWEdVYnBxU05hbGU5YlBYQQ?oc=5",
+            "publishedAt": "2026-08-29T12:32:08Z"
+          },
+          {
+            "title": "尼泊爾洪災 外交部：已向尼國表達願助救災和重建",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aipl/202608290191.aspx",
+            "publishedAt": "2026-08-29T12:32:08Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-914",
+        "representativeTitle": "投資最新與熱門精選文章",
+        "articleCount": 3,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T11:25:01Z",
+        "updatedAt": "2026-08-29T12:16:12Z",
+        "sourceCounts": {
+          "businesstoday": 3
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "businesstoday": [
+            {
+              "date": "2026-08-29",
+              "mentions": 3
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "投資最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE80blE4RnIwdHBGWGdqUmMxMjhpVDhsVVIwQUxySXQ5UDVlb1ZwRXFlNkhJYkVJb0R0SWFhNVpEQ2M5LTNoREtjUHBTaVNiUmg2SVdLaWJySS1CRlN3WHRZY0pUZm9pQVZhS2JqWQ?oc=5",
+            "publishedAt": "2026-08-29T12:16:12Z"
+          },
+          {
+            "title": "發票最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBJSWRhUXpHZ01rVFdFWFFYVlNLdksyZHZ0bXhYRXp0NUk1MHJaU1h2N3JiblF2TnNYS0E2d2ZRSVNGZEpIMU9OTEpxU1hfekVPdFBiczQ2Qm9oTVFSSndYVElkRW1QMDFlaUhOSw?oc=5",
+            "publishedAt": "2026-08-29T11:25:04Z"
+          },
+          {
+            "title": "被動元件最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOSUtZTmJsQ01VNFRXVzFoUWJQbnpMaXJoZnI1LTl6bnBIcHZOTl9XZUx4YUZ3OXN1X3NWYWFuYnB2c1BkUHI1UHJmamhPM3oyYzFnNnZnblVrcHNTV2gzRExETXdlSDRYYkVvbTBNUlZ0MmpnMXBQZlVVOWZQOEJ1YTBzZGE?oc=5",
+            "publishedAt": "2026-08-29T11:25:01Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-165",
+        "representativeTitle": "南澳金岳瀑布溯溪失聯 男子尋獲已明顯死亡",
+        "articleCount": 3,
+        "sourceCount": 3,
+        "startedAt": "2026-08-30T04:02:01Z",
+        "updatedAt": "2026-08-30T04:25:02Z",
+        "sourceCounts": {
+          "cna": 1,
+          "cts": 1,
+          "newtalk": 1
+        },
+        "sourceConcentration": 0.333,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "cts": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "newtalk": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "南澳金岳瀑布溯溪失聯 男子尋獲已明顯死亡",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056601",
+            "publishedAt": "2026-08-30T04:25:02Z"
+          },
+          {
+            "title": "南澳金岳瀑布溯溪失聯男子尋獲已明顯死亡- 社會",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE03V1U2RTVaMlJRdnhqYVVzNVVpZlVMZ0JQWUV0a0V1R3RCRlY1Znlmam5jc0NvRWx1ZGpPSWxvUXRaOUlEbURwc2dkSlQ1TjZzSmVvRlFnVE9SSlhnLW9BbHJsa182Yk1qcVZCVHNHUm4?oc=5",
+            "publishedAt": "2026-08-30T04:02:01Z"
+          },
+          {
+            "title": "南澳金岳瀑布溯溪失聯 男子尋獲已明顯死亡",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/asoc/202608300053.aspx",
+            "publishedAt": "2026-08-30T04:02:01Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-252",
+        "representativeTitle": "[政治] 8艘共艦3架次共機擾台 國軍嚴密監控",
+        "articleCount": 3,
+        "sourceCount": 3,
+        "startedAt": "2026-08-30T01:40:39Z",
+        "updatedAt": "2026-08-30T03:20:42Z",
+        "sourceCounts": {
+          "cna": 1,
+          "cts": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.333,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "cts": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[政治] 8艘共艦3架次共機擾台 國軍嚴密監控",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229110",
+            "publishedAt": "2026-08-30T03:20:42Z"
+          },
+          {
+            "title": "8艘共艦3架次共機擾台國軍嚴密監控- 政治",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE84ODkyYjZIb09iZDNYYlVzaVRnXzItNUprdGJyTGQ0czFPblU4TzNGcXFvb1hncEVkRDRnbnctRmliWTVkcmdMSXdxcm5SRzNzTXJQRlprbWwzczBCeGhHcWZjQXpfZVIzX2lBS2p4ZVl0dw?oc=5",
+            "publishedAt": "2026-08-30T01:40:39Z"
+          },
+          {
+            "title": "8艘共艦3架次共機擾台 國軍嚴密監控",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aipl/202608300015.aspx",
+            "publishedAt": "2026-08-30T01:40:39Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-351",
+        "representativeTitle": "MLB／大谷翔平手臂膝蓋不適 教練：絕不為投球犧牲打擊",
+        "articleCount": 3,
+        "sourceCount": 3,
+        "startedAt": "2026-08-29T23:23:00Z",
+        "updatedAt": "2026-08-30T02:39:00Z",
+        "sourceCounts": {
+          "ebc": 1,
+          "rti": 1,
+          "tvbs": 1
+        },
+        "sourceConcentration": 0.333,
+        "sourceTimeline": {
+          "ebc": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "tvbs": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "MLB／大谷翔平手臂膝蓋不適 教練：絕不為投球犧牲打擊",
+            "source": "ebc",
+            "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE12YlI2eml1cXoyMDd3MzdvbUlKX1M0UFlGY0xVR0hqcE5mbTd3cEhjZzJFWTJLX21oTG1CUzFDczVKM3dZS0RfTmhweWViYV93YndJ?oc=5",
+            "publishedAt": "2026-08-30T02:39:00Z"
+          },
+          {
+            "title": "[生活] 大谷翔平手臂膝蓋不適 教練：絕不為投球犧牲打擊",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229093",
+            "publishedAt": "2026-08-29T23:45:33Z"
+          },
+          {
+            "title": "大谷翔平手臂膝蓋不適 教練：絕不為投球犧牲打擊",
+            "source": "tvbs",
+            "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE4xeFdVVFdVMVBWQ1B0bzRBSnlNd0JiY2o1T2w1SWlKdmVBcEZaZkgxXzE0TzBVTDVodU9KYUhKVi1SRXQyS1JVdmZtbjVweHZu?oc=5",
+            "publishedAt": "2026-08-29T23:23:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-384",
+        "representativeTitle": "鉅亨買幣速報 - USDC(USDC)24小時成交量超過12.35億美元，NFPrompt Token(NFP)24小時漲幅達65.8%",
+        "articleCount": 3,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T02:15:18Z",
+        "updatedAt": "2026-08-30T02:15:22Z",
+        "sourceCounts": {
+          "anue": 3
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "anue": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            },
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "鉅亨買幣速報 - USDC(USDC)24小時成交量超過12.35億美元，NFPrompt Token(NFP)24小時漲幅達65.8%",
+            "source": "anue",
+            "url": "https://news.cnyes.com/news/id/6591715",
+            "publishedAt": "2026-08-30T02:15:22Z"
+          },
+          {
+            "title": "鉅亨買幣速報 - USDC(USDC)24小時成交量超過27.46億美元，NFPrompt Token(NFP)24小時漲幅達65.8%",
+            "source": "anue",
+            "url": "https://news.cnyes.com/news/id/6591533",
+            "publishedAt": "2026-08-29T09:15:17Z"
+          },
+          {
+            "title": "鉅亨買幣速報 - USDC(USDC)24小時成交量超過32.86億美元，NFPrompt Token(NFP)24小時漲幅達65.8%",
+            "source": "anue",
+            "url": "https://news.cnyes.com/news/id/6591383",
+            "publishedAt": "2026-08-29T02:15:18Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260828-1456",
+        "representativeTitle": "【2026年7月捐款徵信】",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-28T04:51:17Z",
+        "updatedAt": "2026-08-28T04:51:50Z",
+        "sourceCounts": {
+          "coolloud": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "coolloud": [
+            {
+              "date": "2026-08-28",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "【2026年7月捐款徵信】",
+            "source": "coolloud",
+            "url": "https://www.coolloud.org.tw/node/99512",
+            "publishedAt": "2026-08-28T04:51:50Z"
+          },
+          {
+            "title": "【2026年6月捐款徵信】",
+            "source": "coolloud",
+            "url": "https://www.coolloud.org.tw/node/99511",
+            "publishedAt": "2026-08-28T04:51:17Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260828-1457",
+        "representativeTitle": "【2026年5月捐款徵信】",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-28T04:49:43Z",
+        "updatedAt": "2026-08-28T04:50:44Z",
+        "sourceCounts": {
+          "coolloud": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "coolloud": [
+            {
+              "date": "2026-08-28",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "【2026年5月捐款徵信】",
+            "source": "coolloud",
+            "url": "https://www.coolloud.org.tw/node/99510",
+            "publishedAt": "2026-08-28T04:50:44Z"
+          },
+          {
+            "title": "【2026年4月捐款徵信】",
+            "source": "coolloud",
+            "url": "https://www.coolloud.org.tw/node/99509",
+            "publishedAt": "2026-08-28T04:49:43Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1001",
+        "representativeTitle": "民眾高檔餐廳餐後不適3天後投訴中市食安處列高風險續追蹤- 地方",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T10:46:41Z",
+        "updatedAt": "2026-08-29T10:46:41Z",
+        "sourceCounts": {
+          "cna": 1,
+          "cts": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "民眾高檔餐廳餐後不適3天後投訴中市食安處列高風險續追蹤- 地方",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5wY0NOS0hjbEt3V2lXVE43aDRrNllLWUZWcUxGT3MxUWhWSmZLUDJHVU1UQzZMNEpwYmtvVm1aRHRHYVNYeWRnb1VJcFg4Wjh6UnRBdEtkR3VkQXhnUGZoYnRlc0JNaTlIQzhORFRn?oc=5",
+            "publishedAt": "2026-08-29T10:46:41Z"
+          },
+          {
+            "title": "民眾高檔餐廳餐後不適3天後投訴 中市食安處列高風險續追蹤",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aloc/202608290180.aspx",
+            "publishedAt": "2026-08-29T10:46:41Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1008",
+        "representativeTitle": "機車撞倒嬤害昏迷 毒駕男心虛「找哥頂替」遭電眼揭穿 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T10:39:00Z",
+        "updatedAt": "2026-08-29T10:39:00Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "機車撞倒嬤害昏迷 毒駕男心虛「找哥頂替」遭電眼揭穿 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFByb0NSdjNSRG9nUkYwRDQ1cHF6TEtMQzdxNm8zSHp6WUZGdklOWF85cG9tTjMweWJuS2dXX25wZ3QxejVsU044MFJyZ2J6VkdsS1NidjQ4dndIYUZjRFI0V2ltRi1vSlpXWms3TTIwQXpUWEhrcEo0dHdkNTc?oc=5",
+            "publishedAt": "2026-08-29T10:39:00Z"
+          },
+          {
+            "title": "機車撞倒嬤害昏迷 毒駕男心虛「找哥頂替」遭電眼揭穿",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Society/2026-08-29/2451554.html",
+            "publishedAt": "2026-08-29T10:39:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1015",
+        "representativeTitle": "施暴畫面曝光！ 印尼看護狂毆93歲失智嬤 家屬憤怒心疼 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T10:34:00Z",
+        "updatedAt": "2026-08-29T10:34:00Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "施暴畫面曝光！ 印尼看護狂毆93歲失智嬤 家屬憤怒心疼 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBuREYyZDZ3NVhYU2lBZm84cW5Ia2JfdV80Nm5Wbi1hcnZkSXBnQjM4aG1aeHJ1X3NGWUJIcUtJMXhWajktODROSndyQTlDVW51RGF5NXQ5T0p1dENhNWVkOHduUmZSMkRod0QxaXhyeGlRM3lka3M1cUR3?oc=5",
+            "publishedAt": "2026-08-29T10:34:00Z"
+          },
+          {
+            "title": "施暴畫面曝光！ 印尼看護狂毆93歲失智嬤 家屬憤怒心疼",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Society/2026-08-29/2451535.html",
+            "publishedAt": "2026-08-29T10:34:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1020",
+        "representativeTitle": "開學倒數！ 新學期行事曆「5大連假」家長崩潰喊累",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T10:05:38Z",
+        "updatedAt": "2026-08-29T10:30:29Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "開學倒數！ 新學期行事曆「5大連假」家長崩潰喊累",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Life/2026-08-29/2451391.html",
+            "publishedAt": "2026-08-29T10:30:29Z"
+          },
+          {
+            "title": "開學倒數！ 新學期行事曆「5大連假」家長崩潰喊累 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE0xMDVvZ2Y3RE5sVGxvMjc3VHQ3b2dHdndxREhvalVKZHV4dGdtejJtRXd5MFFCcU9qSDhmdmdIVXg5bEdmaWZCWU4zUDlVU2htXzV6REk2RTRwc3pqTlhJb1JJQ2Vhakk4YXFCWTRuckhXUFc1Rnc?oc=5",
+            "publishedAt": "2026-08-29T10:05:38Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1025",
+        "representativeTitle": "接住蔣萬安沒接的球？ 沈伯洋自掏腰包10萬挺庇護工場 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:29:15Z",
+        "updatedAt": "2026-08-29T10:28:11Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "接住蔣萬安沒接的球？ 沈伯洋自掏腰包10萬挺庇護工場 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE4wQXVlVW1CU2JZN1FGekdXZTBsWnUzRnNaTDFaY0s2dUlCMEY3T2JsZ3FnU201RF9PelNWOXFvOE9TZFRrQk9zaXJuRnh0ckRWbmE4cTB2WF9keThlSmVqSVh0WUFoUElhcTVaWUxVUmxRQ0hjOGs5MDZaQ0k?oc=5",
+            "publishedAt": "2026-08-29T10:28:11Z"
+          },
+          {
+            "title": "接住蔣萬安沒接的球？ 沈伯洋自掏腰包10萬挺庇護工場",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Politics/2026-08-29/2451086.html",
+            "publishedAt": "2026-08-29T06:29:15Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1032",
+        "representativeTitle": "南投男全身傷送醫不治投檢：掌握3名以上犯嫌- 社會",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T10:20:26Z",
+        "updatedAt": "2026-08-29T10:20:26Z",
+        "sourceCounts": {
+          "cna": 1,
+          "cts": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "南投男全身傷送醫不治投檢：掌握3名以上犯嫌- 社會",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9tZl92cnYyVlNNUTBDbEhwRzVnbUVFWGNpSXlhdzY5dEY0NXZPeUFOb09hbTFuTjc3RGVjNHFjSTR4T0VQd2V6dmxpc3U3LVU5UktJbG1KTmtGcy1yZTE1ZWFqZmNUSVJjdXVkSXkxaUQ?oc=5",
+            "publishedAt": "2026-08-29T10:20:26Z"
+          },
+          {
+            "title": "南投男全身傷送醫不治 投檢：掌握3名以上犯嫌",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/asoc/202608290173.aspx",
+            "publishedAt": "2026-08-29T10:20:26Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1035",
+        "representativeTitle": "[生活] 台積電供應商嘉義縣聯合徵才 近千個工作機會媒合率近5成",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T09:55:17Z",
+        "updatedAt": "2026-08-29T10:16:54Z",
+        "sourceCounts": {
+          "cna": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[生活] 台積電供應商嘉義縣聯合徵才 近千個工作機會媒合率近5成",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229065",
+            "publishedAt": "2026-08-29T10:16:54Z"
+          },
+          {
+            "title": "台積電供應商嘉義縣聯合徵才 近千個工作機會、媒合率近5成",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aloc/202608290169.aspx",
+            "publishedAt": "2026-08-29T09:55:17Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1053",
+        "representativeTitle": "[兩岸] 四川涼山低分教師與「恥辱」合照 當地政府調查",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T07:25:14Z",
+        "updatedAt": "2026-08-29T09:59:51Z",
+        "sourceCounts": {
+          "cts": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[兩岸] 四川涼山低分教師與「恥辱」合照 當地政府調查",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229062",
+            "publishedAt": "2026-08-29T09:59:51Z"
+          },
+          {
+            "title": "四川涼山低分教師與「恥辱」合照當地政府調查- 國際",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5vcXkyalVkU3cyVTI5aElKZERvVHE1dVMzbGVIRzNWX0cwS0pIVmwtOXl0RTNkVlJHX0UyOEJKX0tZblhjejY5VWp3LXg2UE55eHB0SldObURSVUlYRnJXVFNYSjVqNk0yMk5ZNDBQdjdGWTk3QjZvVQ?oc=5",
+            "publishedAt": "2026-08-29T07:25:14Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1063",
+        "representativeTitle": "[政治] 新竹棒球場案林智堅不起訴 竹市府：將提再議並追責",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T09:42:10Z",
+        "updatedAt": "2026-08-29T09:54:22Z",
+        "sourceCounts": {
+          "cna": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[政治] 新竹棒球場案林智堅不起訴 竹市府：將提再議並追責",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229060",
+            "publishedAt": "2026-08-29T09:54:22Z"
+          },
+          {
+            "title": "新竹棒球場案林智堅不起訴 竹市府：將提再議並追責",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aloc/202608290166.aspx",
+            "publishedAt": "2026-08-29T09:42:10Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1067",
+        "representativeTitle": "[政治] 北市女童遭性猥褻案 蔣萬安：不會迴避制度問題持續努力",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T09:39:08Z",
+        "updatedAt": "2026-08-29T09:51:10Z",
+        "sourceCounts": {
+          "cna": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[政治] 北市女童遭性猥褻案 蔣萬安：不會迴避制度問題持續努力",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229059",
+            "publishedAt": "2026-08-29T09:51:10Z"
+          },
+          {
+            "title": "北市女童遭性猥褻案 蔣萬安：不會迴避制度問題持續努力",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aloc/202608290165.aspx",
+            "publishedAt": "2026-08-29T09:39:08Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1072",
+        "representativeTitle": "財長初估洪災重建需50億美元佔尼泊爾經濟近十分之一- 新聞",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T08:04:23Z",
+        "updatedAt": "2026-08-29T09:48:00Z",
+        "sourceCounts": {
+          "moneydj": 1,
+          "ttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "moneydj": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "財長初估洪災重建需50億美元佔尼泊爾經濟近十分之一- 新聞",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPMEg2MHFqSWJQTlp3WjNudS0zMF9LVjFlZGJRLUZJalJFYXY0Tlh5MW1nNW8wN1g5WHFGZDdkUE5ROFNOaTlvaTBJZnFaYWpXTElsNGhMVWc0aEZ2cU5CYXlVejJLTkJveVI0TXpLVmRqQXZCVjE5NzVQNThFM2xjTzVmS2lsVy01b0ZvQmh3a20yZw?oc=5",
+            "publishedAt": "2026-08-29T09:48:00Z"
+          },
+          {
+            "title": "財長初估洪災重建需50億美元 佔尼泊爾經濟近十分之一",
+            "source": "ttv",
+            "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9EdVE4cktyanVicFBHOXhCbVo4NFNmUU9uVlVjb3ltUjRQZUMtQk9zVGdWOXAtd19TZDJQbkJzeGhFc2hsSUdheGM2bTA1OThyVFhtenlTOA?oc=5",
+            "publishedAt": "2026-08-29T08:04:23Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1085",
+        "representativeTitle": "男持刀大街遊蕩 警消驚險對峙揪詐欺通緝犯 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T09:36:00Z",
+        "updatedAt": "2026-08-29T09:36:00Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "男持刀大街遊蕩 警消驚險對峙揪詐欺通緝犯 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE51Ui1MV3B3WTJabXRKOEJwc1RBRzQyRFY5ZDhqNVhaSnA5a2p3UnhHV21iYTloNHhldGYySnRjOGtPOHQ2R3Bjem43d0dCMExPYW9GQVNRSHl5LXJDd2E0OURGOF85b0h2X21ZWUYzaGFobF9nVXduUTN5cVA?oc=5",
+            "publishedAt": "2026-08-29T09:36:00Z"
+          },
+          {
+            "title": "男持刀大街遊蕩 警消驚險對峙揪詐欺通緝犯",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Society/2026-08-29/2451366.html",
+            "publishedAt": "2026-08-29T09:36:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1094",
+        "representativeTitle": "鄭麗文輔選張啓楷、吳品叡籲在野團結翻轉大嘉義- 地方",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T09:27:03Z",
+        "updatedAt": "2026-08-29T09:27:03Z",
+        "sourceCounts": {
+          "cna": 1,
+          "cts": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "鄭麗文輔選張啓楷、吳品叡籲在野團結翻轉大嘉義- 地方",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5FOEI3aHB0VW5vLWlmVE42M19oNDEyY2JEU0xpUDROalpPM0VwYVNaOTU0cldPYWJtbl8wUzg5U2h3M3E3RFowaUxrd0VUWE03WWJzdE1hNWNyNFVrNkxUZHl3aDlaTWVLSUJ2NnlR?oc=5",
+            "publishedAt": "2026-08-29T09:27:03Z"
+          },
+          {
+            "title": "鄭麗文輔選張啓楷、吳品叡 籲在野團結翻轉大嘉義",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aloc/202608290163.aspx",
+            "publishedAt": "2026-08-29T09:27:03Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1098",
+        "representativeTitle": "[財經] 中油：下週汽、柴油價格維持不調整",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T09:17:57Z",
+        "updatedAt": "2026-08-29T09:22:40Z",
+        "sourceCounts": {
+          "cts": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[財經] 中油：下週汽、柴油價格維持不調整",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229057",
+            "publishedAt": "2026-08-29T09:22:40Z"
+          },
+          {
+            "title": "中油：下週汽、柴油價格維持不調整- 財經",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE14V2NkaWx3c2ZJOWszRl91d0hLZTNYN0tyenRRV2NvUkxoc2FjTVVQTFFRb0xfeTVySmYyc1c1LU4zQUg2NkF3NnN3bmRyaVpJZGVuTDFqTWY3WGVrNHdPeXlTYm1XQjBxM204R1BB?oc=5",
+            "publishedAt": "2026-08-29T09:17:57Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1109",
+        "representativeTitle": "[生活] 8/30西部午後留意大雨 下週可能有熱帶系統生成",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T08:59:17Z",
+        "updatedAt": "2026-08-29T09:12:15Z",
+        "sourceCounts": {
+          "cts": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[生活] 8/30西部午後留意大雨 下週可能有熱帶系統生成",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229056",
+            "publishedAt": "2026-08-29T09:12:15Z"
+          },
+          {
+            "title": "8/30西部午後留意大雨下週可能有熱帶系統生成- 生活",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBKV1hKeFZjb2RkYU5oZzE3MGdqcVN6YmlDS1pkcXVQOWdRS3o2c1VKLTBSbDZTNUtReTFhMDNZSVgxM1ZUYXlvbGNSbGQtNVZoeThfR3VJdTVoZXd3c0lhSUxkTHpiMnZHcW8wMQ?oc=5",
+            "publishedAt": "2026-08-29T08:59:17Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1110",
+        "representativeTitle": "[政治] 國務機要費遭刪凍影響庇護工場訂單 鄭麗文願全數承接",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T08:26:59Z",
+        "updatedAt": "2026-08-29T09:11:00Z",
+        "sourceCounts": {
+          "cna": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[政治] 國務機要費遭刪凍影響庇護工場訂單 鄭麗文願全數承接",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229055",
+            "publishedAt": "2026-08-29T09:11:00Z"
+          },
+          {
+            "title": "國務機要費遭刪凍影響弱勢禮盒訂單 鄭麗文：願全數承接",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aipl/202608290135.aspx",
+            "publishedAt": "2026-08-29T08:26:59Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1138",
+        "representativeTitle": "不滿安大略湖遭更名 加國提案川普大道改為「歐巴馬、TACO」",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:48:29Z",
+        "updatedAt": "2026-08-29T08:48:00Z",
+        "sourceCounts": {
+          "moneydj": 1,
+          "ttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "moneydj": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "不滿安大略湖遭更名 加國提案川普大道改為「歐巴馬、TACO」",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOemhXZEp5Uk1ILUtKZm5uemdNcEpTd0ZZOW1VUTlBR3VrVG5WQ3NiN2hwbnFvakVxaGhHMmplaHU5Tmsxb2U3djhwMkxYcmFDVW0ydENFTGZpX1NpMnI1bHdURXlNX2ZaUFkySy1wWW9Oc0JmUmxZRXk5YUo4djZnRFBKYk9wbWtUMFN4VVYxbGZNZw?oc=5",
+            "publishedAt": "2026-08-29T08:48:00Z"
+          },
+          {
+            "title": "不滿安大略湖遭更名 加國提案川普大道改為「歐巴馬、TACO」",
+            "source": "ttv",
+            "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBLUzBZdm11cExDUnEycnNvLS1UZndBY3I0YzNBNmthVHdjTmlMdHUyc1hCTjQ0NUEyX2xIVWNzOVJOb2YxOGN2NFNqQXpiZmdrOHJhWmtLbw?oc=5",
+            "publishedAt": "2026-08-29T06:48:29Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1144",
+        "representativeTitle": "00919最新與熱門精選文章",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T08:01:48Z",
+        "updatedAt": "2026-08-29T08:45:39Z",
+        "sourceCounts": {
+          "businesstoday": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "businesstoday": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "00919最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE56T2hSNTBrdlNRN1J0QzJNUDFVZ0hITlZuLVFYLTYxOXYyamF0RjlxMjBqOUVPZkFHUjE3WnlSSGRzUmhrTmNPX0JEOEppOWg0SkM2WHpDTVEzNzA?oc=5",
+            "publishedAt": "2026-08-29T08:45:39Z"
+          },
+          {
+            "title": "龍頭最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE13b3Z0ZldEdTlPRlE0dGNkNUpZN1h4MlhrRTVaVFJaWDdiZ19uSGc1ZmJoQlV2WG5DWjJQRXFCeEI2X3JoS0wtbjZzX19XdVBPeFNycUl0ZWRfZWpQRDhSTTYtSExaSG5HZzYzcHd6dXRCSHJ4dmpubg?oc=5",
+            "publishedAt": "2026-08-29T08:01:48Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1146",
+        "representativeTitle": "長庚醫院「隱形大股東」？ 握1.46萬張台積電 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T08:01:04Z",
+        "updatedAt": "2026-08-29T08:42:33Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "長庚醫院「隱形大股東」？ 握1.46萬張台積電 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE8yNUh5RWRBX3JlZHVmdWl0YTV1d2t6UkpUeGRXXzdJRFFhN2NpWEhhU1JfUzB3a3AyVzV6anJoOUI1Y3VocW9HUVpiV09URlJ4TG1QQmtZSGxpR0djSG9fa2tpTk5NbnBhSVlPZ2xSMzU4M0VPS2pmdDZR?oc=5",
+            "publishedAt": "2026-08-29T08:42:33Z"
+          },
+          {
+            "title": "長庚醫院「隱形大股東」？ 握1.46萬張台積電",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Finance/2026-08-29/2451259.html",
+            "publishedAt": "2026-08-29T08:01:04Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1154",
+        "representativeTitle": "彰化縣長選舉民眾黨不排除推黨部副主委賴銀柱- 政治",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T08:35:06Z",
+        "updatedAt": "2026-08-29T08:35:06Z",
+        "sourceCounts": {
+          "cna": 1,
+          "cts": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "彰化縣長選舉民眾黨不排除推黨部副主委賴銀柱- 政治",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5RbmVmRk5IQzNLZ3Q5ajF1R2NyMGNqQzNTd01IUS16NlNmc3ZyMkllY29SNlM4YXlXdmd0NzVHVlJQanBJd3l0RnhrOFlyd1ZDbFg0OGpYc3FEbzdfQ0hNRTEtX0M0eVByWTBfdFROLVJwZw?oc=5",
+            "publishedAt": "2026-08-29T08:35:06Z"
+          },
+          {
+            "title": "彰化縣長選舉 民眾黨不排除推黨部副主委賴銀柱",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aipl/202608290137.aspx",
+            "publishedAt": "2026-08-29T08:35:06Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1170",
+        "representativeTitle": "三上悠亞深耕台灣 不只跳職籃也想入職棒啦啦隊 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T08:20:08Z",
+        "updatedAt": "2026-08-29T08:20:09Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "三上悠亞深耕台灣 不只跳職籃也想入職棒啦啦隊 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNT00wdlZ3MHFxbWhkcnBQa3FxcUdIWVRvaDhPVFhhT1J1T3pQV3puYnZQSzBiVzlTcnc2Rll6a19DQm9kOTNsa3pvVG00ejNNWGxFSl9BMjdhUndyN1MwaWNhV3RPSjZPYlI2QUROeF9JN3A4NXVNNV9SY0xxZkhaYk9B?oc=5",
+            "publishedAt": "2026-08-29T08:20:09Z"
+          },
+          {
+            "title": "三上悠亞深耕台灣 不只跳職籃也想入職棒啦啦隊",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Entertainment/2026-08-29/2451284.html",
+            "publishedAt": "2026-08-29T08:20:08Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1181",
+        "representativeTitle": "保育類蛇中元節闖民宅 命理專家：福氣財運來了 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T08:12:47Z",
+        "updatedAt": "2026-08-29T08:12:49Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "保育類蛇中元節闖民宅 命理專家：福氣財運來了 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE91b3pnNWtWck94ekZjOWVjSG1sTF9pTHlROXZoelJ1X050U1ZOVjlLOVFpTW1HTXV4NXdnODhFOHY3Q1Rud3ZNSTFzVHh4LVREbkEwQnpUaUkwc1k2SUEtb3NQMDlMOFdfa29aVW53Vll2aEs3TkE?oc=5",
+            "publishedAt": "2026-08-29T08:12:49Z"
+          },
+          {
+            "title": "保育類蛇中元節闖民宅 命理專家：福氣財運來了",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Life/2026-08-29/2451276.html",
+            "publishedAt": "2026-08-29T08:12:47Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1207",
+        "representativeTitle": "少子化最新與熱門精選文章",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T07:55:25Z",
+        "updatedAt": "2026-08-29T07:56:56Z",
+        "sourceCounts": {
+          "businesstoday": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "businesstoday": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "少子化最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9pbnEyWFdLb3F3ZEdCQmVkaFVXVUxwUndPbzFKRDE4N0RXaWkxanVIdkNKNmFtallrYVN0Nkw5RVJhNEhwMzJVakJ3azNOS2hnUFlVRl9ZczlPWkdqLWdLZVlqSXdTWDVQNThiTzh5QldhRVlIZHY4YQ?oc=5",
+            "publishedAt": "2026-08-29T07:56:56Z"
+          },
+          {
+            "title": "人口推估最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPa2FTaXYyLWU5aEFQSjhXWEZSWDd0akdVbEwxbE9Wejl2ZzdLM1R2QmJYMHA2cXBYRzIzYmduX2hRUjFMazc1WllRc2pxUVNrOFVXbnpRUjI5amZvUGpBZ253V2VzNDQ2RENFZ0dsLUt0MUowZE8xbkZ0RUhyeXB0dmRlU1o?oc=5",
+            "publishedAt": "2026-08-29T07:55:25Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1231",
+        "representativeTitle": "尼泊爾洪災上千人生死未卜 多國家屬焦急尋親 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T07:38:07Z",
+        "updatedAt": "2026-08-29T07:38:10Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "尼泊爾洪災上千人生死未卜 多國家屬焦急尋親 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBkSTV0MTZ3bFZwNWcyckszdzkyMW9PTlg3djJHeERkazF4VnZqZy1UWDZOUlIzUHZSRVZrcHZUNUI3TVgzYXMxOVBMQTZaTU1xTExqYTBvVjVvc2Rxa1doWkJWdVNSRl9YRV95SUV2Ykt1Q3d6djdPSXA5ekc?oc=5",
+            "publishedAt": "2026-08-29T07:38:10Z"
+          },
+          {
+            "title": "尼泊爾洪災上千人生死未卜 多國家屬焦急尋親",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/WorldNews/2026-08-29/2451210.html",
+            "publishedAt": "2026-08-29T07:38:07Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1277",
+        "representativeTitle": "川普自封「最偉大總統」 自製總統排行將歐巴馬、拜登列失敗 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T07:02:59Z",
+        "updatedAt": "2026-08-29T07:03:01Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "川普自封「最偉大總統」 自製總統排行將歐巴馬、拜登列失敗 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBQWFc5NVRlZ04zMFV0VXZ3ZjY1UXZoQ1lCRkVxX1RLakdXVDg4UEZPUGFSNklKZlZIcWx1dkk4eDgzUlU3VXFCZk1nWkdXeEhLRnJaTVE1UlYyUmU4a3lfX2VET2wwNEpDNmJ2UFg0STlQQmJlakNPeWpyQVk?oc=5",
+            "publishedAt": "2026-08-29T07:03:01Z"
+          },
+          {
+            "title": "川普自封「最偉大總統」 自製總統排行將歐巴馬、拜登列失敗",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/WorldNews/2026-08-29/2451170.html",
+            "publishedAt": "2026-08-29T07:02:59Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1288",
+        "representativeTitle": "低壓帶接力！ 南部恐「雨下不停」民怨快發霉",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:13:56Z",
+        "updatedAt": "2026-08-29T06:56:12Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "低壓帶接力！ 南部恐「雨下不停」民怨快發霉",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Life/2026-08-29/2451056.html",
+            "publishedAt": "2026-08-29T06:56:12Z"
+          },
+          {
+            "title": "低壓帶接力！ 南部恐「雨下不停」民怨快發霉 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE0xX1Ffb0dST05xUk81RFAyQmlZTmx5OERmS2Izb3p3cWl2eTM0S09qNV9NQWxHbnFYQmdIQmxGQk1IaktyeHZ3Qml5MTJLcHRrVlRYSzVQZmlzQUJSWWRHX0pHZEFtbFRHSEtkZ29PWWVHalVRNGJCeQ?oc=5",
+            "publishedAt": "2026-08-29T06:13:56Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1291",
+        "representativeTitle": "搶中秋烤肉商機！ 推巨無霸泰國蝦比手掌還大",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:39:42Z",
+        "updatedAt": "2026-08-29T06:54:35Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "搶中秋烤肉商機！ 推巨無霸泰國蝦比手掌還大",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Life/2026-08-29/2451047.html",
+            "publishedAt": "2026-08-29T06:54:35Z"
+          },
+          {
+            "title": "搶中秋烤肉商機！ 推巨無霸泰國蝦比手掌還大 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1FandQbjQ1V0JzZ1FsTU9NZThfR29LejBSeDc2NnVKR1dMQy1MTEMtWW00UnhhbGdjdldsbEtVeE5VOFZsODNEdkRmT0RXajZNM0hJc2JtSndQQnQ3aW1hazZFWGNDODFOVVRGUEZoYnJIdVB6dEE?oc=5",
+            "publishedAt": "2026-08-29T06:39:42Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1292",
+        "representativeTitle": "翁逆向衝上騎樓 恐嚇店員「不給麵包」就撞店 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:52:59Z",
+        "updatedAt": "2026-08-29T06:53:03Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "翁逆向衝上騎樓 恐嚇店員「不給麵包」就撞店 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1LNExyXzh5NEc4akFMUmVGR0E0R3lla00ySHZiN0JldHJPZDZPbFBZX1VDTDNyaDlBVEJKSkxSM3BVd2xmeWhsSXJvZ1owQkp0cjRBcWVBWEFjS0oyUmVPN3JfTGhPbEFZbHJUZUpXd1d1Y21TajZJdUNR?oc=5",
+            "publishedAt": "2026-08-29T06:53:03Z"
+          },
+          {
+            "title": "翁逆向衝上騎樓 恐嚇店員「不給麵包」就撞店",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Society/2026-08-29/2451148.html",
+            "publishedAt": "2026-08-29T06:52:59Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1297",
+        "representativeTitle": "00981A最新與熱門精選文章",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T06:46:09Z",
+        "updatedAt": "2026-08-29T06:49:09Z",
+        "sourceCounts": {
+          "businesstoday": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "businesstoday": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "00981A最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5NZHZCaVRkdklBV3dxcVdCdl9BaHRmbHlkaFNBUDNRUHdrZ0VDbmlkX24zRHM4RVJZc2dUd2x5LUM4dlpfY0R2Z2xWUFhWcklQOWN2aFJBY0NqZUVP?oc=5",
+            "publishedAt": "2026-08-29T06:49:09Z"
+          },
+          {
+            "title": "苗栗最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5ENHhaRmVYRFBqZ1k4MzdSS3djTGQ1RnI0ZVl0UExUbGt0d0RZVVc5TE9VTnNqSnRUM0RoWlhRei1Xd2JYLWxHVDc4NG9LM3YwZmxPa01UcmpTT1FPVGFNQm1aNzJ3MVlORExrZg?oc=5",
+            "publishedAt": "2026-08-29T06:46:09Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1303",
+        "representativeTitle": "心疼10歲女童性猥褻案 蔡英文發聲籲檢討社會安全網 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:42:13Z",
+        "updatedAt": "2026-08-29T06:42:16Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "心疼10歲女童性猥褻案 蔡英文發聲籲檢討社會安全網 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1VQUdZWjFaYlhIZy1qYS1LTWVLY3RRdVFlbl9ndUlXakIwLWxFalZNQWFETktVN1dDazZrUHI2b2QzWGJkRXFiaEd1a0FZX1BWMXdNZVhWZEtBNWFJQWlLTF9sMGU0WDdDSmVyLUFEc2hvZkVLSkkybC1kSHc?oc=5",
+            "publishedAt": "2026-08-29T06:42:16Z"
+          },
+          {
+            "title": "心疼10歲女童性猥褻案 蔡英文發聲籲檢討社會安全網",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Politics/2026-08-29/2451117.html",
+            "publishedAt": "2026-08-29T06:42:13Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1337",
+        "representativeTitle": "緯創最新與熱門精選文章",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T06:13:57Z",
+        "updatedAt": "2026-08-29T06:16:04Z",
+        "sourceCounts": {
+          "businesstoday": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "businesstoday": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "緯創最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1Ua2M2ZnhQNGI5SDFqSF9PemlWSlVTSmtzODBibmhDQmJQSm55cHZXS3RsV3pWSGd3cElnV19xN2VVcGZpWFBhX1oyWFFuVGRjRjFPS0RaVTl1UnBiUi1OaXVBYVZLN01HVHhNXw?oc=5",
+            "publishedAt": "2026-08-29T06:16:04Z"
+          },
+          {
+            "title": "ETF最新與熱門精選文章",
+            "source": "businesstoday",
+            "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9uUDhWZVZDQVRaY1ZhZ3NGVzJrNzhSVVVHOWJDdTdyTGtXbVJNR0tOdU9qOFhoQklBdDFUeHpzOUU3VnoweXJFR1dLWWpGMV81dzhKU3dnaFY?oc=5",
+            "publishedAt": "2026-08-29T06:13:57Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1339",
+        "representativeTitle": "宜蘭蘇澳烏岩角發生2起救援案6名遊客獲救- 社會",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:15:35Z",
+        "updatedAt": "2026-08-29T06:15:35Z",
+        "sourceCounts": {
+          "cna": 1,
+          "cts": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "宜蘭蘇澳烏岩角發生2起救援案6名遊客獲救- 社會",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9vMDdPdnBfTEY0RDZFcGdITE9sRDRKS1lycUZwNjVXSDUtX2VMV3NSRjRFZ1UzWktad203RkxFRUFPU2ZLSzF5YmppUFVVQTg0VVZTUGZnTE9ZdWJEdFVNU2tVM09zYmwyUmw0YmZ1TzU?oc=5",
+            "publishedAt": "2026-08-29T06:15:35Z"
+          },
+          {
+            "title": "宜蘭蘇澳烏岩角發生2起救援案 6名遊客獲救",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/asoc/202608290096.aspx",
+            "publishedAt": "2026-08-29T06:15:35Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-1342",
+        "representativeTitle": "7歲童半夜溜出門「點燃金紙燒廟」 騎鐵馬落跑 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:11:15Z",
+        "updatedAt": "2026-08-29T06:11:17Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "7歲童半夜溜出門「點燃金紙燒廟」 騎鐵馬落跑 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBVZEo4aWdvUXNScllVSUR5b09pZTVwR2N5dVBsYW5fbzY4S1lCWWg2OURXWnJTY1hsc3cyenBmUTNjSnFEdnQwWjVkcjNELU5qX1RSMEctZkU5bFMwUGMzSGI1dXlDZUFjZ19Kek13WVRUUi0ybm56TG1MN3E?oc=5",
+            "publishedAt": "2026-08-29T06:11:17Z"
+          },
+          {
+            "title": "7歲童半夜溜出門「點燃金紙燒廟」 騎鐵馬落跑",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Society/2026-08-29/2451065.html",
+            "publishedAt": "2026-08-29T06:11:15Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-606",
+        "representativeTitle": "尼日軍政府稱平息叛變 傳俄軍助奪回首都空軍基地",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T22:14:31Z",
+        "updatedAt": "2026-08-29T23:35:43Z",
+        "sourceCounts": {
+          "newtalk": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "newtalk": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "尼日軍政府稱平息叛變 傳俄軍助奪回首都空軍基地",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056560",
+            "publishedAt": "2026-08-29T23:35:43Z"
+          },
+          {
+            "title": "[國際] 尼日軍政府稱平息叛變 傳俄軍助奪回首都空軍基地",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229087",
+            "publishedAt": "2026-08-29T22:14:31Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-625",
+        "representativeTitle": "強生* 公告本公司股票面額由「新台幣10元」變更為「新台幣5元」公告期間：115年7月22日至115年10月21日",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T23:04:00Z",
+        "updatedAt": "2026-08-29T23:04:00Z",
+        "sourceCounts": {
+          "moneydj": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "moneydj": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "強生* 公告本公司股票面額由「新台幣10元」變更為「新台幣5元」公告期間：115年7月22日至115年10月21日",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQd0lnZ2pDc0pyVjBsOUxfNGZ4TjVZUmxKV0hBdjUtRTQ0X1p3WmtBbmhUS3JQSF8zdGJ3MkpFVEJXbDBONUhTTGlKVGxWN3Y3eGc5RUh5ekFsanB5eXBpaktYRTJ4OVJTcG9LNUx3bGtXUjdwVDVodnRsYi0xU29MdnJ5V3NoMHAxTFllbFFDb2NRQQ?oc=5",
+            "publishedAt": "2026-08-29T23:04:00Z"
+          },
+          {
+            "title": "沛爾生醫-創 公告本公司股票面額由「新台幣10元」變更為「新台幣0.5元」，公告期間：115年08月06日至115年11月05日。",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOVGEtSmhrTXpBUmtoWVpTeWZFcUlwZWNac0hjSk95TjRUekoySmhkelBUR0FNV3NIYzM2dmNvUTJBUG5IWnRGVDhFQWI1djdJM0pBT3RBYUpEX2NEWWpmbERtWDJMSWh0VnVNaXY4eU1iYVhCeDlTbVFEWEZNQ2I4dFR2NjZZbzBsazNsQU1pbUp0QQ?oc=5",
+            "publishedAt": "2026-08-29T23:04:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-632",
+        "representativeTitle": "仁新* 公告本公司股票面額由「新台幣10元」變更為「新台幣1元」，公告期間：115年8月5日至115年11月4日。",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T23:04:00Z",
+        "updatedAt": "2026-08-29T23:04:00Z",
+        "sourceCounts": {
+          "moneydj": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "moneydj": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "仁新* 公告本公司股票面額由「新台幣10元」變更為「新台幣1元」，公告期間：115年8月5日至115年11月4日。",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQWmZTMTU2LUpvNlFWNjN6ZWdlVHJ3S2tFZnNVZV9wQ05GVWItUXlpSWRGRFFDaU4xaWh3MG9uOW5ua1dMSzNLWkItNHVzZVJGRVNvOGJOSGFnUHdEQmtweTJjXzJyMjJ3dldvQkc5d1ppVFE5cXZqVHVxV05Db0N3cDVhZkN1SFpybFdJMnd4RXI1QQ?oc=5",
+            "publishedAt": "2026-08-29T23:04:00Z"
+          },
+          {
+            "title": "寶雅* 公告本公司股票面額變更由「新台幣10元」變更為「新台幣1元」公告期間：115年7月2日至115年10月1日",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPdkVsNk1GMXR2Z3JYNlY3ZlNjYzdGd1hqVUstNnpDNU14WnY3ajRsSmtPV0lveTVRM0had095QU92azcwdmV5bnE4bjdZLV8xcXdncS1udExpM0QxOE1JNmIwc2NKaHBiR3Rka2xNNW5uQzhIUXVBZVpfUDNJX3ZEZUZiR2Q3UE5sUmVTZnhRWDY1QQ?oc=5",
+            "publishedAt": "2026-08-29T23:04:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-656",
+        "representativeTitle": "補習班沒有消失不是教改失敗 畢竟知識與技能都有門檻",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T22:30:00Z",
+        "updatedAt": "2026-08-29T22:30:00Z",
+        "sourceCounts": {
+          "mirrormedia": 1,
+          "mnews": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "mirrormedia": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "mnews": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "補習班沒有消失不是教改失敗 畢竟知識與技能都有門檻",
+            "source": "mnews",
+            "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5uXzc5U3VuOGphcGNtem5QbF8zUnlKejVqTFNmT1gzajdmT0h2OXhhTEZVeVc3WHkxWFZYeldiUV9Qc2lyZzA4b0Z6ZlE4N1pvZnp1aU5DYmI5dw?oc=5",
+            "publishedAt": "2026-08-29T22:30:00Z"
+          },
+          {
+            "title": "補習班沒有消失不是教改失敗 畢竟知識與技能都有門檻",
+            "source": "mirrormedia",
+            "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5KVUhiaEJBSTkzV2gyR2pyQ2gxWGZkd0N6Z2FTYXQ2MlF3cm1IekYyN3M1VzZHVV9DOVB2V2Z6UlF1T29pZ2RZcGFlaVRfeXJzRll0bVlzOERkZHQtc0F5aUFXVdIBaEFVX3lxTE9zNmhFWnQ0emw0OWJsODdFVktFS2QxMFNZZGZ5M3dwNEhqWWhSWUs5Mk5MeDNTU0p5VS1tMHVQbVN4LTJFaFVmbzFrNlgzbWpKWnEta2V5WU8xaGRkUzJCVWJKZllvdTVw?oc=5",
+            "publishedAt": "2026-08-29T22:30:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-665",
+        "representativeTitle": "[國際] 俄羅斯空襲烏克蘭首都附近彈藥庫 增至37人喪命",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T19:42:00Z",
+        "updatedAt": "2026-08-29T22:04:38Z",
+        "sourceCounts": {
+          "rti": 1,
+          "tvbs": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "tvbs": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[國際] 俄羅斯空襲烏克蘭首都附近彈藥庫 增至37人喪命",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229084",
+            "publishedAt": "2026-08-29T22:04:38Z"
+          },
+          {
+            "title": "俄羅斯空襲烏克蘭首都附近彈藥庫 增至37人喪命",
+            "source": "tvbs",
+            "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFB0b3VBVWdZeGlrbVZWREZJMnE0TERKVF96TmVSNGtPb3V5ODlMRGg1TFlGbVF1U09jU3pXeEUtNFkzeFdRSWhBVFVqQ2dBeHc?oc=5",
+            "publishedAt": "2026-08-29T19:42:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-686",
+        "representativeTitle": "嘉澤 H2營運將有撐",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T19:00:00Z",
+        "updatedAt": "2026-08-29T20:10:00Z",
+        "sourceCounts": {
+          "chinatimes": 1,
+          "ctee": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "chinatimes": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ctee": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "嘉澤 H2營運將有撐",
+            "source": "chinatimes",
+            "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE84UkZFM0JnNjV1QWtBV2xnM0ZHMWF3NmFpaWxFcmUwaVptSk1fcnV2STBRRVphOUlmMUszVjZySkdvT2ljdklJU1J5NUM1TVRQbkMyQm5XQnF0dzdwdlRCY0lrT0lkSGZRb1Fr?oc=5",
+            "publishedAt": "2026-08-29T20:10:00Z"
+          },
+          {
+            "title": "嘉澤H2營運將有撐- 日報",
+            "source": "ctee",
+            "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE51TjdZYmN2dE15X2JyMXdSUGdZYU9CbHpaZ0JISENQV0dGSzJBMFhmdEd1cGRBc3VnajNqLVluTy1pbFhuQmpGRjdWZlM1Ql85S1hvcGFDdURmU1NDdmtF?oc=5",
+            "publishedAt": "2026-08-29T19:00:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-690",
+        "representativeTitle": "東元 四大事業發威",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T19:00:00Z",
+        "updatedAt": "2026-08-29T20:10:00Z",
+        "sourceCounts": {
+          "chinatimes": 1,
+          "ctee": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "chinatimes": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ctee": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "東元 四大事業發威",
+            "source": "chinatimes",
+            "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE80SlJoUHRYV1Z1THMwX2ZTUTMxeUZtc0NpM09TbVl6cWtyUlRTQjlIQUxjbTdHNjhEZWtxNVo4YTQtWFZNLTg2QlA2WHhEeWJRZWZ3ejVwYzRkLUR3cVB4VEZtZDJTXzdXZjQw?oc=5",
+            "publishedAt": "2026-08-29T20:10:00Z"
+          },
+          {
+            "title": "東元四大事業發威- 日報",
+            "source": "ctee",
+            "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9CV0xGZGtRLVdKUEEyUC1aeG0zb0Q4Qmp5Zm44TGdjUnpsanozaW9IWFdocC1vYXhQY1RIQ18tSjNRWHRsOW8xbU5PZERTTm93OGp2YXhSdEgyTjIwb05R?oc=5",
+            "publishedAt": "2026-08-29T19:00:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-692",
+        "representativeTitle": "一詮 站穩所有均線",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T19:00:00Z",
+        "updatedAt": "2026-08-29T20:10:00Z",
+        "sourceCounts": {
+          "chinatimes": 1,
+          "ctee": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "chinatimes": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ctee": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "一詮 站穩所有均線",
+            "source": "chinatimes",
+            "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFA2b2psTjQ1SVJZMnVUeFNlTmZCaURDREEwNXdIaWhPYmt6YXVOc2d3VFRjQmdGYV92NUlBUlBMalp1UVZsMllNVzNZLVdTbFBoU1VfaldTY2JGWUNjU091MWlxNmY4aGY5MW00?oc=5",
+            "publishedAt": "2026-08-29T20:10:00Z"
+          },
+          {
+            "title": "一詮站穩所有均線- 日報",
+            "source": "ctee",
+            "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1TSHBINGEydjBRcjkxMDA2NWxTSkFnR1gtVjFiYU1SQkpNM2wyM1VTSVdrWU05LWNJLVdWRnhJdXJVaDBKUnNkUndJSzFjYzRoOXZ5QVNxUmItRU1zWjh3?oc=5",
+            "publishedAt": "2026-08-29T19:00:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-695",
+        "representativeTitle": "星座理財(8月31日～9月4日)－金牛座（4月21日～5月21日）謹言慎行 旺運之策",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T19:00:00Z",
+        "updatedAt": "2026-08-29T20:10:00Z",
+        "sourceCounts": {
+          "chinatimes": 1,
+          "ctee": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "chinatimes": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ctee": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "星座理財(8月31日～9月4日)－金牛座（4月21日～5月21日）謹言慎行 旺運之策",
+            "source": "chinatimes",
+            "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBpaFFRQ25HMHcwSEdpcGRNelRVZXFhYnZjWE1qd21iTVQ0bWFzNC1HcHBoUWFEd0dodWJVTFFKekJFeWJOTDkzSTl5UGdYRWtnVVdaRE1fVXE2SGRuaXRVQm5WVWNJRTk3bERr?oc=5",
+            "publishedAt": "2026-08-29T20:10:00Z"
+          },
+          {
+            "title": "金牛座（4月21日～5月21日）謹言慎行旺運之策- 日報",
+            "source": "ctee",
+            "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBTTEFjaXdqRmJRQjVUaG9YSTlRd3NGRkRNRldzMGh0Z2Vpd0otZURfaXExRzlBQTNqLVZJcTJTQ2hTNVhsbXdiR1p0a092MDRPME0wQnVBeW95bTE2MXpv?oc=5",
+            "publishedAt": "2026-08-29T19:00:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-733",
+        "representativeTitle": "勝投荒 - ETtoday運動雲",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T16:08:20Z",
+        "updatedAt": "2026-08-29T17:53:20Z",
+        "sourceCounts": {
+          "ettoday": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "ettoday": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "勝投荒 - ETtoday運動雲",
+            "source": "ettoday",
+            "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1IQXdScHFpOWFPYWUyQUJQRlZEMHJqUndpQVpIdlpRQkZpVUFvZUVLVFlHOU9VZTdKRE51MFBmcVpaazRKNDNmaURsNVZ4MU5VUjlFR3ZrUU9WMmRxaTlMcjZibmNRUnFQdUMyc1pHRjM?oc=5",
+            "publishedAt": "2026-08-29T17:53:20Z"
+          },
+          {
+            "title": "菜鳥紀錄 - ETtoday運動雲",
+            "source": "ettoday",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1ZUW9MTllMWE1IYk03VUNkV0FkQ2RYQ2h6ei03ZHhVMHNycjBsalJBdTAzT1hSMmh4SU12cndiUGZ3OTZzd3Q2SjlpZ3hLRkdzaEFsZ1VWN3pCQ3E3WkdFNzdQRmtrLVFuRm1EaUwxaGloaXZHTWVuWUcxdmE?oc=5",
+            "publishedAt": "2026-08-29T16:08:20Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-761",
+        "representativeTitle": "盤中速報 - Moonriver大跌10.23%，報0.8美元",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T08:05:20Z",
+        "updatedAt": "2026-08-29T16:35:19Z",
+        "sourceCounts": {
+          "anue": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "anue": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "盤中速報 - Moonriver大跌10.23%，報0.8美元",
+            "source": "anue",
+            "url": "https://news.cnyes.com/news/id/6591633",
+            "publishedAt": "2026-08-29T16:35:19Z"
+          },
+          {
+            "title": "盤中速報 - Moonriver大跌13.85%，報0.85美元",
+            "source": "anue",
+            "url": "https://news.cnyes.com/news/id/6591508",
+            "publishedAt": "2026-08-29T08:05:20Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-765",
+        "representativeTitle": "盤中速報 - Ontology Gas大漲10.88%，報0.12美元",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T08:05:19Z",
+        "updatedAt": "2026-08-29T16:05:19Z",
+        "sourceCounts": {
+          "anue": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "anue": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "盤中速報 - Ontology Gas大漲10.88%，報0.12美元",
+            "source": "anue",
+            "url": "https://news.cnyes.com/news/id/6591630",
+            "publishedAt": "2026-08-29T16:05:19Z"
+          },
+          {
+            "title": "盤中速報 - Ontology Gas大漲18.3%，報0.13美元",
+            "source": "anue",
+            "url": "https://news.cnyes.com/news/id/6591506",
+            "publishedAt": "2026-08-29T08:05:19Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-806",
+        "representativeTitle": "俄羅斯空襲基輔住宅區彈藥庫至少37死 澤倫斯基要追究「人員疏失」",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T13:33:13Z",
+        "updatedAt": "2026-08-29T15:08:00Z",
+        "sourceCounts": {
+          "moneydj": 1,
+          "ttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "moneydj": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "俄羅斯空襲基輔住宅區彈藥庫至少37死 澤倫斯基要追究「人員疏失」",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPQnhRR0h6N1dZc0lIeHJ1QWFWNEh5UEVvNUJTeWlfM0d5N3A3dEN0Rk5PNmFKUDF1ZzBGRG9FaXZuNzd4bzV2anFvTVhpSWRpYnozUHZOVXlsTWNXQUlucWdNemN4VXNtN1lrZjdpb0VueUt2RWx1Z2NrSnNza1JqWFkwdWNBUWE1SWhfLTNfTHVadw?oc=5",
+            "publishedAt": "2026-08-29T15:08:00Z"
+          },
+          {
+            "title": "俄羅斯空襲基輔住宅區彈藥庫至少37死 澤倫斯基要追究「人員疏失」",
+            "source": "ttv",
+            "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE44UHZQVzZUbjdFcDc1cG9XWkNDLWRNb2M3ZTVTdjlvaktjaklHNzRiai1CSmtmN0I5aVp0UDIxVGp4TUNkTm1kZk1tY1l6WnFfV2ROdnRLZw?oc=5",
+            "publishedAt": "2026-08-29T13:33:13Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-810",
+        "representativeTitle": "尼泊爾洪災獲救生還 97歲阿嬤宛如「戰士」凱旋歸來",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T13:56:37Z",
+        "updatedAt": "2026-08-29T15:04:00Z",
+        "sourceCounts": {
+          "cts": 1,
+          "ebc": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ebc": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "尼泊爾洪災獲救生還 97歲阿嬤宛如「戰士」凱旋歸來",
+            "source": "ebc",
+            "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5FYlVJS0ZDak1CR08tNEdUS2FkU01WWU5zNmZWX2tCWXVYUnJob1U1ZzZqRVBEZ2lqbHlKczlNLWV2TTZBTFYxcjNOZm9fSnZydkNZ?oc=5",
+            "publishedAt": "2026-08-29T15:04:00Z"
+          },
+          {
+            "title": "尼泊爾洪災獲救生還97歲阿嬤宛如「戰士」凱旋歸來- 國際",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1HalRFNUx0VnhRYjQyOVhTMVdkeURMdWFuTXNENV9fd3FWSUlzNTZiUWt6R0NZSXl6SHZGVkJMZlRNRVRoT3VtRU14Tkp1andsazl0NE5WMGU3MnptTFJ2cGlKOENXd1BJMEZSMC1QbnlvdlBmUEJJMA?oc=5",
+            "publishedAt": "2026-08-29T13:56:37Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-822",
+        "representativeTitle": "學者示警AI劇將成認知戰新戰場 對特定族群影響力大",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T14:00:39Z",
+        "updatedAt": "2026-08-29T14:38:05Z",
+        "sourceCounts": {
+          "cna": 1,
+          "newtalk": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "newtalk": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "學者示警AI劇將成認知戰新戰場 對特定族群影響力大",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-29/1056546",
+            "publishedAt": "2026-08-29T14:38:05Z"
+          },
+          {
+            "title": "學者示警AI劇將成認知戰新戰場 對特定族群影響力大",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aipl/202608290204.aspx",
+            "publishedAt": "2026-08-29T14:00:39Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-826",
+        "representativeTitle": "MoneyDJ理財網手機版",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T08:48:45Z",
+        "updatedAt": "2026-08-29T14:31:09Z",
+        "sourceCounts": {
+          "moneydj": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "moneydj": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "MoneyDJ理財網手機版",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBodDRiMFRzZGdGZFRyUm9Gd2F1UTcyS21tc0FUNm00OEIyMjB3aUpod2xDQ3ZsWFlnQ1lnd0xTVEp3WXF1MVdRY0RzV0o?oc=5",
+            "publishedAt": "2026-08-29T14:31:09Z"
+          },
+          {
+            "title": "iQuote-MoneyDJ理財網",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQNDhKMmVSSGFXYmRjSGRxT1NvbHM3N2t6QWFvUnhlWmF2M0VrZ3Z2TUY0dXBoTU5vZkhnWTJEb0UxN2NWSnpZaEw2bnlFZUd6MDRSb1YtcTJZbzhic1FIckkyZTN2LW9zMVBVRWZOYzBlUWxjZFhFWW9FX3RIcVZqOWc4eUk?oc=5",
+            "publishedAt": "2026-08-29T08:48:45Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-842",
+        "representativeTitle": "今彩539第115210期頭獎槓龜- 財經",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T12:43:12Z",
+        "updatedAt": "2026-08-29T14:06:41Z",
+        "sourceCounts": {
+          "cts": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 2
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "今彩539第115210期頭獎槓龜- 財經",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFAydEVQdWJ3czU3WngwWmVmNENlcHU4MHhLT3FCQzJCa2hScGwwd1BVWElXWHE4NF9kZnhQWEp6eEhnZHBaMmhSSG54S25UcWpLRFJ5bnh1bVViSmV1aFNlcHZzRFZlZTJCNDUwZ0dR?oc=5",
+            "publishedAt": "2026-08-29T14:06:41Z"
+          },
+          {
+            "title": "今彩539第115210期開獎- 財經",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5yRmNHU1MxNlhkM25RRGpkYTRLMEdkclJ6V1RMXzRrOFh4dVB1Vkp4YmdWUnZEQlVhNEJDd1Z6VHh2dHdCOC1rMnF2Q3BLdkg0T2hodFVIbm03dWlxR0R5OEF3RWp6T3ZLMFp0T2Vn?oc=5",
+            "publishedAt": "2026-08-29T12:43:12Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-890",
+        "representativeTitle": "[國際] 慈濟援助尼泊爾救災 集結醫護物資送往災區",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T11:32:50Z",
+        "updatedAt": "2026-08-29T12:59:06Z",
+        "sourceCounts": {
+          "cna": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[國際] 慈濟援助尼泊爾救災 集結醫護物資送往災區",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229075",
+            "publishedAt": "2026-08-29T12:59:06Z"
+          },
+          {
+            "title": "慈濟援助尼泊爾救災 集結醫護物資送往災區",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aopl/202608290184.aspx",
+            "publishedAt": "2026-08-29T11:32:50Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-909",
+        "representativeTitle": "[國際] 伊朗總統承認美國制裁衝擊經濟 傳釋出願意讓步訊號",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T10:23:30Z",
+        "updatedAt": "2026-08-29T12:24:57Z",
+        "sourceCounts": {
+          "cts": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cts": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[國際] 伊朗總統承認美國制裁衝擊經濟 傳釋出願意讓步訊號",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229071",
+            "publishedAt": "2026-08-29T12:24:57Z"
+          },
+          {
+            "title": "伊朗總統承認美國制裁衝擊經濟傳釋出願意讓步訊號- 國際",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1GZWtSaE5WWXMtbjVRRENkVXNMQk5YMnRmUTgtMW5zTC1TR3MyTUFSYVdOOGVfVGdqQ0lqYVpnVUpVZndocmEtbDBqTm5WUmFONkQ5ZkpteTY3dlpZTUROTFhWbjBtZm5EczlldTgyZWZRcnhRYkpRQQ?oc=5",
+            "publishedAt": "2026-08-29T10:23:30Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-918",
+        "representativeTitle": "我對美採購岸置魚叉飛彈 試射精準擊毀目標",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T11:22:55Z",
+        "updatedAt": "2026-08-29T12:13:14Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "我對美採購岸置魚叉飛彈 試射精準擊毀目標",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/WorldNews/2026-08-29/2451545.html",
+            "publishedAt": "2026-08-29T12:13:14Z"
+          },
+          {
+            "title": "我對美採購岸置魚叉飛彈 試射精準擊毀目標 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1oVmNqWHF5YzhOWWVKU0Y1ZS1neldrai1OSmduOGVpWTVBb1lUNkxzNEZ1bkZ0T2dyVXctSTVXRkRYLS1yeXVpMmYyUlFqZFZKaHZEWXJLZmc3YW1jUk5ObGlSUDBiOTBBLTNyLWhtOTVVYkJJNlFHWUZDZm9LYjQ?oc=5",
+            "publishedAt": "2026-08-29T11:22:55Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-919",
+        "representativeTitle": "男不滿被按喇叭 亮刀恐嚇還攔車揮拳被驗出毒駕",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T11:06:37Z",
+        "updatedAt": "2026-08-29T12:12:25Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "男不滿被按喇叭 亮刀恐嚇還攔車揮拳被驗出毒駕",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Society/2026-08-29/2451475.html",
+            "publishedAt": "2026-08-29T12:12:25Z"
+          },
+          {
+            "title": "男不滿被按喇叭 亮刀恐嚇還攔車揮拳被驗出毒駕 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFAtVXU2czMzVDVkNFBBbW9IeWJ6RlFOM2pzUm43cmJ6U1RzM1V0azRCSmp6Z0g3bkN4R0tuZm9hVmxIZ1JjbVJrZ1FuN2M4R21NZUczVUNlRUFwVWxjem54SERDSVFWRFlxdlRDMmNxQVhtR29wUkVmT1ln?oc=5",
+            "publishedAt": "2026-08-29T11:06:37Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-920",
+        "representativeTitle": "周氏蝦捲安平老店遭潑灑一袋蟑螂 警鎖定犯案男子",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T11:40:52Z",
+        "updatedAt": "2026-08-29T12:12:00Z",
+        "sourceCounts": {
+          "cna": 1,
+          "ebc": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ebc": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "周氏蝦捲安平老店遭潑灑一袋蟑螂 警鎖定犯案男子",
+            "source": "ebc",
+            "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBuN21XQXlOUlRqajdQMnRvbXlIR0ZJNVduaFJZZENXSGRuNDd4WEE5VEZsZjJGSHFvZnNGRWFJX2t6N3NfMzhKTS15dlpXdE84cjVsQ09B?oc=5",
+            "publishedAt": "2026-08-29T12:12:00Z"
+          },
+          {
+            "title": "周氏蝦捲安平老店遭潑灑一袋蟑螂 警鎖定犯案男子",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/asoc/202608290185.aspx",
+            "publishedAt": "2026-08-29T11:40:52Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-921",
+        "representativeTitle": "一開學就沒收手機！親子衝突拉警報 這三招協助3C戒斷 - 民視健康長照網",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T09:00:00Z",
+        "updatedAt": "2026-08-29T12:11:46Z",
+        "sourceCounts": {
+          "ftv": 1,
+          "mirrormedia": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "ftv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "mirrormedia": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "一開學就沒收手機！親子衝突拉警報 這三招協助3C戒斷 - 民視健康長照網",
+            "source": "ftv",
+            "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE9qamxKcXAyTTRsMEpuT0FMa0U5endIdERGQ3N0TXZ3VVAzcUt5MUVleksyT1RWSl9pcWJDVHQ4RXY2RGhnTXh5Tm5oajNRc2pnczlXZkNXMHhNY3hOTmQtN2NQLVA?oc=5",
+            "publishedAt": "2026-08-29T12:11:46Z"
+          },
+          {
+            "title": "一開學就沒收手機！親子衝突拉警報 這三招協助3C戒斷",
+            "source": "mirrormedia",
+            "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1UTXRpQWRfaml6QTB3Zk9DWXdqYXN1Q0YxelpsZEQ5bkpKV2s4MlhqMkxXY3JaOUx3TXpfN1E5RnpfdU1PREV2dm5nWXZFRWtHLVlSQWNVcEhsZFdDa2RzOF9R0gFnQVVfeXFMT1VLckhfd2cyRmw5YVlZbDBmbWJ6Zlh1XzNYUFEyUjJFdDY4Mlc2U1EzYzZpRlZUeEhyN3paZWpPc1FjNFUtQ0xHMTh4OXZIT0hmOENBSEl6NEItRm5yWXNJZzR0dDZhQQ?oc=5",
+            "publishedAt": "2026-08-29T09:00:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-922",
+        "representativeTitle": "肉食控瘋掉！ 紐約排隊名店推出霸氣「煙燻怪獸塔」",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T11:16:52Z",
+        "updatedAt": "2026-08-29T12:11:31Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "肉食控瘋掉！ 紐約排隊名店推出霸氣「煙燻怪獸塔」",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Life/2026-08-29/2451509.html",
+            "publishedAt": "2026-08-29T12:11:31Z"
+          },
+          {
+            "title": "肉食控瘋掉！ 紐約排隊名店推出霸氣「煙燻怪獸塔」 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE0xWlZjSFBOc2pxaHRqU0pMMG1URmlMNWk2akVVdGRfeWhYZ3gwTkZZUEFmbkhEVGxtY2VJWGVURlpYNHZTa0lSYktsT0I3cTBGX2duM0stVkFUelk1ejdOSEh0aEx4QjdlZWIwdWozdGlsNnJLTFE?oc=5",
+            "publishedAt": "2026-08-29T11:16:52Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-930",
+        "representativeTitle": "尼泊爾洪災633死、近3千人失聯！ 8歲童奇蹟生還",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T11:06:11Z",
+        "updatedAt": "2026-08-29T12:07:17Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "尼泊爾洪災633死、近3千人失聯！ 8歲童奇蹟生還",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/WorldNews/2026-08-29/2451466.html",
+            "publishedAt": "2026-08-29T12:07:17Z"
+          },
+          {
+            "title": "尼泊爾洪災633死、近3千人失聯！ 8歲童奇蹟生還 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE56NnAtQTNIeHJwMjBWZU4tTUMtWEJ2cW5yd0lhOVFndnpFbmJlUW5vQkpPNFVPNzNFWnIwWDZqR3FLbUJFZ1IyWmxHZnhadXhnYXFDV0FSWUhOY1EyTTB0MXlSODZfSUlpTVRzY2NRQXl4U1ZzY3FZdFA5Z0c?oc=5",
+            "publishedAt": "2026-08-29T11:06:11Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-934",
+        "representativeTitle": "婦人闖店跳針喊「要修改衣服」 下秒揪闆娘衣領動粗",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T06:41:48Z",
+        "updatedAt": "2026-08-29T12:05:53Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "婦人闖店跳針喊「要修改衣服」 下秒揪闆娘衣領動粗",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Society/2026-08-29/2451037.html",
+            "publishedAt": "2026-08-29T12:05:53Z"
+          },
+          {
+            "title": "婦人闖店跳針喊「要修改衣服」 下秒揪闆娘衣領動粗 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFAtZVNoNUxlSVA5dnRPLXVJYnpIMmUwYUtTUnBzcVNqeUVPN2tXYmdqcWNsNkFNeUZTSW5ULVFPN291U3pCaWFoNTRHc25FRExZZWRESUxYQy1pVFhRdEZHS2JWdUFJOVV1MlZBSC1XblUxbnVHT09zMzdmRV8?oc=5",
+            "publishedAt": "2026-08-29T06:41:48Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-939",
+        "representativeTitle": "俄軍無人機再轟炸 基輔市郊彈藥庫多次爆炸 - eracom.com.tw",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T12:02:43Z",
+        "updatedAt": "2026-08-29T12:02:44Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "俄軍無人機再轟炸 基輔市郊彈藥庫多次爆炸 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9LRFBVQng4dzZTSDM2aEY2TmdablFSbGtoTHhWUWlmNllxT3RDR0VvUjktdFA3bFVfaGNpaFJscXU5NnZTRE56VGJoTmJpcHNoSS1jQmJqOUliUDZvdWxzNl9aTFg4X2c1ZERTRnY3d3hUMUNablIzQTJpaVQtTkU?oc=5",
+            "publishedAt": "2026-08-29T12:02:44Z"
+          },
+          {
+            "title": "俄軍無人機再轟炸 基輔市郊彈藥庫多次爆炸",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/WorldNews/2026-08-29/2451617.html",
+            "publishedAt": "2026-08-29T12:02:43Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-946",
+        "representativeTitle": "麵包肉鬆「發黑」疑發霉！ 消費者「多次腹瀉」 業者致歉送驗",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T11:05:04Z",
+        "updatedAt": "2026-08-29T11:56:57Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "麵包肉鬆「發黑」疑發霉！ 消費者「多次腹瀉」 業者致歉送驗",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Life/2026-08-29/2451441.html",
+            "publishedAt": "2026-08-29T11:56:57Z"
+          },
+          {
+            "title": "麵包肉鬆「發黑」疑發霉！ 消費者「多次腹瀉」 業者致歉送驗 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5FajZIalRWaUx2V3RGRE5zRnZLTzJlU3kyZXNyWEh0MFhvNk85cDdiM3dhRDZKVTlXTUp5Ri1yM3B2bk9GNzJoR2NkVlkxczgzVG1nYlNVdE9OWHBsc3QyLW1qMXVnemM2Y3o4aFdUS1FtMG1EWXc?oc=5",
+            "publishedAt": "2026-08-29T11:05:04Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260829-973",
+        "representativeTitle": "浪況差！ 東琉線「海盜船」再現 孩童嚇到「罵罵號」",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T09:45:50Z",
+        "updatedAt": "2026-08-29T11:29:10Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "浪況差！ 東琉線「海盜船」再現 孩童嚇到「罵罵號」",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Life/2026-08-29/2451328.html",
+            "publishedAt": "2026-08-29T11:29:10Z"
+          },
+          {
+            "title": "浪況差！ 東琉線「海盜船」再現 孩童嚇到「罵罵號」 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9CT3owMjN2Tm81ZzdQeDZObUhnMThwOVZYQkxKek1VQU5STHFoVkZ5Q1pwdElqekRzLW1iVTVyN2RqOEprQVk1aUFsZUJHbDVlV2dkeTdFSVoxYmhRX092eHZpc0FseE00Q19TRjVza0ZLYWVLb2c?oc=5",
+            "publishedAt": "2026-08-29T09:45:50Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-14",
+        "representativeTitle": "費德瑞躋身國際網球名人堂淚稱人生至高榮耀之一- 生活",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T04:15:05Z",
+        "updatedAt": "2026-08-30T05:38:00Z",
+        "sourceCounts": {
+          "ctee": 1,
+          "newtalk": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "ctee": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "newtalk": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "費德瑞躋身國際網球名人堂淚稱人生至高榮耀之一- 生活",
+            "source": "ctee",
+            "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1iSDF5WFdCSTJjeFN5WXBjVFhaYVlueHV4dGN4Q1U3WVdITTNJWThHQUJHUU5PUGUyVExzR0FObnVMY2IxcWFrRnR0YWR6c0V5RzJjQ25RZ1ZVYUozQ21r?oc=5",
+            "publishedAt": "2026-08-30T05:38:00Z"
+          },
+          {
+            "title": "費德瑞躋身國際網球名人堂 淚稱人生至高榮耀之一",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056599",
+            "publishedAt": "2026-08-30T04:15:05Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-170",
+        "representativeTitle": "機車誤闖桃機航廈周邊道路 航警已告發54件",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T03:49:56Z",
+        "updatedAt": "2026-08-30T04:20:02Z",
+        "sourceCounts": {
+          "cna": 1,
+          "newtalk": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "newtalk": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "機車誤闖桃機航廈周邊道路 航警已告發54件",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056600",
+            "publishedAt": "2026-08-30T04:20:02Z"
+          },
+          {
+            "title": "機車誤闖桃機航廈周邊道路 航警已告發54件",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/asoc/202608300051.aspx",
+            "publishedAt": "2026-08-30T03:49:56Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-181",
+        "representativeTitle": "軍備局205廠遷至高雄大樹 聚焦自動化生產降維安風險",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T03:17:47Z",
+        "updatedAt": "2026-08-30T04:12:09Z",
+        "sourceCounts": {
+          "cna": 1,
+          "newtalk": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "newtalk": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "軍備局205廠遷至高雄大樹 聚焦自動化生產降維安風險",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056595",
+            "publishedAt": "2026-08-30T04:12:09Z"
+          },
+          {
+            "title": "軍備局205廠遷至高雄大樹 聚焦自動化生產降維安風險",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aipl/202608300047.aspx",
+            "publishedAt": "2026-08-30T03:17:47Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-199",
+        "representativeTitle": "Twice 進軍房產？ 娜璉砸2.1億購清潭洞豪宅",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T12:12:39Z",
+        "updatedAt": "2026-08-30T03:59:29Z",
+        "sourceCounts": {
+          "era": 1,
+          "nexttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "era": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "nexttv": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "Twice 進軍房產？ 娜璉砸2.1億購清潭洞豪宅",
+            "source": "nexttv",
+            "url": "https://www.nexttv.com.tw/NextTV/News/Home/Entertainment/2026-08-29/2451525.html",
+            "publishedAt": "2026-08-30T03:59:29Z"
+          },
+          {
+            "title": "Twice 進軍房產？ 娜璉砸2.1億購清潭洞豪宅 - eracom.com.tw",
+            "source": "era",
+            "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOTzVJRUZOallXcXJzamRNOC1lQUx3TUtZLVF3YTVfTlo0M0E5WUpWN1FyWFJTLTl1SzhQNTJsb1I1dTRlb3NrMXNNTzZZTWRRR1F4aUd6V2VZemRGakZvanRpQnB6MzM4dUV1OGZKaUxwdTVWQ1Z3RVhFRWo1SjNiREJaTDg?oc=5",
+            "publishedAt": "2026-08-29T12:12:39Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-203",
+        "representativeTitle": "205廠自動化T112步槍產線 年產萬把加速換裝",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T03:11:23Z",
+        "updatedAt": "2026-08-30T03:55:35Z",
+        "sourceCounts": {
+          "cna": 1,
+          "newtalk": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "newtalk": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "205廠自動化T112步槍產線 年產萬把加速換裝",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056594",
+            "publishedAt": "2026-08-30T03:55:35Z"
+          },
+          {
+            "title": "軍備局205廠自動化T112步槍產線 年產萬把加速換裝",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aipl/202608300035.aspx",
+            "publishedAt": "2026-08-30T03:11:23Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-231",
+        "representativeTitle": "[國際] 菲美共同防禦條約75週年 重申深化合作維護印太和平",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T03:16:45Z",
+        "updatedAt": "2026-08-30T03:34:41Z",
+        "sourceCounts": {
+          "cts": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cts": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[國際] 菲美共同防禦條約75週年 重申深化合作維護印太和平",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229116",
+            "publishedAt": "2026-08-30T03:34:41Z"
+          },
+          {
+            "title": "菲美共同防禦條約75週年重申深化合作維護印太和平- 國際",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9abFk1Y1BPSXVjdU83WWJNTDhIX3pMTVhFWHM1dlVMTmZ1ajR5dTg5WmV2MUdZenFjQmx3cmRxc1kycW1kTTRwVlJWd1BPdm9LS1VTTTAtampWYVdYRTRjQlFmN3ZDZS04X1h0V3VVVUZERWNvQWlTWg?oc=5",
+            "publishedAt": "2026-08-30T03:16:45Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-265",
+        "representativeTitle": "千名支持者到場 北市嘉義鄉親挺沈伯洋後援會成立",
+        "articleCount": 2,
+        "sourceCount": 1,
+        "startedAt": "2026-08-29T09:55:00Z",
+        "updatedAt": "2026-08-30T03:15:00Z",
+        "sourceCounts": {
+          "mnews": 2
+        },
+        "sourceConcentration": 1.0,
+        "sourceTimeline": {
+          "mnews": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            },
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "千名支持者到場 北市嘉義鄉親挺沈伯洋後援會成立",
+            "source": "mnews",
+            "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFB6RExzbFlDeGNOdmZMc0xZOVpnbVVJVmZlOWZZLWtYZ3E3bXdKR21iYnlrcWs0UTAwSnN3cjk2ZldYV0RXakZGdllTSWFGdkxkZ05nTGJ1eDDSAV5BVV95cUxNcGJUSTZMZlJIVVIteWI5MFpHMjFreHZpdlZmMjV3QnkzbGxLSlB3aTBuMHBKYU1lM3hQMnhfZFdsOFp1cUQtQ1JPYS1aMEYybVpWSFBYV05ZTmpOVVZR?oc=5",
+            "publishedAt": "2026-08-30T03:15:00Z"
+          },
+          {
+            "title": "集結挺沈力量！ 北市嘉義鄉親挺沈伯洋後援會成立",
+            "source": "mnews",
+            "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9mS1BiUWZTVDJPSFYxdTB4dnQ1cEJYcktuNWQ0RlVTTmlmOTR1QVhmcnpXeXhHV3dVYXg5WENXU2R6ZEVhUzMzVnlUdmlVSllpS2cwb0lxVHLSAV5BVV95cUxPWmM5Q3h5UGR4NmZmV2cxcXpCeFVxb2NKRDRpM2Z0YzZfTHVvOUhyOERlZTBuU3dVZldkVWJ3N3llRnNKWncyd3g5MEEzYnEtY2lGNmlHaVpldUVHZzV3?oc=5",
+            "publishedAt": "2026-08-29T09:55:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-266",
+        "representativeTitle": "挪威新國王首度發聲 悼念父王、宣示肩負重任",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T22:10:00Z",
+        "updatedAt": "2026-08-30T03:15:00Z",
+        "sourceCounts": {
+          "mnews": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "mnews": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "挪威新國王首度發聲 悼念父王、宣示肩負重任",
+            "source": "mnews",
+            "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE10cm1lN3IzaGU0anBrYWZKNjc3Nmh1Tk5JRTJpS3RKSUpDNFJkVU40TElnNnhodHVkVTdTOEE2OXI1dFIya0xMSV9QX0lNRjdibnY0ZTZZekLSAV5BVV95cUxPYTViY2dFOFBrSG9KZl9sek5rWEpmU1JSSVlUVWJPaGZhXzdPeUFkSEFCMkNleXN3Mk91TWt3bE85dGhTaWhaVVhRM1hwbXFsWWJ0REN1OXF4alhESGln?oc=5",
+            "publishedAt": "2026-08-30T03:15:00Z"
+          },
+          {
+            "title": "[國際] 挪威新國王首度發聲悼念父王、宣示肩負重任",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229086",
+            "publishedAt": "2026-08-29T22:10:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-278",
+        "representativeTitle": "[政治] 林智堅談新竹棒球場案 稱司法還清白盼紛擾落幕",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T02:42:16Z",
+        "updatedAt": "2026-08-30T03:09:26Z",
+        "sourceCounts": {
+          "cna": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[政治] 林智堅談新竹棒球場案 稱司法還清白盼紛擾落幕",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229112",
+            "publishedAt": "2026-08-30T03:09:26Z"
+          },
+          {
+            "title": "林智堅談新竹棒球場案 稱司法還清白盼紛擾落幕",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aipl/202608300032.aspx",
+            "publishedAt": "2026-08-30T02:42:16Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-281",
+        "representativeTitle": "尼日士兵叛變圍攻總統府軍政府宣布已平息武裝行動- 新聞",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T01:35:08Z",
+        "updatedAt": "2026-08-30T03:08:00Z",
+        "sourceCounts": {
+          "moneydj": 1,
+          "ttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "moneydj": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "ttv": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "尼日士兵叛變圍攻總統府軍政府宣布已平息武裝行動- 新聞",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPU1RscGo1d2N0Rm9VaDI5OEpEa01qUVowZHd5ZW00UXZxVlNkZzlHcjFUeXFINTZHcU9neWlNTnBEZ180eTVKMDN3ckZuaHMyRWdPSFZST0tfVElFa0VuNzhGSnlDNWk0RnFDbGxySzFJeFptTkdxV0loQmREVVZkTGt4UEhTbUtBWGEza25lU2RGUQ?oc=5",
+            "publishedAt": "2026-08-30T03:08:00Z"
+          },
+          {
+            "title": "尼日士兵叛變圍攻總統府 軍政府宣布已平息武裝行動",
+            "source": "ttv",
+            "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE82bGR0c2VCbEc5MGJ1YWN3Mk1rZDVPQW9uMzUzVlNUY0ljdlF2TjV0X0xsZmJERFo2SV85ck1UNXgzYlVfYkJYUGQ5VE1nTU04Wnc3WlhfWQ?oc=5",
+            "publishedAt": "2026-08-30T01:35:08Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-282",
+        "representativeTitle": "[生活] QR Code騙取個資增加 資安署示警3方式辨真偽",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T02:22:07Z",
+        "updatedAt": "2026-08-30T03:07:01Z",
+        "sourceCounts": {
+          "newtalk": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "newtalk": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[生活] QR Code騙取個資增加 資安署示警3方式辨真偽",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229113",
+            "publishedAt": "2026-08-30T03:07:01Z"
+          },
+          {
+            "title": "QR Code騙取個資增加 資安署示警3方式辨真偽",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056575",
+            "publishedAt": "2026-08-30T02:22:07Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-325",
+        "representativeTitle": "戰備儲油43年新低！川普與委內瑞拉達成「最大石油交易案」",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T10:50:15Z",
+        "updatedAt": "2026-08-30T02:48:00Z",
+        "sourceCounts": {
+          "moneydj": 1,
+          "ttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "moneydj": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "ttv": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "戰備儲油43年新低！川普與委內瑞拉達成「最大石油交易案」",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPbFVhUEtnbmg2Z1cwSHU5UmdWNlp0ZG1XZWsxLTlaenVNSi1aM1pfVGJ5SHY1MGM1d1dQRDM3RmJUeXNkUlNWTUZKSWVoX19lZVp3MEdCbTg3U0FPQkhCVUZkRXBNOWtWUWMxMFNTQ0VZTmdkb2hXOVUyTm9KSlcxLV9mOTdwVGNCRVktc1ZJQklEQQ?oc=5",
+            "publishedAt": "2026-08-30T02:48:00Z"
+          },
+          {
+            "title": "戰備儲油43年新低！川普與委內瑞拉達成「最大石油交易案」",
+            "source": "ttv",
+            "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1SdnZ2VWl4NEEwT0pjQm1wTGRkWVpmUEpxakM2azBwYzJfdEVkUEZSYlBZcmxUanM2SEdDZEFCWE9mRTFKVURWb3Blb0Z3bDJIWHJzQ3VORQ?oc=5",
+            "publishedAt": "2026-08-29T10:50:15Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-331",
+        "representativeTitle": "[生活] MLB國民隊台灣日開球 林琪兒：緊張堪比太空任務",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T02:45:33Z",
+        "updatedAt": "2026-08-30T02:46:08Z",
+        "sourceCounts": {
+          "newtalk": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "newtalk": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[生活] MLB國民隊台灣日開球 林琪兒：緊張堪比太空任務",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229107",
+            "publishedAt": "2026-08-30T02:46:08Z"
+          },
+          {
+            "title": "MLB國民隊台灣日開球 林琪兒：緊張堪比太空任務",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056580",
+            "publishedAt": "2026-08-30T02:45:33Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-347",
+        "representativeTitle": "AI「燒錢潮」轉向資本紀律！ASIC 成降本利器 這些台廠將受惠",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T11:00:00Z",
+        "updatedAt": "2026-08-30T02:41:55Z",
+        "sourceCounts": {
+          "moneyudn": 1,
+          "udn": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "moneyudn": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "udn": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "AI「燒錢潮」轉向資本紀律！ASIC 成降本利器 這些台廠將受惠",
+            "source": "moneyudn",
+            "url": "https://money.udn.com/money/story/5607/9722572",
+            "publishedAt": "2026-08-30T02:41:55Z"
+          },
+          {
+            "title": "AI「燒錢潮」轉向資本紀律！ASIC 成降本利器 這些台廠將受惠 - 經濟日報",
+            "source": "udn",
+            "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBzalBxWUlwRWUta3c0Ukk0X1VUQzZPZFlMVzV0dkpfcVBQLUZ4cjRqb1QwRE1QNzZDWVZUOWtwLUViV2wyb3Q5TkVIRW9zR0dkQm9LelBzM1lFQdIBX0FVX3lxTFBVZWxBM0JCMVo5aFJic0Y1SVg1TlpmaDl6SHg0SThkdHB2cV9WWTkxc1VuUzFhMEpyRFJEcWoweUlPV3M4TmZBc3VZZlJyWnYxWDlhU0cyazA2ZXduVE04?oc=5",
+            "publishedAt": "2026-08-29T11:00:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-358",
+        "representativeTitle": "高雄酒吧勸架變衝突 男涉持瓦斯槍攻擊2女送辦",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T02:05:52Z",
+        "updatedAt": "2026-08-30T02:35:03Z",
+        "sourceCounts": {
+          "cna": 1,
+          "newtalk": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "newtalk": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "高雄酒吧勸架變衝突 男涉持瓦斯槍攻擊2女送辦",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056579",
+            "publishedAt": "2026-08-30T02:35:03Z"
+          },
+          {
+            "title": "高雄酒吧勸架變衝突 男涉持瓦斯槍攻擊2女送辦",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/asoc/202608300021.aspx",
+            "publishedAt": "2026-08-30T02:05:52Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-376",
+        "representativeTitle": "別嫌1萬太少就花掉！專家點出4檔「銅板價ETF」替你工作至少20年",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T22:00:30Z",
+        "updatedAt": "2026-08-30T02:23:00Z",
+        "sourceCounts": {
+          "chinatimes": 1,
+          "ctee": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "chinatimes": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ctee": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "別嫌1萬太少就花掉！專家點出4檔「銅板價ETF」替你工作至少20年",
+            "source": "ctee",
+            "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9uRjZWZUpwd1pkUFl4eDk5dEIwU0puM3FUUVV3NGU3cHZ1a01hNUtRTG5YcTNYVzh6Ny1rSDVkNkxwYlM1akI3QU40NjlnSmJSbDlzcWV5dnUxUQ?oc=5",
+            "publishedAt": "2026-08-30T02:23:00Z"
+          },
+          {
+            "title": "別嫌1萬太少就花掉 4檔「銅板價ETF」替你工作至少20年",
+            "source": "chinatimes",
+            "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE0wYVVHZ1lVcEVxUWhDNngyRy01U2MzeURoY0ZQZDgzTnVNV0NlS2FvZWYwUWVYM2tIN3pYa3JWM0ZhcWhMSEVHU0ZiTFQ3ODdBQzkzZWUwcG9TVHMxVldoQWg0MWpSWTcxdC12VTZR?oc=5",
+            "publishedAt": "2026-08-29T22:00:30Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-433",
+        "representativeTitle": "尼泊爾洪災逾670人喪生美國提供360萬美元人道援助- 新聞",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T00:17:13Z",
+        "updatedAt": "2026-08-30T01:48:00Z",
+        "sourceCounts": {
+          "moneydj": 1,
+          "ttv": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "moneydj": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "ttv": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "尼泊爾洪災逾670人喪生美國提供360萬美元人道援助- 新聞",
+            "source": "moneydj",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQaWdDWlpudm1ubUR3Z0RodUhxN2ZQOUhwaHIyZUg2clNEYVVSU0xkRmg0bk1OZUNBWWp1UFdmck9lcnp4YjJ2WFViWXhQX0k1UG95WEx2Z0V1cFVUN0RrcVlIN2QtTFMtMnY2bkRtWXdNRTdGeFVNclptMjVoNFRWRFJwQng3bmNBUjhiRkJtYTRqUQ?oc=5",
+            "publishedAt": "2026-08-30T01:48:00Z"
+          },
+          {
+            "title": "尼泊爾洪災逾670人喪生 美國提供360萬美元人道援助",
+            "source": "ttv",
+            "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9HT1VBLVFwc1dHQmY4d0FHQ0N6Z0ZqWU9ueU4wYUtETUwtMEhUMjFzWWFfdVlFSWlwYTNTcEtHOXZ6MVNKZ2RLWVRTUGlQZVVPb2VEWTAyZw?oc=5",
+            "publishedAt": "2026-08-30T00:17:13Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-452",
+        "representativeTitle": "孝女為病母捐骨髓竟「配對失敗」驗DNA才知非親生",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T09:16:45Z",
+        "updatedAt": "2026-08-30T01:32:00Z",
+        "sourceCounts": {
+          "ctwant": 1,
+          "ebc": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "ctwant": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "ebc": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "孝女為病母捐骨髓竟「配對失敗」驗DNA才知非親生",
+            "source": "ebc",
+            "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9fS3FyOHlrV1Ixby10THdxT2JXMjZ6NzVJa250eTF0cnhkNFdNdzBmVENUV3JOVHM2cGFQMWNveVZyTXlGODFHUGNUaFE3azV3T3pN?oc=5",
+            "publishedAt": "2026-08-30T01:32:00Z"
+          },
+          {
+            "title": "29歲孝女為病母捐骨髓竟「配對失敗」 驗DNA才知非親生 | 國際 | CTWANT",
+            "source": "ctwant",
+            "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBmQUQzYlh2bW1JV2NLNkRvQXMzS1FIQ1NuWkJoNHE0Q2tSNVBYdEI0em1JZk1PdUFOeFpsYTAxazBSZ0hnSUJxT0t5ZGhUemPSAVRBVV95cUxOckk1X0NGVnA3bGw5ZEZTZVRQMy01d2praWszUDRkSFgtWDVRVktFaTNnNmpxYnoyMkctcjZPSi1wa2EtY1N6TTM1czdXREZXX2lqb3E?oc=5",
+            "publishedAt": "2026-08-29T09:16:45Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-46",
+        "representativeTitle": "何清漣專欄：恒大歌舞團──是揚州瘦馬還是鹽商戲班？",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-29T22:40:00Z",
+        "updatedAt": "2026-08-30T05:20:13Z",
+        "sourceCounts": {
+          "mirrormedia": 1,
+          "mnews": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "mirrormedia": [
+            {
+              "date": "2026-08-29",
+              "mentions": 1
+            }
+          ],
+          "mnews": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "何清漣專欄：恒大歌舞團──是揚州瘦馬還是鹽商戲班？",
+            "source": "mnews",
+            "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE96UFI1aDdRRVJHUk1YV056MjFYalQ4dFFuaWJ5X2hGdXY1VXpTMTd6RjBfQzgwWEszZG1qNnhIa3Fsa1BsTW11MjFvY0F0VnFIR1RCUmpjTDlWdw?oc=5",
+            "publishedAt": "2026-08-30T05:20:13Z"
+          },
+          {
+            "title": "何清漣專欄：恒大歌舞團──是揚州瘦馬還是鹽商戲班？",
+            "source": "mirrormedia",
+            "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBCNGlBRkNKNVlBeTZ2WjRqczZMeTdrSWdmTk9mWnoxVUdJTm5JMFd1ZmlKeW9ESDZNMUpaTWFsdTdDblI5VktRcWpJaERSaTNubno0cTN0TUJid0dtbzBuV2Z4Y9IBaEFVX3lxTE5ZZk9HaFJYSXFUTk1PQlhfQ1hpRmJ0VWNaSlZWcHRWSnVzZTlOcWpVZmFIZGRPajY5RnAwMUxLUm5QM2tldTdEeGVuQXpPcU9QaWJhYS15U081dDQwOHUxUXNGaEFhMnBX?oc=5",
+            "publishedAt": "2026-08-29T22:40:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-460",
+        "representativeTitle": "[生活] MLB老虎再見安打擊敗道奇 李灝宇關鍵局面選到保送",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T01:12:58Z",
+        "updatedAt": "2026-08-30T01:27:02Z",
+        "sourceCounts": {
+          "newtalk": 1,
+          "rti": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "newtalk": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "rti": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "[生活] MLB老虎再見安打擊敗道奇 李灝宇關鍵局面選到保送",
+            "source": "rti",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229101",
+            "publishedAt": "2026-08-30T01:27:02Z"
+          },
+          {
+            "title": "MLB老虎再見安打擊敗道奇 李灝宇關鍵局面選到保送",
+            "source": "newtalk",
+            "url": "https://newtalk.tw/news/view/2026-08-30/1056567",
+            "publishedAt": "2026-08-30T01:12:58Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-461",
+        "representativeTitle": "GeminiNotebook相關報導",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T01:24:00Z",
+        "updatedAt": "2026-08-30T01:24:38Z",
+        "sourceCounts": {
+          "mirrormedia": 1,
+          "setn": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "mirrormedia": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "setn": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "GeminiNotebook相關報導",
+            "source": "setn",
+            "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5JaXl5Q2RYX1Ffd1RUeTJJU3Zscjh4T2lqZ293VTg4ekI0cTlOTUpacWVzVHd0akhYdS1nNGs4WDF3MXlzcFllbA?oc=5",
+            "publishedAt": "2026-08-30T01:24:38Z"
+          },
+          {
+            "title": "Gemini Notebook改制 不需再等每日更新",
+            "source": "mirrormedia",
+            "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1SNHpHaUxEWUs2RTlxa2V4Q1NSNUcyakxfbTBHTG00dUY3cmllRFpDWWYwQkdfbU5qTENtZC0zTVlUSWpYTnF1cnhzdXdUSTh0Vk5kak51cXM2UHpw0gFiQVVfeXFMUGVScDVBOTFMSXg5VWJRenp3NTNyTXoyVU4wY1NYRnF1MjZMMkd1QnhEQU1LLWJETUdsdnUzRmgwZTNJN3hGbGZnakhkRl9XWmlJQTVzTUw4NHkzcEJtcmNtTEE?oc=5",
+            "publishedAt": "2026-08-30T01:24:00Z"
+          }
+        ]
+      },
+      {
+        "id": "event-20260830-474",
+        "representativeTitle": "澎湖樂在騎中菊島行 運動i臺灣",
+        "articleCount": 2,
+        "sourceCount": 2,
+        "startedAt": "2026-08-30T01:14:32Z",
+        "updatedAt": "2026-08-30T01:14:32Z",
+        "sourceCounts": {
+          "cna": 1,
+          "cts": 1
+        },
+        "sourceConcentration": 0.5,
+        "sourceTimeline": {
+          "cna": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ],
+          "cts": [
+            {
+              "date": "2026-08-30",
+              "mentions": 1
+            }
+          ]
+        },
+        "articles": [
+          {
+            "title": "澎湖樂在騎中菊島行 運動i臺灣",
+            "source": "cts",
+            "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBveGlVWWhLanBTMjVmWFBLY2ZkRDZPaDN0TkZqSWl1YTBndFZxQXJwbVdCMnJiQjBDV2lfY0RQU3Y1NzBIblgweWM0ci1QZzJETWtJUFo1QkQ0M2c1UER0Z0U0RHhybHozNF8xUnhR?oc=5",
+            "publishedAt": "2026-08-30T01:14:32Z"
+          },
+          {
+            "title": "澎湖樂在騎中菊島行 運動i台灣",
+            "source": "cna",
+            "url": "https://www.cna.com.tw/news/aloc/202608300012.aspx",
+            "publishedAt": "2026-08-30T01:14:32Z"
+          }
+        ]
+      }
+    ]
+  }
+}

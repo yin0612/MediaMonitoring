@@ -1,246 +1,293 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-08-09T07:32:55.617361Z",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-30T03:00:00Z",
+    "actualTo": "2026-08-30T05:10:00Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
   "data": {
     "geo": "TW",
     "status": "ok",
     "stale": false,
     "source": "google-trends-realtime-and-rss",
-    "sourceUrl": "https://trends.google.com/trending?geo=TW&hl=zh-TW",
+    "sourceUrl": "https://trends.google.com/trending/rss?geo=TW&hl=zh-TW",
     "items": [
       {
-        "title": "白海豚停班停課",
-        "approximateTraffic": "100,000+",
+        "title": "柴油",
+        "approximateTraffic": "20,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "熱帶性低氣壓",
-        "approximateTraffic": "10,000+",
+        "title": "犯罪",
+        "approximateTraffic": "20,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "遣返",
-        "approximateTraffic": "10,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "徐乃麟",
-        "approximateTraffic": "10,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "藝人",
-        "approximateTraffic": "10,000+",
-        "publishedAt": "",
-        "isRealtime": true,
-        "news": []
-      },
-      {
-        "title": "三商美邦",
+        "title": "軍公教",
         "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "前列腺",
+        "title": "陳天仁",
         "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "工會",
+        "title": "群創光電",
         "approximateTraffic": "2,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "王凱",
+        "title": "陳曉東",
         "approximateTraffic": "5,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "光通訊",
+        "title": "李勇週",
         "approximateTraffic": "2,000+",
         "publishedAt": "",
         "isRealtime": true,
         "news": []
       },
       {
-        "title": "陳睦衡",
-        "approximateTraffic": "100+",
-        "publishedAt": "2026-08-09T07:20:00Z",
+        "title": "陳以真",
+        "approximateTraffic": "5,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "球探",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "娜璉",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "黃金存摺",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "周氏蝦捲",
+        "approximateTraffic": "1,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "三星galaxy系列",
+        "approximateTraffic": "2,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "孫淑媚",
+        "approximateTraffic": "5,000+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "張靜懿",
+        "approximateTraffic": "500+",
+        "publishedAt": "",
+        "isRealtime": true,
+        "news": []
+      },
+      {
+        "title": "博通",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-30T05:10:00Z",
         "isRealtime": false,
         "news": [
           {
-            "title": "狂飆149公里無失分！歐力士台灣新星陳睦衡二軍先發5局好投技驚四座",
-            "source": "Yahoo運動",
-            "url": "https://tw.sports.yahoo.com/news/%E7%8B%82%E9%A3%86149%E5%85%AC%E9%87%8C%E7%84%A1%E5%A4%B1%E5%88%86-%E6%AD%90%E5%8A%9B%E5%A3%AB%E5%8F%B0%E7%81%A3%E6%96%B0%E6%98%9F%E9%99%B3%E7%9D%A6%E8%A1%A1%E4%BA%8C%E8%BB%8D%E5%85%88%E7%99%BC5%E5%B1%80%E5%A5%BD%E6%8A%95%E6%8A%80%E9%A9%9A%E5%9B%9B%E5%BA%A7-050059252.html"
+            "title": "随着美股二季度财报季接近尾声，博通周三盘后公布的业绩也将成为市场焦点",
+            "source": "东方财富",
+            "url": "https://wap.eastmoney.com/a/202608303859339941.html"
           },
           {
-            "title": "日職》防禦率0.66超鬼神！台灣20歲火球男5局3K無失分 最快球速曝光",
-            "source": "自由體育",
-            "url": "https://sports.ltn.com.tw/news/breakingnews/5533595"
+            "title": "美股讯号 | 博通财报引发市场关注，英伟达业绩助推情绪 ｜#美股资讯# #博通# #财报发布#",
+            "source": "搜狐网",
+            "url": "https://m.sohu.com/a/1069567623_122132398?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334"
           },
           {
-            "title": "陳睦衡日職二軍5局無失分本季第2勝登英雄訪問| 運動",
-            "source": "中央社 CNA",
-            "url": "https://www.cna.com.tw/news/aspt/202608090088.aspx"
+            "title": "瑞穗看好博通9月2日财报，押注连续30个季度佳绩延续 提供者 Investing.com",
+            "source": "英为财情 Investing.com",
+            "url": "https://cn.investing.com/news/stock-market-news/article-3542579"
           }
         ]
       },
       {
-        "title": "愛子公主",
+        "title": "大葉大學",
         "approximateTraffic": "100+",
-        "publishedAt": "2026-08-09T07:20:00Z",
+        "publishedAt": "2026-08-30T05:10:00Z",
         "isRealtime": false,
         "news": []
       },
       {
-        "title": "摩洛哥",
-        "approximateTraffic": "500+",
-        "publishedAt": "2026-08-09T07:10:00Z",
+        "title": "pca",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-30T05:00:00Z",
+        "isRealtime": false,
+        "news": []
+      },
+      {
+        "title": "安海瑟薇",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-30T04:50:00Z",
         "isRealtime": false,
         "news": [
           {
-            "title": "Morocco vs. South Africa - Banyana's WAFCON quarter-final defeat as it happened",
-            "source": "ESPN",
-            "url": "https://africa.espn.com/espn/story/_/id/49561639/morocco-vs-south-africa-banyana-wafcon-quarter-final-defeat-happened"
+            "title": "安海瑟薇取代妮可基嫚 主演《霹靂男兒》續集合作湯姆克魯斯",
+            "source": "Yahoo新聞",
+            "url": "https://tw.news.yahoo.com/%E5%AE%89%E6%B5%B7%E7%91%9F%E8%96%87%E5%8F%96%E4%BB%A3%E5%A6%AE%E5%8F%AF%E5%9F%BA%E5%AB%9A-%E4%B8%BB%E6%BC%94%E3%80%8A%E9%9C%B9%E9%9D%82%E7%94%B7%E5%85%92%E3%80%8B%E7%BA%8C%E9%9B%86%E5%90%88%E4%BD%9C%E6%B9%AF%E5%A7%86%E5%85%8B%E9%AD%AF%E6%96%AF-022048813.html"
           },
           {
-            "title": "CAF announces extensive coverage of TotalEnergies CAF Women’s Africa Cup of Nations Morocco 2026 including CAF TV streaming",
-            "source": "CAFOnline.com",
-            "url": "https://www.cafonline.com/caf-womens-africa-cup-of-nations/news/caf-announces-extensive-coverage-of-totalenergies-caf-women-s-africa-cup-of-nations-morocco-2026-including-caf-tv-streaming/"
+            "title": "阿湯哥《霹靂男兒2》重磅宣布！安海瑟薇首度飆戲 笑喊：等我生完就開工",
+            "source": "自由娛樂",
+            "url": "https://ent.ltn.com.tw/news/breakingnews/5556802"
           },
           {
-            "title": "WAFCON quarterfinals preview: World Cup spots on the line, players to watch and more key stories",
+            "title": "《霹靂男兒》續集2028年正式回歸！阿湯哥再戰NASCAR、安海瑟薇加盟",
+            "source": "UDN",
+            "url": "https://autos.udn.com/autos/amp/story/12168/9722463"
+          }
+        ]
+      },
+      {
+        "title": "尼日",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-30T04:30:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "士兵叛變！試圖攻入總統府遭擊退 尼日軍政府宣布已平息武裝行動",
+            "source": "Yahoo新聞",
+            "url": "https://tw.news.yahoo.com/%E5%A3%AB%E5%85%B5%E5%8F%9B%E8%AE%8A-%E8%A9%A6%E5%9C%96%E6%94%BB%E5%85%A5%E7%B8%BD%E7%B5%B1%E5%BA%9C%E9%81%AD%E6%93%8A%E9%80%80-%E5%B0%BC%E6%97%A5%E8%BB%8D%E6%94%BF%E5%BA%9C%E5%AE%A3%E5%B8%83%E5%B7%B2%E5%B9%B3%E6%81%AF%E6%AD%A6%E8%A3%9D%E8%A1%8C%E5%8B%95-002238252.html"
+          },
+          {
+            "title": "尼日軍政府稱平息叛變 傳俄軍助奪回首都空軍基地",
+            "source": "Rti 中央廣播電臺",
+            "url": "https://www.rti.org.tw/news?uid=3&pid=229087"
+          },
+          {
+            "title": "尼日首都激烈交火！機場、總統府附近傳槍響爆炸叛軍試圖衝破安全防線| 國際焦點| 全球",
+            "source": "UDN",
+            "url": "https://udn.com/news/story/6809/9722054"
+          }
+        ]
+      },
+      {
+        "title": "庇護工場",
+        "approximateTraffic": "500+",
+        "publishedAt": "2026-08-30T04:10:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "自家人也受不了？藍委要翁曉玲「安靜」…蔣萬安也說話了",
+            "source": "Yahoo新聞",
+            "url": "https://tw.news.yahoo.com/%E8%87%AA%E5%AE%B6%E4%BA%BA%E4%B9%9F%E5%8F%97%E4%B8%8D%E4%BA%86-%E8%97%8D%E5%A7%94%E8%A6%81%E7%BF%81%E6%9B%89%E7%8E%B2-%E5%AE%89%E9%9D%9C-%E8%94%A3%E8%90%AC%E5%AE%89%E4%B9%9F%E8%AA%AA%E8%A9%B1%E4%BA%86-045355435.html"
+          },
+          {
+            "title": "盧秀燕月餅秀不收場！他勸沒必要再纏鬥了",
+            "source": "Yahoo新聞",
+            "url": "https://tw.news.yahoo.com/%E7%9B%A7%E7%A7%80%E7%87%95%E6%9C%88%E9%A4%85%E7%A7%80%E4%B8%8D%E6%94%B6%E5%A0%B4-%E4%BB%96%E5%8B%B8%E6%B2%92%E5%BF%85%E8%A6%81%E5%86%8D%E7%BA%8F%E9%AC%A5%E4%BA%86-023345278.html"
+          },
+          {
+            "title": "盧秀燕接手總統府「棄單」月餅網路投票結果一面倒- 政治",
+            "source": "中時新聞網",
+            "url": "https://www.chinatimes.com/realtimenews/20260829002758-260407"
+          }
+        ]
+      },
+      {
+        "title": "总统",
+        "approximateTraffic": "100+",
+        "publishedAt": "2026-08-30T04:00:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "‘A New Form of U.S. Colonialism’: Venezuelans Bristle at U.S. Oil Takeover",
             "source": "The New York Times",
-            "url": "https://www.nytimes.com/athletic/7498458/2026/08/07/wafcon-quarterfinal-preview-world-cup-qualification/"
+            "url": "https://www.nytimes.com/2026/08/29/world/americas/venezuela-oil-us-takeover.html"
+          },
+          {
+            "title": "What we know about Trump’s deal giving US access to vast oil reserves in Venezuela",
+            "source": "AP News",
+            "url": "https://apnews.com/article/venezuela-oil-trump-deal-unknown-questions-reserves-c229bc39b6e1a3d5dd16f7f9e67fef3f"
+          },
+          {
+            "title": "Trump says US reaches deal with Venezuela to control 65 billion barrels of country’s oil reserves",
+            "source": "CNN",
+            "url": "https://www.cnn.com/2026/08/28/politics/trump-venezuela-oil-deal"
           }
         ]
       },
       {
-        "title": "駕駛",
-        "approximateTraffic": "200+",
-        "publishedAt": "2026-08-09T07:10:00Z",
-        "isRealtime": false,
-        "news": [
-          {
-            "title": "台南死亡車禍！轎車遭大貨車壓「扭曲變形」男駕駛受困亡",
-            "source": "東森新聞",
-            "url": "https://news.ebc.net.tw/news/society/565375"
-          },
-          {
-            "title": "大貨車壓爛轎車 救2小時才移出釀1死 司機喊太累竟驗出毒駕",
-            "source": "Yahoo新聞",
-            "url": "https://tw.news.yahoo.com/%E5%A4%A7%E8%B2%A8%E8%BB%8A%E5%A3%93%E7%88%9B%E8%BD%8E%E8%BB%8A-%E6%95%912%E5%B0%8F%E6%99%82%E6%89%8D%E7%A7%BB%E5%87%BA%E9%87%801%E6%AD%BB-%E5%8F%B8%E6%A9%9F%E5%96%8A%E5%A4%AA%E7%B4%AF%E7%AB%9F%E9%A9%97%E5%87%BA%E6%AF%92%E9%A7%95-052300020.html"
-          },
-          {
-            "title": "台南大貨車駕駛疑毒駕 與自小客對撞釀1死",
-            "source": "中央社 CNA",
-            "url": "https://www.cna.com.tw/news/asoc/202608090073.aspx"
-          }
-        ]
-      },
-      {
-        "title": "鄭廳宜",
-        "approximateTraffic": "100+",
-        "publishedAt": "2026-08-09T06:10:00Z",
-        "isRealtime": false,
-        "news": [
-          {
-            "title": "DRAM供需吃緊到2030年！ 高盛：廠商將獲更強定價與獲利",
-            "source": "Yahoo新聞",
-            "url": "https://tw.news.yahoo.com/dram%E4%BE%9B%E9%9C%80%E5%90%83%E7%B7%8A%E5%88%B02030%E5%B9%B4-%E9%AB%98%E7%9B%9B-%E5%BB%A0%E5%95%86%E5%B0%87%E7%8D%B2%E6%9B%B4%E5%BC%B7%E5%AE%9A%E5%83%B9%E8%88%87%E7%8D%B2%E5%88%A9-054305183.html"
-          },
-          {
-            "title": "大摩「空頭」態度大轉彎！記憶體股修正近尾聲：迎戰術性買點",
-            "source": "鉅亨網",
-            "url": "https://news.cnyes.com/news/id/6566403"
-          },
-          {
-            "title": "三大原廠2026年產能被包光！記憶體缺貨潮再起？力積電、南亞科、華邦電怎麼選？鄭廳宜獨家點名「這檔」抱一年| 優分析",
-            "source": "LINE TODAY",
-            "url": "https://today.line.me/tw/v3/article/XYRnelZ"
-          }
-        ]
-      },
-      {
-        "title": "垃圾",
-        "approximateTraffic": "200+",
-        "publishedAt": "2026-08-09T05:50:00Z",
-        "isRealtime": false,
-        "news": [
-          {
-            "title": "百萬YTR跳50噸垃圾山找相機！澎湖民宿辯「以為是按摩棒才丟」遭網砲轟",
-            "source": "Yahoo新聞",
-            "url": "https://tw.news.yahoo.com/%E7%99%BE%E8%90%ACytr%E8%B7%B350%E5%99%B8%E5%9E%83%E5%9C%BE%E5%B1%B1%E6%89%BE%E7%9B%B8%E6%A9%9F-%E6%BE%8E%E6%B9%96%E6%B0%91%E5%AE%BF%E8%BE%AF-%E4%BB%A5%E7%82%BA%E6%98%AF%E6%8C%89%E6%91%A9%E6%A3%92%E6%89%8D%E4%B8%9F-%E9%81%AD%E7%B6%B2%E7%A0%B2%E8%BD%9F-062800499.html"
-          },
-          {
-            "title": "黃豪平看「放火垃圾山找相機」有感發聲　曝16年前遊日垃圾車中含淚找御守",
-            "source": "噓！星聞",
-            "url": "https://stars.udn.com/star/story/10089/9677835"
-          },
-          {
-            "title": "攝影機被民宿老闆丟了 網紅衝垃圾山翻找 萬人線上觀看",
-            "source": "東森電視",
-            "url": "https://ent.ebc.net.tw/buzz/501002"
-          }
-        ]
-      },
-      {
-        "title": "中国男子篮球职业联赛",
-        "approximateTraffic": "200+",
-        "publishedAt": "2026-08-09T05:50:00Z",
-        "isRealtime": false,
-        "news": []
-      },
-      {
-        "title": "重陽節",
-        "approximateTraffic": "2000+",
-        "publishedAt": "2026-08-09T05:40:00Z",
-        "isRealtime": false,
-        "news": []
-      },
-      {
-        "title": "愛莉莎莎",
-        "approximateTraffic": "200+",
-        "publishedAt": "2026-08-09T05:40:00Z",
-        "isRealtime": false,
-        "news": [
-          {
-            "title": "派助理颱風天「肉身護植栽」 愛莉莎莎遭轟：命比不上植物",
-            "source": "Yahoo新聞",
-            "url": "https://tw.news.yahoo.com/%E6%B4%BE%E5%8A%A9%E7%90%86%E9%A2%B1%E9%A2%A8%E5%A4%A9-%E8%82%89%E8%BA%AB%E8%AD%B7%E6%A4%8D%E6%A0%BD-%E6%84%9B%E8%8E%89%E8%8E%8E%E8%8E%8E%E9%81%AD%E8%BD%9F-%E5%91%BD%E6%AF%94%E4%B8%8D%E4%B8%8A%E6%A4%8D%E7%89%A9-031500637.html"
-          },
-          {
-            "title": "主機、商品全泡水！3C Tim哥成受災戶崩潰",
-            "source": "鏡週刊Mirror Media",
-            "url": "https://www.mirrormedia.mg/external/setn_1886391"
-          },
-          {
-            "title": "慘淪白海豚受災戶！網紅Tim哥公司淹水　貨物泡湯、員工急救電腦",
-            "source": "NOWnews今日新聞",
-            "url": "https://www.nownews.com/news/6864312"
-          }
-        ]
-      },
-      {
-        "title": "三立新聞網",
+        "title": "張靜懿",
         "approximateTraffic": "500+",
-        "publishedAt": "2026-08-09T05:30:00Z",
+        "publishedAt": "2026-08-30T03:10:00Z",
+        "isRealtime": false,
+        "news": []
+      },
+      {
+        "title": "加藤浩次",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-30T03:10:00Z",
+        "isRealtime": false,
+        "news": [
+          {
+            "title": "加藤浩次、中学のサッカー部キャプテンをクビになった過去「お前についていけねぇ」（日刊スポーツ）",
+            "source": "Yahoo!ニュース",
+            "url": "https://news.yahoo.co.jp/articles/c49202003669f316783ea1498cb26591cde4ef59"
+          },
+          {
+            "title": "人生最高レストラン 8月29日(土)放送分 ゲスト：中島歩｜報道／ドキュメンタリー｜見逃し無料配信はTVer！人気の動画見放題",
+            "source": "TVer",
+            "url": "https://tver.jp/episodes/epvt9k0nsz"
+          },
+          {
+            "title": "中島歩：「棒読み俳優」といわれトラウマに 11年越しに挑んだ朝ドラ 今田美桜と心が通じ合ったと「ウッキウキ」 「初耳学」で",
+            "source": "毎日キレイ",
+            "url": "https://mainichikirei.jp/article/20260828dog00m100015000a.html"
+          }
+        ]
+      },
+      {
+        "title": "停電",
+        "approximateTraffic": "200+",
+        "publishedAt": "2026-08-30T03:00:00Z",
         "isRealtime": false,
         "news": []
       }

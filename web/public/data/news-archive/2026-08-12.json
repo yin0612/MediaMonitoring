@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-08-30T05:52:16.059879Z",
+  "pipeline": "deep-github",
+  "window": {
+    "actualFrom": "2026-08-12T09:34:48Z",
+    "actualTo": "2026-08-12T09:34:48Z"
+  },
+  "quality": {
+    "status": "ok"
+  },
+  "provenance": {
+    "method": "public-metadata-only",
+    "reproducible": true
+  },
+  "data": {
+    "status": "ok",
+    "stale": false,
+    "date": "2026-08-12",
+    "items": [
+      {
+        "id": "7b66cc0210b10e1174e3",
+        "source": "coolloud",
+        "title": "當工會甘於成為政治人物的背景板 失去的不是一次選舉，而是會員對工會最珍貴的信任",
+        "excerpt": "2026/08/12 12:00:00公共論壇王慶宏中鋼運通企業工會理事長不到兩週前，民進黨提名的高雄市長候選人賴瑞隆於 7 月 26 日大陣仗成立「勞工後援總會」。根據賴瑞隆臉書粉絲專頁的宣傳文字：「全高雄市超過 7 成總工會夥伴、15 家總工會站出來力挺，超過 200 家基層…",
+        "publishedAt": "2026-08-12T09:34:48Z",
+        "url": "https://www.coolloud.org.tw/node/99499",
+        "sentiment": {
+          "label": "positive",
+          "score": 1.0,
+          "matched": [
+            {
+              "term": "力挺",
+              "polarity": "positive",
+              "weight": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
