@@ -24,7 +24,7 @@ export interface Envelope<T> {
 
 /**
  * 來源代碼。
- * 使用者指定的 37 家台灣新聞媒體；歷史文件中的 29/35 不代表現況。
+ * 使用者指定的新聞網站與頻道；數量以 config/sources.yml 為準。
  */
 export type SourceId =
   | 'tvbs'
@@ -63,7 +63,32 @@ export type SourceId =
   | 'chinatimes'
   | 'ctwant'
   | 'mnews'
-  | 'mirrormedia';
+  | 'mirrormedia'
+  | 'investor'
+  | 'wantrich'
+  | 'moneylink'
+  | 'watchmedia'
+  | 'taiwantimes'
+  | 'turnnews'
+  | 'cdns'
+  | 'yesmedia'
+  | 'gbyhn'
+  | 'thehubnews'
+  | 'uanalyze'
+  | 'nstock'
+  | 'leho'
+  | 'stockltn'
+  | 'renews'
+  | 'technice'
+  | 'xfastest'
+  | 'cardu'
+  | 'knews'
+  | 'linetoday'
+  | 'yahoonews'
+  | 'yahoostock'
+  | 'pchomenews'
+  | 'pchomestock'
+  | 'yam';
 
 export type SourceStatus = 'ok' | 'empty' | 'stale' | 'degraded' | 'disabled' | 'error';
 

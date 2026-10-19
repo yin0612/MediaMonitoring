@@ -50,7 +50,11 @@ const googleNewsUrl = (query, range = '24h') => {
   return url.toString();
 };
 
-const rssUrls = (source) => (Array.isArray(source.rssUrls) ? source.rssUrls : source.rssUrl ? [source.rssUrl] : []);
+// Aggregator feeds are collected by Actions and merged from Pages. Keeping
+// them out of direct Worker fetches reserves Free-plan redirect headroom.
+const rssUrls = (source) => source.viaPages
+  ? []
+  : (Array.isArray(source.rssUrls) ? source.rssUrls : source.rssUrl ? [source.rssUrl] : []);
 
 async function fetchOfficialItems(source, attempts = 2) {
   const urls = rssUrls(source);

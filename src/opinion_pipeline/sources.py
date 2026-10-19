@@ -11,6 +11,11 @@ SOURCE_IDS = (
     "reporter", "newtalk", "nownews", "nextapple", "ettoday", "rti", "technews",
     "taipeitimes", "coolloud", "tfc", "moneydj", "businesstoday", "bnext", "managertoday",
     "chinatimes", "ctwant", "mnews", "mirrormedia",
+    "investor", "wantrich", "moneylink", "watchmedia", "taiwantimes", "turnnews",
+    "cdns", "yesmedia", "gbyhn", "thehubnews", "uanalyze", "nstock",
+    "leho", "stockltn", "renews", "technice", "xfastest", "cardu",
+    "knews", "linetoday", "yahoonews", "yahoostock", "pchomenews", "pchomestock",
+    "yam",
 )
 
 

@@ -551,7 +551,7 @@ test('24h search merges Google News results with the low-frequency Pages snapsho
 
     assert.equal(response.status, 200);
     assert.equal(response.headers.get('Cache-Control'), 'no-store');
-    assert.equal(body.data.sources.length, 37);
+    assert.equal(body.data.sources.length, NEWS_SOURCES.length);
     assert.deepEqual(new Set(body.data.items.map((item) => item.source)), new Set(['setn', 'ebc']));
     assert.ok(requested.some((url) => url.endsWith('/data/recent.json')));
     assert.ok(!requested.some((url) => url.endsWith('/data/news-archive.json')));
@@ -956,7 +956,7 @@ test('Pages-first scheduled snapshot skips official RSS for complete fresh sourc
   const originalFetch = globalThis.fetch;
   const calls = [];
   const officialUrls = new Set(
-    NEWS_SOURCES.flatMap((source) => source.rssUrls || (source.rssUrl ? [source.rssUrl] : [])),
+    NEWS_SOURCES.filter((source) => !source.viaPages).flatMap((source) => source.rssUrls || (source.rssUrl ? [source.rssUrl] : [])),
   );
   const recentItem = {
     id: 'era-pages-first-1',
@@ -1070,7 +1070,7 @@ test('scheduled source quality never scores Pages items outside the 24-hour wind
 
 test('Pages-first scheduled snapshot falls back to official RSS for an incomplete source map', async () => {
   const originalFetch = globalThis.fetch;
-  const officialUrls = NEWS_SOURCES.flatMap(
+  const officialUrls = NEWS_SOURCES.filter((source) => !source.viaPages).flatMap(
     (source) => source.rssUrls || (source.rssUrl ? [source.rssUrl] : []),
   );
   const calls = [];
@@ -1114,7 +1114,7 @@ const completePageSourceStates = () => NEWS_SOURCES.map((source) => pagesSourceS
 
 async function assertPagesEvidenceFallsBack(pageStates) {
   const originalFetch = globalThis.fetch;
-  const officialUrls = NEWS_SOURCES.flatMap(
+  const officialUrls = NEWS_SOURCES.filter((source) => !source.viaPages).flatMap(
     (source) => source.rssUrls || (source.rssUrl ? [source.rssUrl] : []),
   );
   const calls = [];
@@ -1530,7 +1530,8 @@ test('scheduled subrequest budget uses one attempt per official URL and keeps re
     return new Response('', { status: 503 });
   };
   const env = { SNAPSHOT: memoryKv(), GITHUB_TOKEN: 'test-token' };
-  const officialUrls = NEWS_SOURCES.flatMap((source) => source.rssUrls || (source.rssUrl ? [source.rssUrl] : []));
+  const officialUrls = NEWS_SOURCES.filter((source) => !source.viaPages)
+    .flatMap((source) => source.rssUrls || (source.rssUrl ? [source.rssUrl] : []));
   const pagesReadCount = 7;
   const dispatchCount = 0;
   const safeThreshold = 40;
@@ -1538,6 +1539,9 @@ test('scheduled subrequest budget uses one attempt per official URL and keeps re
     await runScheduled(env);
     for (const url of officialUrls) {
       assert.equal(calls.filter((call) => call === url).length, 1, `scheduled retry budget for ${url}`);
+    }
+    for (const source of NEWS_SOURCES.filter((source) => source.viaPages)) {
+      assert.equal(calls.includes(source.rssUrl), false, `${source.id} is collected through Pages`);
     }
     assert.equal(calls.length, officialUrls.length + pagesReadCount + dispatchCount);
     assert.ok(calls.length <= safeThreshold, `${calls.length} scheduled subrequests exceed ${safeThreshold}`);
@@ -1618,7 +1622,7 @@ test('scheduled build writes a snapshot that /api/data serves per file', async (
     assert.equal(meta.data.coverage.coveredDays, 30);
 
     const sources = await (await worker.fetch(new Request('https://worker.example/api/data?name=sources'), env)).json();
-    assert.equal(sources.data.sources.length, 37);
+    assert.equal(sources.data.sources.length, NEWS_SOURCES.length);
 
     const recent = await (await worker.fetch(new Request('https://worker.example/api/data?name=recent'), env)).json();
     assert.ok(recent.window.actualFrom, 'recent envelope should expose its actual lower bound');

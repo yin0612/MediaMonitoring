@@ -19,7 +19,7 @@
 - 時間正規化單一規則（`timeutil.py`）：無時區時間視為台北時間；台灣時間誤標 GMT 的未來時間自動校正；無法解析或仍為未來的時間直接捨棄，並在來源狀態頁顯示捨棄統計。
 - 熱度排行的數字只在排行欄顯示一次；熱度條本身只呈現視覺比例，避免手機版重複數字造成跑版。
 
-來源固定為 37 家指定媒體（實際數量以 `config/sources.yml` 為準，前端顯示的數量由該清單推導）。官方 RSS 可用時優先使用；同一媒體可合併多個官方分類 RSS（目前中央社使用政治、地方、社會、財經、科技與生活健康 feed），不可用時才改用該媒體官方網域的 Google News RSS 補充，部分媒體另有遵守 robots.txt 的低頻官網 metadata 擷取。來源狀態會隨每次更新顯示，不會把失敗來源偽裝成成功。
+來源固定為 62 個指定新聞網站／頻道（實際數量以 `config/sources.yml` 為準，前端顯示的數量由該清單推導）。官方 RSS 可用時優先使用；同一媒體可合併多個官方分類 RSS（目前中央社使用政治、地方、社會、財經、科技與生活健康 feed），不可用時才改用該媒體官方網域的 Google News RSS 補充，部分媒體另有遵守 robots.txt 的低頻官網 metadata 擷取。來源狀態會隨每次更新顯示，不會把失敗來源偽裝成成功。
 
 ## 架構
 
@@ -32,7 +32,7 @@
   └─ Google Trends：Worker /api/trends（快取 60 秒），失敗改讀 Pages trends
 
 Cloudflare Worker（免費層）
-  ├─ Cron */5：抓 37 家來源 → 合併近 24 小時工作集 → 重算逐篇輕量情緒與 sources/meta → 寫入 KV
+  ├─ Cron */5：抓 62 個來源 → 合併近 24 小時工作集 → 重算逐篇輕量情緒與 sources/meta → 寫入 KV
   ├─ Cron 以每 15 分鐘錯開觸發 deep GitHub Actions，重算歷史 archive 與深度分析
   ├─ keywords/entities/topics：搬運 Actions/Python 公開快照，避免 Free Cron 的 10 ms CPU 上限
   ├─ /api/data：從 KV 取儀表板各檔（新鮮度 ≤5 分鐘）
@@ -53,7 +53,7 @@ GitHub Actions（push／手動／Worker deep 觸發；另保留每小時一次�
 本專案已配置一鍵同步與啟動腳本：
 
 ```bash
-# 1. 立即同步與更新最新新聞輿情資料 (擷取 37 家媒體 RSS 與 Google Trends)
+# 1. 立即同步與更新最新新聞輿情資料 (擷取 62 個來源的公開新聞 與 Google Trends)
 ./scripts/sync_data.sh
 
 # 2. 啟動 Web 前端儀表板
@@ -128,6 +128,8 @@ Token 必須具備觸發該 repository workflow 的權限；同時將 `web/.env.
 正式站點：<https://yin0612.github.io/MediaMonitoring/>
 
 ## 資料來源
+
+2026-10-19 依提供的兩張新聞網站截圖核對 36 個網站／頻道，保留既有 37 個並新增 25 個，合計 62 個來源。逐項對照、實際抓取結果與頻道歸屬見 [來源擴充核對表](docs/source-expansion-2026-10-19.md)。來源包含原創媒體與聚合平台，數量不代表獨立原創媒體數。
 
 | 來源 | 狀態與用途 |
 |---|---|
