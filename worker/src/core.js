@@ -1,3 +1,5 @@
+import { sourceForGoogleNews } from './sources.js';
+
 const RANGE_MS = {
   '1h': 3_600_000,
   '6h': 21_600_000,
@@ -309,17 +311,7 @@ export function parseGoogleNewsRss(xml, sources) {
     .map((block, index) => {
       const sourceName = extract(block, 'source');
       const sourceUrl = tagAttribute(block, 'source', 'url');
-      const normalizedName = sourceName.replace(/\s+/g, '').toLocaleLowerCase('zh-TW');
-      let hostname = '';
-      try {
-        hostname = new URL(sourceUrl).hostname.toLowerCase();
-      } catch {
-        hostname = '';
-      }
-      const source = sources.find((candidate) =>
-        candidate.domains.some((domain) => hostname === domain || hostname.endsWith(`.${domain}`))
-          || candidate.aliases.some((alias) => alias.replace(/\s+/g, '').toLocaleLowerCase('zh-TW') === normalizedName),
-      );
+      const source = sourceForGoogleNews(sourceName, sourceUrl, sources);
       const title = extract(block, 'title');
       const url = canonicalUrl(linkOf(block));
       const rawDate = extract(block, 'pubDate') || extract(block, 'published') || extract(block, 'updated');

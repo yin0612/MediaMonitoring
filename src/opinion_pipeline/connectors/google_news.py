@@ -16,8 +16,15 @@ from ..models import NormalizedItem, SourceResult
 from .rss import _clean, _error_code, _fetch_bytes, _parse_time, is_feed_document
 
 
-def google_news_url(domain: str) -> str:
-    query = quote(f"site:{domain} when:1d")
+def google_news_url(domain: str | list[str]) -> str:
+    domains = list(dict.fromkeys([domain] if isinstance(domain, str) else domain))
+    # Keep sibling hosts (e.g. PChome's old/new stock hosts), while avoiding
+    # redundant www queries when their parent domain is already included.
+    domains = [value for value in domains if not any(
+        value != parent and value.endswith(f".{parent}") for parent in domains
+    )]
+    sites = " OR ".join(f"site:{value}" for value in domains)
+    query = quote(f"({sites}) when:1d" if len(domains) > 1 else f"{sites} when:1d")
     return f"https://news.google.com/rss/search?q={query}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
 
 
@@ -32,12 +39,12 @@ def strip_publisher_suffix(title: str, source: dict) -> str:
 
 def fetch_google_news(source: dict, timeout: int, max_items: int) -> SourceResult:
     sid, name = source["id"], source["name"]
-    domain = (source.get("domains") or [""])[0]
-    if not domain:
+    domains = source.get("domains") or []
+    if not domains:
         return SourceResult(id=sid, name=name, enabled=True, ok=False, error_code="NO_DOMAIN")
 
     try:
-        raw = _fetch_bytes(google_news_url(domain), timeout)
+        raw = _fetch_bytes(google_news_url(domains), timeout)
     except Exception as exc:  # noqa: BLE001 - 交由上層記錄來源錯誤
         return SourceResult(id=sid, name=name, enabled=True, ok=False, error_code=_error_code(exc))
     return parse_google_news(raw, source, max_items)

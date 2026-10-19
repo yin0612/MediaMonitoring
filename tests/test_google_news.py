@@ -20,6 +20,17 @@ def test_google_news_url_is_scoped_to_the_official_domain():
     assert "ceid=TW%3Azh-Hant" in url or "ceid=TW:zh-Hant" in url
 
 
+def test_google_news_query_covers_sibling_stock_hosts_without_duplicate_www_queries():
+    from urllib.parse import parse_qs, urlparse
+
+    url = google_news_url(["stock.pchome.com.tw", "pchome.megatime.com.tw"])
+    assert parse_qs(urlparse(url).query)["q"] == [
+        "(site:stock.pchome.com.tw OR site:pchome.megatime.com.tw) when:1d"
+    ]
+    url = google_news_url(["money-link.com.tw", "ww2.money-link.com.tw", "www.money-link.com.tw"])
+    assert parse_qs(urlparse(url).query)["q"] == ["site:money-link.com.tw when:1d"]
+
+
 def test_publisher_suffix_is_stripped_only_when_it_matches_the_source():
     assert strip_publisher_suffix("颱風要來了 - 台視新聞網", SOURCE) == "颱風要來了"
     assert strip_publisher_suffix("進口車 - 出口統計", SOURCE) == "進口車 - 出口統計"

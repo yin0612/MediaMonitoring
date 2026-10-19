@@ -52,10 +52,35 @@ EXPECTED_SOURCE_IDS = (
     "ctwant",
     "mnews",
     "mirrormedia",
+    "investor",
+    "wantrich",
+    "moneylink",
+    "watchmedia",
+    "taiwantimes",
+    "turnnews",
+    "cdns",
+    "yesmedia",
+    "gbyhn",
+    "thehubnews",
+    "uanalyze",
+    "nstock",
+    "leho",
+    "stockltn",
+    "renews",
+    "technice",
+    "xfastest",
+    "cardu",
+    "knews",
+    "linetoday",
+    "yahoonews",
+    "yahoostock",
+    "pchomenews",
+    "pchomestock",
+    "yam",
 )
 
 
-def test_registry_contains_exactly_the_requested_37_news_sources():
+def test_registry_contains_exactly_the_requested_62_news_sources():
     sources = load_sources(Path("config/sources.yml"))
 
     assert SOURCE_IDS == EXPECTED_SOURCE_IDS

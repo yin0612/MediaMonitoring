@@ -36,6 +36,31 @@ export const NEWS_SOURCES = [
   { id: 'ctwant', displayName: 'CTWANT', domains: ['ctwant.com', 'www.ctwant.com'], aliases: ['CTWANT', '周刊王', 'CTWANT新聞'] },
   { id: 'mnews', displayName: '鏡新聞', domains: ['mnews.tw', 'www.mnews.tw'], aliases: ['鏡新聞', 'MNews'] },
   { id: 'mirrormedia', displayName: '鏡週刊', domains: ['mirrormedia.mg', 'www.mirrormedia.mg'], aliases: ['鏡週刊', 'Mirror Media', '鏡週刊Mirror Media'] },
+  { id: 'investor', displayName: '財訊快報', domains: ['investor.com.tw', 'www.investor.com.tw'], aliases: ['財訊快報'] },
+  { id: 'wantrich', displayName: '旺得富', domains: ['wantrich.chinatimes.com'], aliases: ['旺得富', '旺得富理財網'] },
+  { id: 'moneylink', displayName: '富聯網', domains: ['money-link.com.tw', 'ww2.money-link.com.tw', 'www.money-link.com.tw'], aliases: ['富聯網'] },
+  { id: 'watchmedia', displayName: '觀傳媒', domains: ['watchmedia01.com', 'www.watchmedia01.com'], aliases: ['觀傳媒'], rssUrl: 'https://www.watchmedia01.com/feed/' },
+  { id: 'taiwantimes', displayName: '臺灣時報', domains: ['taiwantimes.com.tw', 'www.taiwantimes.com.tw'], aliases: ['臺灣時報', '台灣時報', 'Taiwan Times'] },
+  { id: 'turnnews', displayName: '翻報', domains: ['turnnewsapp.com', 'www.turnnewsapp.com', 'reader.turnnewsapp.com'], aliases: ['翻報', '翻爆', '翻爆 - 翻報'] },
+  { id: 'cdns', displayName: '中華日報', domains: ['cdns.com.tw', 'www.cdns.com.tw'], aliases: ['中華日報', '中華新聞雲'], rssUrl: 'https://www.cdns.com.tw/feed' },
+  { id: 'yesmedia', displayName: '是新聞 YesMedia', domains: ['yesmedia.com.tw', 'www.yesmedia.com.tw'], aliases: ['是新聞', '是新聞網', 'Yes新聞', '是新聞 YesMedia', 'YesMedia'] },
+  { id: 'gbyhn', displayName: '敗家達人', domains: ['gbyhn.com.tw', 'www.gbyhn.com.tw'], aliases: ['敗家達人', '敗家達人推薦'], rssUrl: 'https://www.gbyhn.com.tw/feed' },
+  { id: 'thehubnews', displayName: '新頭條', domains: ['thehubnews.net', 'www.thehubnews.net'], aliases: ['新頭條', '新頭條新聞', '新頭條-TheHubNews', 'TheHubNews'], rssUrl: 'https://www.thehubnews.net/feed' },
+  { id: 'uanalyze', displayName: '優分析', domains: ['uanalyze.com.tw', 'www.uanalyze.com.tw'], aliases: ['優分析', '優分析UAnalyze', 'UAnalyze'] },
+  { id: 'nstock', displayName: 'nStock', domains: ['nstock.tw', 'www.nstock.tw'], aliases: ['nStock', 'nStock新聞'] },
+  { id: 'leho', displayName: '樂聯網', domains: ['leho.com.tw', 'www.leho.com.tw'], aliases: ['樂聯網'], rssUrl: 'https://leho.com.tw/feed' },
+  { id: 'stockltn', displayName: '財富自由', domains: ['stock.ltn.com.tw'], aliases: ['財富自由', '自由時報財富自由'] },
+  { id: 'renews', displayName: '短傳媒', domains: ['re-news.tw', 'www.re-news.tw'], aliases: ['短傳媒', '短傳媒 re-news.tw'] },
+  { id: 'technice', displayName: '科技島', domains: ['technice.com.tw', 'www.technice.com.tw'], aliases: ['科技島', '科技島TechNice', 'TechNice'], rssUrl: 'https://www.technice.com.tw/feed/' },
+  { id: 'xfastest', displayName: 'XFastest', domains: ['news.xfastest.com', 'www.xfastest.com', 'xfastest.com'], aliases: ['XFastest', 'XFastest News', 'XFastest最夯的電腦領域'], rssUrl: 'https://news.xfastest.com/feed/' },
+  { id: 'cardu', displayName: '卡優新聞網', domains: ['cardu.com.tw', 'www.cardu.com.tw'], aliases: ['卡優新聞網', '卡優新聞', '卡優'], rssUrl: 'https://www.cardu.com.tw/rss/cardurss.xml' },
+  { id: 'knews', displayName: '知新聞', domains: ['knews.com.tw', 'www.knews.com.tw'], aliases: ['知新聞', 'Knews'] },
+  { id: 'linetoday', displayName: 'LINE TODAY', domains: ['today.line.me'], aliases: ['LINE TODAY', 'LINE TODAY Taiwan'] },
+  { id: 'yahoonews', displayName: 'Yahoo新聞', domains: ['tw.news.yahoo.com'], aliases: ['Yahoo新聞', 'Yahoo奇摩新聞', 'Yahoo奇摩新聞（即時新聞）'], rssUrl: 'https://tw.news.yahoo.com/rss', viaPages: true },
+  { id: 'yahoostock', displayName: 'Yahoo股市', domains: ['tw.stock.yahoo.com'], aliases: ['Yahoo股市', 'Yahoo奇摩股市'], rssUrl: 'https://tw.stock.yahoo.com/rss', viaPages: true },
+  { id: 'pchomenews', displayName: 'PChome新聞', domains: ['news.pchome.com.tw'], aliases: ['PChome新聞', 'PChome Online新聞', 'PChome Online 新聞'], rssUrl: 'https://news.pchome.com.tw/articles/Feed-Google', viaPages: true },
+  { id: 'pchomestock', displayName: 'PChome股市', domains: ['stock.pchome.com.tw', 'pchome.megatime.com.tw'], aliases: ['PChome股市', 'PChome 股市', 'PChome Online 股市'] },
+  { id: 'yam', displayName: '蕃新聞 yamNews', domains: ['n.yam.com'], aliases: ['蕃新聞', '蕃新聞 yamNews', 'yamNews', '蕃薯藤新聞'] },
 ];
 
 // 官方 RSS 補充：來源名稱與白名單維持單一登錄，RSS 可用多個分類 feed 合併。
@@ -62,8 +87,19 @@ export function sourceForGoogleNews(name, sourceUrl, sources = NEWS_SOURCES) {
     hostname = '';
   }
   const normalizedName = normalized(name);
-  return sources.find((source) =>
-    source.domains.some((domain) => hostname === domain || hostname.endsWith(`.${domain}`))
-      || source.aliases.some((alias) => normalized(alias) === normalizedName),
+  // Prefer the most specific host: stock.ltn.com.tw and wantrich.chinatimes.com
+  // are distinct channels even though their parent publishers are allowlisted.
+  let hostMatch = null;
+  let specificity = 0;
+  for (const source of sources) {
+    for (const domain of source.domains) {
+      if ((hostname === domain || hostname.endsWith(`.${domain}`)) && domain.length > specificity) {
+        hostMatch = source;
+        specificity = domain.length;
+      }
+    }
+  }
+  return hostMatch || sources.find((source) =>
+    source.aliases.some((alias) => normalized(alias) === normalizedName),
   ) || null;
 }

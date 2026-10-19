@@ -11,7 +11,7 @@ import {
   parseTrendsRss,
   validateQuery,
 } from '../src/core.js';
-import { NEWS_SOURCES } from '../src/sources.js';
+import { NEWS_SOURCES, sourceForGoogleNews } from '../src/sources.js';
 
 const EXPECTED_SOURCE_IDS = [
   'tvbs', 'ebc', 'setn', 'ftv', 'cti', 'era', 'nexttv', 'pts', 'ttv', 'cts', 'udn', 'ltn', 'cna',
@@ -20,11 +20,16 @@ const EXPECTED_SOURCE_IDS = [
   'rti', 'technews', 'taipeitimes', 'coolloud', 'tfc',
   'moneydj', 'businesstoday', 'bnext', 'managertoday', 'chinatimes', 'ctwant',
   'mnews', 'mirrormedia',
+  'investor', 'wantrich', 'moneylink', 'watchmedia', 'taiwantimes', 'turnnews',
+  'cdns', 'yesmedia', 'gbyhn', 'thehubnews', 'uanalyze', 'nstock',
+  'leho', 'stockltn', 'renews', 'technice', 'xfastest', 'cardu',
+  'knews', 'linetoday', 'yahoonews', 'yahoostock', 'pchomenews', 'pchomestock',
+  'yam',
 ];
 
-test('news source registry contains exactly the requested 37 publishers', () => {
+test('news source registry contains exactly the requested 62 news sources', () => {
   assert.deepEqual(NEWS_SOURCES.map((source) => source.id), EXPECTED_SOURCE_IDS);
-  assert.equal(new Set(NEWS_SOURCES.flatMap((source) => source.domains)).size >= 37, true);
+  assert.equal(new Set(NEWS_SOURCES.flatMap((source) => source.domains)).size >= 62, true);
 });
 
 test('new official RSS sources retain their required domains and feed URLs', () => {
@@ -39,6 +44,40 @@ test('new official RSS sources retain their required domains and feed URLs', () 
   assert.equal(byId.coolloud.rssUrl, 'https://www.coolloud.org.tw/rss.xml');
   assert.deepEqual(byId.tfc.domains, ['tfc-taiwan.org.tw', 'www.tfc-taiwan.org.tw']);
   assert.equal(byId.tfc.rssUrl, 'https://tfc-taiwan.org.tw/feed/');
+});
+
+test('all screenshot providers resolve to their configured source, including distinct channels', () => {
+  const expected = [
+    ['MoneyDJ理財網', 'moneydj'], ['財訊快報', 'investor'], ['旺得富', 'wantrich'],
+    ['富聯網', 'moneylink'], ['觀傳媒', 'watchmedia'], ['臺灣時報', 'taiwantimes'],
+    ['翻報', 'turnnews'], ['中華日報', 'cdns'], ['是新聞 YesMedia', 'yesmedia'],
+    ['敗家達人', 'gbyhn'], ['新頭條', 'thehubnews'], ['優分析', 'uanalyze'],
+    ['nStock', 'nstock'], ['樂聯網', 'leho'], ['財富自由', 'stockltn'],
+    ['短傳媒', 'renews'], ['科技島', 'technice'], ['XFastest', 'xfastest'], ['卡優新聞網', 'cardu'],
+    ['ETtoday', 'ettoday'], ['鉅亨網', 'anue'], ['經濟日報', 'moneyudn'], ['中央社', 'cna'],
+    ['中時新聞網', 'chinatimes'], ['工商時報', 'ctee'], ['知新聞', 'knews'], ['自由財經', 'ltn'],
+    ['聯合新聞網', 'udn'], ['LINE TODAY', 'linetoday'], ['Yahoo新聞', 'yahoonews'],
+    ['Yahoo股市', 'yahoostock'], ['PChome新聞', 'pchomenews'], ['PChome股市', 'pchomestock'],
+    ['壹蘋新聞網', 'nextapple'], ['蕃新聞 yamNews', 'yam'], ['三立新聞網', 'setn'],
+  ];
+  for (const [name, id] of expected) assert.equal(sourceForGoogleNews(name, '')?.id, id, name);
+  assert.equal(sourceForGoogleNews('中時新聞網', 'https://wantrich.chinatimes.com')?.id, 'wantrich');
+  assert.equal(sourceForGoogleNews('自由時報', 'https://stock.ltn.com.tw')?.id, 'stockltn');
+  assert.equal(sourceForGoogleNews('', 'https://ec.ltn.com.tw')?.id, 'ltn');
+  assert.equal(sourceForGoogleNews('', 'https://pchome.megatime.com.tw')?.id, 'pchomestock');
+  assert.equal(sourceForGoogleNews('', 'https://tw.stock.yahoo.com')?.id, 'yahoostock');
+  assert.equal(sourceForGoogleNews('', 'https://tw.news.yahoo.com')?.id, 'yahoonews');
+  assert.equal(sourceForGoogleNews('', 'https://stock.ltn.com.tw.example.com'), null);
+});
+
+test('Google News articles retain the more specific channel instead of its parent publisher', () => {
+  const xml = `<rss><channel>${[
+    ['stock.ltn.com.tw', '自由時報', 'stockltn'],
+    ['wantrich.chinatimes.com', '中時新聞網', 'wantrich'],
+  ].map(([host, name, id]) => `<item><guid>${id}</guid><title>測試新聞</title>
+    <link>https://${host}/article/123</link><pubDate>${new Date().toUTCString()}</pubDate>
+    <source url="https://${host}">${name}</source></item>`).join('')}</channel></rss>`;
+  assert.deepEqual(parseGoogleNewsRss(xml, NEWS_SOURCES).map(item => item.source), ['stockltn', 'wantrich']);
 });
 
 test('parseGoogleNewsRss keeps only allowlisted publishers and normalizes source ids', () => {
